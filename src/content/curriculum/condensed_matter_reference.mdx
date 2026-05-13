@@ -1,0 +1,1006 @@
+---
+title: "Condensed Matter Physics"
+stationNumber: 10
+line: "Classical Branch"
+date: 2026-05-02
+backdated: true
+prerequisites: [8, 12]
+extendsTo: []
+classReportTitle: "Solids, electrons, and a job market I did not expect."
+---
+
+*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+
+# Condensed Matter Physics: A Comprehensive Reference
+
+*Where quantum mechanics, statistical mechanics, and field theory come together to describe the matter around you.*
+
+Condensed matter physics is the study of the many-body behavior of atoms and electrons in solids, liquids, and other condensed phases. It's where most working physicists actually work — about half of all physics research, by most counts. It's also where some of the deepest recent theoretical ideas have emerged (topological phases, fractionalization, emergent gauge fields) and where quantum mechanics confronts experiment most directly.
+
+This document covers condensed matter at the level of a first-year graduate course — roughly Ashcroft & Mermin for solid state basics, with some modern topics (topological matter, strongly correlated systems) tacked on. You've built the prerequisites: quantum mechanics, statistical mechanics, and (via the field theory docs) the concept of spontaneous symmetry breaking.
+
+---
+
+## Table of Contents
+
+1. [What Condensed Matter Is About](#1-what-condensed-matter-is-about)
+2. [Crystal Structure and Reciprocal Space](#2-crystal-structure-and-reciprocal-space)
+3. [Electrons in a Periodic Potential](#3-electrons-in-a-periodic-potential)
+4. [Band Theory and the Origin of Metals, Insulators, and Semiconductors](#4-band-theory-and-the-origin-of-metals-insulators-and-semiconductors)
+5. [Phonons and Lattice Dynamics](#5-phonons-and-lattice-dynamics)
+6. [The Free Electron Gas Revisited](#6-the-free-electron-gas-revisited)
+7. [Semiconductors and Devices](#7-semiconductors-and-devices)
+8. [Magnetism](#8-magnetism)
+9. [Superconductivity](#9-superconductivity)
+10. [Superfluidity and Quantum Fluids](#10-superfluidity-and-quantum-fluids)
+11. [Fermi Liquid Theory and Beyond](#11-fermi-liquid-theory-and-beyond)
+12. [Topological Phases of Matter](#12-topological-phases-of-matter)
+13. [Strongly Correlated Systems](#13-strongly-correlated-systems)
+14. [Frontiers and Open Problems](#14-frontiers-and-open-problems)
+15. [Appendix: Formulas and Reference Data](#appendix-formulas-and-reference-data)
+
+---
+
+## 1. What Condensed Matter Is About
+
+### Emergence
+
+A carbon atom is unremarkable. Many carbon atoms arranged as diamond are the hardest substance we know. The same atoms arranged as graphite are soft and conducting. The same atoms as graphene (a single layer of graphite) have electrons that behave like massless relativistic particles despite moving only at $10^6$ m/s.
+
+This is **emergence**: the qualitative properties of condensed matter are not simple extrapolations of single-atom physics. Many-body quantum mechanics generates genuinely new behavior — phases, phase transitions, quasi-particles, collective modes — that has no counterpart in the underlying ingredients.
+
+Philip Anderson's 1972 essay "More Is Different" is the canonical statement. The laws of physics at each length scale are not mere consequences of the laws at shorter scales; they have their own principles, their own unknowns, their own research programs.
+
+### Why Condensed Matter Matters
+
+- **Technology:** transistors, lasers, magnetic storage, solar cells, superconducting magnets — all condensed matter.
+- **Fundamental physics:** many of the best-tested laws of nature emerged from condensed matter (BCS superconductivity, the quantum Hall effect, spontaneous symmetry breaking).
+- **Connection to other fields:** condensed matter techniques apply to nuclear matter, neutron stars, cold atomic gases, and even high-energy physics (holographic duality relates black holes to condensed matter systems).
+- **New phenomena:** topological insulators, quantum spin liquids, and strange metals continue to be discovered and understood.
+
+### What We'll Cover
+
+The document moves roughly from tractable (non-interacting electrons in periodic potentials) to strongly interacting (Fermi liquids, correlated systems). Along the way we'll cover the key applications: metals, semiconductors, magnets, superconductors — and then the modern frontiers.
+
+---
+
+## 2. Crystal Structure and Reciprocal Space
+
+Most condensed matter systems have crystalline order, and the mathematics of periodicity is central to the subject.
+
+### Bravais Lattices
+
+A **Bravais lattice** is an infinite array of points such that the environment of each point is identical. In 3D, there are 14 distinct Bravais lattices. The most common:
+
+- **Simple cubic (SC):** atoms at corners of a cube
+- **Body-centered cubic (BCC):** corners + one at center (iron, sodium, tungsten)
+- **Face-centered cubic (FCC):** corners + centers of faces (copper, aluminum, gold)
+- **Hexagonal close-packed (HCP):** alternating hexagonal layers (magnesium, zinc)
+
+The lattice is characterized by **primitive vectors** $\vec a_1, \vec a_2, \vec a_3$ such that every lattice point is:
+
+$$\vec R = n_1 \vec a_1 + n_2 \vec a_2 + n_3 \vec a_3$$
+
+for integers $n_i$.
+
+### Crystal Structure
+
+A real crystal is a Bravais lattice **plus a basis** (the atoms at or near each lattice site). Examples:
+
+- **Diamond structure:** FCC Bravais lattice + 2-atom basis (offset by $(a/4, a/4, a/4)$). Silicon, germanium, diamond.
+- **NaCl structure:** FCC Bravais lattice + 2-atom basis (Na at origin, Cl offset)
+- **Cuprate superconductors:** complex basis with copper-oxygen planes
+
+### Reciprocal Lattice
+
+The **reciprocal lattice** is the Fourier transform of the direct lattice. If $\vec a_i$ are primitive vectors of the direct lattice, the reciprocal primitive vectors $\vec b_i$ satisfy:
+
+$$\vec a_i \cdot \vec b_j = 2\pi \delta_{ij}$$
+
+Explicitly:
+
+$$\vec b_1 = 2\pi \frac{\vec a_2 \times \vec a_3}{\vec a_1 \cdot (\vec a_2 \times \vec a_3)}$$
+
+(cyclic for $\vec b_2, \vec b_3$).
+
+Reciprocal lattice vectors:
+
+$$\vec G = m_1 \vec b_1 + m_2 \vec b_2 + m_3 \vec b_3$$
+
+Key property: $e^{i\vec G \cdot \vec R} = 1$ for any lattice vector $\vec R$ and reciprocal lattice vector $\vec G$. This is the condition that makes the reciprocal lattice the "Fourier space" of the crystal.
+
+### Brillouin Zones
+
+The **first Brillouin zone** (BZ) is the Wigner-Seitz cell of the reciprocal lattice — the set of points closer to the origin than to any other reciprocal lattice point.
+
+Why important? The electronic states of a crystal can be uniquely labeled by crystal momenta $\vec k$ lying in the first BZ. Anything outside is equivalent (by adding reciprocal lattice vectors) to something inside.
+
+### X-ray Diffraction
+
+Bragg's law:
+
+$$n\lambda = 2d\sin\theta$$
+
+relates diffraction peak angles $\theta$ to lattice spacings $d$. Equivalently, the Laue condition: $\vec k_{\text{out}} - \vec k_{\text{in}} = \vec G$ for a reciprocal lattice vector $\vec G$.
+
+X-ray diffraction is *the* tool for determining crystal structure, and revealing the reciprocal lattice directly. Watson and Crick deduced DNA's double helix from Rosalind Franklin's X-ray diffraction images — itself an application of the same physics used for every solid.
+
+### Symmetry and Group Theory
+
+Crystals have symmetries: rotations, reflections, translations. These form a **space group**. There are 230 distinct space groups in 3D — each crystalline material belongs to exactly one.
+
+Symmetry determines a lot:
+- Selection rules for optical transitions
+- Degeneracies in electronic spectra
+- Allowed terms in the effective Hamiltonian
+- Topological classifications
+
+Group theory — specifically representation theory of space groups — is a working tool for condensed matter theorists. This document won't develop it, but be aware: much of the structure of condensed matter reflects symmetry.
+
+---
+
+## 3. Electrons in a Periodic Potential
+
+An electron in a crystal moves in a potential that's periodic: $V(\vec r + \vec R) = V(\vec r)$ for all lattice vectors $\vec R$. This periodicity has dramatic consequences.
+
+### Bloch's Theorem
+
+**Bloch's theorem:** the eigenstates of a periodic Hamiltonian have the form
+
+$$\psi_{\vec k}(\vec r) = e^{i\vec k \cdot \vec r} u_{\vec k}(\vec r)$$
+
+where $u_{\vec k}(\vec r)$ has the periodicity of the lattice. Equivalently:
+
+$$\psi_{\vec k}(\vec r + \vec R) = e^{i\vec k \cdot \vec R} \psi_{\vec k}(\vec r)$$
+
+Interpretation: the wave function is a plane wave ($e^{i\vec k \cdot \vec r}$) modulated by a periodic function ($u$). The quantum number $\vec k$ is the **crystal momentum** and plays a role analogous to momentum in free space.
+
+### Proof Sketch
+
+Write the Hamiltonian eigenvalue problem. The periodicity of $V$ means $H$ commutes with translation operators $T_{\vec R}$, and translations commute with each other. So simultaneous eigenstates of $H$ and $\{T_{\vec R}\}$ exist. Eigenvalues of $T_{\vec R}$ have magnitude 1 (unitary); write them as $e^{i\vec k \cdot \vec R}$. The result is Bloch's theorem.
+
+### Band Index
+
+For each crystal momentum $\vec k$, there are multiple eigenstates labeled by a band index $n$:
+
+$$H\psi_{n\vec k} = \epsilon_n(\vec k)\psi_{n\vec k}$$
+
+The function $\epsilon_n(\vec k)$ is the **band structure** — the allowed electron energies. Bands can overlap, touch, or be separated by gaps.
+
+### The Empty Lattice Approximation
+
+Start with truly free electrons: $\epsilon(\vec k) = \hbar^2 k^2/(2m)$. Restrict $\vec k$ to the first Brillouin zone by folding (i.e., identifying $\vec k$ with $\vec k + \vec G$). You get parabolic bands folded back into the BZ.
+
+Turn on a weak crystal potential. At the BZ boundaries, where parabolas from different "extended zones" meet, gaps open up — this is the **nearly free electron** picture.
+
+Turn on a strong crystal potential. Electrons become localized near atoms, and you derive bands from atomic orbitals — this is the **tight-binding** picture.
+
+Both approaches give the same qualitative structure: bands separated by gaps.
+
+### Tight-Binding Model
+
+The workhorse of qualitative band theory. Write:
+
+$$H = \sum_i \epsilon_0 c_i^\dagger c_i - t\sum_{\langle i,j\rangle}(c_i^\dagger c_j + c_j^\dagger c_i)$$
+
+$\epsilon_0$ is the on-site energy, $t$ is the hopping amplitude to nearest neighbors, $c_i^\dagger$ creates an electron on site $i$.
+
+For a 1D chain of spacing $a$:
+
+$$\epsilon(k) = \epsilon_0 - 2t\cos(ka)$$
+
+Bandwidth $4t$, centered on $\epsilon_0$. This simple cosine band illustrates all the essentials: periodicity in $k$ (with period $2\pi/a$), bounded energy range, characteristic shape.
+
+For a 2D square lattice:
+
+$$\epsilon(k_x, k_y) = \epsilon_0 - 2t(\cos k_x a + \cos k_y a)$$
+
+### Density of States
+
+The **density of states** $g(\epsilon)$ is the number of states per unit energy per unit volume:
+
+$$g(\epsilon) = \sum_n \int \frac{d^3k}{(2\pi)^3} \delta(\epsilon - \epsilon_n(\vec k))$$
+
+In 3D free electron gas: $g(\epsilon) \propto \sqrt{\epsilon}$.
+
+In 1D: $g(\epsilon)$ diverges at band edges as $1/\sqrt{\epsilon}$ — Van Hove singularities.
+
+In 2D: $g(\epsilon)$ has logarithmic Van Hove singularities at saddle points.
+
+Shape of $g(\epsilon)$ determines many properties (heat capacity, magnetic susceptibility, spectroscopic features).
+
+---
+
+## 4. Band Theory and the Origin of Metals, Insulators, and Semiconductors
+
+### Filling the Bands
+
+Electrons are fermions; they obey Pauli exclusion. At zero temperature, they fill the lowest available states up to the **Fermi energy** $\epsilon_F$. At finite temperature, the filling follows the Fermi-Dirac distribution.
+
+### Three Outcomes
+
+**Case 1: Fermi level inside a band.** Partially filled band — electrons near $\epsilon_F$ can be excited by infinitesimal energy (into empty states just above). The material conducts electricity: **metal**.
+
+**Case 2: Fermi level in a gap, gap is large.** Filled band below, empty band above, separated by a gap $E_g \gg k_B T$. No thermally accessible excitations: **insulator**.
+
+**Case 3: Fermi level in a gap, gap is small.** Same structure, but $E_g \sim k_B T$ or small enough to be bridged by doping: **semiconductor**.
+
+This single picture explains why copper conducts, silicon is a semiconductor, and diamond is a (wide-gap) insulator — despite all three being made of elements with similar chemistry. It's about how the electrons fill the bands.
+
+### Counting
+
+A fully filled band has one electron per unit cell per spin — so two electrons per unit cell per band. Consequence: **a material with an odd number of electrons per unit cell must be a metal** (band theory alone). An even number could be either metal or insulator, depending on whether bands overlap.
+
+### Fermi Surface
+
+For a metal, the Fermi surface is the set of $\vec k$-points at which $\epsilon(\vec k) = \epsilon_F$. It lives in the first Brillouin zone.
+
+For free electrons, the Fermi surface is a sphere. For real metals, it reflects the crystal symmetry and can be quite complex — open sheets, necks, hole pockets.
+
+The Fermi surface is not a theoretical artifact; it's directly measurable via the **de Haas-van Alphen effect** (oscillations of magnetization with applied field) and other techniques.
+
+### Effective Mass
+
+Near band extrema, bands are usually parabolic:
+
+$$\epsilon(\vec k) \approx \epsilon_0 + \frac{\hbar^2}{2m^*} k^2$$
+
+The **effective mass** $m^*$ can be very different from the free electron mass $m_e$. In GaAs: $m^*_e \approx 0.067 m_e$. In heavy fermion materials: $m^* \approx 1000 m_e$. The crystal potential modifies the electron's effective inertia.
+
+For anisotropic bands, $m^*$ becomes a tensor: $\hbar^2/(2m^*_{ij}) = \partial^2 \epsilon/(2\partial k_i \partial k_j)$.
+
+### Holes
+
+An empty state in an otherwise-filled band behaves like a positively-charged particle with positive effective mass. This is a **hole**. Semiconductor physics and device physics rely on treating current as flowing via electrons in the conduction band and holes in the valence band.
+
+---
+
+## 5. Phonons and Lattice Dynamics
+
+Electrons move in a lattice, but the lattice also moves. Quantized lattice vibrations are **phonons** — bosonic excitations that act almost exactly like photons in an optical cavity.
+
+### Classical Lattice Dynamics
+
+Consider a 1D chain of identical masses connected by springs. Equations of motion:
+
+$$m\ddot x_n = -K(2x_n - x_{n-1} - x_{n+1})$$
+
+Try $x_n = A e^{i(kna - \omega t)}$:
+
+$$\omega(k) = 2\sqrt{K/m}\,|\sin(ka/2)|$$
+
+Linear dispersion near $k = 0$: $\omega \approx v_s k$, where $v_s = a\sqrt{K/m}$ is the sound velocity. Bounded above by $\omega_{\max} = 2\sqrt{K/m}$ at the BZ edge.
+
+### Two-Atom Basis: Acoustic and Optical Phonons
+
+For a chain with alternating masses $m_1$ and $m_2$, or two springs $K_1$ and $K_2$, you get *two* branches:
+
+- **Acoustic branch:** $\omega \to 0$ as $k \to 0$. All atoms move in phase. Ordinary sound waves.
+- **Optical branch:** $\omega \ne 0$ at $k = 0$. Adjacent atoms move out of phase. These can couple to electromagnetic radiation (hence "optical"), as in infrared spectroscopy of crystals.
+
+In 3D with a $p$-atom basis: $3p$ branches total, of which 3 are acoustic and $3(p-1)$ are optical.
+
+### Quantization
+
+Phonons are the quantized excitations of lattice vibrations. Each normal mode behaves as a quantum harmonic oscillator with energy levels $\hbar\omega(n + 1/2)$.
+
+A phonon is a quantum of lattice vibration with energy $\hbar\omega(\vec k, \lambda)$ and momentum $\hbar\vec k$ (crystal momentum, so defined modulo reciprocal lattice vectors).
+
+### Phonons as Bosons
+
+Phonons obey Bose-Einstein statistics. Average occupation:
+
+$$\langle n(\omega)\rangle = \frac{1}{e^{\hbar\omega/(k_BT)} - 1}$$
+
+### Specific Heat: Debye Model
+
+Already covered in the stat mech reference, but worth revisiting. Treat all phonons as having linear dispersion $\omega = v_s k$, up to a cutoff $\omega_D$ set by the total number of modes.
+
+**Low-T limit** ($T \ll \Theta_D = \hbar\omega_D/k_B$):
+
+$$C_V \propto T^3$$
+
+The famous $T^3$ law. Arises because at low $T$, only long-wavelength (low-$\omega$) phonons are excited; the density of states goes as $\omega^2$ and the Bose factor gives thermal occupation to these modes.
+
+**High-T limit:** $C_V = 3N k_B$ — Dulong-Petit.
+
+### Electron-Phonon Coupling
+
+Electrons and phonons interact. An electron scattering off a phonon changes both its momentum and (slightly) its energy. Key consequences:
+
+- **Electrical resistance** in normal metals (at high $T$, $\rho \propto T$; at low $T$, $\rho \propto T^5$ until impurity scattering dominates)
+- **Superconductivity** (in conventional BCS superconductors, phonon exchange provides the attractive interaction binding electrons into Cooper pairs)
+- **Kohn anomalies** in phonon dispersion near $2k_F$
+- **Polarons** (electrons dressed with a cloud of phonons in ionic crystals)
+
+---
+
+## 6. The Free Electron Gas Revisited
+
+The stat mech reference covered the free Fermi gas. Here we emphasize what's specifically relevant to metals.
+
+### Sommerfeld Model
+
+Treat metallic electrons as a free Fermi gas, ignoring ions except as a uniform positive background.
+
+Density of states at Fermi level:
+
+$$g(\epsilon_F) = \frac{3n}{2\epsilon_F}$$
+
+(For a 3D free gas with density $n$.)
+
+### Electronic Heat Capacity
+
+At $T \ll T_F$:
+
+$$C_V^{\text{el}} = \frac{\pi^2}{3} g(\epsilon_F) k_B^2 T = \gamma T$$
+
+Linear in $T$. The coefficient $\gamma$ is the **Sommerfeld coefficient**, directly proportional to $g(\epsilon_F)$.
+
+Total heat capacity of a metal at low $T$:
+
+$$C = \gamma T + \beta T^3$$
+
+(Electronic + phononic.) Plotting $C/T$ vs. $T^2$ gives a straight line; intercept is $\gamma$, slope is $\beta$. This is a standard experimental test.
+
+### Electrical Conductivity
+
+Drude picture: electrons accelerate under the field, scatter with relaxation time $\tau$:
+
+$$\sigma = \frac{ne^2 \tau}{m}$$
+
+Boltzmann equation refinement: only electrons near the Fermi surface matter. Same formula, but $m \to m^*$ and relaxation time depends on impurity/phonon scattering.
+
+### Wiedemann-Franz Law
+
+Electrons carry both charge and heat. Ratio of thermal conductivity $\kappa$ to electrical conductivity $\sigma$ is universal:
+
+$$\frac{\kappa}{\sigma T} = \frac{\pi^2}{3}\left(\frac{k_B}{e}\right)^2 = L$$
+
+where $L = 2.44 \times 10^{-8}$ W·Ω/K² is the **Lorenz number**. Remarkably, this holds for most metals near room temperature.
+
+### Thermal Conductivity: Phonons vs. Electrons
+
+In metals: electrons dominate heat conduction.
+
+In insulators: phonons dominate. $\kappa$ peaks at intermediate $T$ — low $T$ has few phonons, high $T$ has heavy phonon scattering.
+
+### Limitations of Free Electron Model
+
+Gets the *qualitative* picture right for simple metals (Na, K, Al, Cu) but fails in detail: it predicts the same properties for all metals based just on density. Real metals differ because of:
+
+- Band structure (effective mass, anisotropy, multiple Fermi surface sheets)
+- Electron-electron interactions (Fermi liquid modifications)
+- Electron-phonon coupling
+- Disorder and impurities
+
+Progressive refinements (band theory, Landau Fermi liquid, density functional theory) address these.
+
+---
+
+## 7. Semiconductors and Devices
+
+The foundation of modern technology.
+
+### Intrinsic Semiconductors
+
+A **semiconductor** has a band gap $E_g$ small enough that at room temperature, some electrons are thermally excited across. Typical gaps:
+
+| Material | $E_g$ (eV) |
+|---|---|
+| InSb | 0.17 |
+| Ge | 0.67 |
+| Si | 1.12 |
+| GaAs | 1.42 |
+| AlAs | 2.16 |
+| GaN | 3.4 |
+| Diamond | 5.5 |
+
+Intrinsic (undoped) semiconductor: equal number of electrons in conduction band and holes in valence band. Carrier density:
+
+$$n_i = \sqrt{N_c N_v}\, e^{-E_g/(2k_BT)}$$
+
+exponentially small at low $T$, large at high $T$.
+
+### Doping
+
+Adding small amounts of impurity atoms (typically $10^{15}$ to $10^{19}$ cm$^{-3}$) dramatically changes the carrier density.
+
+- **n-type:** donor atoms (e.g., P in Si) contribute extra electrons to the conduction band
+- **p-type:** acceptor atoms (e.g., B in Si) leave holes in the valence band
+
+Carrier density is set by doping, not by thermal excitation across the full gap. This gives precise control over electronic properties — the basis of all semiconductor electronics.
+
+### The p-n Junction
+
+Join n-type and p-type material. At the junction:
+
+- Electrons from n-side diffuse to p-side; holes go the other way
+- They recombine, leaving behind charged dopant ions
+- A **depletion region** with built-in electric field forms
+- The built-in voltage opposes further diffusion, reaching equilibrium
+
+Apply forward bias: current flows. Reverse bias: no current (except small leakage). This is a **diode** — the simplest semiconductor device.
+
+### Transistors
+
+**Bipolar junction transistor (BJT):** three alternating doped regions (NPN or PNP). Small base current controls large collector current — current amplification.
+
+**MOSFET (metal-oxide-semiconductor field-effect transistor):** a gate voltage controls conductivity of a channel between source and drain. Extremely low power. The workhorse of integrated circuits. Every modern microprocessor contains billions of MOSFETs.
+
+### Optoelectronics
+
+**LEDs:** direct-gap semiconductors emit light when electrons and holes recombine. Energy of emitted photon ≈ band gap.
+
+**Semiconductor lasers:** LEDs with optical cavity and high current density — coherent light.
+
+**Solar cells:** reverse operation — incident photons create electron-hole pairs, separated by the p-n junction's field, producing current. Silicon is workhorse; perovskites are the rising alternative.
+
+**Photodetectors:** similar idea, optimized for light detection.
+
+### Heterostructures
+
+Stack different semiconductors with matched lattice constants. Create quantum wells (electrons confined in 2D), quantum wires (1D), quantum dots (0D — "artificial atoms"). Remarkable control over electron behavior.
+
+Example: the 2D electron gas in GaAs/AlGaAs heterostructures — the system where the fractional quantum Hall effect was discovered.
+
+### Moore's Law and Its Limits
+
+For decades, transistor count per chip doubled every ~2 years (Moore's law). Current transistors are ~3 nm in feature size, approaching atomic scales. Further shrinkage faces fundamental physics problems:
+
+- Quantum tunneling through thin oxide layers
+- Statistical fluctuations in dopant distributions
+- Power dissipation at high density
+- Heat dissipation
+
+Current research: vertical transistors (FinFETs), 2D material transistors, neuromorphic computing, quantum computing — each exploring alternatives to classical CMOS scaling.
+
+---
+
+## 8. Magnetism
+
+Why is iron magnetic? Basic quantum mechanics + statistical mechanics + interactions.
+
+### Atomic Magnetism
+
+An isolated atom with unpaired electrons has a magnetic moment, roughly:
+
+$$\vec\mu = -g\mu_B \vec S / \hbar$$
+
+where $\mu_B = e\hbar/(2m_e) \approx 9.27 \times 10^{-24}$ J/T is the **Bohr magneton** and $g \approx 2$ for the electron. Orbital angular momentum can also contribute.
+
+### Types of Magnetic Response
+
+**Diamagnetism:** materials with no unpaired electrons develop a weak magnetic moment *opposing* an applied field. Universal, usually tiny ($\chi \sim -10^{-5}$). Bismuth, water, organic molecules. Superconductors are perfect diamagnets ($\chi = -1$).
+
+**Paramagnetism:** unpaired electrons align partially with applied field. $\chi > 0$, temperature-dependent:
+
+$$\chi = \frac{C}{T}$$
+
+(**Curie law**). Typical for salts of transition metals and rare earths.
+
+**Ferromagnetism:** spontaneous alignment of spins below a critical temperature $T_C$ (**Curie temperature**). Iron, nickel, cobalt, various alloys.
+
+**Antiferromagnetism:** alternating alignment, net zero moment, but ordered. $\text{MnO}, \text{NiO}$, etc.
+
+**Ferrimagnetism:** like antiferromagnetic alignment, but unequal sublattice moments give net magnetization. Magnetite ($\text{Fe}_3\text{O}_4$).
+
+### The Heisenberg Model
+
+$$H = -J \sum_{\langle i,j\rangle} \vec S_i \cdot \vec S_j - g\mu_B B \sum_i S_i^z$$
+
+$J > 0$: ferromagnetic. $J < 0$: antiferromagnetic. Model of local moments coupled by exchange.
+
+### Mean Field Theory of Ferromagnetism
+
+Replace neighboring spins by their average:
+
+$$\langle S^z \rangle = \tfrac{1}{2}\tanh\left(\frac{g\mu_B(B + \lambda\langle S^z\rangle)}{2k_BT}\right)$$
+
+where $\lambda$ is a molecular field constant. Below $T_C$, spontaneous magnetization appears. Above $T_C$, Curie-Weiss paramagnetism:
+
+$$\chi = \frac{C}{T - T_C}$$
+
+### Magnons
+
+Low-energy excitations of a ferromagnet: spin waves (quantized: **magnons**). Spin wave dispersion (for small $k$):
+
+$$\omega(k) \propto k^2$$
+
+Quadratic for ferromagnets, linear for antiferromagnets. Magnons contribute to heat capacity at low $T$: $C \propto T^{3/2}$ (ferro), $C \propto T^3$ (antiferro).
+
+### Origin of Exchange
+
+Exchange is not literal magnetic dipole-dipole interaction (which is thousand times too weak). It's a consequence of Coulomb repulsion + Pauli exclusion: identical-spin electrons cannot be at the same place, so they have larger separation, reducing Coulomb energy. This favors aligned spins (ferromagnetic exchange) or anti-aligned (antiferromagnetic), depending on orbital structure.
+
+For itinerant electrons (metals), exchange comes from the **Stoner criterion**: ferromagnetism appears when the density of states at the Fermi level is large enough. Iron, nickel, cobalt satisfy it.
+
+### Domain Structure
+
+Bulk ferromagnets are typically divided into **domains** of different magnetization direction, separated by **domain walls**. Domains form to minimize the magnetic field energy outside the sample; domain walls have energy cost from exchange + anisotropy.
+
+Magnetization processes (hysteresis loops) reflect domain wall motion and reorientation.
+
+### Hysteresis
+
+Ferromagnets show **hysteresis**: the $M$ vs. $H$ curve depends on history. Area inside the loop = energy dissipated per cycle.
+
+- Small loop: **soft magnet** (transformers, cores). Easy to magnetize and demagnetize.
+- Large loop: **hard magnet** (permanent magnets, memory). Retains magnetization.
+
+Different applications need different loop shapes.
+
+### Applications
+
+- Permanent magnets (motors, loudspeakers, MRI)
+- Magnetic storage (hard drives, magnetic tape)
+- Transformers (power distribution)
+- Magnetic sensors
+- Spintronics (emerging technology using electron spin for computation)
+
+---
+
+## 9. Superconductivity
+
+Below a critical temperature, some materials conduct electricity with absolutely zero resistance and expel magnetic fields completely. Discovered in mercury by Kamerlingh Onnes in 1911. Explained microscopically by BCS in 1957. Still producing surprises.
+
+### Phenomenology
+
+**Zero resistance** below $T_c$. Persistent currents measured over years without decay — no upper bound on the coherence time.
+
+**Meissner effect** (1933): superconductors expel magnetic field from their interior ($B = 0$). Not just perfect conductivity (which would only prevent *changes* in $B$) — an active exclusion. This distinguishes superconductors from hypothetical perfect conductors.
+
+**Critical field $H_c$:** strong enough magnetic field destroys superconductivity. Two types:
+- **Type I:** abrupt transition at $H_c$. Pure elements (Hg, Pb, Sn).
+- **Type II:** two critical fields, $H_{c1} < H_{c2}$. Between them, magnetic flux penetrates in quantized "vortices." Alloys and most technologically useful superconductors.
+
+**Critical current $J_c$:** superconductivity fails above a critical current density.
+
+**Isotope effect:** $T_c$ depends on isotope mass: $T_c \propto M^{-1/2}$. Evidence for phonon-mediated pairing.
+
+### BCS Theory
+
+Bardeen, Cooper, Schrieffer (1957): a microscopic theory of conventional superconductivity.
+
+**Key insight (Cooper, 1956):** an arbitrarily weak attractive interaction between electrons near the Fermi surface binds them into pairs — **Cooper pairs** — regardless of strength. The Fermi sea is unstable to pairing.
+
+**Source of attraction:** phonon exchange. An electron distorts the lattice, attracting other electrons (positive ions). The retarded interaction creates an effective attraction between electrons.
+
+**The BCS ground state:** a coherent superposition of Cooper pairs. Schematically:
+
+$$|\text{BCS}\rangle = \prod_{\vec k} (u_{\vec k} + v_{\vec k} c^\dagger_{\vec k\uparrow} c^\dagger_{-\vec k\downarrow})|0\rangle$$
+
+Pairs of electrons with opposite momentum and opposite spin. All pairs share a single macroscopic wave function — a condensate.
+
+**Energy gap:**
+
+$$2\Delta$$
+
+It costs energy $2\Delta$ to break a Cooper pair. This gap in the single-particle excitation spectrum produces the zero-resistance (no low-energy excitations to scatter off).
+
+**BCS gap equation:**
+
+$$\Delta = V g(\epsilon_F)\int_0^{\omega_D} \frac{\Delta}{\sqrt{\epsilon^2 + \Delta^2}}\tanh\left(\frac{\sqrt{\epsilon^2+\Delta^2}}{2k_BT}\right) d\epsilon$$
+
+Self-consistent equation for the gap. Solutions exist below $T_c$.
+
+**Universal relation:**
+
+$$2\Delta(0) \approx 3.53 k_B T_c$$
+
+Holds for BCS superconductors, independent of material-specific details.
+
+### Ginzburg-Landau Theory
+
+A phenomenological theory (Ginzburg and Landau, 1950) written before BCS but consistent with it. Order parameter: complex field $\psi(\vec r)$ (related to the Cooper pair wave function).
+
+Free energy functional:
+
+$$F = \int d^3r\left[\frac{1}{2m^*}|(-i\hbar\nabla - 2eA)\psi|^2 + \alpha|\psi|^2 + \tfrac{\beta}{2}|\psi|^4 + \frac{B^2}{2\mu_0}\right]$$
+
+For $\alpha < 0$: Mexican hat, spontaneous symmetry breaking, $|\psi|^2 = -\alpha/\beta$ in the ground state.
+
+The same Mexican-hat structure as the Higgs! Superconductivity is a condensed-matter realization of the Higgs mechanism: the condensate "gives a mass" to the electromagnetic field inside the superconductor, leading to the Meissner effect (photons become massive, fields are screened).
+
+### Type II Superconductors and Vortices
+
+For type II, when the applied field exceeds $H_{c1}$, magnetic flux penetrates in **vortices** — tubes of flux, each carrying one flux quantum:
+
+$$\Phi_0 = \frac{h}{2e} \approx 2.07 \times 10^{-15}$$
+
+Wb. (Factor of 2 from Cooper pairing.) Vortices form a triangular lattice (Abrikosov lattice) and are directly imaged by various techniques.
+
+### High-$T_c$ Superconductors
+
+In 1986, Bednorz and Müller discovered superconductivity at 35 K in a copper oxide compound. Quickly pushed to 93 K (YBa$_2$Cu$_3$O$_7$, "YBCO") and beyond — above liquid nitrogen temperature.
+
+**Still not fully understood.** These materials are:
+- Layered (CuO$_2$ planes are the action)
+- Doped Mott insulators — parent compound is an antiferromagnet
+- Strongly correlated — electronic interactions dominate
+- $d$-wave pairing symmetry (not $s$-wave like BCS)
+- Show "strange metal" behavior above $T_c$
+
+Many proposed theories; no consensus.
+
+### Hydrogen-Rich Superconductors
+
+Since ~2015, superconductivity has been found at very high pressures in hydrogen-rich compounds: H$_3$S at 203 K, LaH$_{10}$ at 250 K, etc. These require megabar pressures — not practical, but interesting. Phonon-mediated BCS-like mechanism, predicted theoretically before experiment.
+
+### Josephson Effect
+
+At a tunneling junction between two superconductors:
+
+- **DC Josephson effect:** a current flows with zero voltage, $I = I_c \sin\phi$ where $\phi$ is the phase difference
+- **AC Josephson effect:** a voltage $V$ produces an oscillating current at frequency $f = 2eV/h$
+
+The frequency-voltage relation is so precise that it's used to define the volt. Also the basis of SQUIDs (ultra-sensitive magnetometers) and superconducting qubits.
+
+### Applications
+
+- MRI machines (superconducting magnets)
+- Particle accelerator magnets (LHC, SRF cavities)
+- Quantum computing (superconducting qubits)
+- Power transmission (limited commercial deployment)
+- Maglev trains
+
+Lossless power transmission on a global scale remains a dream, requiring room-temperature superconductors at atmospheric pressure. Not yet found.
+
+---
+
+## 10. Superfluidity and Quantum Fluids
+
+Superfluidity: flow with zero viscosity. A close cousin of superconductivity but in neutral (not charged) systems.
+
+### Helium-4: The Lambda Transition
+
+Liquid $^4$He below $T_\lambda = 2.17$ K becomes a superfluid.
+- Flows through tiny capillaries without resistance
+- Creeps up walls (Rollin film)
+- Second sound (temperature waves propagate)
+
+$^4$He atoms are bosons. Superfluidity is a form of Bose-Einstein condensation — but strongly interacting (unlike the weakly-interacting atomic gas BECs).
+
+### Two-Fluid Model
+
+Below $T_\lambda$: superfluid fraction $\rho_s$ + normal fluid fraction $\rho_n$, with $\rho_s + \rho_n = \rho$. $\rho_s/\rho$ grows from 0 at $T_\lambda$ to 1 at $T = 0$.
+
+The superfluid flows without dissipation; the normal fluid behaves as usual.
+
+### Helium-3: Fermion Superfluidity
+
+$^3$He atoms are fermions. At $T \sim 2$ mK (much colder!) they undergo a BCS-like transition to a superfluid state. The pairing is $p$-wave (not $s$-wave) — Cooper pairs with nonzero orbital angular momentum. Multiple phases (A, B) with rich topological structure.
+
+### Atomic BECs
+
+Since 1995, gases of ultracold alkali atoms (Rb, Na, Li, K, Cs, etc.) have been Bose-condensed at temperatures ~100 nK. Remarkably clean system to study:
+- BEC ground state
+- Vortices and quantum turbulence
+- BEC-BCS crossover (tuning interactions from attractive to repulsive)
+- Optical lattices (simulate condensed matter systems with atoms)
+
+Ultracold atoms is now a major subfield, bridging AMO, condensed matter, and quantum information.
+
+---
+
+## 11. Fermi Liquid Theory and Beyond
+
+### The Puzzle
+
+A metal's electrons interact strongly via Coulomb forces. Why does the free-electron model work at all?
+
+### Landau's Answer
+
+Landau (1956): a system of interacting fermions has low-energy excitations that look like free fermions with modified properties ("quasiparticles"). This is **Fermi liquid theory**.
+
+Near the Fermi surface:
+- Quasiparticle effective mass $m^*$ (can be renormalized from $m$)
+- Quasiparticle lifetime $\tau$ diverges as $\tau \propto 1/(T^2 + (\omega-\omega_F)^2)$ at the Fermi surface
+- Landau parameters quantify residual interactions
+
+Why it works: Pauli exclusion severely restricts phase space for scattering near the Fermi surface. Interactions dress the electrons but don't destroy the single-particle picture.
+
+### Fermi Liquid Properties
+
+All the same relations as free electrons, with renormalized parameters:
+
+- Linear-in-$T$ heat capacity
+- Temperature-independent magnetic susceptibility
+- Quadratic-in-$T$ resistivity from electron-electron scattering
+
+Confirmed in most metals, cold $^3$He, some (but not all) superconductors above $T_c$.
+
+### Breakdown: Non-Fermi Liquids
+
+Some materials violate Fermi liquid behavior:
+
+**Strange metals** (high-$T_c$ cuprates above $T_c$): resistivity linear in $T$, not quadratic. Up to high temperatures. No Fermi-liquid quasiparticles.
+
+**Luttinger liquids** (1D electron systems): genuinely different low-energy theory. Spin and charge separate into distinct bosonic excitations.
+
+**Heavy fermion systems** (some rare earth compounds): extremely large $m^*$ at low $T$, with puzzling behavior near critical points.
+
+Non-Fermi liquids are a major area of active research and one of the frontiers of theoretical condensed matter physics.
+
+---
+
+## 12. Topological Phases of Matter
+
+A revolution in condensed matter theory. States of matter characterized not by symmetry breaking (like ferromagnetism) but by *topology* — global properties of the wave function that are robust to local perturbations.
+
+### The Quantum Hall Effect
+
+Put a 2D electron gas (e.g., at a semiconductor interface) in a strong perpendicular magnetic field. Classically, you get the Hall effect: a transverse voltage proportional to current.
+
+Quantum mechanically (Von Klitzing, 1980): at low temperatures and high fields, the Hall conductance is quantized:
+
+$$\sigma_{xy} = \nu \frac{e^2}{h}, \quad \nu = 1, 2, 3, \ldots$$
+
+This quantization is *ridiculously* precise — to better than one part in $10^9$ — and *material-independent*. It's used to define the ohm metrologically.
+
+### Topology of the Quantization
+
+The integer $\nu$ is a **topological invariant** of the occupied bands (the **Chern number**). Topological invariants are integers that cannot change under smooth deformations of the Hamiltonian — only through a phase transition where the gap closes.
+
+That's the source of the quantization's precision and universality: it's an integer, protected by topology.
+
+### The Fractional Quantum Hall Effect
+
+At even stronger fields and cleaner samples, $\sigma_{xy} = \nu e^2/h$ with $\nu = 1/3, 2/5, 5/2, \ldots$ — *fractional* values.
+
+These states cannot be understood from non-interacting electrons. They're genuinely many-body topological states. Fractionalization: the quasiparticles carry fractional electric charge ($e/3, e/5, \ldots$) and — even more strangely — **anyonic** statistics (neither bosonic nor fermionic).
+
+Some fractional quantum Hall states (like $\nu = 5/2$) may host **non-Abelian anyons** — candidates for fault-tolerant topological quantum computation.
+
+### Topological Insulators
+
+In 2005-2007, theorists predicted and experimentalists found a new class of materials: topological insulators. Bulk is an insulator, but the surface (or edge) has metallic conducting states.
+
+These edge states are topologically protected — you cannot remove them without closing the bulk gap. They're robust to disorder. Spin-momentum locking: at each point on the edge, electrons with opposite momenta have opposite spins.
+
+Examples: $\text{Bi}_2\text{Se}_3$, $\text{Bi}_2\text{Te}_3$, HgTe quantum wells.
+
+### Weyl and Dirac Semimetals
+
+Beyond insulators: topological semimetals with *point degeneracies* in the bulk band structure. Near these points, the electrons behave as relativistic massless fermions — **Weyl fermions** (chiral) or **Dirac fermions** (non-chiral).
+
+TaAs, Cd$_3$As$_2$, and others host these states. The Weyl fermions of particle physics (predicted in 1929 but never observed as elementary particles) show up as emergent quasiparticles in these condensed matter systems.
+
+### Why This Matters
+
+Topology gives a completely new way to classify phases of matter — one that goes beyond Landau's symmetry-breaking paradigm. Properties protected by topology are robust: they don't require fine-tuning and survive disorder. This makes them potentially useful for quantum technology (topological qubits).
+
+Whole classification schemes of topological phases have been developed, connecting condensed matter to high-energy theory, K-theory, and topology.
+
+---
+
+## 13. Strongly Correlated Systems
+
+Systems where electron-electron interactions are too strong to treat perturbatively. Mean-field theories and Fermi liquid theory often fail. Some of the hardest problems in physics live here.
+
+### The Mott Insulator
+
+A half-filled band should be a metal (band theory). But strong Coulomb repulsion between electrons on the same site can prevent them from hopping — resulting in an insulator. This is a **Mott insulator**.
+
+Hubbard model:
+
+$$H = -t\sum_{\langle i,j\rangle,\sigma}(c^\dagger_{i\sigma}c_{j\sigma} + h.c.) + U\sum_i n_{i\uparrow}n_{i\downarrow}$$
+
+$t$: hopping. $U$: on-site Coulomb repulsion. When $U/t$ is small, the system is metallic; when large and at half-filling, it's a Mott insulator.
+
+Despite its simplicity, the Hubbard model has not been solved exactly in 2D or higher. It's one of the canonical unsolved models in condensed matter theory.
+
+### Cuprates and High-$T_c$
+
+The parent compounds of cuprate superconductors (like La$_2$CuO$_4$, YBa$_2$Cu$_3$O$_6$) are Mott insulators. Doping introduces mobile carriers. At intermediate doping, they become superconducting at temperatures far higher than conventional BCS theory predicts. Nobody fully understands the mechanism, despite 40 years of work.
+
+The cuprate phase diagram has:
+- Antiferromagnetic Mott insulator (undoped)
+- Strange metal (highly doped, not Fermi liquid)
+- Pseudogap phase (partial gap above $T_c$)
+- d-wave superconductor
+- Fermi liquid (heavily overdoped)
+
+Understanding this diagram is one of the most important problems in condensed matter physics.
+
+### Heavy Fermions
+
+Compounds with $f$-electrons (rare earths, actinides) can have quasiparticles with effective masses up to ~1000 $m_e$. Examples: CeAl$_3$, UPt$_3$, URu$_2$Si$_2$.
+
+Many exhibit unconventional superconductivity and quantum critical behavior — non-Fermi liquid responses near $T = 0$ critical points.
+
+### Quantum Magnetism
+
+Frustrated magnets (e.g., on triangular or kagome lattices) can fail to order even at $T = 0$, instead forming **quantum spin liquids** — highly entangled states with emergent gauge fields and fractionalized excitations.
+
+Experimentally candidate materials exist (herbertsmithite, some organic salts) but unambiguous identification is difficult.
+
+### Numerical Methods
+
+Strongly correlated systems generally can't be solved analytically. Numerical tools include:
+
+- **Quantum Monte Carlo:** simulates path integrals; works well for bosons, suffers from the sign problem for fermions
+- **Density Matrix Renormalization Group (DMRG):** powerful for 1D, extended to 2D via tensor networks
+- **Dynamical Mean Field Theory (DMFT):** treats local correlations exactly, mean-field for non-local
+- **Neural network quantum states:** recent entry; uses machine learning to represent wave functions
+
+Real progress often requires combining methods. Computational condensed matter is a growing enterprise.
+
+---
+
+## 14. Frontiers and Open Problems
+
+### Unsolved Fundamental Problems
+
+**High-$T_c$ superconductivity.** No accepted microscopic theory despite 40 years of work. Central question: what's the pairing mechanism? Related question: nature of the strange metal phase.
+
+**Quantum spin liquids.** Experimental identification remains difficult. What are the right physical signatures?
+
+**The sign problem.** A technical obstacle to simulating fermions at finite density. Blocks progress in nuclear matter, QCD phase diagram, and electronic structure of many materials.
+
+**Nature of the glass transition.** Why does supercooled liquid slow down millions of times faster than a crystal would freeze? Not a true phase transition, but something. Frontier of soft matter / statistical physics.
+
+### Active Research Areas
+
+**Topological materials.** New topological phases are discovered regularly. Connection to mathematics (K-theory, homotopy) is deep.
+
+**Twistronics.** Stacking 2D materials like graphene at small twist angles creates flat bands, strong correlations, and superconductivity at precisely magic angles. Twisted bilayer graphene, ongoing research.
+
+**Quantum simulation.** Using cold atoms, trapped ions, or superconducting qubits to simulate condensed matter Hamiltonians that classical computers can't handle.
+
+**Hybrid topological superconductors.** Engineering systems with Majorana zero modes for topological quantum computation. Microsoft, Google, and others pursuing.
+
+**Moiré materials.** More generally, exploring many-body physics in engineered superlattices.
+
+**Quantum information in condensed matter.** Entanglement entropy as a characterization of phases, area laws, topological entanglement, quantum error correction in natural systems.
+
+**Machine learning for materials.** Discovering new materials, solving strongly correlated systems, finding effective Hamiltonians.
+
+### Technological Frontiers
+
+- Room-temperature superconductors at atmospheric pressure
+- Topological quantum computers
+- Neuromorphic computing hardware
+- High-efficiency thermoelectric materials
+- Spintronic memory and logic
+- New battery materials (solid-state, sodium-ion)
+- High-efficiency photovoltaics
+
+Condensed matter physics is where most physics PhDs find industry jobs, and where fundamental science most directly drives technology.
+
+---
+
+## Appendix: Formulas and Reference Data
+
+### Useful Constants
+
+- $k_B = 1.381 \times 10^{-23}$ J/K
+- $\mu_B = 9.274 \times 10^{-24}$ J/T
+- $\Phi_0 = h/(2e) \approx 2.07 \times 10^{-15}$ Wb (flux quantum)
+- $R_K = h/e^2 \approx 25.8$ kΩ (von Klitzing constant)
+- $a_0 = 5.29 \times 10^{-11}$ m (Bohr radius)
+
+### Key Formulas
+
+**Bloch theorem:** $\psi_{n\vec k}(\vec r) = e^{i\vec k \cdot \vec r} u_{n\vec k}(\vec r)$
+
+**Tight-binding 1D:** $\epsilon(k) = \epsilon_0 - 2t\cos(ka)$
+
+**Free electron Fermi energy:** $\epsilon_F = \hbar^2(3\pi^2 n)^{2/3}/(2m)$
+
+**Sommerfeld heat capacity:** $C = \gamma T$, $\gamma = \pi^2 k_B^2 g(\epsilon_F)/3$
+
+**Debye $T^3$ law:** $C_V \propto T^3$ at $T \ll \Theta_D$
+
+**Dulong-Petit:** $C_V = 3Nk_B$ at $T \gg \Theta_D$
+
+**Drude conductivity:** $\sigma = ne^2\tau/m$
+
+**Wiedemann-Franz:** $\kappa/(\sigma T) = \pi^2 k_B^2/(3e^2)$
+
+**BCS gap at $T=0$:** $2\Delta \approx 3.53 k_B T_c$
+
+**BCS critical temperature:** $k_B T_c \approx 1.13 \hbar\omega_D \exp(-1/\lambda)$ where $\lambda = V g(\epsilon_F)$
+
+**London penetration depth:** $\lambda_L = \sqrt{m/(\mu_0 n_s e^2)}$
+
+**Coherence length:** $\xi = \hbar v_F/(\pi\Delta)$
+
+**Curie law:** $\chi = C/T$
+
+**Curie-Weiss law:** $\chi = C/(T - T_C)$
+
+**Quantum Hall:** $\sigma_{xy} = \nu e^2/h$
+
+### Typical Values
+
+**Fermi temperatures (metals):**
+- Cu: $8.2 \times 10^4$ K
+- Al: $1.4 \times 10^5$ K
+- Na: $3.8 \times 10^4$ K
+
+**Debye temperatures:**
+- Diamond: 2230 K
+- Si: 645 K
+- Cu: 343 K
+- Pb: 105 K
+
+**Superconducting $T_c$ (at atmospheric pressure):**
+- Al: 1.18 K
+- Pb: 7.2 K
+- Nb: 9.3 K
+- Nb$_3$Sn: 18.3 K
+- MgB$_2$: 39 K
+- YBa$_2$Cu$_3$O$_7$: 93 K
+- HgBa$_2$Ca$_2$Cu$_3$O$_8$: 133 K (record at ambient pressure)
+
+**Curie temperatures:**
+- Fe: 1043 K
+- Co: 1388 K
+- Ni: 627 K
+- Gd: 293 K
+
+**Band gaps (eV, at 300K):**
+- Si: 1.12
+- Ge: 0.66
+- GaAs: 1.42
+- GaN: 3.4
+- Diamond: 5.5
+
+### Further Reading
+
+**Introductory:**
+- Kittel, *Introduction to Solid State Physics*
+- Ashcroft & Mermin, *Solid State Physics* (the classic)
+
+**Graduate:**
+- Marder, *Condensed Matter Physics*
+- Pavarini, Koch et al. (eds.), *The LDA+DMFT approach*
+
+**Specialized:**
+- Tinkham, *Introduction to Superconductivity*
+- Coleman, *Introduction to Many-Body Physics*
+- Fradkin, *Field Theories of Condensed Matter Physics*
+- Sachdev, *Quantum Phase Transitions*
+- Bernevig, *Topological Insulators and Superconductors*
+
+---
+
+## Closing Note
+
+Condensed matter physics is enormous — the vast majority of practicing physicists work in some corner of it, and this document barely scratches the surface of any given topic. What I've tried to convey:
+
+- **Band theory** gives you metals, insulators, and semiconductors — the materials running civilization.
+- **Phonons and electron-phonon interactions** explain heat, sound, and conventional superconductivity.
+- **Symmetry breaking** gives you magnetism, superconductivity, and superfluidity — all of which share the same mathematical structure as the Higgs mechanism in particle physics.
+- **Fermi liquid theory** explains why free-electron models work, and its breakdown (strange metals, Luttinger liquids) is the frontier.
+- **Topological matter** is a genuinely new kind of classification, one that goes beyond symmetry breaking and produces materials with robust, protected properties.
+- **Strongly correlated systems** (high-$T_c$, heavy fermions, quantum magnets) contain many of physics's current great unsolved problems.
+
+The deep theme: interactions + quantum mechanics + statistics → emergence of qualitatively new phenomena that have no counterpart in the underlying particles.
+
+### Connections to the Rest of the Series
+
+This document draws on everything we've built:
+
+- **Quantum mechanics** (Bloch states, perturbation theory, many-body wave functions)
+- **Statistical mechanics** (distributions, ensembles, phase transitions, critical phenomena)
+- **Classical field theory** (Landau-Ginzburg, order parameters, symmetry breaking)
+- **Relativity** (relativistic dispersions in Dirac/Weyl semimetals)
+
+And it feeds forward into quantum field theory: many of the methods (Green's functions, Feynman diagrams, renormalization group) were developed for condensed matter or adapted from QFT and flow both ways.
+
+### What's Next
+
+You now have twelve reference documents. The natural final entry in the pre-QFT roadmap is — QFT itself. Specifically, starting with **canonical quantization of the scalar field**, as you suggested way back. With everything you now have:
+
+- Classical field theory (know how to write $\mathcal{L}$)
+- Quantum mechanics (operators, commutators, Hilbert space)
+- Statistical mechanics (partition functions, ensembles)
+- Condensed matter (many-body concepts, Green's functions context)
+- General relativity (curved spacetime — for QFT in curved backgrounds, later)
+
+...the scalar field quantization will actually make sense rather than feeling like an arbitrary procedure.
+
+Whenever you're ready. You've built a genuinely impressive foundation.
+

@@ -5,8 +5,8 @@ import { getCollection } from 'astro:content';
 const methodEssays = await getCollection('essays', ({ data }) => data.subsection === 'method-essay');
 methodEssays.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 
-const essayOrder = ['thesis', 'protocol', 'failure-modes', 'calibration', 'for-other-generalists', 'roles-and-credits'];
-methodEssays.sort((a, b) => essayOrder.indexOf(a.slug) - essayOrder.indexOf(b.slug));
+const essayOrder = ['method-thesis', 'method-protocol', 'failure-modes', 'calibration', 'for-other-generalists', 'roles-and-credits'];
+methodEssays.sort((a, b) => essayOrder.indexOf(a.id) - essayOrder.indexOf(b.id));
 ---
 
 <Base
