@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Roadmap"
+  description="The Paper 2 research plan, made public on May 11, 2026."
+>
+  <main class="shell">
+    <header class="page-header">
+      <p class="header-eyebrow">The Lab</p>
+      <h1 class="header-title">Roadmap.</h1>
+      <p class="header-meta">The Paper 2 plan, made public on May 11, 2026.</p>
+    </header>
+
+    <article class="article-body">
+      <p>Paper 2 of this project extends the framework of Paper 1 to evaporating black holes, with the goal of producing a quantitative prediction about how observer complementarity behaves at the Page-time transition. The plan below is the public version of the research program. The reasons to publish it openly are twofold: it commits us to a specific plan that the community can evaluate, and it lets other researchers see what we are working on so that, if they want to attack the same questions, they can either coordinate or compete openly rather than independently rediscovering the same ground.</p>
+
+      <p>The plan is current as of May 11, 2026. It will be updated as phases complete, as results emerge, and as the community responds to Paper 1. Updates will carry their dates. The original plan stays in the record.</p>
+
+      <h2 class="article-subhead">The question Paper 2 addresses</h2>
+
+      <p>The Page curve for evaporating black holes says that the entropy of Hawking radiation rises, peaks at half the evaporation time, and decreases back to zero by the time the black hole has fully evaporated. The shape of the curve is a quantitative statement about how information is preserved through evaporation.</p>
+
+      <p>The two-observer disagreement results of Paper 1 are quantitative statements about how observers with different access to the underlying quantum state will see different reconstructed entropies of bulk states encoded through non-isometric codes. The framework of Paper 1 was developed for static codes; the framework relevant for evaporating black holes is time-dependent (the encoding changes as the black hole evaporates) and finite-temperature (the radiation has a thermal character).</p>
+
+      <p>The question Paper 2 asks: how does the integer gap, and the two scaling exponents, behave under time evolution through the Page transition? Does the integer gap persist? Do the exponents change continuously? Is there a phase-transition-like feature at the Page time?</p>
+
+      <h2 class="article-subhead">Phase plan</h2>
+
+      <div class="phase-list">
+        <div class="phase-item">
+          <span class="phase-num">Phase 8</span>
+          <div class="phase-body">
+            <h3 class="phase-title">Rank-r interpolation scan</h3>
+            <p>Compute the entropy disagreement as a function of the bulk-state rank r continuously between r = 1 (product) and r = d<sub>eff</sub> (Haar). The prediction from Paper 1 is a smooth interpolation between the -1/2 and -3/2 exponents. A phase transition at some critical rank would be a surprise and an interesting physics statement.</p>
+            <p class="phase-meta">Expected: within one week of May 11, 2026.</p>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <span class="phase-num">Phase 9</span>
+          <div class="phase-body">
+            <h3 class="phase-title">Time-dependent encoding</h3>
+            <p>Extend the verified backend to time-dependent AEHPV codes, with the encoding map evolving according to a specified model of black hole evaporation. Compute the static result of Paper 1 in this time-dependent setting at several time slices. Verify that the static result is reproduced when the time-dependent effects are turned off.</p>
+          </div>
+        </div>
+
+        <div class="phase-item">
+          <span class="phase-num">Phase 10</span>
+          <div class="phase-body">
+            <h3 class="phase-title">Page-time scan</h3>
+            <p>Compute the two-observer entropy disagreement as a function of the evaporation time, with the encoding map at each time slice determined by the time-dependent extension of Phase 9. Look for a change in behavior at or near the Page time.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-rule"><div class="section-rule-line"></div></div>
+      <p class="article-note">This roadmap is updated as phases complete. Each update carries a date. The original plan above stays in the record unchanged.</p>
+    </article>
+  </main>
+</Base>
