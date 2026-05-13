@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const essays = await getCollection('essays', ({ data }) => data.subsection === 'method-essay');
+  return essays.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, date } = entry.data;
+
+const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title={title}>
+  <main class="shell">
+    <header class="running-head">
+      <span class="rh-mark">The Method</span>
+    </header>
+
+    <article class="article-body">
+      <header>
+        <h1 class="article-title">{title}</h1>
+        <div class="article-byline">
+          <span class="article-byline-name">Adam Cagle</span>
+          <time class="article-byline-meta" datetime={date.toISOString()}>{dateStr}</time>
+        </div>
+      </header>
+
+      <div class="article-open-ornament"></div>
+      <Content />
+      <div class="end-ornament"></div>
+    </article>
+  </main>
+</Base>

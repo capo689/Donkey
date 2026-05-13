@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const results = await getCollection('results');
+  return results.map((entry) => ({
+    params: { result: String(entry.data.resultNumber) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, resultNumber, scaling, status, summary } = entry.data;
+---
+
+<Base title={`Result ${resultNumber}: ${title}`} description={summary}>
+  <!-- Layout: ResultCard.astro (from mockup_5_result_iv.html) -->
+  <main class="shell">
+    <nav class="breadcrumb">
+      <a href="/paper">The Paper</a> &rsaquo; Result {resultNumber}
+    </nav>
+
+    <header class="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Result {resultNumber}</p>
+        <h1 class="hero-headline">{title}</h1>
+        {scaling && <p class="hero-numeral">{scaling}</p>}
+        {status === 'empirical' && <span class="hero-tags">Empirical &middot; Open</span>}
+      </div>
+    </header>
+
+    <div class="two-voice">
+      <div class="voice-col paper-voice">
+        <p class="voice-label">Paper Voice</p>
+        <div class="voice-text">
+          <Content />
+        </div>
+      </div>
+      <div class="voice-col donkey-voice">
+        <p class="voice-label">Donkey Voice</p>
+        <div class="voice-text">
+          <!-- Donkey voice prose loaded from copy deck in Step 6 -->
+        </div>
+      </div>
+    </div>
+
+    <nav class="prev-next">
+      {resultNumber > 1 && <a href={`/paper/${resultNumber - 1}`} class="nav-btn">Previous result</a>}
+      {resultNumber < 5 && <a href={`/paper/${resultNumber + 1}`} class="nav-btn">Next result</a>}
+    </nav>
+  </main>
+</Base>

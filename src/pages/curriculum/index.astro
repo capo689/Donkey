@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const stations = await getCollection('curriculum');
+stations.sort((a, b) => a.data.stationNumber - b.data.stationNumber);
+---
+
+<Base
+  title="The Curriculum"
+  description="38 physics documents from Newton to quantum gravity. The full learning path, visualized as a subway map."
+>
+  <!-- Layout: SubwayMap.astro (from mockup_3_map.html) — full interactive map in Step 7 -->
+  <main class="shell">
+    <header class="article-byline">
+      <p class="rh-mark">The Curriculum</p>
+    </header>
+    <div class="map-wrap">
+      <!-- Subway map rendered here in Step 7 -->
+      <p class="article-preamble">38 documents. Physics 101 through quantum gravity. April 23 to May 10, 2026.</p>
+      <nav class="index-grid">
+        {stations.map((s) => (
+          <a href={`/curriculum/${s.slug}`} class="station-link">
+            <span class="station-numeral">{String(s.data.stationNumber).padStart(2, '0')}</span>
+            <span class="station-label">{s.data.classReportTitle}</span>
+          </a>
+        ))}
+      </nav>
+    </div>
+  </main>
+</Base>

@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const methodEssays = await getCollection('essays', ({ data }) => data.subsection === 'method-essay');
+methodEssays.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const essayOrder = ['thesis', 'protocol', 'failure-modes', 'calibration', 'for-other-generalists', 'roles-and-credits'];
+methodEssays.sort((a, b) => essayOrder.indexOf(a.slug) - essayOrder.indexOf(b.slug));
+---
+
+<Base
+  title="The Method"
+  description="What we did, how we did it, where it worked, and where it did not."
+>
+  <main class="shell">
+    <header class="article-byline">
+      <p class="rh-mark">The Method</p>
+      <h1 class="article-title">The Method</h1>
+      <p class="article-preamble">What we did, how we did it, where it worked, and where it did not. Six essays.</p>
+    </header>
+
+    <nav class="related">
+      <a href="/method/thesis" class="related-entry">
+        <span class="related-title">What we did, and what we are claiming</span>
+        <span class="related-sub">The thesis</span>
+      </a>
+      <a href="/method/protocol" class="related-entry">
+        <span class="related-title">The protocol</span>
+        <span class="related-sub">Six operating principles</span>
+      </a>
+      <a href="/method/failure-modes" class="related-entry">
+        <span class="related-title">Failure modes</span>
+      </a>
+      <a href="/method/calibration" class="related-entry">
+        <span class="related-title">The calibration log</span>
+      </a>
+      <a href="/method/for-other-generalists" class="related-entry">
+        <span class="related-title">If you want to try this</span>
+        <span class="related-sub">For other generalists</span>
+      </a>
+      <a href="/method/roles-and-credits" class="related-entry">
+        <span class="related-title">Roles and credits</span>
+      </a>
+    </nav>
+  </main>
+</Base>

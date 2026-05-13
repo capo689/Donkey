@@ -1,0 +1,108 @@
+/* =====================================================
+   THE DONKEY ON THE EDGE / Vol. I, No. I
+   Presented as a 19th-century scientific journal.
+   Type: IM Fell DW Pica + Old Standard TT + JetBrains Mono
+   ===================================================== */
+
+:root {
+  /* Aged paper palette */
+  --paper: #EFE5CC;
+  --paper-deep: #E2D5B2;
+  --paper-stain: rgba(120, 85, 40, 0.05);
+
+  /* Iron-gall ink (warm dark, slightly faded) */
+  --ink: #211810;
+  --ink-2: #4E3B26;
+  --ink-3: #8A7553;
+
+  /* Rubrication red (deep oxblood, period appropriate) */
+  --red: #8A1818;
+  --red-deep: #5C0E0E;
+  --red-soft: rgba(138, 24, 24, 0.18);
+
+  /* Rules */
+  --rule: #B5A37C;
+  --rule-faint: #CFC1A0;
+
+  /* Type */
+  --display: 'IM Fell DW Pica', 'Goudy Old Style', serif;
+  --display-sc: 'IM Fell DW Pica SC', 'IM Fell DW Pica', serif;
+  --body: 'Old Standard TT', 'Cardo', Georgia, serif;
+  --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+
+  /* Scale */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+  --s9: 96px; --s10: 128px; --s11: 192px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  font-feature-settings: "onum" 1, "kern" 1, "liga" 1;
+}
+
+/* Aged paper texture: SVG noise + radial stains */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(ellipse at 12% 18%, var(--paper-stain) 0%, transparent 35%),
+    radial-gradient(ellipse at 88% 82%, var(--paper-stain) 0%, transparent 40%),
+    radial-gradient(ellipse at 65% 35%, rgba(120,85,40,0.035) 0%, transparent 25%),
+    radial-gradient(ellipse at 25% 75%, rgba(120,85,40,0.04) 0%, transparent 30%);
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.13 0 0 0 0 0.09 0 0 0 0 0.06 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.35'/></svg>");
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* =====================================================
+   Animation
+   ===================================================== */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* =====================================================
+   Responsive — base overrides
+   ===================================================== */
+@media (max-width: 880px) {
+  body { /* inherited font-size unchanged at this breakpoint */ }
+}
+
+@media (max-width: 540px) {
+  body { font-size: 16.5px; }
+}
