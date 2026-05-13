@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('calibration');
+entries.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+---
+
+<Base
+  title="The Calibration Log"
+  description="A structured record of predictions made and outcomes observed during the research program."
+>
+  <!-- Layout: StructuredData.astro (from mockup_8_calibration_log.html) -->
+  <main class="shell">
+    <header class="page-header">
+      <p class="header-eyebrow">The Method</p>
+      <h1 class="header-title">The Calibration Log</h1>
+      <p class="header-meta">A structured record of predictions made and outcomes observed. Probability estimates given before each phase; outcomes recorded after.</p>
+    </header>
+
+    <div class="update-note">Last updated May 2026.</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="col-date">Date</th>
+          <th class="col-pred">Prediction</th>
+          <th class="col-prob">Prob. before</th>
+          <th class="col-outcome">Outcome</th>
+          <th class="col-notes">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {entries.map((e) => (
+          <tr>
+            <td class="col-date">{e.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
+            <td class="col-pred">{e.data.prediction}</td>
+            <td class="col-prob">
+              {e.data.probabilityBefore !== undefined && (
+                <div class="prob-gauge">
+                  <div class="prob-bar-track">
+                    <div class="prob-bar-fill" style={`width: ${e.data.probabilityBefore * 100}%`}></div>
+                  </div>
+                  <span class="prob-value">{Math.round(e.data.probabilityBefore * 100)}%</span>
+                </div>
+              )}
+            </td>
+            <td class="col-outcome">
+              <span class={`verdict ${e.data.outcome}`}>{e.data.outcome}</span>
+            </td>
+            <td class="col-notes">{e.data.notes}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </main>
+</Base>

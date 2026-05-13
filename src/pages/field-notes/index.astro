@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const essays = await getCollection('essays');
+const workPosts = essays.filter(e => e.data.subsection === 'work-post').sort((a, b) => (a.data.workPhase ?? 0) - (b.data.workPhase ?? 0));
+const standalonePosts = essays.filter(e => e.data.subsection === 'standalone').sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const referencePosts = essays.filter(e => e.data.subsection === 'reference');
+---
+
+<Base
+  title="Field Notes"
+  description="The record of the work. Class reports, research phase posts, and essays on what happened and how."
+>
+  <main class="shell">
+    <header class="article-byline">
+      <p class="rh-mark">Field Notes</p>
+      <h1 class="article-title">Field Notes</h1>
+      <p class="article-preamble">The record of the work. Forty class reports, ten research phase posts, and essays on method and meaning.</p>
+    </header>
+
+    <section>
+      <h2 class="section-head">The Work</h2>
+      <p class="article-preamble">Ten posts documenting the research from picking the problem to submitting to arXiv.</p>
+      <nav class="related">
+        {workPosts.map((e) => (
+          <a href={`/field-notes/${e.slug}`} class="related-entry">
+            <span class="related-num">Phase {e.data.workPhase}</span>
+            <span class="related-title">{e.data.title}</span>
+          </a>
+        ))}
+      </nav>
+    </section>
+
+    <section>
+      <h2 class="section-head">Essays</h2>
+      <nav class="related">
+        {standalonePosts.map((e) => (
+          <a href={`/field-notes/${e.slug}`} class="related-entry">
+            <span class="related-title">{e.data.title}</span>
+          </a>
+        ))}
+      </nav>
+    </section>
+
+    <section>
+      <h2 class="section-head">Reference</h2>
+      <nav class="related">
+        {referencePosts.map((e) => (
+          <a href={`/field-notes/${e.slug}`} class="related-entry">
+            <span class="related-title">{e.data.title}</span>
+          </a>
+        ))}
+      </nav>
+    </section>
+
+    <section>
+      <h2 class="section-head">Class Reports</h2>
+      <p>All 38 class reports are also in <a href="/curriculum">The Curriculum</a>, organized as a subway map.</p>
+    </section>
+  </main>
+</Base>

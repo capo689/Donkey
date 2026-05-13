@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const stations = await getCollection('curriculum');
+  return stations.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const { title, stationNumber, classReportTitle, date, backdated, prerequisites, extendsTo, line } = entry.data;
+
+const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title={classReportTitle} description={`Class Report ${stationNumber}: ${classReportTitle}`}>
+  <!-- Layout: ClassReport.astro (from mockup_6_class_report.html) -->
+  <main class="shell">
+    <header class="station-identity">
+      <p class="station-eyebrow">Class Report</p>
+      <span class="station-numeral">{String(stationNumber).padStart(2, '0')}</span>
+      <h1 class="station-title">{classReportTitle}</h1>
+      <p class="station-subtitle">{title}</p>
+      <p class="station-line-name">{line}</p>
+    </header>
+
+    {backdated && (
+      <p class="backdating">Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.</p>
+    )}
+
+    {prerequisites.length > 0 && (
+      <div class="prereq-col">
+        <p class="prereq-col-head">Prerequisites</p>
+        {prerequisites.map((n: number) => (
+          <a href={`/curriculum/station-${String(n).padStart(2, '0')}`} class="prereq-item">
+            <span class="prereq-number">{String(n).padStart(2, '0')}</span>
+          </a>
+        ))}
+      </div>
+    )}
+
+    <article class="article-body main-col">
+      <Content />
+    </article>
+
+    {extendsTo.length > 0 && (
+      <div class="connections">
+        <p class="connections-head">Extends to</p>
+        <div class="connections-grid">
+          {extendsTo.map((n: number) => (
+            <a href={`/curriculum/station-${String(n).padStart(2, '0')}`} class="conn-item">
+              <span class="prereq-number">{String(n).padStart(2, '0')}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
+  </main>
+</Base>

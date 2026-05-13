@@ -1,7 +1,8 @@
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const curriculum = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/curriculum' }),
   schema: z.object({
     title: z.string(),
     stationNumber: z.number(),
@@ -22,7 +23,7 @@ const curriculum = defineCollection({
 });
 
 const essays = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/essays' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -41,7 +42,7 @@ const essays = defineCollection({
 });
 
 const results = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/results' }),
   schema: z.object({
     title: z.string(),
     resultNumber: z.number().min(1).max(5),
@@ -52,7 +53,7 @@ const results = defineCollection({
 });
 
 const calibration = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/calibration' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -66,7 +67,7 @@ const calibration = defineCollection({
 });
 
 const phaseMemos = defineCollection({
-  type: 'content',
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/phase-memos' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),

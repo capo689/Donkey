@@ -1,17 +1,174 @@
 ---
-
+import Base from '../layouts/Base.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  title="Home"
+  description="A non-physicist and an AI walked to the frontier of quantum gravity. They started on April 23, 2026 with F = ma. They finished on May 11 with a paper headed for arXiv."
+>
+  <div class="page">
+    <a href="#main" class="skip">Skip to content</a>
+
+    <!-- Masthead -->
+    <header class="masthead" role="banner">
+      <div class="masthead-corners"></div>
+      <p class="masthead-strap">An Independent Scientific Publication</p>
+      <div class="masthead-line"><div class="masthead-line-rule"></div></div>
+      <h1 class="masthead-title">
+        <span class="masthead-title-main">Donkey</span>
+        <span class="masthead-title-conn">on the</span>
+        <span class="masthead-title-main">Edge</span>
+      </h1>
+      <div class="masthead-line"><div class="masthead-line-rule"></div></div>
+      <p class="masthead-meta">
+        <span class="dot">Vol. I, No. I</span>
+        <span class="dot">May 2026</span>
+        <span class="dot">donkeyontheedge.com</span>
+      </p>
+    </header>
+
+    <main id="main">
+      <!-- Frontispiece / Hero -->
+      <section class="frontispiece" aria-label="Hero">
+        <div class="plate">
+          <div class="plate-inner">
+            <img
+              src="/images/donkeyedge.png"
+              alt="A donkey stands at the edge of a cliff, looking out."
+              width="800"
+              height="600"
+            />
+          </div>
+          <p class="plate-caption">
+            <em>The edge. May 11, 2026.</em>
+          </p>
+        </div>
+      </section>
+
+      <!-- Intro / Lede -->
+      <section class="intro" aria-label="Introduction">
+        <h2 class="intro-head">A non-physicist and an AI walked to the frontier of quantum gravity.</h2>
+        <div class="intro-body">
+          <p>They started on April&nbsp;23, 2026 with <em>F</em>&nbsp;=&nbsp;<em>ma</em>. They finished on May&nbsp;11 with a paper headed for arXiv. The full record of how it happened is here.</p>
+        </div>
+        <div class="intro-after">
+          <div class="intro-after-rule"><div class="intro-after-mark"></div></div>
+          <nav class="intro-nav" aria-label="Primary actions">
+            <a href="/paper" class="btn-primary">Read the paper</a>
+            <a href="/field-notes/a-little-help-for-my-friends" class="btn-secondary">Start with the symphony</a>
+          </nav>
+        </div>
+      </section>
+
+      <!-- Story strip -->
+      <section class="dispatches" aria-label="Timeline">
+        <div class="dispatches-frame">
+          <div class="dispatches-corner dispatches-corner-left"><span class="dispatches-corner-text">Timeline</span></div>
+          <div class="dispatches-corner dispatches-corner-right"></div>
+          <div class="dispatches-head">The record, in sequence</div>
+          <div class="dispatches-rule"><div class="dispatches-rule-line"></div><div class="dispatches-rule-mark"></div></div>
+          <div class="dispatches-body">
+            <p><strong>April&nbsp;23, 2026.</strong> A man in Bend, Oregon asks Claude where to start learning quantum mechanics.</p>
+            <p><strong>April&nbsp;23 to May&nbsp;10.</strong> Forty reference documents. Physics&nbsp;101 through the speculative frontier of quantum gravity.</p>
+            <p><strong>May&nbsp;10.</strong> The open-problems survey points at a tractable question at the edge of the field. The research begins.</p>
+            <p><strong>May&nbsp;11.</strong> Paper headed for arXiv.</p>
+          </div>
+          <div class="dispatches-foot">
+            <span class="pulse" aria-hidden="true"></span>
+            <span>The research continues. Paper&nbsp;2 in progress.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pull quote -->
+      <blockquote class="pull-quote">
+        <p class="pull-quote-text">"It is not that the universe has one answer for how much two observers can disagree. It has a hierarchy of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy."</p>
+        <footer><cite><a href="/field-notes/a-little-help-for-my-friends">A Little Help for My Friends</a></cite></footer>
+      </blockquote>
+
+      <!-- Table of contents -->
+      <nav class="contents" aria-label="Site sections">
+        <div class="contents-head">
+          <h2 class="contents-head-title">Contents</h2>
+          <p class="contents-head-sub">Vol. I, No. I</p>
+        </div>
+
+        <a href="/paper" class="toc-entry">
+          <span class="toc-num">I</span>
+          <div class="toc-body">
+            <span class="toc-title">The Paper</span>
+            <span class="toc-sub">Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes</span>
+            <span class="toc-desc">Two new theorems. Five results. The research, complete.</span>
+          </div>
+        </a>
+
+        <a href="/curriculum" class="toc-entry">
+          <span class="toc-num">II</span>
+          <div class="toc-body">
+            <span class="toc-title">The Curriculum</span>
+            <span class="toc-sub">Physics&nbsp;101 to quantum gravity, 38 stations</span>
+            <span class="toc-desc">The full learning path, visualized as a Victorian subway map.</span>
+          </div>
+        </a>
+
+        <a href="/field-notes" class="toc-entry">
+          <span class="toc-num">III</span>
+          <div class="toc-body">
+            <span class="toc-title">Field Notes</span>
+            <span class="toc-sub">38 class reports, 10 research phase posts, 8 essays</span>
+            <span class="toc-desc">The record of the work, written as it happened.</span>
+          </div>
+        </a>
+
+        <a href="/method" class="toc-entry">
+          <span class="toc-num">IV</span>
+          <div class="toc-body">
+            <span class="toc-title">The Method</span>
+            <span class="toc-sub">What we did and what we are claiming</span>
+            <span class="toc-desc">Six essays on the protocol, failure modes, and calibration.</span>
+          </div>
+        </a>
+
+        <a href="/lab" class="toc-entry">
+          <span class="toc-num">V</span>
+          <div class="toc-body">
+            <span class="toc-title">The Lab</span>
+            <span class="toc-sub">Paper 2 in progress</span>
+            <span class="toc-desc">What is happening right now. Updated as it happens.</span>
+          </div>
+        </a>
+      </nav>
+    </main>
+
+    <!-- Colophon / Footer -->
+    <footer class="colophon" role="contentinfo">
+      <div class="colophon-mark">
+        <div class="colophon-inner">
+          <div class="colophon-portrait">
+            <img src="/images/donkeyportrait.png" alt="" aria-hidden="true" width="80" height="80" />
+          </div>
+          <div class="colophon-byline">
+            <span class="colophon-role">Adam Cagle</span>
+            <span class="colophon-with">with</span>
+            <span class="colophon-role">Claude (Anthropic), computational collaborator</span>
+          </div>
+        </div>
+      </div>
+      <div class="colophon-rule">
+        <div class="colophon-rule-line"></div>
+        <div class="colophon-rule-mark"></div>
+      </div>
+      <div class="colophon-notes">
+        <nav class="colophon-links" aria-label="Footer navigation">
+          <a href="/paper">The Paper</a>
+          <a href="/curriculum">The Curriculum</a>
+          <a href="/field-notes">Field Notes</a>
+          <a href="/method">The Method</a>
+          <a href="/lab">The Lab</a>
+          <a href="/about">About</a>
+        </nav>
+        <p class="colophon-meta">This site is run by Adam Cagle (the donkey). Built with Claude (Anthropic), computational collaborator. No tracking or analytics.</p>
+      </div>
+    </footer>
+  </div>
+</Base>

@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const results = await getCollection('results');
+results.sort((a, b) => a.data.resultNumber - b.data.resultNumber);
+---
+
+<Base
+  title="The Paper"
+  description="Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes. Cagle, A.R. 2026."
+>
+  <!-- Layout: PaperLanding.astro (from mockup_4_paper_landing.html) -->
+  <main class="shell">
+    <header class="frontmatter">
+      <p class="masthead-eyebrow">Paper I</p>
+      <h1 class="masthead-title">Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes</h1>
+      <p class="byline">Cagle, A.R. &mdash; with Claude (Anthropic), computational collaborator</p>
+      <p class="dateline">May 2026 &middot; arXiv:26XX.XXXXX</p>
+
+      <div class="downloads">
+        <a href="/paper/Paper1.pdf" class="dl-btn" download>Download PDF</a>
+        <span class="arxiv-tag">arXiv:26XX.XXXXX</span>
+      </div>
+    </header>
+
+    <section class="abstract">
+      <h2 class="section-head">Abstract</h2>
+      <div class="abstract-body">
+        <!-- Abstract pulled from paper_full_draft.md in content load step -->
+        <p><em>Abstract loading...</em></p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-head">Results</h2>
+      <div class="results-grid">
+        {results.map((r) => (
+          <a href={`/paper/results/${r.data.resultNumber}`} class="result-card">
+            <span class="result-num">Result {r.data.resultNumber}</span>
+            <h3 class="result-title">{r.data.title}</h3>
+            <p class="result-summary">{r.data.summary}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-head">Plain English</h2>
+      <p>A non-technical explanation of what we found and why it matters. <a href="/paper/plain-english">Read "A Little Help for My Friends" &rarr;</a></p>
+    </section>
+
+    <section>
+      <h2 class="section-head">How to cite</h2>
+      <div class="citation-block">
+        <div class="citation-inner">
+          <p class="citation-text">Cagle, A.R., 2026. <em>Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes.</em> arXiv:26XX.XXXXX.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>
