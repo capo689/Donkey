@@ -1,31 +1,153 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import SubwayMap from '../../components/SubwayMap.svg?raw';
 
 const stations = await getCollection('curriculum');
 stations.sort((a, b) => a.data.stationNumber - b.data.stationNumber);
+
+const lines = [
+  {
+    key: 'Foundation Way',
+    cssKey: 'foundation',
+    name: 'The Foundation Way',
+    desc: 'Where the journey begins. Newtonian mechanics, classical EM, the road to modern physics.',
+  },
+  {
+    key: 'Math & Quantum Hub',
+    cssKey: 'math',
+    name: 'The Math & Quantum Hub',
+    desc: 'Mathematical foundations and quantum mechanics, the interchange to the Trunk.',
+  },
+  {
+    key: 'Quantum Trunk',
+    cssKey: 'quantum',
+    name: 'The Quantum Trunk',
+    desc: 'The spine of the curriculum: special relativity through the Standard Model.',
+  },
+  {
+    key: 'Advanced QFT Loop',
+    cssKey: 'advanced',
+    name: 'The Advanced QFT Loop',
+    desc: 'What you reach after QFT XII: effective theories, anomalies, instantons.',
+  },
+  {
+    key: 'Classical Branch',
+    cssKey: 'classical',
+    name: 'The Classical Branch',
+    desc: 'Lagrangian mechanics through statistical mechanics and condensed matter.',
+  },
+  {
+    key: 'Gravitational Spur',
+    cssKey: 'gravity',
+    name: 'The Gravitational Spur',
+    desc: 'General relativity through string theory and the quantum gravity frontier.',
+  },
+];
+
+const romanNumerals = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii','xiii','xiv','xv','xvi','xvii','xviii','xix','xx','xxi','xxii','xxiii','xxiv','xxv','xxvi','xxvii','xxviii','xxix','xxx','xxxi','xxxii','xxxiii','xxxiv','xxxv','xxxvi','xxxvii','xxxviii'];
 ---
 
 <Base
   title="The Curriculum"
-  description="38 physics documents from Newton to quantum gravity. The full learning path, visualized as a subway map."
+  description="38 physics documents from Newton to quantum gravity. The full learning path, visualized as a Victorian railway chart."
 >
-  <!-- Layout: SubwayMap.astro (from mockup_3_map.html) — full interactive map in Step 7 -->
-  <main class="shell">
-    <header class="article-byline">
-      <p class="rh-mark">The Curriculum</p>
-    </header>
-    <div class="map-wrap">
-      <!-- Subway map rendered here in Step 7 -->
-      <p class="article-preamble">38 documents. Physics 101 through quantum gravity. April 23 to May 10, 2026.</p>
-      <nav class="index-grid">
-        {stations.map((s) => (
-          <a href={`/curriculum/${s.id}`} class="station-link">
-            <span class="station-numeral">{String(s.data.stationNumber).padStart(2, '0')}</span>
-            <span class="station-label">{s.data.classReportTitle}</span>
-          </a>
-        ))}
-      </nav>
+  <div class="shell">
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&#8592;</span>Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span><span class="dot"></span><span>The Curriculum</span><span class="dot"></span><span>&sect; II</span>
+      </div>
     </div>
-  </main>
+
+    <article id="main">
+      <header class="article-preamble">
+        <div class="article-section">The Curriculum &nbsp;&middot;&nbsp; &sect; II</div>
+        <h1 class="article-title">A Chart of the Territory.</h1>
+        <p class="article-subtitle">
+          Thirty-eight reference documents, mapped from <em>Physics 101</em> to the frontier of <em>quantum gravity</em>. The full path of study, with its junctions and its branches.
+        </p>
+        <div class="article-byline">
+          <div class="article-byline-mark" aria-hidden="true">
+            <img src="/images/DonkeyMini.png" alt="" />
+          </div>
+          <div class="article-byline-text">
+            <p class="article-byline-name">Drawn by Adam R. Cagle</p>
+            <p class="article-byline-meta">with <em>Claude</em> of Anthropic, as computational collaborator &middot; May MMXXVI</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="sigil-block" aria-hidden="true">
+        <img src="/images/donkey-sigil.png" alt="" width="160" />
+      </div>
+
+      <div class="intro-block">
+        <p>The curriculum is presented here as a <em>railway chart</em>, in the manner of a Victorian transit map. The thirty-eight reference documents are stations. Six lines connect them. The Quantum Trunk is the spine of the work, with the Classical Branch running alongside and the Gravitational Spur descending to the frontier. All routes terminate at <em>Paper&nbsp;I.</em></p>
+        <p>Click any station to read the document. The full station index follows below the chart.</p>
+      </div>
+
+      <figure class="map-wrap">
+        <div class="map-frame">
+          <div class="map-cartouche"><span class="map-cartouche-title">A Chart of the Curriculum</span></div>
+          <div class="map-plate">Pl. II</div>
+          <div class="map-ornament"><span class="mark">&#10086;</span>From the Press at Bend, Oregon &middot; MMXXVI</div>
+          <div class="map-scroll">
+            <Fragment set:html={SubwayMap} />
+          </div>
+          <div class="map-legend-wrap">
+            <p class="map-legend-title">Lines of the Curriculum</p>
+            <div class="map-legend-grid">
+              {lines.map(l => (
+                <div class="map-legend-row">
+                  <div class="map-legend-swatch">
+                    <div class={`swatch-${l.cssKey}`} style="width:50px"></div>
+                  </div>
+                  <span>{l.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </figure>
+
+      <section class="station-index" aria-labelledby="index-head">
+        <header class="index-head">
+          <p class="index-head-mark" id="index-head">Index of Stations</p>
+          <h2 class="index-head-title">All Thirty-Eight, by Line.</h2>
+          <p class="index-head-sub">arranged in the order of the journey</p>
+        </header>
+        <div class="index-grid">
+          {lines.map(line => {
+            const lineStations = stations.filter(s => s.data.line === line.key);
+            return (
+              <div class={`line-block`} data-line={line.cssKey}>
+                <header class="line-block-head">
+                  <span class={`line-swatch line-swatch-${line.cssKey}`} aria-hidden="true"></span>
+                  <h3 class="line-name">{line.name}</h3>
+                  <p class="line-desc">{line.desc}</p>
+                </header>
+                <ol class="line-stations">
+                  {lineStations.map(s => {
+                    const ordinal = romanNumerals[s.data.stationNumber - 1] || s.data.stationNumber;
+                    return (
+                      <li>
+                        <a href={`/curriculum/${s.id}`}>
+                          <span class="ord">{ordinal}.</span>
+                          <span class="name">{s.data.classReportTitle}</span>
+                          <em>{s.data.title}</em>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <div class="end-ornament" aria-hidden="true">&#8258;</div>
+    </article>
+  </div>
 </Base>
