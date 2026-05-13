@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://donkeyontheedge.com/sitemap-index.xml
