@@ -20,7 +20,7 @@ stations.sort((a, b) => a.data.stationNumber - b.data.stationNumber);
       <p class="article-preamble">38 documents. Physics 101 through quantum gravity. April 23 to May 10, 2026.</p>
       <nav class="index-grid">
         {stations.map((s) => (
-          <a href={`/curriculum/${s.slug}`} class="station-link">
+          <a href={`/curriculum/${s.id}`} class="station-link">
             <span class="station-numeral">{String(s.data.stationNumber).padStart(2, '0')}</span>
             <span class="station-label">{s.data.classReportTitle}</span>
           </a>

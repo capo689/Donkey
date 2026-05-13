@@ -24,7 +24,7 @@ const referencePosts = essays.filter(e => e.data.subsection === 'reference');
       <p class="article-preamble">Ten posts documenting the research from picking the problem to submitting to arXiv.</p>
       <nav class="related">
         {workPosts.map((e) => (
-          <a href={`/field-notes/${e.slug}`} class="related-entry">
+          <a href={`/field-notes/${e.id}`} class="related-entry">
             <span class="related-num">Phase {e.data.workPhase}</span>
             <span class="related-title">{e.data.title}</span>
           </a>
@@ -36,7 +36,7 @@ const referencePosts = essays.filter(e => e.data.subsection === 'reference');
       <h2 class="section-head">Essays</h2>
       <nav class="related">
         {standalonePosts.map((e) => (
-          <a href={`/field-notes/${e.slug}`} class="related-entry">
+          <a href={`/field-notes/${e.id}`} class="related-entry">
             <span class="related-title">{e.data.title}</span>
           </a>
         ))}
@@ -47,7 +47,7 @@ const referencePosts = essays.filter(e => e.data.subsection === 'reference');
       <h2 class="section-head">Reference</h2>
       <nav class="related">
         {referencePosts.map((e) => (
-          <a href={`/field-notes/${e.slug}`} class="related-entry">
+          <a href={`/field-notes/${e.id}`} class="related-entry">
             <span class="related-title">{e.data.title}</span>
           </a>
         ))}
