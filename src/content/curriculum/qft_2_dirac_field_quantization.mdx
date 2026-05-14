@@ -9,6 +9,702 @@ extendsTo: [15]
 classReportTitle: "Spin, and the price of relativistic quantum mechanics."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 2: fermions, antiparticles, and the spin-statistics theorem, falling out of the mathematics.*
 
-{/* Content from qft_2_dirac_field_quantization.md */}
+The scalar field document showed how to quantize a bosonic field. Now we do the same for the Dirac field; a relativistic spin-½ field describing electrons, quarks, and every other fundamental fermion. Same canonical procedure, but with one crucial twist: commutators get replaced by anticommutators. That single change generates every distinctive feature of fermionic physics: Pauli exclusion, antisymmetric wave functions, and the spin-statistics theorem itself.
+
+Pre-requisites: the scalar field quantization document, plus the sections on spinors and the Dirac equation from the classical field theory reference. If gamma matrices, left/right-handed Weyl components, and $\slashed{\partial}\psi = m\psi$ feel familiar, you're ready.
+
+### Conventions (Same as Document 1)
+
+- Metric $\eta_{\mu\nu} = \text{diag}(+,-,-,-)$ (mostly-minus)
+- $\hbar = c = 1$
+- $\{\gamma^\mu, \gamma^\nu\} = 2\eta^{\mu\nu}$
+- $\bar\psi = \psi^\dagger \gamma^0$
+- $\slashed{p} = \gamma^\mu p_\mu$
+
+---
+
+## Table of Contents
+
+1. [Why Fermions Need Different Rules](#1-why-fermions-need-different-rules)
+2. [The Classical Dirac Field in Review](#2-the-classical-dirac-field-in-review)
+3. [Solutions to the Dirac Equation: u and v Spinors](#3-solutions-to-the-dirac-equation-u-and-v-spinors)
+4. [The Canonical Quantization Attempt That Fails](#4-the-canonical-quantization-attempt-that-fails)
+5. [Anticommutators and the Spin-Statistics Theorem](#5-anticommutators-and-the-spin-statistics-theorem)
+6. [The Dirac Field as Creation and Annihilation Operators](#6-the-dirac-field-as-creation-and-annihilation-operators)
+7. [The Hamiltonian and Vacuum](#7-the-hamiltonian-and-vacuum)
+8. [Fermionic Fock Space](#8-fermionic-fock-space)
+9. [The Fermion Propagator](#9-the-fermion-propagator)
+10. [Discrete Symmetries: C, P, T on the Dirac Field](#10-discrete-symmetries-c-p-t-on-the-dirac-field)
+11. [Bilinears and Physical Currents](#11-bilinears-and-physical-currents)
+12. [Physical Content and Preview of QED](#12-physical-content-and-preview-of-qed)
+13. [Appendix: Formulas and Identities](#appendix-formulas-and-identities)
+
+---
+
+## 1. Why Fermions Need Different Rules
+
+### The Spin-Statistics Puzzle
+
+Experimentally, identical electrons (and all other spin-½ particles) obey the Pauli exclusion principle: no two can occupy the same quantum state. This is why atoms have shell structure, why metals conduct, why white dwarfs resist collapse. Equivalently: multi-fermion states are **antisymmetric** under particle exchange.
+
+Spin-0 particles, by contrast, can pile into the same state arbitrarily. Bose-Einstein condensates, superconducting Cooper pairs, photons in a laser; all bosonic. Multi-boson states are **symmetric**.
+
+The connection between spin and statistics is not obvious. Nothing in non-relativistic quantum mechanics explains why spin-½ particles should be antisymmetric. It's postulated, not derived.
+
+The remarkable fact of QFT: **spin-statistics is a theorem**. If you try to quantize a spin-½ field using ordinary commutators, you get a nonsensical theory (unbounded-below Hamiltonian). To get sensible physics, you must use *anticommutators*. And anticommutators automatically produce antisymmetric multi-particle states.
+
+Spin, statistics, and quantization rules are rigidly linked. This document makes that explicit.
+
+### The Road Map
+
+1. Start with the classical Dirac field (from the classical field theory document)
+2. Try canonical quantization with commutators; and see it fail
+3. Replace commutators with anticommutators
+4. Discover that everything works, and the resulting theory has the right properties (Pauli exclusion, antisymmetry, sensible energies, antiparticles)
+5. Package the result in the same Fock-space language as before, but now with fermionic occupation numbers
+
+---
+
+## 2. The Classical Dirac Field in Review
+
+### Lagrangian
+
+$$\mathcal{L} = \bar\psi(i\slashed{\partial} - m)\psi$$
+
+where $\psi(x)$ is a four-component complex Dirac spinor and $\bar\psi = \psi^\dagger\gamma^0$. The $\slashed{\partial} = \gamma^\mu\partial_\mu$ is Dirac's slash notation for contracting with gamma matrices.
+
+Varying with respect to $\bar\psi$ yields the **Dirac equation**:
+
+$$(i\slashed{\partial} - m)\psi = 0$$
+
+Equivalently $i\gamma^\mu\partial_\mu \psi = m\psi$, an equation first-order in derivatives (unlike Klein-Gordon, which is second-order).
+
+Squaring the Dirac equation gives Klein-Gordon: any Dirac solution automatically satisfies $(\Box + m^2)\psi = 0$. So Dirac fields describe particles with mass $m$ and the expected relativistic dispersion $E^2 = |\vec p|^2 + m^2$.
+
+### Conjugate Momentum
+
+$$\pi = \frac{\partial\mathcal{L}}{\partial\dot\psi} = i\bar\psi\gamma^0 = i\psi^\dagger$$
+
+This is a slightly awkward feature of the Dirac Lagrangian: $\pi$ is essentially $\psi^\dagger$ itself (up to a factor of $i$), not something independent. This reflects that the Dirac equation is first-order; the field and its momentum aren't independent in the way they are for scalars.
+
+### Hamiltonian
+
+$$H = \int d^3x\, \psi^\dagger(-i\vec\alpha\cdot\vec\nabla + \beta m)\psi$$
+
+with $\vec\alpha = \gamma^0\vec\gamma$ and $\beta = \gamma^0$. You can also write this as:
+
+$$H = \int d^3x\, \bar\psi(-i\vec\gamma\cdot\vec\nabla + m)\psi$$
+
+**Crucial observation:** the classical Hamiltonian is *not* positive-definite for a Dirac field. Both signs of energy appear in the spectrum. This is the infamous "negative energy" problem of the Dirac equation, and its resolution is where antiparticles enter.
+
+---
+
+## 3. Solutions to the Dirac Equation: u and v Spinors
+
+Before quantizing, we need the classical solutions organized neatly.
+
+### Plane Wave Solutions
+
+Try $\psi(x) = u(p) e^{-ip\cdot x}$ with $p^\mu = (E, \vec p)$ and $E = +\sqrt{|\vec p|^2 + m^2} > 0$:
+
+$$(i\slashed{\partial} - m)u(p)e^{-ip\cdot x} = 0 \implies (\slashed{p} - m)u(p) = 0$$
+
+This is an algebraic equation on the 4-component spinor $u(p)$. In matrix form $(\slashed{p} - m)$ has a 2-dimensional null space; two independent solutions, labeled by spin $s = 1, 2$. We write $u^s(p)$ for these.
+
+Try $\psi(x) = v(p) e^{+ip\cdot x}$ with the same positive $E$:
+
+$$(\slashed{p} + m)v(p) = 0$$
+
+Again 2-dimensional null space, labeled $v^s(p)$ for $s = 1, 2$.
+
+### Explicit Forms in the Chiral Basis
+
+In the chiral (Weyl) basis from the classical field theory document:
+
+$$u^s(p) = \begin{pmatrix} \sqrt{p\cdot\sigma}\,\xi^s \\ \sqrt{p\cdot\bar\sigma}\,\xi^s \end{pmatrix}, \qquad v^s(p) = \begin{pmatrix} \sqrt{p\cdot\sigma}\,\eta^s \\ -\sqrt{p\cdot\bar\sigma}\,\eta^s \end{pmatrix}$$
+
+where $\sigma^\mu = (1, \vec\sigma)$, $\bar\sigma^\mu = (1, -\vec\sigma)$, and $\xi^s, \eta^s$ are 2-component spinors encoding the spin state (e.g., $\xi^1 = \binom{1}{0}$, $\xi^2 = \binom{0}{1}$).
+
+The square roots need some interpretation; they're defined by power series and the fact that $p\cdot\sigma$ is a Hermitian matrix. For a particle at rest ($\vec p = 0$, $E = m$):
+
+$$u^s(m\vec e_0) = \sqrt{m}\begin{pmatrix}\xi^s \\ \xi^s\end{pmatrix}, \quad v^s(m\vec e_0) = \sqrt{m}\begin{pmatrix}\eta^s \\ -\eta^s\end{pmatrix}$$
+
+Don't worry if the explicit forms aren't transparent; what matters is that they exist, satisfy $(\slashed{p} \mp m)u/v = 0$, and have the normalization properties below.
+
+### Normalization and Orthogonality
+
+**Spinor normalizations** (two conventions; I'll use Peskin-style):
+
+$$\bar u^r(p) u^s(p) = 2m\delta^{rs}, \quad \bar v^r(p) v^s(p) = -2m\delta^{rs}$$
+
+$$u^{r\dagger}(p) u^s(p) = 2E\delta^{rs}, \quad v^{r\dagger}(p) v^s(p) = 2E\delta^{rs}$$
+
+**Orthogonality between u and v:**
+
+$$\bar u^r(p) v^s(p) = 0, \quad u^{r\dagger}(p) v^s(-p) = 0$$
+
+(Note the $-p$ in the momentum of the $v$ spinor; this is important!)
+
+### Completeness Relations
+
+Two crucial identities that will be used constantly:
+
+$$\boxed{\sum_s u^s(p)\bar u^s(p) = \slashed{p} + m}$$
+
+$$\boxed{\sum_s v^s(p)\bar v^s(p) = \slashed{p} - m}$$
+
+These are outer products (4×4 matrices), summed over spin. They are the "density matrix" for spin-averaged states.
+
+These relations will appear in essentially every QED calculation you ever do; when you average over initial spins or sum over final spins in a scattering process.
+
+### General Classical Solution
+
+$$\psi(x) = \int\frac{d^3p}{(2\pi)^3}\frac{1}{\sqrt{2E_p}}\sum_s\left[b^s(\vec p)\, u^s(p)e^{-ip\cdot x} + c^{s*}(\vec p)\, v^s(p)e^{+ip\cdot x}\right]$$
+
+where $b^s(\vec p)$ and $c^{s*}(\vec p)$ are complex coefficients. Upon quantization, $b^s$ will become an annihilation operator for particles, and $c^{s\dagger}$ will become a creation operator for antiparticles.
+
+Note the letters: different symbols ($b$ and $c$) for the particle and antiparticle modes, because they represent different physical entities. In the scalar case for the complex field, we used $a$ and $b$; here we use $b$ and $c$ by convention. Just a naming convention; don't get thrown.
+
+---
+
+## 4. The Canonical Quantization Attempt That Fails
+
+Let's try the naive generalization of the scalar field procedure: canonical commutators.
+
+### The Naive Recipe
+
+Treat $\psi$ and $\pi = i\psi^\dagger$ as canonical conjugates. Impose equal-time commutation relations:
+
+$$[\psi_a(\vec x, t), \psi_b^\dagger(\vec y, t)] \stackrel{?}{=} \delta_{ab}\delta^3(\vec x - \vec y)$$
+
+(The $a,b$ are spinor indices, $1, 2, 3, 4$; the $\delta_{ab}$ reflects that different spinor components commute with each other except for the identity term.)
+
+### Mode Operator Commutators
+
+Working through; same procedure as for the scalar; gives:
+
+$$[b^r_{\vec p}, b^{s\dagger}_{\vec q}] = (2\pi)^3\delta^{rs}\delta^3(\vec p - \vec q)$$
+
+$$[c^r_{\vec p}, c^{s\dagger}_{\vec q}] = -(2\pi)^3\delta^{rs}\delta^3(\vec p - \vec q)$$
+
+**Note the minus sign on the $c$ commutator.** This is already a warning sign.
+
+### Computing the Hamiltonian
+
+Substituting the mode expansion into the Hamiltonian:
+
+$$H \sim \int\frac{d^3p}{(2\pi)^3} E_p\left[b^{s\dagger}_{\vec p} b^s_{\vec p} - c^{s\dagger}_{\vec p} c^s_{\vec p}\right] + (\text{const})$$
+
+**The minus sign is catastrophic.** Creating a $c$-particle *lowers* the energy. You can create arbitrarily many $c$-particles and drive the energy to $-\infty$. The theory has no ground state. It's sick.
+
+This is the real face of the "negative energy problem" of the Dirac equation. You can't just reinterpret the $E < 0$ plane-wave solutions; quantizing with commutators produces a theory with no stable vacuum.
+
+### What Went Wrong
+
+The minus sign traces back to the commutator $[c_{\vec p}, c_{\vec q}^\dagger] = -(2\pi)^3\delta^3(\vec p - \vec q)$. This is a sign of an unphysical theory; the would-be creation operator is creating "negative-norm" states.
+
+More specifically: $\langle 0 | c_{\vec p} c_{\vec p}^\dagger | 0\rangle$ would have to be negative, which is impossible for a legitimate Hilbert space inner product.
+
+The commutator prescription is wrong for spin-½. To get a sensible theory, we need something else.
+
+---
+
+## 5. Anticommutators and the Spin-Statistics Theorem
+
+### The Fix
+
+Replace commutators with anticommutators:
+
+$$\{A, B\} \equiv AB + BA$$
+
+Impose:
+
+$$\boxed{\{\psi_a(\vec x, t), \psi_b^\dagger(\vec y, t)\} = \delta_{ab}\delta^3(\vec x - \vec y)}$$
+
+$$\{\psi_a(\vec x, t), \psi_b(\vec y, t)\} = \{\psi_a^\dagger(\vec x, t), \psi_b^\dagger(\vec y, t)\} = 0$$
+
+These are **equal-time anticommutation relations**.
+
+### Mode Operator Anticommutators
+
+Working through the algebra with anticommutators replacing commutators:
+
+$$\boxed{\{b^r_{\vec p}, b^{s\dagger}_{\vec q}\} = (2\pi)^3\delta^{rs}\delta^3(\vec p - \vec q)}$$
+
+$$\boxed{\{c^r_{\vec p}, c^{s\dagger}_{\vec q}\} = (2\pi)^3\delta^{rs}\delta^3(\vec p - \vec q)}$$
+
+All other anticommutators (same type, or $b$ with $c$) vanish.
+
+**Now both signs are positive.** The minus sign disappeared when we switched from commutators to anticommutators; the sign flip exactly compensated.
+
+### The Spin-Statistics Theorem
+
+The argument we just made is the simplest version of the **spin-statistics theorem**:
+
+**Spin-½ fields must be quantized with anticommutators; spin-0 fields must be quantized with commutators.** Any other choice produces a theory with no sensible vacuum or negative-norm states.
+
+More generally: integer-spin fields (bosons) use commutators, half-integer-spin fields (fermions) use anticommutators. This can be proved rigorously from Lorentz invariance + causality + positive energies; the **spin-statistics theorem** (Pauli 1940, refined by Lüders and Zumino).
+
+This is a *theorem*, not a postulate. The structure of relativistic quantum field theory requires the connection between spin and statistics.
+
+### Consequence: Pauli Exclusion
+
+From the anticommutator:
+
+$$\{b^{s\dagger}_{\vec p}, b^{s\dagger}_{\vec p}\} = 0 \implies (b^{s\dagger}_{\vec p})^2 = 0$$
+
+Trying to create two fermions in the same quantum state gives zero. **Pauli exclusion, built into the math.**
+
+Similarly, a two-fermion state:
+
+$$b^{s_1\dagger}_{\vec p_1} b^{s_2\dagger}_{\vec p_2}|0\rangle = -b^{s_2\dagger}_{\vec p_2} b^{s_1\dagger}_{\vec p_1}|0\rangle$$
+
+The state is antisymmetric under exchange; automatically. You can't symmetrize it; anticommutation forbids it.
+
+### Grassmann Numbers
+
+A consequence of the quantization with anticommutators: fields are not ordinary (commuting) numbers. Products of classical fermion fields anticommute too. To properly treat classical fermion fields, you use **Grassmann numbers**; numbers that satisfy $\theta_1\theta_2 = -\theta_2\theta_1$.
+
+This becomes important for path integrals with fermions (later document). For now, just be aware: if you're computing at the classical level with spinors, you need to respect their anticommuting nature.
+
+---
+
+## 6. The Dirac Field as Creation and Annihilation Operators
+
+Now assemble the pieces. The quantized Dirac field:
+
+$$\boxed{\psi(x) = \int\frac{d^3p}{(2\pi)^3}\frac{1}{\sqrt{2E_p}}\sum_s\left[b^s_{\vec p}\, u^s(p)e^{-ip\cdot x} + c^{s\dagger}_{\vec p}\, v^s(p)e^{+ip\cdot x}\right]}$$
+
+$$\psi^\dagger(x) = \int\frac{d^3p}{(2\pi)^3}\frac{1}{\sqrt{2E_p}}\sum_s\left[b^{s\dagger}_{\vec p}\, u^{s\dagger}(p)e^{+ip\cdot x} + c^s_{\vec p}\, v^{s\dagger}(p)e^{-ip\cdot x}\right]$$
+
+### Interpretation of Operators
+
+- $b^{s\dagger}_{\vec p}$: creates a **particle** (e.g., electron) with momentum $\vec p$ and spin $s$
+- $b^s_{\vec p}$: annihilates a particle
+- $c^{s\dagger}_{\vec p}$: creates an **antiparticle** (e.g., positron) with momentum $\vec p$ and spin $s$
+- $c^s_{\vec p}$: annihilates an antiparticle
+
+The field $\psi(x)$ itself: destroys a particle at $x$ *or* creates an antiparticle at $x$. (Both reduce the total charge by one.)
+
+The field $\psi^\dagger(x)$: creates a particle at $x$ or destroys an antiparticle. (Both increase the total charge by one.)
+
+This is a major conceptual point: a single field operator can destroy particles and create antiparticles, simultaneously. The two halves of the Dirac field; the positive- and negative-frequency parts; have dual interpretations, and the field unites them.
+
+### Vacuum
+
+$$b^s_{\vec p}|0\rangle = 0, \quad c^s_{\vec p}|0\rangle = 0 \quad \text{for all } \vec p, s$$
+
+The vacuum has no particles *and* no antiparticles.
+
+### Single-Particle States
+
+$$|\vec p, s\rangle_e = \sqrt{2E_p}\, b^{s\dagger}_{\vec p}|0\rangle \quad \text{(electron)}$$
+
+$$|\vec p, s\rangle_{\bar e} = \sqrt{2E_p}\, c^{s\dagger}_{\vec p}|0\rangle \quad \text{(positron)}$$
+
+Both are Lorentz-invariantly normalized.
+
+### Two-Particle States
+
+$$b^{s_1\dagger}_{\vec p_1} b^{s_2\dagger}_{\vec p_2}|0\rangle = -b^{s_2\dagger}_{\vec p_2} b^{s_1\dagger}_{\vec p_1}|0\rangle$$
+
+Antisymmetric. Fermionic. $\checkmark$
+
+And the Pauli exclusion follows: if $(\vec p_1, s_1) = (\vec p_2, s_2)$, the state vanishes.
+
+---
+
+## 7. The Hamiltonian and Vacuum
+
+Substituting the mode expansion into the Hamiltonian and working through (using anticommutators, and being careful with signs):
+
+$$H = \int\frac{d^3p}{(2\pi)^3}E_p\sum_s\left[b^{s\dagger}_{\vec p} b^s_{\vec p} + c^{s\dagger}_{\vec p} c^s_{\vec p}\right] + (\text{infinite constant})$$
+
+**Both terms are positive.** The infinite constant is again the (divergent) vacuum energy, which we subtract via normal ordering:
+
+$$:H: = \int\frac{d^3p}{(2\pi)^3}E_p\sum_s\left[b^{s\dagger}_{\vec p} b^s_{\vec p} + c^{s\dagger}_{\vec p} c^s_{\vec p}\right]$$
+
+### Particles AND Antiparticles Carry Positive Energy
+
+Act on single-particle states:
+
+$$:H:|\vec p, s\rangle_e = E_p|\vec p, s\rangle_e$$
+
+$$:H:|\vec p, s\rangle_{\bar e} = E_p|\vec p, s\rangle_{\bar e}$$
+
+Both particles and antiparticles have positive energy $E_p = \sqrt{|\vec p|^2 + m^2}$. $\checkmark$
+
+This is a crucial success of the anticommutator prescription. Antiparticles aren't "negative energy" states; they're perfectly ordinary positive-energy excitations that happen to carry opposite charge.
+
+### Normal Ordering of Fermions
+
+Normal ordering for fermions has a subtle twist: you pick up a **minus sign** for each anticommutation needed to move an annihilation operator past a creation operator.
+
+$$:b^\dagger b: = b^\dagger b$$
+
+$$:b b^\dagger: = -b^\dagger b$$
+
+This ensures that normal-ordered products of fermions correctly respect the antisymmetry.
+
+### A Note on the Classical Hamiltonian
+
+Recall: the *classical* Dirac Hamiltonian wasn't positive-definite. Quantization changed that. The positive energies for antiparticles come from the anticommutation algebra; after reordering, the would-be negative term $-c^\dagger c$ becomes $+c c^\dagger - \text{const} = +c^\dagger c + (\text{const subtracted by normal ordering})$.
+
+So the classical "negative energy sea" is an artifact of looking at the theory before quantization. The quantum theory has a proper ground state and only positive-energy excitations above it.
+
+---
+
+## 8. Fermionic Fock Space
+
+### Structure
+
+Just like bosonic Fock space, but with antisymmetric multi-particle states. At each occupation level, states are built by applying creation operators:
+
+$$b^{s_1\dagger}_{\vec p_1} b^{s_2\dagger}_{\vec p_2} \cdots b^{s_n\dagger}_{\vec p_n}|0\rangle$$
+
+These are antisymmetric under exchange of any two indices, and vanish if any two are identical; automatic Pauli exclusion.
+
+### Particle Number Operators
+
+$$N_b = \int\frac{d^3p}{(2\pi)^3}\sum_s b^{s\dagger}_{\vec p} b^s_{\vec p} \quad \text{(electron number)}$$
+
+$$N_c = \int\frac{d^3p}{(2\pi)^3}\sum_s c^{s\dagger}_{\vec p} c^s_{\vec p} \quad \text{(positron number)}$$
+
+The difference $Q = -e(N_b - N_c)$ (for electrons of charge $-e$) is the total electric charge operator; a conserved quantity corresponding to the $U(1)$ symmetry $\psi \to e^{i\alpha}\psi$.
+
+### The Noether Current
+
+Classical symmetry $\psi \to e^{i\alpha}\psi$ gives conserved current:
+
+$$j^\mu = \bar\psi \gamma^\mu \psi$$
+
+After quantization, this becomes an operator:
+
+$$j^\mu(x) = :\bar\psi(x)\gamma^\mu\psi(x):$$
+
+The conserved charge $Q = \int d^3x\, j^0$ evaluates (with some algebra) to:
+
+$$Q = \int\frac{d^3p}{(2\pi)^3}\sum_s\left[b^{s\dagger}_{\vec p} b^s_{\vec p} - c^{s\dagger}_{\vec p} c^s_{\vec p}\right]$$
+
+**Particles contribute +1, antiparticles contribute −1.** The charge is opposite for the two, as required.
+
+---
+
+## 9. The Fermion Propagator
+
+### Feynman Propagator
+
+$$S_F(x - y) = \langle 0|T\{\psi(x)\bar\psi(y)\}|0\rangle$$
+
+where $T$ is the **fermionic** time-ordering:
+
+$$T\{\psi(x)\bar\psi(y)\} = \theta(x^0 - y^0)\psi(x)\bar\psi(y) - \theta(y^0 - x^0)\bar\psi(y)\psi(x)$$
+
+**Note the minus sign.** Fermionic time-ordering picks up a sign from the anticommutation. Miss this minus sign and you'll get wrong answers for every fermionic Feynman diagram.
+
+### Computation
+
+Using the mode expansions and the completeness relations from section 3:
+
+$$\boxed{S_F(x - y) = \int\frac{d^4p}{(2\pi)^4}\frac{i(\slashed{p} + m)}{p^2 - m^2 + i\epsilon}e^{-ip\cdot(x-y)}}$$
+
+Same $+i\epsilon$ prescription as the scalar, giving time ordering. But the numerator is $(\slashed{p} + m)$ instead of a single factor; a 4×4 matrix in spinor space.
+
+### In Momentum Space
+
+$$\tilde S_F(p) = \frac{i(\slashed{p} + m)}{p^2 - m^2 + i\epsilon}$$
+
+Alternative form (rationalizing):
+
+$$\tilde S_F(p) = \frac{i}{\slashed{p} - m + i\epsilon}$$
+
+understood as a matrix inverse. Both forms show up in calculations.
+
+### Physical Meaning
+
+The $\slashed{p} + m$ in the numerator is precisely $\sum_s u^s(p)\bar u^s(p)$ for positive-frequency parts, or $\sum_s v^s(p)\bar v^s(p)$ (with sign) for negative-frequency. It encodes the spin structure of the propagating fermion.
+
+### Why Two Types of Propagator?
+
+Scalars: $\phi \to \phi$ propagator, $\phi^* \to \phi^*$ propagator, and $\phi \to \phi^*$ propagator (for complex field).
+
+Fermions: similar structure. Most calculations use $\psi \to \bar\psi$ (the one above). There are also non-vanishing propagators between other combinations for a complex field.
+
+The notation gets more elaborate, but the principle is clear: the propagator encodes the two-point function of fields, with appropriate time/space ordering.
+
+---
+
+## 10. Discrete Symmetries: C, P, T on the Dirac Field
+
+These are technical and subtle but physically important, because they classify what kind of interactions are allowed in different theories. Three discrete symmetries act on the Dirac field:
+
+### Parity (P)
+
+Spatial inversion: $\vec x \to -\vec x$. Acts on the Dirac field as:
+
+$$P\psi(t, \vec x)P^{-1} = \gamma^0 \psi(t, -\vec x)$$
+
+Consequence: under parity, a Dirac spinor picks up a $\gamma^0$. The left- and right-handed components swap, since $\gamma^0 \psi_L = \psi_R$ in the chiral basis.
+
+### Charge Conjugation (C)
+
+Particle ↔ antiparticle exchange:
+
+$$C\psi(x)C^{-1} = -i(\bar\psi\gamma^0\gamma^2)^T$$
+
+An operator that maps electrons to positrons and vice versa. Intuition: $C$ exchanges the $b$'s with the $c$'s.
+
+### Time Reversal (T)
+
+Time inversion. T is an antiunitary operator (complex conjugation plus a unitary transformation):
+
+$$T\psi(t, \vec x)T^{-1} = -\gamma^1\gamma^3 \psi(-t, \vec x)$$
+
+### CPT Theorem
+
+The combination CPT is an exact symmetry of any Lorentz-invariant local quantum field theory. This is the **CPT theorem** (Lüders, Pauli), one of the deepest theorems in physics.
+
+Consequences:
+- Particles and antiparticles have identical masses
+- Particles and antiparticles have identical lifetimes
+- If CPT were violated, Lorentz invariance would be too
+
+All experimental tests are consistent with CPT.
+
+### Individually
+
+Individual C, P, T are *not* required to be symmetries. Strong and electromagnetic interactions conserve each separately. The **weak interaction** maximally violates both P and C individually (1956-1957 Wu experiment), but respects CP approximately. CP is violated in kaon decays (1964) and B meson decays (~2000), at a small but nonzero level; all within the Standard Model via the CKM phase.
+
+The fact that C and P are violated *separately* but CP nearly conserved is a deep constraint on the weak interaction. Dirac theory with different interactions built on top can respect or violate any combination; the Lagrangian choices are what matter.
+
+---
+
+## 11. Bilinears and Physical Currents
+
+Fermion fields by themselves can't be measured (they're Grassmann-valued, not observable). But bilinear combinations; two fields at a point; are ordinary numbers/operators and can be directly interpreted.
+
+### Five Types of Bilinears
+
+These transform in specific ways under the Lorentz group:
+
+| Expression | Type | Transforms as | Notes |
+|---|---|---|---|
+| $\bar\psi \psi$ | Scalar | $+1$ | Mass-like; Higgs couples here |
+| $\bar\psi \gamma^5 \psi$ | Pseudoscalar | $-1$ under $P$ | P-violating |
+| $\bar\psi \gamma^\mu \psi$ | Vector | Four-vector | Electromagnetic current |
+| $\bar\psi \gamma^\mu \gamma^5 \psi$ | Axial vector | Flips sign under $P$ | Weak interaction uses this |
+| $\bar\psi \sigma^{\mu\nu} \psi$ | Antisym. tensor | Rank-2 | EDM-type operators |
+
+where $\sigma^{\mu\nu} = \tfrac{i}{2}[\gamma^\mu, \gamma^\nu]$.
+
+### The Electromagnetic Current
+
+$$j^\mu_{\rm EM} = -e\bar\psi\gamma^\mu\psi$$
+
+for an electron (charge $-e$). The zeroth component is the charge density, spatial components are current density. Conservation: $\partial_\mu j^\mu = 0$ follows from the Dirac equation.
+
+### The Weak Current
+
+In the Standard Model, the charged weak interaction uses the combination:
+
+$$j^\mu_{W} = \bar\psi_e\gamma^\mu\tfrac{1}{2}(1 - \gamma^5)\psi_\nu$$
+
+The factor $\tfrac{1}{2}(1 - \gamma^5) = P_L$ is the left-handed projector. Only left-handed fermions interact via the charged weak current; this is the source of parity violation in the weak interaction.
+
+### Axial Vector Currents and Anomalies
+
+Classically, for a massless fermion the axial current $j^{\mu}_5 = \bar\psi\gamma^\mu\gamma^5\psi$ is conserved. In the quantum theory, this is violated by **anomalies**; classical symmetries that fail to survive quantization due to the measure in the path integral. The chiral anomaly is essential for understanding the decay $\pi^0 \to \gamma\gamma$ and other phenomena. (Detailed treatment later; anomalies deserve their own document.)
+
+---
+
+## 12. Physical Content and Preview of QED
+
+### What We've Accomplished
+
+- Quantized the Dirac field using anticommutators
+- Showed that this is forced on us by positivity of the Hamiltonian
+- Got particles and antiparticles, both with positive energy
+- Automatic Pauli exclusion and antisymmetric multi-particle states
+- The spin-statistics connection as a theorem
+- The fermion propagator
+- Bilinears for constructing interactions
+
+### The Spin-Statistics Theorem Restated
+
+**Integer-spin fields are quantized with commutators → bosons, symmetric states, Bose-Einstein statistics, no Pauli exclusion.**
+
+**Half-integer-spin fields are quantized with anticommutators → fermions, antisymmetric states, Fermi-Dirac statistics, Pauli exclusion.**
+
+This is rigid: it's a theorem of relativistic quantum field theory, not a choice. Experiment has never found a violation.
+
+### Implications
+
+**Stability of matter.** Atoms exist because electrons (fermions) can't all pile into the lowest orbital. Without Pauli exclusion, all electrons would collapse to the ground state and matter would have no structure.
+
+**White dwarfs.** Supported against gravitational collapse by electron degeneracy pressure; a consequence of Pauli exclusion forcing electrons into high-momentum states.
+
+**Neutron stars.** Same for neutrons.
+
+**Chemistry.** Shell structure, periodic table, covalent bonding; all traces to fermion statistics.
+
+**Superconductivity.** Pairs of fermions (Cooper pairs) act as effective bosons, which can Bose-condense. If electrons were bosons, superconductivity wouldn't be interesting; everything would already be in the ground state.
+
+### Preview: Electron-Photon Interactions
+
+The next steps involve coupling the Dirac field to the electromagnetic field. The Lagrangian of **QED** (from the classical field theory document):
+
+$$\mathcal{L}_{\rm QED} = \bar\psi(i\slashed{D} - m)\psi - \tfrac{1}{4}F_{\mu\nu}F^{\mu\nu}$$
+
+$$\slashed{D} = \gamma^\mu(\partial_\mu + ieA_\mu)$$
+
+After quantizing both $\psi$ and $A_\mu$, we can compute processes like:
+
+- Electron-positron scattering: $e^+e^- \to e^+e^-$
+- Electron-muon scattering
+- Compton scattering: $\gamma e^- \to \gamma e^-$
+- $e^+e^- \to \gamma\gamma$ (annihilation)
+- Pair production: $\gamma\gamma \to e^+e^-$
+
+Each one involves computing a matrix element between initial and final states in Fock space, using the field operators and the interaction term. The resulting expressions become Feynman diagrams.
+
+Before we get there, we need to quantize the photon field (document 3) and develop perturbation theory (document 4). But you can already see where this is heading.
+
+---
+
+## Appendix: Formulas and Identities
+
+### Gamma Matrix Algebra
+
+$$\{\gamma^\mu, \gamma^\nu\} = 2\eta^{\mu\nu}$$
+
+$$(\gamma^0)^\dagger = \gamma^0, \quad (\gamma^i)^\dagger = -\gamma^i$$
+
+$$\gamma^5 = i\gamma^0\gamma^1\gamma^2\gamma^3, \quad \{\gamma^5, \gamma^\mu\} = 0$$
+
+$$\gamma^\mu\gamma_\mu = 4$$
+
+$$\gamma^\mu\gamma^\nu\gamma_\mu = -2\gamma^\nu$$
+
+$$\gamma^\mu\gamma^\nu\gamma^\rho\gamma_\mu = 4\eta^{\nu\rho}$$
+
+### Traces
+
+$$\text{tr}(\gamma^\mu\gamma^\nu) = 4\eta^{\mu\nu}$$
+
+$$\text{tr}(\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma) = 4(\eta^{\mu\nu}\eta^{\rho\sigma} - \eta^{\mu\rho}\eta^{\nu\sigma} + \eta^{\mu\sigma}\eta^{\nu\rho})$$
+
+$$\text{tr}(\gamma^5\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma) = -4i\epsilon^{\mu\nu\rho\sigma}$$
+
+$$\text{tr}(\text{odd number of } \gamma^\mu\text{'s}) = 0$$
+
+$$\text{tr}(\gamma^5) = 0, \quad \text{tr}(\gamma^5\gamma^\mu) = 0, \quad \text{tr}(\gamma^5\gamma^\mu\gamma^\nu) = 0$$
+
+### Spinor Completeness
+
+$$\sum_s u^s(p)\bar u^s(p) = \slashed{p} + m$$
+
+$$\sum_s v^s(p)\bar v^s(p) = \slashed{p} - m$$
+
+### Canonical Anticommutation Relations
+
+$$\{\psi_a(\vec x), \psi_b^\dagger(\vec y)\} = \delta_{ab}\delta^3(\vec x - \vec y)$$
+
+$$\{\psi_a, \psi_b\} = \{\psi_a^\dagger, \psi_b^\dagger\} = 0$$
+
+### Mode Operator Anticommutators
+
+$$\{b^r_{\vec p}, b^{s\dagger}_{\vec q}\} = (2\pi)^3\delta^{rs}\delta^3(\vec p - \vec q)$$
+
+$$\{c^r_{\vec p}, c^{s\dagger}_{\vec q}\} = (2\pi)^3\delta^{rs}\delta^3(\vec p - \vec q)$$
+
+All others vanish.
+
+### Field Expansion
+
+$$\psi(x) = \int\frac{d^3p}{(2\pi)^3\sqrt{2E_p}}\sum_s[b^s_{\vec p} u^s(p) e^{-ip\cdot x} + c^{s\dagger}_{\vec p} v^s(p) e^{+ip\cdot x}]$$
+
+### Feynman Propagator
+
+$$S_F(x - y) = \int\frac{d^4p}{(2\pi)^4}\frac{i(\slashed{p} + m)}{p^2 - m^2 + i\epsilon}e^{-ip\cdot(x-y)}$$
+
+### Chirality Projectors
+
+$$P_L = \tfrac{1}{2}(1 - \gamma^5), \quad P_R = \tfrac{1}{2}(1 + \gamma^5)$$
+
+$$P_L + P_R = 1, \quad P_L^2 = P_L, \quad P_R^2 = P_R, \quad P_L P_R = 0$$
+
+### Bilinears and Their Transformations
+
+| Bilinear | Symbol | Under $P$ | Under $C$ | Under $T$ |
+|---|---|---|---|---|
+| Scalar | $\bar\psi\psi$ | $+$ | $+$ | $+$ |
+| Pseudoscalar | $\bar\psi\gamma^5\psi$ | $-$ | $+$ | $-$ |
+| Vector | $\bar\psi\gamma^\mu\psi$ | $\pm$ | $-$ | $\pm$ |
+| Axial vector | $\bar\psi\gamma^\mu\gamma^5\psi$ | $\mp$ | $+$ | $\mp$ |
+| Tensor | $\bar\psi\sigma^{\mu\nu}\psi$ | $\pm$ | $-$ | $\mp$ |
+
+(Where $\pm$ means spatial components flip sign, time components don't, depending on index structure.)
+
+### Checklist
+
+By the end of this document, you should be able to:
+
+- Explain why commutators don't work for spin-½ fields, and why anticommutators do
+- State the spin-statistics theorem and describe its content
+- Expand the Dirac field in terms of creation/annihilation operators for particles and antiparticles
+- Explain the conventions (the factors of $\sqrt{2E_p}$, the $u$ vs. $v$ spinors)
+- Show that Pauli exclusion follows from $(b^\dagger)^2 = 0$
+- Write the Feynman propagator in momentum space
+- List the five types of bilinears and their Lorentz transformation properties
+- Explain why CPT is guaranteed but CP might be violated
+
+### Problems to Work
+
+1. Verify that $(b^\dagger_{\vec p})^2 = 0$ from the anticommutation relations, confirming Pauli exclusion.
+2. Compute $H|\vec p, s\rangle_e$ and $H|\vec p, s\rangle_{\bar e}$ to verify both have energy $E_p$.
+3. Derive the explicit form of the Feynman propagator starting from the mode expansion.
+4. Show that $Q|\vec p, s\rangle_e = +|\vec p, s\rangle_e$ and $Q|\vec p, s\rangle_{\bar e} = -|\vec p, s\rangle_{\bar e}$.
+5. Verify that the sum over spins $\sum_s u^s(p)\bar u^s(p) = \slashed{p} + m$ using the explicit chiral-basis spinors.
+6. Compute the trace $\text{tr}[\slashed{p}\slashed{k}]$ and $\text{tr}[\slashed{p}\slashed{k}\slashed{q}\slashed{\ell}]$ using the trace identities.
+
+Problems 5 and 6 especially are worth doing; both will appear constantly in QED calculations, and fluency with spinor algebra comes from repetition.
+
+### Further Reading
+
+- **Peskin & Schroeder, Chapter 3:** standard treatment of Dirac quantization
+- **Schwartz, Chapter 10:** cleaner modern presentation
+- **Srednicki, Chapters 36-44:** includes careful discussion of discrete symmetries
+- **Weinberg, Vol. 1, Chapter 5:** Weinberg's unique perspective on why fields transform as they do
+
+---
+
+## Closing Note
+
+This document establishes the second pillar of QFT. We now have:
+
+- Scalar fields (bosons); quantized with commutators
+- Dirac fields (fermions); quantized with anticommutators
+
+And we've seen that this isn't a choice; the spin-statistics theorem forces it.
+
+### The Big Picture So Far
+
+Each fundamental field in the Standard Model is quantized by canonical methods:
+
+- Higgs (spin 0); commutators
+- Electrons, quarks, leptons (spin ½); anticommutators
+- Photon, W, Z, gluon (spin 1); commutators (next document, with complications from gauge)
+
+All matter is fermionic. All force carriers are bosonic. That's not accidental; it's forced by the spin-statistics theorem, and it explains why matter and forces play different roles.
+
+### What's Next
+
+The next document handles the photon: quantizing a gauge field. The complications: gauge invariance means the $A_\mu$ has more components than physical degrees of freedom. Simply quantizing all four components of $A_\mu$ gives wrong results. We need gauge fixing; and the procedures have conceptual content (leading eventually to ghost fields in non-abelian theories).
+
+After that: interactions. We'll couple the Dirac and photon fields together in QED, derive Feynman rules from first principles, and finally compute physical quantities like cross-sections and anomalous magnetic moments.
+
+You're two-thirds of the way through the "quantize the free fields" phase of QFT. The next document completes it, and then the real payoff; Feynman diagrams, QED predictions, experimentally testable results; begins.
+
+Nicely done.

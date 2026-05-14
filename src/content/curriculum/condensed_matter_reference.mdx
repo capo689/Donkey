@@ -15,9 +15,9 @@ classReportTitle: "Solids, electrons, and a job market I did not expect."
 
 *Where quantum mechanics, statistical mechanics, and field theory come together to describe the matter around you.*
 
-Condensed matter physics is the study of the many-body behavior of atoms and electrons in solids, liquids, and other condensed phases. It's where most working physicists actually work — about half of all physics research, by most counts. It's also where some of the deepest recent theoretical ideas have emerged (topological phases, fractionalization, emergent gauge fields) and where quantum mechanics confronts experiment most directly.
+Condensed matter physics is the study of the many-body behavior of atoms and electrons in solids, liquids, and other condensed phases. It's where most working physicists actually work; about half of all physics research, by most counts. It's also where some of the deepest recent theoretical ideas have emerged (topological phases, fractionalization, emergent gauge fields) and where quantum mechanics confronts experiment most directly.
 
-This document covers condensed matter at the level of a first-year graduate course — roughly Ashcroft & Mermin for solid state basics, with some modern topics (topological matter, strongly correlated systems) tacked on. You've built the prerequisites: quantum mechanics, statistical mechanics, and (via the field theory docs) the concept of spontaneous symmetry breaking.
+This document covers condensed matter at the level of a first-year graduate course; roughly Ashcroft & Mermin for solid state basics, with some modern topics (topological matter, strongly correlated systems) tacked on. You've built the prerequisites: quantum mechanics, statistical mechanics, and (via the field theory docs) the concept of spontaneous symmetry breaking.
 
 ---
 
@@ -47,20 +47,20 @@ This document covers condensed matter at the level of a first-year graduate cour
 
 A carbon atom is unremarkable. Many carbon atoms arranged as diamond are the hardest substance we know. The same atoms arranged as graphite are soft and conducting. The same atoms as graphene (a single layer of graphite) have electrons that behave like massless relativistic particles despite moving only at $10^6$ m/s.
 
-This is **emergence**: the qualitative properties of condensed matter are not simple extrapolations of single-atom physics. Many-body quantum mechanics generates genuinely new behavior — phases, phase transitions, quasi-particles, collective modes — that has no counterpart in the underlying ingredients.
+This is **emergence**: the qualitative properties of condensed matter are not simple extrapolations of single-atom physics. Many-body quantum mechanics generates genuinely new behavior; phases, phase transitions, quasi-particles, collective modes; that has no counterpart in the underlying ingredients.
 
 Philip Anderson's 1972 essay "More Is Different" is the canonical statement. The laws of physics at each length scale are not mere consequences of the laws at shorter scales; they have their own principles, their own unknowns, their own research programs.
 
 ### Why Condensed Matter Matters
 
-- **Technology:** transistors, lasers, magnetic storage, solar cells, superconducting magnets — all condensed matter.
+- **Technology:** transistors, lasers, magnetic storage, solar cells, superconducting magnets; all condensed matter.
 - **Fundamental physics:** many of the best-tested laws of nature emerged from condensed matter (BCS superconductivity, the quantum Hall effect, spontaneous symmetry breaking).
 - **Connection to other fields:** condensed matter techniques apply to nuclear matter, neutron stars, cold atomic gases, and even high-energy physics (holographic duality relates black holes to condensed matter systems).
 - **New phenomena:** topological insulators, quantum spin liquids, and strange metals continue to be discovered and understood.
 
 ### What We'll Cover
 
-The document moves roughly from tractable (non-interacting electrons in periodic potentials) to strongly interacting (Fermi liquids, correlated systems). Along the way we'll cover the key applications: metals, semiconductors, magnets, superconductors — and then the modern frontiers.
+The document moves roughly from tractable (non-interacting electrons in periodic potentials) to strongly interacting (Fermi liquids, correlated systems). Along the way we'll cover the key applications: metals, semiconductors, magnets, superconductors; and then the modern frontiers.
 
 ---
 
@@ -111,7 +111,7 @@ Key property: $e^{i\vec G \cdot \vec R} = 1$ for any lattice vector $\vec R$ and
 
 ### Brillouin Zones
 
-The **first Brillouin zone** (BZ) is the Wigner-Seitz cell of the reciprocal lattice — the set of points closer to the origin than to any other reciprocal lattice point.
+The **first Brillouin zone** (BZ) is the Wigner-Seitz cell of the reciprocal lattice; the set of points closer to the origin than to any other reciprocal lattice point.
 
 Why important? The electronic states of a crystal can be uniquely labeled by crystal momenta $\vec k$ lying in the first BZ. Anything outside is equivalent (by adding reciprocal lattice vectors) to something inside.
 
@@ -123,11 +123,11 @@ $$n\lambda = 2d\sin\theta$$
 
 relates diffraction peak angles $\theta$ to lattice spacings $d$. Equivalently, the Laue condition: $\vec k_{\text{out}} - \vec k_{\text{in}} = \vec G$ for a reciprocal lattice vector $\vec G$.
 
-X-ray diffraction is *the* tool for determining crystal structure, and revealing the reciprocal lattice directly. Watson and Crick deduced DNA's double helix from Rosalind Franklin's X-ray diffraction images — itself an application of the same physics used for every solid.
+X-ray diffraction is *the* tool for determining crystal structure, and revealing the reciprocal lattice directly. Watson and Crick deduced DNA's double helix from Rosalind Franklin's X-ray diffraction images; itself an application of the same physics used for every solid.
 
 ### Symmetry and Group Theory
 
-Crystals have symmetries: rotations, reflections, translations. These form a **space group**. There are 230 distinct space groups in 3D — each crystalline material belongs to exactly one.
+Crystals have symmetries: rotations, reflections, translations. These form a **space group**. There are 230 distinct space groups in 3D; each crystalline material belongs to exactly one.
 
 Symmetry determines a lot:
 - Selection rules for optical transitions
@@ -135,7 +135,7 @@ Symmetry determines a lot:
 - Allowed terms in the effective Hamiltonian
 - Topological classifications
 
-Group theory — specifically representation theory of space groups — is a working tool for condensed matter theorists. This document won't develop it, but be aware: much of the structure of condensed matter reflects symmetry.
+Group theory; specifically representation theory of space groups; is a working tool for condensed matter theorists. This document won't develop it, but be aware: much of the structure of condensed matter reflects symmetry.
 
 ---
 
@@ -165,15 +165,15 @@ For each crystal momentum $\vec k$, there are multiple eigenstates labeled by a 
 
 $$H\psi_{n\vec k} = \epsilon_n(\vec k)\psi_{n\vec k}$$
 
-The function $\epsilon_n(\vec k)$ is the **band structure** — the allowed electron energies. Bands can overlap, touch, or be separated by gaps.
+The function $\epsilon_n(\vec k)$ is the **band structure**; the allowed electron energies. Bands can overlap, touch, or be separated by gaps.
 
 ### The Empty Lattice Approximation
 
 Start with truly free electrons: $\epsilon(\vec k) = \hbar^2 k^2/(2m)$. Restrict $\vec k$ to the first Brillouin zone by folding (i.e., identifying $\vec k$ with $\vec k + \vec G$). You get parabolic bands folded back into the BZ.
 
-Turn on a weak crystal potential. At the BZ boundaries, where parabolas from different "extended zones" meet, gaps open up — this is the **nearly free electron** picture.
+Turn on a weak crystal potential. At the BZ boundaries, where parabolas from different "extended zones" meet, gaps open up; this is the **nearly free electron** picture.
 
-Turn on a strong crystal potential. Electrons become localized near atoms, and you derive bands from atomic orbitals — this is the **tight-binding** picture.
+Turn on a strong crystal potential. Electrons become localized near atoms, and you derive bands from atomic orbitals; this is the **tight-binding** picture.
 
 Both approaches give the same qualitative structure: bands separated by gaps.
 
@@ -203,7 +203,7 @@ $$g(\epsilon) = \sum_n \int \frac{d^3k}{(2\pi)^3} \delta(\epsilon - \epsilon_n(\
 
 In 3D free electron gas: $g(\epsilon) \propto \sqrt{\epsilon}$.
 
-In 1D: $g(\epsilon)$ diverges at band edges as $1/\sqrt{\epsilon}$ — Van Hove singularities.
+In 1D: $g(\epsilon)$ diverges at band edges as $1/\sqrt{\epsilon}$; Van Hove singularities.
 
 In 2D: $g(\epsilon)$ has logarithmic Van Hove singularities at saddle points.
 
@@ -219,23 +219,23 @@ Electrons are fermions; they obey Pauli exclusion. At zero temperature, they fil
 
 ### Three Outcomes
 
-**Case 1: Fermi level inside a band.** Partially filled band — electrons near $\epsilon_F$ can be excited by infinitesimal energy (into empty states just above). The material conducts electricity: **metal**.
+**Case 1: Fermi level inside a band.** Partially filled band; electrons near $\epsilon_F$ can be excited by infinitesimal energy (into empty states just above). The material conducts electricity: **metal**.
 
 **Case 2: Fermi level in a gap, gap is large.** Filled band below, empty band above, separated by a gap $E_g \gg k_B T$. No thermally accessible excitations: **insulator**.
 
 **Case 3: Fermi level in a gap, gap is small.** Same structure, but $E_g \sim k_B T$ or small enough to be bridged by doping: **semiconductor**.
 
-This single picture explains why copper conducts, silicon is a semiconductor, and diamond is a (wide-gap) insulator — despite all three being made of elements with similar chemistry. It's about how the electrons fill the bands.
+This single picture explains why copper conducts, silicon is a semiconductor, and diamond is a (wide-gap) insulator; despite all three being made of elements with similar chemistry. It's about how the electrons fill the bands.
 
 ### Counting
 
-A fully filled band has one electron per unit cell per spin — so two electrons per unit cell per band. Consequence: **a material with an odd number of electrons per unit cell must be a metal** (band theory alone). An even number could be either metal or insulator, depending on whether bands overlap.
+A fully filled band has one electron per unit cell per spin; so two electrons per unit cell per band. Consequence: **a material with an odd number of electrons per unit cell must be a metal** (band theory alone). An even number could be either metal or insulator, depending on whether bands overlap.
 
 ### Fermi Surface
 
 For a metal, the Fermi surface is the set of $\vec k$-points at which $\epsilon(\vec k) = \epsilon_F$. It lives in the first Brillouin zone.
 
-For free electrons, the Fermi surface is a sphere. For real metals, it reflects the crystal symmetry and can be quite complex — open sheets, necks, hole pockets.
+For free electrons, the Fermi surface is a sphere. For real metals, it reflects the crystal symmetry and can be quite complex; open sheets, necks, hole pockets.
 
 The Fermi surface is not a theoretical artifact; it's directly measurable via the **de Haas-van Alphen effect** (oscillations of magnetization with applied field) and other techniques.
 
@@ -257,7 +257,7 @@ An empty state in an otherwise-filled band behaves like a positively-charged par
 
 ## 5. Phonons and Lattice Dynamics
 
-Electrons move in a lattice, but the lattice also moves. Quantized lattice vibrations are **phonons** — bosonic excitations that act almost exactly like photons in an optical cavity.
+Electrons move in a lattice, but the lattice also moves. Quantized lattice vibrations are **phonons**; bosonic excitations that act almost exactly like photons in an optical cavity.
 
 ### Classical Lattice Dynamics
 
@@ -302,7 +302,7 @@ $$C_V \propto T^3$$
 
 The famous $T^3$ law. Arises because at low $T$, only long-wavelength (low-$\omega$) phonons are excited; the density of states goes as $\omega^2$ and the Bose factor gives thermal occupation to these modes.
 
-**High-T limit:** $C_V = 3N k_B$ — Dulong-Petit.
+**High-T limit:** $C_V = 3N k_B$; Dulong-Petit.
 
 ### Electron-Phonon Coupling
 
@@ -363,7 +363,7 @@ where $L = 2.44 \times 10^{-8}$ W·Ω/K² is the **Lorenz number**. Remarkably, 
 
 In metals: electrons dominate heat conduction.
 
-In insulators: phonons dominate. $\kappa$ peaks at intermediate $T$ — low $T$ has few phonons, high $T$ has heavy phonon scattering.
+In insulators: phonons dominate. $\kappa$ peaks at intermediate $T$; low $T$ has few phonons, high $T$ has heavy phonon scattering.
 
 ### Limitations of Free Electron Model
 
@@ -409,7 +409,7 @@ Adding small amounts of impurity atoms (typically $10^{15}$ to $10^{19}$ cm$^{-3
 - **n-type:** donor atoms (e.g., P in Si) contribute extra electrons to the conduction band
 - **p-type:** acceptor atoms (e.g., B in Si) leave holes in the valence band
 
-Carrier density is set by doping, not by thermal excitation across the full gap. This gives precise control over electronic properties — the basis of all semiconductor electronics.
+Carrier density is set by doping, not by thermal excitation across the full gap. This gives precise control over electronic properties; the basis of all semiconductor electronics.
 
 ### The p-n Junction
 
@@ -420,11 +420,11 @@ Join n-type and p-type material. At the junction:
 - A **depletion region** with built-in electric field forms
 - The built-in voltage opposes further diffusion, reaching equilibrium
 
-Apply forward bias: current flows. Reverse bias: no current (except small leakage). This is a **diode** — the simplest semiconductor device.
+Apply forward bias: current flows. Reverse bias: no current (except small leakage). This is a **diode**; the simplest semiconductor device.
 
 ### Transistors
 
-**Bipolar junction transistor (BJT):** three alternating doped regions (NPN or PNP). Small base current controls large collector current — current amplification.
+**Bipolar junction transistor (BJT):** three alternating doped regions (NPN or PNP). Small base current controls large collector current; current amplification.
 
 **MOSFET (metal-oxide-semiconductor field-effect transistor):** a gate voltage controls conductivity of a channel between source and drain. Extremely low power. The workhorse of integrated circuits. Every modern microprocessor contains billions of MOSFETs.
 
@@ -432,17 +432,17 @@ Apply forward bias: current flows. Reverse bias: no current (except small leakag
 
 **LEDs:** direct-gap semiconductors emit light when electrons and holes recombine. Energy of emitted photon ≈ band gap.
 
-**Semiconductor lasers:** LEDs with optical cavity and high current density — coherent light.
+**Semiconductor lasers:** LEDs with optical cavity and high current density; coherent light.
 
-**Solar cells:** reverse operation — incident photons create electron-hole pairs, separated by the p-n junction's field, producing current. Silicon is workhorse; perovskites are the rising alternative.
+**Solar cells:** reverse operation; incident photons create electron-hole pairs, separated by the p-n junction's field, producing current. Silicon is workhorse; perovskites are the rising alternative.
 
 **Photodetectors:** similar idea, optimized for light detection.
 
 ### Heterostructures
 
-Stack different semiconductors with matched lattice constants. Create quantum wells (electrons confined in 2D), quantum wires (1D), quantum dots (0D — "artificial atoms"). Remarkable control over electron behavior.
+Stack different semiconductors with matched lattice constants. Create quantum wells (electrons confined in 2D), quantum wires (1D), quantum dots (0D; "artificial atoms"). Remarkable control over electron behavior.
 
-Example: the 2D electron gas in GaAs/AlGaAs heterostructures — the system where the fractional quantum Hall effect was discovered.
+Example: the 2D electron gas in GaAs/AlGaAs heterostructures; the system where the fractional quantum Hall effect was discovered.
 
 ### Moore's Law and Its Limits
 
@@ -453,7 +453,7 @@ For decades, transistor count per chip doubled every ~2 years (Moore's law). Cur
 - Power dissipation at high density
 - Heat dissipation
 
-Current research: vertical transistors (FinFETs), 2D material transistors, neuromorphic computing, quantum computing — each exploring alternatives to classical CMOS scaling.
+Current research: vertical transistors (FinFETs), 2D material transistors, neuromorphic computing, quantum computing; each exploring alternatives to classical CMOS scaling.
 
 ---
 
@@ -546,9 +546,9 @@ Below a critical temperature, some materials conduct electricity with absolutely
 
 ### Phenomenology
 
-**Zero resistance** below $T_c$. Persistent currents measured over years without decay — no upper bound on the coherence time.
+**Zero resistance** below $T_c$. Persistent currents measured over years without decay; no upper bound on the coherence time.
 
-**Meissner effect** (1933): superconductors expel magnetic field from their interior ($B = 0$). Not just perfect conductivity (which would only prevent *changes* in $B$) — an active exclusion. This distinguishes superconductors from hypothetical perfect conductors.
+**Meissner effect** (1933): superconductors expel magnetic field from their interior ($B = 0$). Not just perfect conductivity (which would only prevent *changes* in $B$); an active exclusion. This distinguishes superconductors from hypothetical perfect conductors.
 
 **Critical field $H_c$:** strong enough magnetic field destroys superconductivity. Two types:
 - **Type I:** abrupt transition at $H_c$. Pure elements (Hg, Pb, Sn).
@@ -562,7 +562,7 @@ Below a critical temperature, some materials conduct electricity with absolutely
 
 Bardeen, Cooper, Schrieffer (1957): a microscopic theory of conventional superconductivity.
 
-**Key insight (Cooper, 1956):** an arbitrarily weak attractive interaction between electrons near the Fermi surface binds them into pairs — **Cooper pairs** — regardless of strength. The Fermi sea is unstable to pairing.
+**Key insight (Cooper, 1956):** an arbitrarily weak attractive interaction between electrons near the Fermi surface binds them into pairs; **Cooper pairs**; regardless of strength. The Fermi sea is unstable to pairing.
 
 **Source of attraction:** phonon exchange. An electron distorts the lattice, attracting other electrons (positive ions). The retarded interaction creates an effective attraction between electrons.
 
@@ -570,7 +570,7 @@ Bardeen, Cooper, Schrieffer (1957): a microscopic theory of conventional superco
 
 $$|\text{BCS}\rangle = \prod_{\vec k} (u_{\vec k} + v_{\vec k} c^\dagger_{\vec k\uparrow} c^\dagger_{-\vec k\downarrow})|0\rangle$$
 
-Pairs of electrons with opposite momentum and opposite spin. All pairs share a single macroscopic wave function — a condensate.
+Pairs of electrons with opposite momentum and opposite spin. All pairs share a single macroscopic wave function; a condensate.
 
 **Energy gap:**
 
@@ -604,7 +604,7 @@ The same Mexican-hat structure as the Higgs! Superconductivity is a condensed-ma
 
 ### Type II Superconductors and Vortices
 
-For type II, when the applied field exceeds $H_{c1}$, magnetic flux penetrates in **vortices** — tubes of flux, each carrying one flux quantum:
+For type II, when the applied field exceeds $H_{c1}$, magnetic flux penetrates in **vortices**; tubes of flux, each carrying one flux quantum:
 
 $$\Phi_0 = \frac{h}{2e} \approx 2.07 \times 10^{-15}$$
 
@@ -612,12 +612,12 @@ Wb. (Factor of 2 from Cooper pairing.) Vortices form a triangular lattice (Abrik
 
 ### High-$T_c$ Superconductors
 
-In 1986, Bednorz and Müller discovered superconductivity at 35 K in a copper oxide compound. Quickly pushed to 93 K (YBa$_2$Cu$_3$O$_7$, "YBCO") and beyond — above liquid nitrogen temperature.
+In 1986, Bednorz and Müller discovered superconductivity at 35 K in a copper oxide compound. Quickly pushed to 93 K (YBa$_2$Cu$_3$O$_7$, "YBCO") and beyond; above liquid nitrogen temperature.
 
 **Still not fully understood.** These materials are:
 - Layered (CuO$_2$ planes are the action)
-- Doped Mott insulators — parent compound is an antiferromagnet
-- Strongly correlated — electronic interactions dominate
+- Doped Mott insulators; parent compound is an antiferromagnet
+- Strongly correlated; electronic interactions dominate
 - $d$-wave pairing symmetry (not $s$-wave like BCS)
 - Show "strange metal" behavior above $T_c$
 
@@ -625,7 +625,7 @@ Many proposed theories; no consensus.
 
 ### Hydrogen-Rich Superconductors
 
-Since ~2015, superconductivity has been found at very high pressures in hydrogen-rich compounds: H$_3$S at 203 K, LaH$_{10}$ at 250 K, etc. These require megabar pressures — not practical, but interesting. Phonon-mediated BCS-like mechanism, predicted theoretically before experiment.
+Since ~2015, superconductivity has been found at very high pressures in hydrogen-rich compounds: H$_3$S at 203 K, LaH$_{10}$ at 250 K, etc. These require megabar pressures; not practical, but interesting. Phonon-mediated BCS-like mechanism, predicted theoretically before experiment.
 
 ### Josephson Effect
 
@@ -659,7 +659,7 @@ Liquid $^4$He below $T_\lambda = 2.17$ K becomes a superfluid.
 - Creeps up walls (Rollin film)
 - Second sound (temperature waves propagate)
 
-$^4$He atoms are bosons. Superfluidity is a form of Bose-Einstein condensation — but strongly interacting (unlike the weakly-interacting atomic gas BECs).
+$^4$He atoms are bosons. Superfluidity is a form of Bose-Einstein condensation; but strongly interacting (unlike the weakly-interacting atomic gas BECs).
 
 ### Two-Fluid Model
 
@@ -669,7 +669,7 @@ The superfluid flows without dissipation; the normal fluid behaves as usual.
 
 ### Helium-3: Fermion Superfluidity
 
-$^3$He atoms are fermions. At $T \sim 2$ mK (much colder!) they undergo a BCS-like transition to a superfluid state. The pairing is $p$-wave (not $s$-wave) — Cooper pairs with nonzero orbital angular momentum. Multiple phases (A, B) with rich topological structure.
+$^3$He atoms are fermions. At $T \sim 2$ mK (much colder!) they undergo a BCS-like transition to a superfluid state. The pairing is $p$-wave (not $s$-wave); Cooper pairs with nonzero orbital angular momentum. Multiple phases (A, B) with rich topological structure.
 
 ### Atomic BECs
 
@@ -726,7 +726,7 @@ Non-Fermi liquids are a major area of active research and one of the frontiers o
 
 ## 12. Topological Phases of Matter
 
-A revolution in condensed matter theory. States of matter characterized not by symmetry breaking (like ferromagnetism) but by *topology* — global properties of the wave function that are robust to local perturbations.
+A revolution in condensed matter theory. States of matter characterized not by symmetry breaking (like ferromagnetism) but by *topology*; global properties of the wave function that are robust to local perturbations.
 
 ### The Quantum Hall Effect
 
@@ -736,39 +736,39 @@ Quantum mechanically (Von Klitzing, 1980): at low temperatures and high fields, 
 
 $$\sigma_{xy} = \nu \frac{e^2}{h}, \quad \nu = 1, 2, 3, \ldots$$
 
-This quantization is *ridiculously* precise — to better than one part in $10^9$ — and *material-independent*. It's used to define the ohm metrologically.
+This quantization is *ridiculously* precise; to better than one part in $10^9$; and *material-independent*. It's used to define the ohm metrologically.
 
 ### Topology of the Quantization
 
-The integer $\nu$ is a **topological invariant** of the occupied bands (the **Chern number**). Topological invariants are integers that cannot change under smooth deformations of the Hamiltonian — only through a phase transition where the gap closes.
+The integer $\nu$ is a **topological invariant** of the occupied bands (the **Chern number**). Topological invariants are integers that cannot change under smooth deformations of the Hamiltonian; only through a phase transition where the gap closes.
 
 That's the source of the quantization's precision and universality: it's an integer, protected by topology.
 
 ### The Fractional Quantum Hall Effect
 
-At even stronger fields and cleaner samples, $\sigma_{xy} = \nu e^2/h$ with $\nu = 1/3, 2/5, 5/2, \ldots$ — *fractional* values.
+At even stronger fields and cleaner samples, $\sigma_{xy} = \nu e^2/h$ with $\nu = 1/3, 2/5, 5/2, \ldots$; *fractional* values.
 
-These states cannot be understood from non-interacting electrons. They're genuinely many-body topological states. Fractionalization: the quasiparticles carry fractional electric charge ($e/3, e/5, \ldots$) and — even more strangely — **anyonic** statistics (neither bosonic nor fermionic).
+These states cannot be understood from non-interacting electrons. They're genuinely many-body topological states. Fractionalization: the quasiparticles carry fractional electric charge ($e/3, e/5, \ldots$) and; even more strangely; **anyonic** statistics (neither bosonic nor fermionic).
 
-Some fractional quantum Hall states (like $\nu = 5/2$) may host **non-Abelian anyons** — candidates for fault-tolerant topological quantum computation.
+Some fractional quantum Hall states (like $\nu = 5/2$) may host **non-Abelian anyons**; candidates for fault-tolerant topological quantum computation.
 
 ### Topological Insulators
 
 In 2005-2007, theorists predicted and experimentalists found a new class of materials: topological insulators. Bulk is an insulator, but the surface (or edge) has metallic conducting states.
 
-These edge states are topologically protected — you cannot remove them without closing the bulk gap. They're robust to disorder. Spin-momentum locking: at each point on the edge, electrons with opposite momenta have opposite spins.
+These edge states are topologically protected; you cannot remove them without closing the bulk gap. They're robust to disorder. Spin-momentum locking: at each point on the edge, electrons with opposite momenta have opposite spins.
 
 Examples: $\text{Bi}_2\text{Se}_3$, $\text{Bi}_2\text{Te}_3$, HgTe quantum wells.
 
 ### Weyl and Dirac Semimetals
 
-Beyond insulators: topological semimetals with *point degeneracies* in the bulk band structure. Near these points, the electrons behave as relativistic massless fermions — **Weyl fermions** (chiral) or **Dirac fermions** (non-chiral).
+Beyond insulators: topological semimetals with *point degeneracies* in the bulk band structure. Near these points, the electrons behave as relativistic massless fermions; **Weyl fermions** (chiral) or **Dirac fermions** (non-chiral).
 
 TaAs, Cd$_3$As$_2$, and others host these states. The Weyl fermions of particle physics (predicted in 1929 but never observed as elementary particles) show up as emergent quasiparticles in these condensed matter systems.
 
 ### Why This Matters
 
-Topology gives a completely new way to classify phases of matter — one that goes beyond Landau's symmetry-breaking paradigm. Properties protected by topology are robust: they don't require fine-tuning and survive disorder. This makes them potentially useful for quantum technology (topological qubits).
+Topology gives a completely new way to classify phases of matter; one that goes beyond Landau's symmetry-breaking paradigm. Properties protected by topology are robust: they don't require fine-tuning and survive disorder. This makes them potentially useful for quantum technology (topological qubits).
 
 Whole classification schemes of topological phases have been developed, connecting condensed matter to high-energy theory, K-theory, and topology.
 
@@ -780,7 +780,7 @@ Systems where electron-electron interactions are too strong to treat perturbativ
 
 ### The Mott Insulator
 
-A half-filled band should be a metal (band theory). But strong Coulomb repulsion between electrons on the same site can prevent them from hopping — resulting in an insulator. This is a **Mott insulator**.
+A half-filled band should be a metal (band theory). But strong Coulomb repulsion between electrons on the same site can prevent them from hopping; resulting in an insulator. This is a **Mott insulator**.
 
 Hubbard model:
 
@@ -807,11 +807,11 @@ Understanding this diagram is one of the most important problems in condensed ma
 
 Compounds with $f$-electrons (rare earths, actinides) can have quasiparticles with effective masses up to ~1000 $m_e$. Examples: CeAl$_3$, UPt$_3$, URu$_2$Si$_2$.
 
-Many exhibit unconventional superconductivity and quantum critical behavior — non-Fermi liquid responses near $T = 0$ critical points.
+Many exhibit unconventional superconductivity and quantum critical behavior; non-Fermi liquid responses near $T = 0$ critical points.
 
 ### Quantum Magnetism
 
-Frustrated magnets (e.g., on triangular or kagome lattices) can fail to order even at $T = 0$, instead forming **quantum spin liquids** — highly entangled states with emergent gauge fields and fractionalized excitations.
+Frustrated magnets (e.g., on triangular or kagome lattices) can fail to order even at $T = 0$, instead forming **quantum spin liquids**; highly entangled states with emergent gauge fields and fractionalized excitations.
 
 Experimentally candidate materials exist (herbertsmithite, some organic salts) but unambiguous identification is difficult.
 
@@ -968,11 +968,11 @@ Condensed matter physics is where most physics PhDs find industry jobs, and wher
 
 ## Closing Note
 
-Condensed matter physics is enormous — the vast majority of practicing physicists work in some corner of it, and this document barely scratches the surface of any given topic. What I've tried to convey:
+Condensed matter physics is enormous; the vast majority of practicing physicists work in some corner of it, and this document barely scratches the surface of any given topic. What I've tried to convey:
 
-- **Band theory** gives you metals, insulators, and semiconductors — the materials running civilization.
+- **Band theory** gives you metals, insulators, and semiconductors; the materials running civilization.
 - **Phonons and electron-phonon interactions** explain heat, sound, and conventional superconductivity.
-- **Symmetry breaking** gives you magnetism, superconductivity, and superfluidity — all of which share the same mathematical structure as the Higgs mechanism in particle physics.
+- **Symmetry breaking** gives you magnetism, superconductivity, and superfluidity; all of which share the same mathematical structure as the Higgs mechanism in particle physics.
 - **Fermi liquid theory** explains why free-electron models work, and its breakdown (strange metals, Luttinger liquids) is the frontier.
 - **Topological matter** is a genuinely new kind of classification, one that goes beyond symmetry breaking and produces materials with robust, protected properties.
 - **Strongly correlated systems** (high-$T_c$, heavy fermions, quantum magnets) contain many of physics's current great unsolved problems.
@@ -992,13 +992,13 @@ And it feeds forward into quantum field theory: many of the methods (Green's fun
 
 ### What's Next
 
-You now have twelve reference documents. The natural final entry in the pre-QFT roadmap is — QFT itself. Specifically, starting with **canonical quantization of the scalar field**, as you suggested way back. With everything you now have:
+You now have twelve reference documents. The natural final entry in the pre-QFT roadmap is; QFT itself. Specifically, starting with **canonical quantization of the scalar field**, as you suggested way back. With everything you now have:
 
 - Classical field theory (know how to write $\mathcal{L}$)
 - Quantum mechanics (operators, commutators, Hilbert space)
 - Statistical mechanics (partition functions, ensembles)
 - Condensed matter (many-body concepts, Green's functions context)
-- General relativity (curved spacetime — for QFT in curved backgrounds, later)
+- General relativity (curved spacetime; for QFT in curved backgrounds, later)
 
 ...the scalar field quantization will actually make sense rather than feeling like an arbitrary procedure.
 

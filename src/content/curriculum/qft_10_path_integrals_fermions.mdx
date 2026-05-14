@@ -9,6 +9,779 @@ extendsTo: [23]
 classReportTitle: "Fermions in the path integral, with the sign that won't go away."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 10: Grassmann variables, anticommuting c-numbers, and how to put fermions inside the path integral.*
 
-{/* Content from qft_10_path_integrals_fermions.md */}
+Document 9 developed path integrals for bosonic fields. But all matter is fermionic, and no complete QFT framework can ignore fermions. The challenge: fermions anticommute, and ordinary c-number integration variables commute. If we want path integrals over fermion fields, we need a new kind of number.
+
+Those new numbers are **Grassmann variables**; anticommuting c-numbers. They're strange at first sight (a number that squares to zero? that doesn't commute with itself?) but the algebra is perfectly well-defined and maps beautifully onto fermionic physics.
+
+Once we have Grassmann integration, the fermionic path integral is essentially identical in structure to the bosonic one; same generating functionals, same perturbation theory, same Feynman rules. But with one crucial difference: **Gaussian integrals over Grassmann variables give *determinants*, not *inverse* determinants.** This sign flip is what encodes fermionic statistics at the level of the path integral, and it has profound consequences.
+
+### Prerequisites and Conventions
+
+- QFT documents 1-9 (especially documents 2 and 9)
+- Linear algebra (determinants, matrix exponentials)
+- Same conventions: mostly-minus metric, $\hbar = c = 1$
+
+---
+
+## Table of Contents
+
+1. [Why We Need Anticommuting Numbers](#1-why-we-need-anticommuting-numbers)
+2. [Grassmann Numbers: The Algebra](#2-grassmann-numbers-the-algebra)
+3. [Calculus on Grassmann Variables](#3-calculus-on-grassmann-variables)
+4. [Grassmann Gaussian Integrals](#4-grassmann-gaussian-integrals)
+5. [The Fermionic Path Integral](#5-the-fermionic-path-integral)
+6. [Generating Functional for Fermions](#6-generating-functional-for-fermions)
+7. [The Fermion Propagator from the Path Integral](#7-the-fermion-propagator-from-the-path-integral)
+8. [Integrating Out Fermions: Effective Actions](#8-integrating-out-fermions-effective-actions)
+9. [Perturbation Theory with Fermions](#9-perturbation-theory-with-fermions)
+10. [The Sign of the Fermion Loop](#10-the-sign-of-the-fermion-loop)
+11. [Applications: Yukawa, QED, and Beyond](#11-applications-yukawa-qed-and-beyond)
+12. [The Sign Problem and Lattice QCD](#12-the-sign-problem-and-lattice-qcd)
+13. [Appendix: Grassmann Algebra Reference](#appendix-grassmann-algebra-reference)
+
+---
+
+## 1. Why We Need Anticommuting Numbers
+
+### The Problem
+
+In document 2, we quantized the Dirac field using anticommutators instead of commutators. The spin-statistics theorem forced this: any attempt to use commutators produced either negative-energy states or negative-norm vectors.
+
+Now we want to write the Dirac field theory as a path integral:
+
+$$Z = \int\mathcal{D}\psi\,\mathcal{D}\bar\psi\, e^{iS[\psi, \bar\psi]}$$
+
+The integration variables $\psi(x)$ and $\bar\psi(x)$ are "classical" fields corresponding to the Dirac operator. But classical fields that correspond to *fermionic* quantum operators must satisfy something unusual: they should anticommute.
+
+Why? Because when you derive the path integral from canonical quantization (as in document 2, section 2), the "classical" fields appearing in the integrand are eigenvalues of the field operators. Eigenvalues of anticommuting operators must themselves anticommute; otherwise the path integral won't reproduce the right commutation structure.
+
+### The Requirement
+
+We need integration variables $\psi$, $\bar\psi$ satisfying:
+
+$$\{\psi(x), \psi(y)\} = 0, \quad \{\bar\psi(x), \bar\psi(y)\} = 0, \quad \{\psi(x), \bar\psi(y)\} = 0$$
+
+These anticommutators are at the level of classical c-numbers, not operators. The variables multiply each other anticommutatively.
+
+Such quantities are called **Grassmann numbers** (after Hermann Grassmann, 1844).
+
+### The Payoff
+
+Once we have Grassmann numbers, the fermionic path integral looks almost identical to the bosonic one, with Gaussian integrals giving determinants instead of inverse determinants. Everything about fermion physics falls out.
+
+---
+
+## 2. Grassmann Numbers: The Algebra
+
+### Definition
+
+A **Grassmann number** $\theta$ is an object satisfying:
+
+$$\theta^2 = 0$$
+
+More generally, a set of Grassmann numbers $\theta_1, \theta_2, \ldots, \theta_n$ satisfies:
+
+$$\theta_i \theta_j + \theta_j \theta_i = 0 \quad \text{for all } i, j$$
+
+$$\theta_i^2 = 0 \quad \text{(follows from the above with } i = j\text{)}$$
+
+### Properties
+
+**Nilpotency.** Since $\theta^2 = 0$, any power higher than one vanishes. So a function of a single Grassmann number $\theta$ can have at most two terms:
+
+$$f(\theta) = a + b\theta$$
+
+where $a, b$ are ordinary (commuting) numbers. Higher powers $\theta^2, \theta^3, \ldots$ all vanish.
+
+**Linear independence.** For $n$ Grassmann variables $\theta_1, \ldots, \theta_n$, the most general function has $2^n$ terms (each $\theta_i$ either appears or doesn't):
+
+$$f(\theta_1, \ldots, \theta_n) = c_0 + \sum_i c_i \theta_i + \sum_{i<j} c_{ij}\theta_i\theta_j + \cdots + c_{12\cdots n}\theta_1\theta_2\cdots\theta_n$$
+
+The final term (with all $\theta$'s present) is called the "top form."
+
+**Commutation with ordinary numbers.** Grassmann variables commute with ordinary (c-number) variables:
+
+$$\theta_i\, a = a\,\theta_i$$
+
+for ordinary numbers $a$.
+
+### Two Kinds of Numbers
+
+It's crucial to distinguish:
+- **c-numbers (commuting numbers):** ordinary real or complex numbers. $ab = ba$.
+- **a-numbers (anticommuting numbers) = Grassmann numbers.** $\theta_i\theta_j = -\theta_j\theta_i$.
+
+Products of Grassmann numbers can be either kind:
+- An even number of $\theta$'s multiplied together is a c-number: $(\theta_1\theta_2)(\theta_3\theta_4) = (\theta_3\theta_4)(\theta_1\theta_2)$
+- An odd number of $\theta$'s is an a-number
+
+This parity (even vs. odd) determines the statistics.
+
+### Complex Grassmann Numbers
+
+For fermion fields, we need complex Grassmann variables. Define $\psi$ and its independent "complex conjugate" $\bar\psi$ (strictly, they're independent complex Grassmann variables, not actually related by complex conjugation). They satisfy:
+
+$$\{\psi, \bar\psi\} = 0, \quad \{\psi, \psi\} = 0, \quad \{\bar\psi, \bar\psi\} = 0$$
+
+### Functions of Grassmann Fields
+
+A "Grassmann field" $\psi(x)$ is a Grassmann variable at each spacetime point $x$. Different points give different Grassmann variables, all anticommuting with each other.
+
+An arbitrary function of a Grassmann field has the structure:
+
+$$f[\psi] = \sum_n \frac{1}{n!}\int dx_1\cdots dx_n\, F_n(x_1, \ldots, x_n)\psi(x_1)\cdots\psi(x_n)$$
+
+where the coefficients $F_n$ are ordinary functions. The anticommutation of $\psi$'s at different points is respected.
+
+---
+
+## 3. Calculus on Grassmann Variables
+
+### Differentiation
+
+Define differentiation of Grassmann functions by:
+
+$$\frac{\partial}{\partial\theta_i}\theta_j = \delta_{ij}$$
+
+Since $\theta_i^2 = 0$, the Leibniz rule takes a modified form:
+
+$$\frac{\partial}{\partial\theta_i}(\theta_j\theta_k) = \delta_{ij}\theta_k - \theta_j\delta_{ik}$$
+
+Note the **minus sign** in the second term. Grassmann derivatives anticommute with Grassmann variables: $\partial_\theta\cdot\theta = \theta\cdot\partial_\theta$... no wait. Let me be more careful.
+
+The rule is: $\partial_\theta$ is itself an a-number, and it anticommutes with Grassmann variables. So:
+
+$$\partial_\theta(\theta\eta) = \eta$$ (one minus sign from moving $\partial_\theta$ past $\theta$, then $\partial_\theta \theta = 1$... no, this gives $-\partial_\theta\theta\eta + \partial_\theta\theta\eta = \eta$... let me just state the rule directly.)
+
+Standard Grassmann derivative (left-derivative):
+
+$$\partial_\theta(\theta) = 1$$
+
+$$\partial_\theta(\eta\theta) = -\eta\cdot\partial_\theta(\theta) = -\eta$$
+
+That is, moving $\partial_\theta$ to act on $\theta$ past an intervening Grassmann variable $\eta$ picks up a minus sign. This convention is called the **left-derivative**.
+
+### Integration
+
+This is where Grassmann calculus gets strange. Define Grassmann integration by:
+
+$$\int d\theta\, 1 = 0, \quad \int d\theta\, \theta = 1$$
+
+**Integration is equivalent to differentiation for Grassmann variables.** This is perhaps the weirdest feature of the algebra.
+
+From these two rules, any Grassmann integral can be computed. For a function $f(\theta) = a + b\theta$:
+
+$$\int d\theta\, f(\theta) = \int d\theta\,(a + b\theta) = 0 + b = b$$
+
+Only the $\theta$-term in the integrand contributes. The constant piece integrates to zero.
+
+### Multi-Variable Integration
+
+For multiple Grassmann variables:
+
+$$\int d\theta_n d\theta_{n-1}\cdots d\theta_1\, \theta_1\theta_2\cdots\theta_n = 1$$
+
+The **ordering** of $d\theta_i$'s matters and is conventional (I'm using one common convention). Different orderings may differ by signs.
+
+### Change of Variables
+
+Ordinary integration: $\int dx\, f(x) = \int dy\, |J|\, f(y)$ where $J = \partial x/\partial y$ is the Jacobian.
+
+Grassmann integration reverses this:
+
+$$\int d\theta\, f(\theta) = \int d\eta\, |J|^{-1}\, f(\theta(\eta))$$
+
+The Jacobian appears *inversely*. This is because "integration" for Grassmann variables is more like differentiation than integration.
+
+Specifically, for a linear change of variables $\theta_i = M_{ij}\eta_j$:
+
+$$\int\prod_i d\theta_i\, F(\theta) = \frac{1}{\det M}\int\prod_i d\eta_i\, F(M\eta)$$
+
+(With appropriate sign conventions.)
+
+This inverse-Jacobian property is what leads to determinants (rather than inverse determinants) in Gaussian Grassmann integrals.
+
+### A Simple Example
+
+Consider $\int d\theta_2 d\theta_1\, \theta_1\theta_2$. Expand using the rules:
+
+$$\int d\theta_2 d\theta_1\, \theta_1\theta_2 = \int d\theta_2\,[\int d\theta_1\, \theta_1]\theta_2 = \int d\theta_2\, 1\cdot\theta_2 = 1$$
+
+Alternatively, changing order:
+
+$$\int d\theta_2 d\theta_1\, \theta_1\theta_2 = -\int d\theta_2 d\theta_1\, \theta_2\theta_1 = -\int d\theta_2\,\theta_2[\int d\theta_1\,\theta_1... ]$$
+
+Hmm, this is getting tangled. The conventions matter. Just accept the rule: for each Grassmann variable in the integrand that matches a $d\theta_i$ in the measure, you get a factor of 1 (with appropriate signs); otherwise you get zero.
+
+### The Fundamental Integration Formula
+
+For $n$ Grassmann variables:
+
+$$\int d^n\theta\, e^{\tfrac{1}{2}\theta^T A\theta} = \sqrt{\det A}$$
+
+Wait; this is for *real* Grassmann variables (a single copy). For complex Grassmann variables (our case), the relevant formula is the Gaussian integral.
+
+---
+
+## 4. Grassmann Gaussian Integrals
+
+### The Key Formula
+
+For complex Grassmann variables $\bar\psi_i, \psi_i$ (think of them as $\bar\psi, \psi$ at different points) with a bilinear form:
+
+$$\int d\bar\psi_n\, d\psi_n\cdots d\bar\psi_1\, d\psi_1\, e^{-\bar\psi_i A_{ij}\psi_j} = \det A$$
+
+**Compare to bosonic Gaussian integration** (single complex $z$):
+
+$$\int d\bar z\, dz\, e^{-\bar z_i A_{ij} z_j} = \frac{(2\pi)^N}{\det A}$$
+
+(Up to factors.) The crucial difference: **$\det A$ for fermions, $1/\det A$ for bosons.**
+
+### Why the Difference?
+
+For ordinary (commuting) integration variables, the Gaussian integral in $N$ dimensions is:
+
+$$\int d^N z\, d^N\bar z\, e^{-\bar z A z} \propto \frac{1}{\det A}$$
+
+because the integrand is suppressed by $\det A$, so the integral is proportional to its reciprocal.
+
+For Grassmann variables, integration is essentially differentiation. Expanding the exponential $e^{-\bar\psi A\psi}$ in a Taylor series, only the $(\bar\psi A\psi)^N/N!$ term contributes (because higher powers vanish by Grassmann nilpotency, and lower powers don't have enough fields to match all $d\psi_i d\bar\psi_i$ in the measure).
+
+Computing this specific term:
+
+$$\frac{(-1)^N}{N!}(\bar\psi A \psi)^N = \frac{(-1)^N}{N!}\sum_{\sigma, \tau}\prod_i \bar\psi_{\sigma(i)}A_{\sigma(i),\tau(i)}\psi_{\tau(i)}$$
+
+Reordering the $\psi$'s and $\bar\psi$'s picks up signs. After the dust settles, the coefficient of $\prod_i \bar\psi_i\psi_i$ (the only surviving Grassmann structure) is exactly $\det A$.
+
+So the integral equals $\det A$, not $1/\det A$.
+
+### Source Terms
+
+With source terms; Grassmann functions $\eta, \bar\eta$; the generating function is:
+
+$$Z[\bar\eta, \eta] = \int d\bar\psi\, d\psi\, e^{-\bar\psi A\psi + \bar\eta\psi + \bar\psi\eta} = \det A \cdot e^{\bar\eta A^{-1}\eta}$$
+
+This is the fermionic analog of the bosonic result $Z_0[J] = Z_0[0]\exp[\tfrac{i}{2}JD_F J]$.
+
+The exponent $\bar\eta A^{-1}\eta$; with the matrix inverse; gives the propagator structure. Hitting $Z[\bar\eta, \eta]$ with derivatives $\delta/\delta\eta$ and $\delta/\delta\bar\eta$ pulls down factors of $A^{-1}$.
+
+### The Importance
+
+The fact that fermion integration gives $\det A$ has two huge consequences:
+
+**1. Fermion loops come with a minus sign.** This is the Feynman rule we stated in document 5 without derivation.
+
+**2. Integrating out fermions produces a functional determinant that modifies the effective action.** In a theory of fermions coupled to a background field, integrating out the fermions gives $\det(i\slashed D - m)$, which contains all the back-reaction of the fermions on the background.
+
+---
+
+## 5. The Fermionic Path Integral
+
+### The Setup
+
+For the Dirac field, the action is:
+
+$$S[\psi, \bar\psi] = \int d^4x\,\bar\psi(i\slashed\partial - m)\psi$$
+
+The path integral is:
+
+$$Z = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{iS[\psi, \bar\psi]}$$
+
+where $\psi$ and $\bar\psi$ are now independent Grassmann-valued fields (i.e., at each point $x$ and for each spinor index, they're independent Grassmann variables).
+
+### The Euclidean Version
+
+Wick-rotate $t \to -i\tau$. The Euclidean Dirac action becomes:
+
+$$S_E[\psi, \bar\psi] = \int d^4x\,\bar\psi(\slashed\partial + m)\psi$$
+
+(with appropriate sign conventions for Euclidean gamma matrices). The path integral is:
+
+$$Z_E = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{-S_E[\psi, \bar\psi]}$$
+
+This is a Grassmann Gaussian integral with the bilinear form $A = \slashed\partial + m$.
+
+### Evaluating the Free Fermion Path Integral
+
+By the Grassmann Gaussian formula:
+
+$$Z_E = \det(\slashed\partial + m)$$
+
+(up to normalization). This is the fermion functional determinant.
+
+In momentum space, $\slashed\partial + m \to i\slashed p + m$, and:
+
+$$\det(i\slashed p + m) = \text{(infinite product over momenta and spinor indices)}$$
+
+This product is formally infinite and requires regularization, but can be made sense of using zeta function regularization, lattice discretization, or dimensional regularization.
+
+### Including Sources
+
+$$Z[\bar\eta, \eta] = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{iS + i\int(\bar\eta\psi + \bar\psi\eta)}$$
+
+Using the Gaussian formula:
+
+$$Z[\bar\eta, \eta] = \det(\slashed\partial + m) \cdot \exp\left[-i\int d^4x\, d^4y\, \bar\eta(x) S_F(x - y)\eta(y)\right]$$
+
+Where $S_F$ is the fermion Feynman propagator. Again up to signs from conventions.
+
+---
+
+## 6. Generating Functional for Fermions
+
+### The Definition
+
+As for the bosonic case, introduce Grassmann source terms:
+
+$$Z[\bar\eta, \eta] = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{iS[\psi, \bar\psi] + i\int(\bar\eta\psi + \bar\psi\eta)}$$
+
+### Correlators via Functional Derivatives
+
+Now the derivatives are Grassmann derivatives (which pick up signs):
+
+$$\langle 0|T\{\psi(x_1)\cdots\psi(x_n)\bar\psi(y_1)\cdots\bar\psi(y_n)\}|0\rangle = \frac{1}{Z[0]}\frac{\delta^{2n} Z[\bar\eta, \eta]}{i^n\,\delta\bar\eta(x_1)\cdots\delta\bar\eta(x_n) i^n\,\delta\eta(y_n)\cdots\delta\eta(y_1)}\bigg|_{\eta = 0}$$
+
+### Two-Point Function
+
+For the free theory:
+
+$$\langle 0|T\{\psi(x)\bar\psi(y)\}|0\rangle = S_F(x - y)$$
+
+This matches the result from canonical quantization in document 2. The Feynman propagator emerges from the path integral via functional differentiation.
+
+### The Direction of Arrows
+
+A careful comment: the ordering of Grassmann derivatives matters because $\delta/\delta\bar\eta$ and $\delta/\delta\eta$ anticommute. Getting the right number of minus signs requires tracking the order. This is one of the places where fermion calculations are slightly more tedious than bosonic ones.
+
+In practice, Feynman-diagram conventions are set up to handle this automatically. As long as you follow them, the signs work out.
+
+---
+
+## 7. The Fermion Propagator from the Path Integral
+
+Let me derive the Feynman propagator explicitly from the path integral, to ground the formalism.
+
+### The Free Fermion Generating Functional
+
+From section 5:
+
+$$Z_0[\bar\eta, \eta] = Z_0[0, 0]\cdot\exp\left[-i\int d^4x\, d^4y\, \bar\eta(x)\, S_F(x - y)\,\eta(y)\right]$$
+
+### Computing the Two-Point Function
+
+Take Grassmann derivatives:
+
+$$\langle 0|T\{\psi_a(x)\bar\psi_b(y)\}|0\rangle = \frac{\delta}{i\delta\bar\eta_a(x)}\frac{-\delta}{i\delta\eta_b(y)}\ln Z_0[\bar\eta, \eta]\bigg|_{\eta = \bar\eta = 0}$$
+
+(The $-\delta$ on the second derivative accounts for anticommutation of Grassmann derivatives.)
+
+Applying the derivatives to the exponent:
+
+$$= \frac{\delta}{i\delta\bar\eta_a(x)}\frac{-\delta}{i\delta\eta_b(y)}\left[-i\int d^4x'\, d^4y'\,\bar\eta(x')S_F(x' - y')\eta(y')\right]$$
+
+The derivative $\delta/\delta\eta_b(y)$ brings down a factor $S_F(x' - y)_b$. Then $\delta/\delta\bar\eta_a(x)$ brings down $S_F(x - y)_{ab}$. The signs and $i$'s work out to give:
+
+$$\langle 0|T\{\psi_a(x)\bar\psi_b(y)\}|0\rangle = S_F(x - y)_{ab}$$
+
+Exactly the Dirac propagator from document 2. ✓
+
+### The Grassmann Structure
+
+Notice: the path integral formalism never mentions "creation operators" or "anticommutators" explicitly. Everything comes out of the Grassmann algebra of the integration variables. The fermionic statistics; Pauli exclusion, antisymmetric correlators, minus signs for fermion loops; all emerge naturally from Grassmann rules.
+
+This is the elegance of the path integral: physics is encoded in the mathematical structure of the integration variables.
+
+---
+
+## 8. Integrating Out Fermions: Effective Actions
+
+One of the most useful techniques in modern QFT.
+
+### The Setup
+
+Suppose you have a theory with fermions $\psi$ coupled to some bosonic field $\phi$ (could be a scalar, a gauge field, whatever):
+
+$$S[\psi, \bar\psi, \phi] = S_F[\psi, \bar\psi, \phi] + S_B[\phi]$$
+
+where $S_F$ depends on both fermions and bosons, $S_B$ depends only on bosons.
+
+### Integrating Out the Fermions
+
+The path integral is:
+
+$$Z = \int\mathcal{D}\phi\,\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{iS}$$
+
+If the fermion dependence is bilinear (i.e., $S_F = \int \bar\psi\,\mathcal{O}[\phi]\,\psi$ for some operator $\mathcal{O}$ depending on $\phi$), then we can do the fermion integral exactly:
+
+$$\int\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{i\int\bar\psi\,\mathcal{O}[\phi]\,\psi} = \det(\mathcal{O}[\phi])$$
+
+Now we have a bosonic path integral:
+
+$$Z = \int\mathcal{D}\phi\,\det(\mathcal{O}[\phi])\,e^{iS_B[\phi]} = \int\mathcal{D}\phi\,e^{iS_B[\phi] + \ln\det(\mathcal{O}[\phi])}$$
+
+### The Effective Action
+
+Define the **effective action**:
+
+$$S_{\rm eff}[\phi] = S_B[\phi] - i\ln\det(\mathcal{O}[\phi])$$
+
+(The $-i$ comes from the $e^i$ in the path integral versus $\det$ appearing in the Gaussian formula.)
+
+The fermionic effects are now encoded in the determinant. This is a **non-local** functional of $\phi$, but it's well-defined and computable (perturbatively or on the lattice).
+
+### Example: QED Effective Lagrangian
+
+Consider QED with the electron field and the photon. Integrate out the electron:
+
+$$\int\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{i\int\bar\psi(i\slashed D - m)\psi} = \det(i\slashed D - m)$$
+
+where $D_\mu = \partial_\mu + ieA_\mu$. Taking the log:
+
+$$\ln\det(i\slashed D - m) = \text{Tr}\,\ln(i\slashed D - m)$$
+
+Expanding this gives the **Heisenberg-Euler effective Lagrangian**; the effective action for the photon field alone, after integrating out the electrons.
+
+At lowest order, this gives the vacuum polarization contribution. At higher orders in the photon field, it gives the famous Heisenberg-Euler result:
+
+$$\mathcal{L}_{\rm HE} = -\tfrac{1}{4}F^2 + \frac{\alpha^2}{90 m_e^4}\left[(F_{\mu\nu}F^{\mu\nu})^2 + \tfrac{7}{4}(F_{\mu\nu}\tilde F^{\mu\nu})^2\right] + \cdots$$
+
+This is the leading non-linear correction to Maxwell electrodynamics from QED. It predicts phenomena like:
+
+- **Light-by-light scattering:** two photons can scatter off each other (forbidden classically). Observed at the LHC in 2017!
+- **Schwinger pair production:** strong electric fields can spontaneously create electron-positron pairs. Theoretical threshold: $E_{\rm crit} \sim m_e^2/e \approx 10^{18}$ V/m. Not yet reached in lab, but predicted.
+- **Vacuum birefringence:** the vacuum in strong magnetic fields becomes birefringent (different speeds for different polarizations). Important near neutron stars.
+
+All of these come from integrating out the electron from QED.
+
+### Physical Interpretation
+
+Integrating out heavy fields gives you an effective theory for the light fields. The effective Lagrangian has higher-dimension operators suppressed by powers of the heavy mass. This is the EFT machinery from the RG document, made explicit through Grassmann path integrals.
+
+Any time you have a theory with both light and heavy degrees of freedom, you can systematically integrate out the heavy ones and get an effective description in terms of the light ones. This is how we get:
+
+- Chiral perturbation theory (integrate out quarks above the chiral scale)
+- The Fermi theory of weak interactions (integrate out W bosons)
+- The Euler-Heisenberg Lagrangian (integrate out electrons below their mass)
+
+The trick works in reverse too: you can integrate out the light fields (via background field methods) to study effective Lagrangians for heavy fields.
+
+---
+
+## 9. Perturbation Theory with Fermions
+
+The formalism for perturbation theory is nearly identical to the bosonic case.
+
+### The Setup
+
+For QED with interaction $\mathcal{L}_{\rm int} = -e\bar\psi\gamma^\mu\psi A_\mu$:
+
+$$Z = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\,\mathcal{D}A\, e^{iS_0 + iS_{\rm int}}$$
+
+Expand $e^{iS_{\rm int}}$ in powers of $e$. Each term pulls down factors of $\bar\psi\gamma^\mu\psi A_\mu$. Contracting these with external and internal lines gives Feynman diagrams.
+
+### What's Different
+
+Two key differences from the bosonic case:
+
+**1. Fermion lines have directed arrows.** The $\bar\psi$ and $\psi$ are different Grassmann fields, so contractions must respect the direction.
+
+**2. Closed fermion loops get a minus sign.** This comes from the determinant structure; every closed fermion loop produces a $\det$ contribution, which when expanded gives a sign for each cycle.
+
+### Sign Tracking
+
+Careful sign tracking is tedious but mechanical. The rules:
+
+- Each closed fermion loop: factor of $(-1)$
+- Order of spinor factors along a fermion line: follows the arrow backwards (as in canonical Feynman rules)
+- Exchange of external fermion legs: factor of $(-1)$ per swap (reflecting antisymmetry)
+
+These rules emerge automatically from Grassmann combinatorics. You don't have to memorize them separately; they fall out of keeping track of signs when commuting Grassmann variables past each other.
+
+### An Example: The Vacuum Polarization Revisited
+
+The vacuum polarization diagram has a closed fermion loop (electron-positron pair). In the canonical treatment, we imposed the minus sign ad hoc. In the path integral treatment:
+
+- Closed fermion loop corresponds to a trace over spinor indices of the product of propagators
+- The trace originates from Grassmann integration: $\int d\psi\,d\bar\psi\,\psi\bar\psi = \text{tr}$ (up to factors)
+- The overall minus sign is an artifact of the direction of fermion integration
+
+So the minus sign we used in document 6 is a consequence of Grassmann integration, not an extra rule we had to add.
+
+### Loops of Fermions are Actually Determinants
+
+Another way to see the minus sign: each closed fermion loop corresponds to a determinant contribution in $Z$. When we expand the determinant perturbatively, the resulting Feynman diagrams come with $(-1)^L$ for $L$ fermion loops.
+
+This is consistent with: determinants are products of eigenvalues, and expanding $\ln\det(A) = \text{tr}\,\ln(A)$ gives a sum over loops, each with specific signs.
+
+---
+
+## 10. The Sign of the Fermion Loop
+
+Let me make the sign rule concrete with a calculation.
+
+### Simplest Case: Electron Self-Energy
+
+The one-loop electron self-energy has no closed fermion loops; just a virtual photon being emitted and reabsorbed on a single fermion line. No minus sign.
+
+### Vacuum Polarization
+
+The vacuum polarization has one closed fermion loop. Let me trace through the sign.
+
+In the path integral, the relevant correlator is:
+
+$$\Pi^{\mu\nu}(x - y) = \langle T\{j^\mu(x) j^\nu(y)\}\rangle_0$$
+
+where $j^\mu(x) = \bar\psi(x)\gamma^\mu\psi(x)$.
+
+Expanding:
+
+$$\Pi^{\mu\nu}(x-y) = \text{Tr}\,[\gamma^\mu S_F(x-y)\gamma^\nu S_F(y-x)]$$
+
+where the trace is over spinor indices and over the two "fermions" in the loop. The minus sign is encoded in the direction of the trace; it comes from anticommuting $\bar\psi(x)$ past $\psi(y)$ in the derivation.
+
+Explicitly:
+
+$$\langle\bar\psi_a(x)\psi_b(y)\rangle = S_F(y - x)_{ba}$$
+
+Note the argument order is swapped from the "usual" $\langle\psi\bar\psi\rangle$ convention, and the indices are swapped. This gives the minus sign automatically.
+
+### Practical Rule
+
+For Feynman diagram calculations, the rule is simple: every closed fermion loop gets an extra factor of $(-1)$.
+
+This applies to:
+- Vacuum polarization (1 fermion loop → factor of $-1$)
+- $e^+e^-$ annihilation followed by pair production (no closed loops in tree-level → no minus sign)
+- The "penguin" diagrams (depending on how loops close)
+- Higher-order diagrams with multiple loops (factor of $(-1)^L$ for $L$ loops)
+
+---
+
+## 11. Applications: Yukawa, QED, and Beyond
+
+### Yukawa Theory
+
+Scalar fermions coupled via a Yukawa interaction:
+
+$$\mathcal{L} = \bar\psi(i\slashed\partial - m)\psi + \tfrac{1}{2}(\partial\phi)^2 - \tfrac{1}{2}M^2\phi^2 - g\bar\psi\phi\psi$$
+
+The Yukawa coupling $g\bar\psi\phi\psi$ is the simplest interaction between a scalar and fermion. Present in the Standard Model (Higgs-fermion couplings).
+
+In the path integral, this theory is:
+
+$$Z = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\,\mathcal{D}\phi\, e^{iS}$$
+
+Integrating out the fermions gives:
+
+$$Z = \int\mathcal{D}\phi\, \det(i\slashed\partial - m - g\phi)\,e^{iS_\phi}$$
+
+Where $S_\phi$ is just the bosonic part.
+
+For a constant background field $\phi$, the determinant can be computed and gives corrections to the scalar mass and self-interactions. This is how the Higgs boson's mass receives quantum corrections from Yukawa interactions; the famous hierarchy problem.
+
+### Higgs-Fermion Couplings
+
+In the Standard Model, the Higgs couples to fermions via:
+
+$$\mathcal{L}_Y = -y_f\bar\psi_L \phi\,\psi_R + \text{h.c.}$$
+
+(for each fermion species $f$). Integrating out the Higgs (above its mass) would give an effective theory with four-fermion interactions. Below the Higgs mass, these integrated-out effects are in the Fermi constant and CKM matrix.
+
+The top quark Yukawa coupling $y_t \approx 1$ is the largest. Its loop contributions to the Higgs mass are what make the hierarchy problem acute; without cancellations (like supersymmetry), the Higgs mass would naturally be near the Planck scale rather than 125 GeV.
+
+### QED: Revisiting
+
+For QED, the gauge symmetry constrains interactions. The path integral:
+
+$$Z = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\,\mathcal{D}A\, e^{iS_{\rm QED}}$$
+
+Integrating out the electrons (at leading order in the coupling, this is just the one-loop vacuum polarization):
+
+$$Z_{\rm eff}[A] \supset e^{i\int d^4x\,\mathcal{L}_{\rm HE}[A]}$$
+
+where $\mathcal{L}_{\rm HE}$ is the Heisenberg-Euler Lagrangian mentioned in section 8. This effective Lagrangian describes how photons scatter off each other at low energies (below $m_e$).
+
+### Electroweak Theory
+
+In the electroweak theory (part of the Standard Model), fermions, gauge bosons, and the Higgs all interact. The path integral is a complicated multi-field integral, but the Grassmann structure for fermions remains the same.
+
+Integrating out fermions in various limits gives effective theories for bosons, and vice versa. This is how weak-boson exchange (at energies below $M_W$) becomes the Fermi four-fermion interaction.
+
+### Lattice Fermion Theories
+
+On a Euclidean lattice, putting fermions is notoriously tricky because of **fermion doubling**; naive lattice fermion actions give too many species (15 extra copies!). This is a consequence of a theorem (Nielsen-Ninomiya) that forbids having a single chiral fermion on a lattice without breaking some nice property.
+
+Workarounds:
+
+- **Wilson fermions:** add extra terms that lift the doublers at high momenta. Physical at low momenta.
+- **Staggered fermions:** spread the fermion over the lattice, reducing doublers.
+- **Domain-wall/Overlap fermions:** modern approach preserving approximate chiral symmetry.
+
+Each has trade-offs. The difficulties are why lattice QCD took decades to become genuinely predictive.
+
+---
+
+## 12. The Sign Problem and Lattice QCD
+
+A subtle problem that limits lattice simulations.
+
+### The Issue
+
+In Euclidean path integrals for bosons, $e^{-S_E}$ is real and positive; so the integrand acts like a probability density. Monte Carlo methods can sample it efficiently.
+
+After integrating out fermions, the integrand for bosons contains $\det(\mathcal{O}[\phi])$, which can be negative or even complex. If it's not positive, you can't treat it as a probability measure.
+
+This is the **sign problem** (or "fermion sign problem"), and it's a major obstacle to certain classes of lattice calculations.
+
+### When Does It Occur?
+
+The sign problem is mild or absent for:
+
+- Pure gauge theories (no fermions)
+- QCD at zero chemical potential and zero $\theta$-angle
+- Some supersymmetric theories
+
+The sign problem is severe for:
+
+- QCD at **finite chemical potential** (finite baryon density; relevant for neutron stars, quark-gluon plasma)
+- Real-time evolution in quantum field theory
+- Many condensed matter systems (Hubbard model away from half-filling)
+
+### Consequences
+
+Lattice QCD is extremely successful for equilibrium properties at zero chemical potential (hadron spectrum, form factors, etc.) but struggles with:
+
+- The QCD phase diagram at nonzero baryon density
+- Real-time dynamics of the quark-gluon plasma
+- The equation of state of neutron stars
+
+These are among the most pressing frontiers of lattice QCD research.
+
+### Possible Solutions
+
+Various ideas exist:
+
+- **Complex Langevin dynamics:** reformulate the problem with complexified variables
+- **Lefschetz thimble:** deform the contour of integration to find manifolds where the problem is mild
+- **Tensor network methods:** a completely different approach to representing many-body quantum states
+- **Quantum simulation:** use quantum computers to simulate fermionic systems directly
+
+None of these have fully solved the problem, but progress is steady.
+
+### A Quantum Gravity Analog
+
+Interestingly, the sign problem has an analog in quantum gravity; the Euclidean path integral for gravity has unstable modes (the conformal mode is unbounded), making the standard Wick rotation problematic. Various proposals have emerged (Lorentzian path integrals, causal dynamical triangulations, specific saddle points) but no fully satisfactory resolution.
+
+These technical problems may be pointing at deeper issues. If our regulated QFTs still have sign problems, maybe our foundations need rethinking.
+
+---
+
+## 13. Appendix: Grassmann Algebra Reference
+
+### Basic Rules
+
+$$\theta_i\theta_j = -\theta_j\theta_i, \quad \theta_i^2 = 0$$
+
+### Integration
+
+$$\int d\theta\, 1 = 0, \quad \int d\theta\, \theta = 1$$
+
+### Multi-Variable Integration
+
+For $n$ Grassmann variables:
+
+$$\int d\theta_n\cdots d\theta_1\, \theta_1\cdots\theta_n = 1$$
+
+### Gaussian Integrals
+
+**Real Grassmann:**
+
+$$\int d^n\theta\, e^{\tfrac{1}{2}\theta^T A\theta} = \text{Pf}(A)$$
+
+(Pfaffian of the antisymmetric matrix $A$.)
+
+**Complex Grassmann:**
+
+$$\int d^n\bar\psi\, d^n\psi\, e^{-\bar\psi A\psi} = \det A$$
+
+**With sources:**
+
+$$\int d^n\bar\psi\, d^n\psi\, e^{-\bar\psi A\psi + \bar\eta\psi + \bar\psi\eta} = \det A\cdot e^{\bar\eta A^{-1}\eta}$$
+
+### Differentiation
+
+$$\frac{\partial}{\partial\theta}\cdot\theta = 1$$
+
+$$\frac{\partial}{\partial\theta}(\eta\theta) = -\eta\cdot\frac{\partial\theta}{\partial\theta} = -\eta \quad (\text{for Grassmann } \eta)$$
+
+### Fermion Path Integral
+
+$$Z = \int\mathcal{D}\bar\psi\,\mathcal{D}\psi\, e^{iS[\psi, \bar\psi]}$$
+
+### Free-Fermion Generating Functional
+
+$$Z_0[\bar\eta, \eta] = Z_0[0, 0]\exp\left[-i\int d^4x\, d^4y\,\bar\eta(x) S_F(x - y)\eta(y)\right]$$
+
+### Two-Point Function
+
+$$\langle 0|T\{\psi(x)\bar\psi(y)\}|0\rangle = S_F(x - y)$$
+
+### Fermion Feynman Propagator
+
+$$S_F(x - y) = \int\frac{d^4p}{(2\pi)^4}\frac{i(\slashed p + m)}{p^2 - m^2 + i\epsilon}e^{-ip(x-y)}$$
+
+### The Fermion Loop Sign
+
+Each closed fermion loop in a Feynman diagram contributes an overall factor of $(-1)$.
+
+### Further Reading
+
+- **Peskin & Schroeder, Sections 9.5, 9.6:** clean introduction to Grassmann path integrals
+- **Srednicki, Chapters 43-45:** rigorous treatment
+- **Zinn-Justin, *Quantum Field Theory and Critical Phenomena*:** encyclopedic reference
+- **Cvetic, *Fermion Integrals*:** mathematical physics perspective
+- **Wipf, *Statistical Approach to Quantum Field Theory*:** good for the lattice connection
+
+### Problems to Work
+
+1. Verify that $\int d\theta\,d\bar\theta\, \bar\theta\theta = 1$ (the basic Grassmann identity).
+
+2. Compute $\int d\bar\theta\, d\theta\, e^{-\bar\theta a\theta}$ for an ordinary number $a$. Show it equals $a$ (the "determinant" of a $1\times 1$ matrix).
+
+3. Derive the $\det A$ formula for a $2\times 2$ case: explicitly compute $\int d\bar\theta_2 d\theta_2 d\bar\theta_1 d\theta_1\, e^{-\bar\theta A\theta}$.
+
+4. Compute $\det(\slashed\partial + m)$ formally in momentum space. Show it's the product over momenta of $(p^2 + m^2)^2$ (for a single Dirac fermion; four spinor components).
+
+5. Expand the Heisenberg-Euler Lagrangian to show the $\alpha^2/m^4$ dependence for the low-energy photon-photon interaction.
+
+6. Integrate out a heavy fermion from a Yukawa theory and obtain the resulting effective Lagrangian for the scalar.
+
+Problem 4 is particularly instructive; it shows how fermion functional determinants relate to the free propagator, and reveals the structure of Euclidean QFT cleanly.
+
+---
+
+## Closing Note
+
+Fermionic path integrals complete the basic QFT toolkit. Every particle of matter can now be described via path integrals; bosons through ordinary numbers, fermions through Grassmann variables. The formalism is entirely parallel, with one key difference: fermion Gaussian integrals give $\det A$ rather than $1/\det A$, and this sign difference ripples through to give all of fermionic statistics: Pauli exclusion, minus signs for fermion loops, antisymmetry of multi-fermion wave functions.
+
+### What We've Gained
+
+- **A systematic treatment of fermions in the path integral formalism**
+- **The technology to integrate out fermions** and derive effective Lagrangians (EFTs)
+- **Clean derivation of fermion loop signs** from Grassmann combinatorics (no longer an ad hoc rule)
+- **Tools for computing non-perturbative quantities** like effective potentials and Heisenberg-Euler Lagrangians
+- **A foundation for understanding subtle issues** like anomalies (which show up in the fermionic measure) and the sign problem
+
+### What's Next
+
+With both bosonic (doc 9) and fermionic (doc 10) path integrals, we have the complete machinery for quantizing interacting field theories. The next major hurdle: **non-abelian gauge theories**.
+
+The canonical approach to Yang-Mills requires Gupta-Bleuler-like tricks that get complicated quickly. The path integral approach, using Faddeev-Popov gauge fixing, is dramatically cleaner. The "ghost" fields that Faddeev-Popov introduces are themselves Grassmann-valued (despite being scalars, not fermions); a beautiful application of the machinery we just developed.
+
+**Document 11: Yang-Mills quantization with the Faddeev-Popov procedure.** This is where the literal ghosts of Ghostbusters fame make their appearance. Fitting end to a long journey.
+
+**Document 12: The complete Standard Model as a QFT.** Everything together; gauge bosons, fermions, Higgs, anomalies; the crown jewel.
+
+Two more documents to go. You're almost there.

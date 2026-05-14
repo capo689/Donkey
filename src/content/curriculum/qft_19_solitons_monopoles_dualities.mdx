@@ -9,6 +9,864 @@ extendsTo: [32]
 classReportTitle: "Solitons, monopoles, dualities."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 19: classical field configurations that aren't small perturbations of vacuum. Kinks, vortices, monopoles. Topological stability. BPS states. Dirac quantization. Electric-magnetic duality and Montonen-Olive. Where topology meets field theory in its most concrete form.*
 
-{/* Content from qft_19_solitons_monopoles_dualities.md */}
+Document 18 covered **instantons**; Euclidean tunneling events, localized in spacetime. This document covers **solitons**; static classical solutions that extend in space and exist in Minkowski signature. These are particle-like objects made of fields: the fields themselves are bent into a configuration that can't be smoothly unwrapped to a trivial vacuum.
+
+The topology of solitons is different from instantons: solitons are **stable** in Minkowski time because you can't continuously deform them to zero energy. Instantons are Euclidean events that contribute to tunneling amplitudes; solitons are real particles in the quantum theory.
+
+Key questions this document answers:
+- What makes a classical solution a "soliton"?
+- Why do monopoles exist in spontaneously broken gauge theories?
+- What's the Dirac quantization condition and why is it mandatory?
+- What are BPS states and why are they exactly massive?
+- What is electric-magnetic duality, and why does it suggest deep structure?
+- How does the confinement-Higgs phase structure emerge from soliton physics?
+
+By the end, you'll see solitons as the "other half" of non-perturbative field theory; objects that perturbation theory can't see, but which are crucial for understanding the phase structure and deep symmetries of QFTs.
+
+### Prerequisites
+
+- Documents 1-17, especially Yang-Mills (11), anomalies (17), instantons (18)
+- Some familiarity with differential geometry helps but isn't required
+
+### Conventions
+
+- Mostly-minus metric
+- $\hbar = c = 1$
+- We'll mostly work in Minkowski signature (solitons are real-time objects)
+- Greek indices for spacetime, Latin for spatial and internal
+
+---
+
+## Table of Contents
+
+1. [What Is a Soliton?](#1-what-is-a-soliton)
+2. [Kinks in 1+1 Dimensions](#2-kinks-in-11-dimensions)
+3. [Vortices in 2+1 Dimensions](#3-vortices-in-21-dimensions)
+4. [The Dirac Monopole](#4-the-dirac-monopole)
+5. [The 't Hooft-Polyakov Monopole](#5-the-t-hooft-polyakov-monopole)
+6. [BPS States](#6-bps-states)
+7. [Topological Charges and Conserved Currents](#7-topological-charges-and-conserved-currents)
+8. [Electric-Magnetic Duality](#8-electric-magnetic-duality)
+9. [Montonen-Olive Duality](#9-montonen-olive-duality)
+10. [Seiberg-Witten and $\mathcal{N}=2$ SUSY](#10-seiberg-witten-and-n2-susy)
+11. [Skyrmions: Baryons as Solitons](#11-skyrmions-baryons-as-solitons)
+12. [Solitons in Condensed Matter](#12-solitons-in-condensed-matter)
+13. [Appendix: Soliton Formulas Reference](#13-appendix-soliton-formulas-reference)
+
+---
+
+## 1. What Is a Soliton?
+
+### The Classical Definition
+
+A **soliton** is a localized, classical field configuration with finite energy, static (or traveling at constant velocity), that is stable against perturbations.
+
+"Classical" means: it's a solution to the classical equations of motion. Not a quantum object directly, but the starting point for quantum corrections.
+
+"Localized" means: the energy density is concentrated in some region of space, vanishing at infinity.
+
+"Finite energy" means: $\int d^3x\,\varepsilon(\vec x) < \infty$, with $\varepsilon$ the energy density.
+
+"Stable" means: small perturbations don't cause the configuration to unfurl. The stability is typically **topological**; the configuration can't be smoothly deformed to a trivial vacuum because of topology.
+
+### Why Topology?
+
+Consider a field $\phi(\vec x)$ at spatial infinity. For finite energy, $\phi \to \phi_{\rm vac}$ (a vacuum configuration). The space of possible vacua $M$ is the **vacuum manifold**.
+
+At spatial infinity, our field defines a map:
+
+$$\phi|_\infty : S^{D-1} \to M$$
+
+where $S^{D-1}$ is the sphere at spatial infinity (in $D$ spatial dimensions). These maps are classified by the homotopy group $\pi_{D-1}(M)$.
+
+**If $\pi_{D-1}(M)$ is nontrivial, solitons exist.** They can't be continuously deformed to the trivial configuration (vacuum everywhere).
+
+### Counting of Solitons by Dimension
+
+| Topological structure | Dimension | Relevant $\pi$ |
+|---|---|---|
+| Kink | $0+1$, $1+1$ | $\pi_0(M)$ |
+| Vortex | $2+1$, $2+2$ | $\pi_1(M)$ |
+| Monopole | $3+1$ | $\pi_2(M)$ |
+| Instanton | $3+1$ (Euclidean) | $\pi_3(M)$ |
+
+Each homotopy group gives a different type of soliton.
+
+### Topological Charge
+
+The integer from $\pi_n(M)$ is the **topological charge**. It's conserved: you can't change the topological charge of a field configuration without making the energy infinite (or going through a singular configuration).
+
+Solitons are classified by their topological charge. The "vacuum" has charge 0. Solitons have nonzero charge.
+
+### Quantum Solitons
+
+Classical solitons become quantum particles in the quantum theory. Their mass is:
+
+$$M = E_{\rm classical} + E_{\rm quantum}$$
+
+Classical energy dominates at weak coupling. Quantum corrections (zero-point energy of fluctuations, renormalization) modify the mass but don't destroy it.
+
+Solitons are typically **non-perturbative**; their mass scales as $1/g$ at weak coupling, making them much heavier than perturbative particles. For example, monopoles in weak-coupling Yang-Mills are very massive.
+
+### Contrast with Instantons
+
+**Instantons** are Euclidean events: localized in both space and (imaginary) time. They contribute to tunneling amplitudes.
+
+**Solitons** are Minkowski objects: localized in space, extending infinitely in time. They're real particles with definite mass and charge.
+
+Sometimes the same mathematical structure (a Yang-Mills instanton, for example) can be viewed either way, depending on dimensional framing. But the physical interpretation differs.
+
+---
+
+## 2. Kinks in 1+1 Dimensions
+
+### The Simplest Soliton
+
+Start simple: a scalar field in $1+1$ dimensions:
+
+$$\mathcal{L} = \tfrac{1}{2}(\partial\phi)^2 - V(\phi)$$
+
+with a double-well potential $V(\phi) = \lambda(\phi^2 - v^2)^2/2$.
+
+Vacua: $\phi = \pm v$. Vacuum manifold: $M = \{+v, -v\}$, a 2-point set.
+
+$\pi_0(M) = \mathbb{Z}_2$: two topological sectors.
+
+### The Kink Solution
+
+Look for static solutions interpolating between the two vacua. The equation of motion:
+
+$$-\phi'' + V'(\phi) = 0$$
+
+where $\phi'' = d^2\phi/dx^2$.
+
+Multiplying by $\phi'$ and integrating:
+
+$$\tfrac{1}{2}(\phi')^2 = V(\phi) + \text{const}$$
+
+At $x \to \pm\infty$: $\phi \to \pm v$ (or $\mp v$), $\phi' \to 0$, $V \to 0$. So const $= 0$:
+
+$$\phi'(x) = \sqrt{2V(\phi)}$$
+
+Integrating:
+
+$$x - x_0 = \int_0^\phi\frac{d\phi'}{\sqrt{2V(\phi')}}$$
+
+For our $V$: $\sqrt{2V} = \sqrt\lambda(v^2 - \phi^2)$, giving:
+
+$$\phi_K(x) = v\tanh\left(\sqrt{\lambda/2}\, v\, (x - x_0)\right)$$
+
+This is the **kink** soliton. It interpolates from $\phi = -v$ at $x \to -\infty$ to $\phi = +v$ at $x \to +\infty$.
+
+### The Kink Mass
+
+The energy of the kink:
+
+$$E_K = \int dx\,\left[\tfrac{1}{2}(\phi')^2 + V(\phi)\right] = \int dx\, 2V(\phi) = \int\sqrt{2V}\,d\phi$$
+
+For our $V$: $E_K = \int_{-v}^{v}\sqrt\lambda(v^2 - \phi^2)\,d\phi = \frac{4\sqrt\lambda v^3}{3}$.
+
+So:
+
+$$\boxed{M_{\rm kink} = \frac{4v^3\sqrt\lambda}{3}}$$
+
+At weak coupling $\lambda \to 0$: $M_{\rm kink} \to 0$ as $\sqrt\lambda$. But compare to perturbative particle (small oscillation around the vacuum, mass $m^2 = 2\lambda v^2$): $m = v\sqrt{2\lambda}$. The kink mass scales as $\sqrt\lambda$ while perturbative particle mass also scales as $\sqrt\lambda$, but with a different coefficient.
+
+Actually, the ratio $M_{\rm kink}/m = (4v^3\sqrt\lambda/3)/(v\sqrt{2\lambda}) = 2\sqrt 2 v^2/3 \sim v^2$. In terms of the coupling: at small coupling, the kink mass is of the same order as the perturbative mass.
+
+### Topological Charge
+
+Define the topological current:
+
+$$J^\mu = \frac{1}{2v}\epsilon^{\mu\nu}\partial_\nu\phi$$
+
+(Using 2D antisymmetric tensor $\epsilon^{\mu\nu}$.)
+
+This is conserved trivially: $\partial_\mu J^\mu = (1/2v)\epsilon^{\mu\nu}\partial_\mu\partial_\nu\phi = 0$.
+
+The topological charge:
+
+$$Q = \int dx\, J^0 = \frac{1}{2v}\int dx\, \partial_x\phi = \frac{\phi(+\infty) - \phi(-\infty)}{2v}$$
+
+For the kink: $Q = (v - (-v))/(2v) = 1$. For the anti-kink: $Q = -1$. For vacuum: $Q = 0$.
+
+The topological charge is conserved; it can only change via singular configurations.
+
+### Sine-Gordon Model
+
+A famous example: the sine-Gordon model $V(\phi) = \frac{m^4}{\lambda}[1 - \cos(\sqrt\lambda\phi/m)]$. Has infinitely many vacua $\phi_n = 2\pi n m/\sqrt\lambda$, and corresponding multi-soliton sectors.
+
+The sine-Gordon is exactly solvable and related to the Thirring model (fermion theory) via bosonization; a beautiful duality in 2D.
+
+### Solitons in 1+1 Dimensions: Summary
+
+Kinks are static particles interpolating between vacua. They're stable topologically. Their mass scales with $\sqrt\lambda$. Quantum corrections renormalize but don't destroy them.
+
+In 2D field theories, solitons are often solvable exactly, providing rare windows into non-perturbative physics.
+
+---
+
+## 3. Vortices in 2+1 Dimensions
+
+### The Abelian Higgs Model
+
+In 2+1 dimensions (or higher, with translational symmetry in the extra direction), consider a $U(1)$ gauge theory with a charged scalar:
+
+$$\mathcal{L} = -\tfrac{1}{4}F^{\mu\nu}F_{\mu\nu} + |D_\mu\phi|^2 - V(|\phi|^2)$$
+
+with $D_\mu = \partial_\mu - ieA_\mu$ and $V = \lambda(|\phi|^2 - v^2)^2/2$.
+
+Vacuum: $|\phi| = v$. Vacuum manifold: $U(1)$ (complex phase of $\phi$).
+
+$\pi_1(U(1)) = \mathbb{Z}$: integer-labeled vortex sectors.
+
+### The Vortex Solution
+
+Ansatz for a vortex of winding $n$ at the origin:
+
+$$\phi(r, \theta) = v\cdot f(r)\cdot e^{in\theta}$$
+
+$$A_\theta = -\frac{n}{er}a(r), \quad A_r = 0$$
+
+(Using polar coordinates.) The functions $f(r)$ and $a(r)$ satisfy:
+
+$$f(0) = 0, \quad f(\infty) = 1$$
+$$a(0) = 0, \quad a(\infty) = 1$$
+
+At the center: $\phi = 0$, so vacuum is gone. Far away: $\phi$ acquires a phase that winds $n$ times, $A$ provides the gauge-completing term.
+
+### Magnetic Flux
+
+The vortex carries magnetic flux:
+
+$$\Phi = \int d^2x\, B = \oint A_\theta\,r\,d\theta = \frac{2\pi n}{e}$$
+
+Quantized in units of $2\pi/e$. This is the familiar **flux quantization** in superconductors (where the analog vortex is the Abrikosov vortex).
+
+### Vortex Mass
+
+The mass per unit length (tension) of a vortex:
+
+$$T_{\rm vortex} = \pi v^2\cdot(\text{function of }m_H/m_A)$$
+
+where $m_H = \sqrt{2\lambda}v$ is the Higgs mass and $m_A = ev$ is the gauge boson mass. In the Type-II superconductor analogy, the ratio $m_H/m_A$ determines whether vortices attract (Type-I) or repel (Type-II).
+
+At **critical coupling** ($m_H = m_A$), vortices have special properties (BPS; section 6): the function becomes linear, and vortices don't interact at that specific point.
+
+### Vortices in Superconductors
+
+The abelian Higgs model describes Ginzburg-Landau superconductors:
+- $\phi$ = Cooper pair order parameter
+- $A_\mu$ = electromagnetic gauge field
+- Vortices = Abrikosov vortices (magnetic field threading the superconductor)
+
+Flux quantum: $\Phi_0 = h/(2e)$, observable experimentally.
+
+### Vortices and Confinement (Abelian)
+
+In 2+1 dimensional gauge theory, vortices can play the role of "confining" electric charge. In certain phases:
+- Vortices are light: theory is in a Coulomb or Higgs phase
+- Vortices are heavy/condense: theory is in a confining phase
+
+This "vortex condensation" picture of confinement was one of the early attempts to understand QCD-like confinement, generalized to non-abelian gauge theories.
+
+---
+
+## 4. The Dirac Monopole
+
+### The Setup
+
+Dirac (1931) asked: can there be an isolated magnetic pole, a source of magnetic field like an electron is a source of electric field?
+
+For an isolated magnetic charge $g$ at the origin:
+
+$$\vec B(\vec r) = \frac{g}{4\pi}\frac{\hat r}{r^2}$$
+
+The divergence: $\nabla\cdot\vec B = g\delta^3(\vec r) \neq 0$.
+
+But classical Maxwell equations require $\nabla\cdot\vec B = 0$ everywhere. If $\vec B = \nabla\times\vec A$ (some vector potential), then $\nabla\cdot\vec B = 0$ identically.
+
+### The Dirac Potential
+
+Dirac observed: you can have a magnetic monopole if you allow a singular vector potential; a "string" of singular flux from the origin out to infinity.
+
+For example:
+
+$$A_\phi(\vec r) = \frac{g}{4\pi r}\cdot\frac{1 - \cos\theta}{\sin\theta}$$
+
+(In spherical coordinates.) This is regular everywhere except along the south pole ($\theta = \pi$) where there's a singular flux line; the **Dirac string**.
+
+This potential gives $\vec B = g\hat r/(4\pi r^2)$ except for a delta function along the string. But the string itself is physically meaningless; it's a gauge artifact.
+
+### The Dirac Quantization Condition
+
+For the Dirac string to be unobservable, the electron wave function must pick up a trivial phase $e^{2\pi ni}$ when encircling the string. This requires:
+
+$$eg = 2\pi n \text{ for integer } n$$
+
+This is the **Dirac quantization condition**:
+
+$$\boxed{eg = 2\pi n}$$
+
+**Remarkable consequence:** If even one magnetic monopole exists anywhere in the universe, then *all* electric charges must be quantized as multiples of $2\pi/g$.
+
+This is the most elegant known explanation for the quantization of electric charge. The observed quantization of $e$ (all electron charges equal, proton equals $-$electron, etc.) would be "explained" by the existence of monopoles, even if we never observe them directly.
+
+### Status Today
+
+No isolated magnetic monopoles have been observed. Searches have set strict limits.
+
+But monopoles are predicted by many theories:
+- Grand Unified Theories (typical mass $\sim 10^{16}$ GeV)
+- String theory (various types)
+- 't Hooft-Polyakov monopoles in spontaneously broken non-abelian gauge theories
+
+GUT monopoles are expected to have existed in the very early universe and been inflated away. Their absence today is consistent with inflation. But their existence would explain charge quantization.
+
+### The Magnetic Charge
+
+The magnetic charge $g$ is conserved (by continuity: $\nabla\cdot\vec B = $ magnetic source density, integrated gives total magnetic charge). It's the electromagnetic analog of electric charge $e$.
+
+The Dirac quantization says $g \geq 2\pi/e \approx 2\pi/(1/3) \approx 20$. Much larger than $e$. So magnetic monopoles, if they exist, have huge charges.
+
+---
+
+## 5. The 't Hooft-Polyakov Monopole
+
+### The Setup
+
+The Dirac monopole is singular; it requires the singular string. 't Hooft and Polyakov (independently, 1974) showed that in **spontaneously broken non-abelian gauge theories**, smooth monopole solutions exist.
+
+Consider $SU(2)$ gauge theory with a Higgs field $\Phi^a$ (adjoint representation, $a = 1, 2, 3$):
+
+$$\mathcal{L} = -\tfrac{1}{4}G^{a\mu\nu}G^a_{\mu\nu} + \tfrac{1}{2}(D_\mu\Phi)^a(D^\mu\Phi)^a - V(|\Phi|^2)$$
+
+with $V = \lambda(|\Phi|^2 - v^2)^2/2$.
+
+The Higgs breaks $SU(2) \to U(1)$ (when $\Phi$ acquires a VEV).
+
+### Vacuum Manifold
+
+$\Phi$ transforms as an adjoint (3-vector under $SU(2)$). The VEV $\langle\Phi\rangle \neq 0$ breaks $SU(2)$ to the $U(1)$ that rotates around $\langle\Phi\rangle$.
+
+Vacuum manifold: $SU(2)/U(1) = S^2$, a sphere.
+
+$\pi_2(S^2) = \mathbb{Z}$: integer-labeled monopole sectors!
+
+### The 't Hooft-Polyakov Solution
+
+Ansatz ('t Hooft ansatz):
+
+$$\Phi^a(\vec r) = \hat r^a\cdot v\cdot h(r), \quad A^a_i = \epsilon^a{}_{ij}\hat r^j\cdot\frac{1 - K(r)}{er}$$
+
+With boundary conditions:
+- $h(0) = 0$ (Higgs vanishes at the center)
+- $h(\infty) = 1$ (Higgs reaches VEV at infinity)
+- $K(0) = 1$ (gauge field regular at center)
+- $K(\infty) = 0$ (gauge field approaches pure-gauge form)
+
+The Higgs direction $\Phi^a/|\Phi|$ coincides with the unit radial vector $\hat r^a$. This is the "hedgehog" configuration.
+
+### The Hedgehog Structure
+
+The Higgs field points "radially outward" in both spacetime and internal space. The configuration:
+- Has $|\Phi| \to v$ at infinity (vacuum)
+- Has $\Phi = 0$ at the origin (symmetry restoration)
+- Wraps around $S^2$ once as $\vec r$ wraps around $S^2$ at infinity
+
+Winding number = topological charge = magnetic charge (in units of $1/e$).
+
+### Computing the Magnetic Charge
+
+Far from the center, $\Phi^a = v\hat r^a$. The low-energy theory is $U(1)$ (the unbroken subgroup). The "magnetic" field of this $U(1)$ is:
+
+$$B^i = \frac{1}{e}\epsilon^{ijk}\partial_j\hat\Phi^k$$
+
+(Schematically.) Integrating over a sphere at infinity:
+
+$$\int_{S^2}\vec B\cdot d\vec A = \frac{4\pi}{e}$$
+
+for the minimal monopole (winding 1). In terms of Dirac quantization: $g = 4\pi/e$, which satisfies $eg = 4\pi$. This is $4\pi$ not $2\pi$, a factor of 2 off.
+
+Why? Because the SU(2) → U(1) breaking only preserves electromagnetism with a normalization issue. Full treatment: the quantization is actually $eg = 4\pi n$ for 't Hooft-Polyakov, related to the unified $SU(2)$ structure.
+
+### The Monopole Mass
+
+The mass (at generic coupling):
+
+$$M_{\rm monopole} = \frac{4\pi v}{e}\cdot f(\lambda/e^2)$$
+
+where $f$ is some function of the ratio of couplings. At weak coupling: $M \sim 4\pi v/e$, very heavy.
+
+For typical GUT couplings ($\alpha_{\rm GUT} \sim 1/25$): $M_{\rm GUT mono} \sim M_{\rm GUT}/\alpha_{\rm GUT} \sim 10^{16}$ GeV × 25 $\sim 10^{17}$ GeV.
+
+### Why 't Hooft-Polyakov Is Better Than Dirac
+
+The 't Hooft-Polyakov monopole is **smooth**; no singularity, no Dirac string. It's a genuine, well-defined soliton.
+
+The Dirac string structure appears in the abelian $U(1)$ limit as a gauge artifact; the monopole "has" a Dirac string in the low-energy effective theory, but it's not physical.
+
+The 't Hooft-Polyakov construction shows: whenever a non-abelian gauge theory breaks to contain an unbroken $U(1)$, magnetic monopoles exist as smooth solitons.
+
+### Implication for GUTs
+
+Any Grand Unified Theory that breaks to the SM (which contains $U(1)_{\rm EM}$) predicts magnetic monopoles. Their existence is **automatic**.
+
+GUT monopoles are very heavy ($\sim 10^{16}$ GeV) and were produced in the early universe. Inflation dilutes them to undetectable densities today; the "monopole problem" of cosmology was a major motivation for inflation.
+
+---
+
+## 6. BPS States
+
+### The BPS Bound
+
+Consider the 't Hooft-Polyakov monopole. Its mass depends on coupling ratios. But at a special limit:
+
+$$\lambda \to 0 \text{ (with } v \text{ fixed)}$$
+
+something beautiful happens. The Bogomol'nyi-Prasad-Sommerfield (BPS) bound:
+
+$$M \geq \frac{4\pi v}{e}|Q|$$
+
+where $Q$ is the magnetic charge. This saturates (becomes equality) for special configurations called **BPS states**.
+
+### The BPS Equations
+
+The bound is saturated when:
+
+$$B^a_i = D_i\Phi^a$$
+
+(Bogomol'nyi equations). These are **first-order** equations; simpler than the full Yang-Mills equations. Solutions saturate the BPS bound.
+
+### BPS Monopole Mass Formula
+
+For the BPS monopole:
+
+$$M_{\rm BPS} = \frac{4\pi v}{e}$$
+
+(exactly, no higher-order corrections). This is an **exact mass formula**; remarkable, given that we're normally stuck with perturbative approximations.
+
+### Why BPS States Are Special
+
+BPS states have:
+- **Exact mass formulas**; uncorrected by quantum effects (in appropriate theories)
+- **Preservation of half the supersymmetry** (in SUSY theories); "half-BPS" or "1/2-BPS"
+- **Small fluctuations** (the second-order equations become first-order)
+- **Exact moduli spaces** with special geometry
+
+In SUSY theories, BPS bounds correspond to preserved supersymmetries. The mass is bounded below by the central charge of the supersymmetry algebra, and BPS states saturate this bound.
+
+### The Mathematics of BPS Monopoles
+
+The BPS monopole moduli space (for $SU(N)$ theory with N-1 monopole charges) has a rich mathematical structure:
+- It's a Kähler manifold with specific metric
+- For $SU(2)$ with $k$ monopoles: it's a $4k$-dimensional manifold with $U(k)$ structure
+- ADHM construction generalizes to monopoles (Hitchin)
+
+This connects to:
+- Integrable systems (Hitchin systems)
+- Geometric Langlands program
+- Mirror symmetry
+
+### Dyons
+
+BPS states can carry both electric and magnetic charge. These are **dyons**:
+
+$$M_{\rm dyon} = \frac{4\pi v}{e}\sqrt{Q_e^2 + Q_m^2}$$
+
+(BPS mass formula for dyons.) The Witten effect: in the presence of a nonzero $\theta$-angle, monopoles acquire electric charge:
+
+$$Q_e = n_e - \theta Q_m/(2\pi)$$
+
+So dyons with specific $(n_e, Q_m)$ quantum numbers are generated by the $\theta$-term. This mixing is deep and connects anomalies to soliton physics.
+
+---
+
+## 7. Topological Charges and Conserved Currents
+
+### General Structure
+
+For a theory with spontaneously broken symmetry group $G \to H$, the vacuum manifold is $G/H$. Solitons are classified by $\pi_n(G/H)$ for various $n$.
+
+Each topological charge has an associated **topologically conserved current**; a current whose conservation is not from Noether's theorem (symmetry) but from topological triviality of the current's divergence.
+
+### Currents from Topology
+
+For a kink in 2D: $J^\mu = \epsilon^{\mu\nu}\partial_\nu\phi/(2v)$.
+For a vortex in 3D: $J^\mu = \epsilon^{\mu\nu\rho}\partial_\nu\partial_\rho(\text{phase of }\phi)/(2\pi)$
+For a monopole in 4D: $J^\mu_m = \epsilon^{\mu\nu\rho\sigma}\partial_\nu\partial_\rho A_\sigma/(4\pi)$ (when $A$ has singular parts near the monopole)
+
+These currents are conserved by construction (derivatives commute).
+
+### Unifying Picture
+
+Topological charges and their conservation come from:
+- The **vacuum structure** (what $G/H$ looks like)
+- The **homotopy of the vacuum manifold** ($\pi_n(G/H)$)
+- Smoothness of field configurations
+
+Topological conservation is different from Noether: it's not from continuous symmetries but from topology. Solitons are long-lived because their charge is topologically conserved.
+
+### Applications
+
+**Kelvin's vortex theorem:** vortices in a perfect fluid are topologically conserved. Same structure as QFT vortices.
+
+**Dislocations in solids:** topologically conserved; can't annihilate except in pairs of opposite type.
+
+**Topological defects in cosmology:** cosmic strings, domain walls, monopoles are predicted by early-universe symmetry breakings. Their abundance and consequences are central to cosmology.
+
+**Topological order in matter:** quantum Hall states and topological insulators carry topological information encoded in boundary physics.
+
+---
+
+## 8. Electric-Magnetic Duality
+
+### The Duality
+
+In pure electromagnetism in vacuum (no charges):
+
+$$\nabla\cdot\vec E = 0, \quad \nabla\cdot\vec B = 0$$
+$$\partial_t\vec E = \nabla\times\vec B, \quad -\partial_t\vec B = \nabla\times\vec E$$
+
+These equations are invariant under:
+
+$$\vec E \leftrightarrow \vec B, \quad \vec B \leftrightarrow -\vec E$$
+
+(Swap of electric and magnetic fields.) In terms of the field strength tensor: $F^{\mu\nu} \leftrightarrow \tilde F^{\mu\nu}$.
+
+In vacuum, this is an exact symmetry. But when charges are introduced, it's broken; electric charges source $\vec E$, magnetic charges source $\vec B$.
+
+### The Dirac Quantization Restoration
+
+If we have both electric charges $e$ and magnetic charges $g$, the duality would require:
+
+$$\text{mapping } e \leftrightarrow g$$
+
+Dirac quantization: $eg = 2\pi n$. This means the dual coupling is $1/(eg/(2\pi)) = 2\pi n/e^2$ (if $g = 2\pi/e$).
+
+**If magnetic monopoles exist, the theory at coupling $e$ is "dual" to a theory at coupling $2\pi/e$.** Strong coupling in one description = weak coupling in the other!
+
+This is remarkable. It suggests that a theory at strong coupling might be described simply (perturbatively) in terms of other particles; the magnetic monopoles.
+
+### Duality in Free Theories
+
+In free electromagnetism: duality is exact. The theory is invariant under $F \leftrightarrow \tilde F$.
+
+With matter: broken unless one introduces magnetic monopoles.
+
+### Duality as Equivalence of Theories
+
+If two theories are dual, they describe the same physics but with different "fundamental" variables:
+- Theory A: electric description, charge $e$
+- Theory B: magnetic description, charge $g = 2\pi/e$ (equiv. $\alpha_{\rm dual} = 2\pi/e^2 = 1/(4\pi\alpha)$)
+
+At $\alpha = 1/(4\pi)$ (strong coupling): dual $\alpha_{\rm dual} = 1$. Comparable strengths.
+
+For $\alpha_{\rm QED} \approx 1/137$: dual $\alpha_{\rm dual} \approx 137$; extremely strong. So QED is "weakly coupled" in our electric description; the magnetic description would be very strongly coupled.
+
+Duality is most useful when it takes a strongly-coupled theory to a weakly-coupled dual.
+
+---
+
+## 9. Montonen-Olive Duality
+
+### The Conjecture
+
+Montonen and Olive (1977) conjectured that certain gauge theories have an **exact S-duality**: the theory at coupling $g$ is dual to the same theory at coupling $4\pi/g$.
+
+For this duality to work, monopoles (which appear as non-perturbative objects in one description) must become the elementary particles in the dual description.
+
+### The Natural Home: $\mathcal{N} = 4$ SUSY
+
+Montonen-Olive duality works best in $\mathcal{N} = 4$ Super-Yang-Mills theory:
+
+- Has exactly the symmetries needed (conformal + superconformal)
+- Monopoles have the same quantum numbers (spin, internal charges) as the elementary particles
+- The coupling runs trivially (conformal), so $g$ is a genuine parameter
+
+### Evidence for Duality
+
+At the specific coupling value where $g = g_{\rm dual}$ (self-dual point), the theory has an extra symmetry. Various consistency checks:
+- BPS masses match between dual pairs
+- Anomaly coefficients match
+- Partition functions on various topologies match
+- Boundary states match
+
+Many have been verified in $\mathcal{N} = 4$, making this duality extremely well-tested.
+
+### Generalizations
+
+**S-duality in string theory:** Type IIB string theory has an $SL(2, \mathbb{Z})$ S-duality group. The coupling transforms as $g \to 1/g$ (strong-weak) under part of this group.
+
+**AdS/CFT:** $\mathcal{N} = 4$ SYM has a dual gravitational description via AdS/CFT. The gauge coupling maps to string coupling, and duality relates different regimes.
+
+**Seiberg duality:** in $\mathcal{N} = 1$ SUSY gauge theories, non-abelian Seiberg duality relates different theories with different gauge groups (e.g., $SU(N)$ with $F$ fundamental flavors ↔ $SU(F - N)$ with different matter content). A generalization of electromagnetic duality.
+
+### Physical Significance
+
+Duality suggests that our notion of "fundamental particle" is redescribable. What's elementary in one framework is composite in another. There's no absolute distinction between electric and magnetic charges; it depends on the coupling regime.
+
+This has implications for:
+- **Confinement:** dual Meissner effect, magnetic monopoles condensing
+- **Phase structure:** theories can have confining phases dual to Higgs phases
+- **Compactification:** different compactifications can be dual to each other
+- **Non-perturbative physics:** duality provides a way to compute strongly-coupled quantities
+
+---
+
+## 10. Seiberg-Witten and $\mathcal{N}=2$ SUSY
+
+### The Setup
+
+Seiberg and Witten (1994) solved the low-energy dynamics of $\mathcal{N} = 2$ SUSY gauge theory in 4D, with gauge group $SU(2)$ and no matter.
+
+The theory is asymptotically free: coupling grows at low energies. Low-energy dynamics: strongly coupled, perturbation theory fails.
+
+### The Exact Solution
+
+Despite strong coupling, Seiberg-Witten **solved the theory exactly**:
+
+**The moduli space of vacua** is parameterized by a single complex parameter $u$ (the vev of $\text{tr}\Phi^2$, where $\Phi$ is the scalar in the gauge multiplet).
+
+**The effective theory** in the low-energy regime is an abelian $U(1)$ gauge theory (Coulomb phase).
+
+**The coupling $\tau(u) = 4\pi i/g^2 + \theta/(2\pi)$** is determined by an elliptic curve that depends on $u$.
+
+**Monopoles and dyons** become massless at specific points in moduli space ($u = u_\pm$), where they drive confinement.
+
+### The Confinement Mechanism
+
+At specific points in moduli space, BPS monopoles become massless. Adding a small mass term (breaking to $\mathcal{N} = 1$), these monopoles condense, producing confinement of electric charges.
+
+**This is the dual Meissner effect in action.** Confinement is understood as monopole condensation; a long-standing conjecture made concrete.
+
+### Mathematical Beauty
+
+The Seiberg-Witten solution is:
+- An example where strongly coupled physics becomes calculable
+- A rich source of mathematical structures (elliptic curves, BPS moduli spaces)
+- A template for understanding other strongly-coupled SUSY theories
+- Connected to Donaldson invariants in 4-manifold topology
+
+### Legacy
+
+Seiberg-Witten theory opened modern explorations of:
+- **Integrable systems from gauge theories** (Nekrasov partition function)
+- **Topological field theories** and their applications to geometry
+- **BPS state counting** and wall-crossing formulas
+- **AGT correspondence** (gauge theory ↔ 2D CFT)
+
+This is some of the most beautiful mathematical physics of the past 30 years.
+
+---
+
+## 11. Skyrmions: Baryons as Solitons
+
+### The Skyrme Model
+
+Skyrme (1962) proposed that baryons (protons, neutrons) are solitons in an effective theory of mesons. The idea: pion field configurations with nonzero winding number are baryons.
+
+For an $SU(2)$ valued field $U(\vec x) = \exp(i\vec\tau\cdot\vec\pi/f_\pi)$:
+
+$$\mathcal{L}_{\rm Skyrme} = \frac{f_\pi^2}{4}\text{tr}[\partial_\mu U^\dagger\partial^\mu U] + \frac{1}{32e^2}\text{tr}[(\partial_\mu U^\dagger U)[\partial^\mu U^\dagger U, \partial^\nu U^\dagger U]] + \ldots$$
+
+The Skyrme term (second term) is added to stabilize solutions.
+
+### Topological Baryon Number
+
+The winding number:
+
+$$B = \frac{1}{24\pi^2}\int d^3x\,\epsilon^{ijk}\text{tr}[U^\dagger\partial_i U\cdot U^\dagger\partial_j U\cdot U^\dagger\partial_k U]$$
+
+This is the **baryon number**. Skyrme's conjecture: $B$ is literally baryon number.
+
+### The Skyrmion Solution
+
+The Skyrmion is a soliton with $B = 1$. The mass, computed from the Lagrangian, gives the baryon mass.
+
+Numerically: $M_{\rm Skyrme} \approx 1.4 f_\pi\cdot\ldots$ (depending on the detailed Lagrangian). For $f_\pi = 93$ MeV, reasonable baryon masses emerge.
+
+### Why This Works
+
+In large-$N$ QCD (document 18):
+- Baryons have mass $O(N)$
+- Mesons have mass $O(N^0)$
+- Baryons can be described as soliton states in the meson effective theory
+
+Witten made this precise (1983): baryons at large $N$ ARE Skyrmions of the pion effective theory. The topological charge is the baryon number, and the mass scaling works out.
+
+### Consequences
+
+Skyrme's original model gives:
+- Nucleon mass (approximate, from classical mass + rotational quantization)
+- Nucleon radii and charge distributions
+- Meson-baryon interactions
+- Hedgehog structure of the soliton
+
+Numerical fits to data are quite good (10-20% accuracy for baryon properties).
+
+### Modern Relevance
+
+Skyrmions as baryons are now standard theoretical understanding. At large $N$, they're exactly baryons. At $N = 3$, they're a reasonable approximation.
+
+This is a beautiful example of the **duality between perturbative and solitonic descriptions**:
+- In QCD with quarks: baryons are composite 3-quark states (perturbative picture)
+- In ChPT with pions: baryons are Skyrmion solitons (dual picture)
+
+Both descriptions coexist; neither is more "true."
+
+---
+
+## 12. Solitons in Condensed Matter
+
+Solitons aren't unique to particle physics. They appear throughout condensed matter:
+
+### Dislocations
+
+Crystal imperfections are topological defects. Edge dislocations, screw dislocations, etc.; all classified by topology.
+
+The motion of dislocations is central to plastic deformation. Topological stability ensures dislocations can't just disappear; they must annihilate with opposite-type dislocations or exit the material.
+
+### Vortices in Superfluids
+
+Superfluid helium supports quantized vortices. A vortex in helium-4 has quantized circulation $\Gamma = h/m_{\rm He}$.
+
+Helium-3 (fermionic) has more exotic structures: half-quantum vortices, skyrmion defects, etc.
+
+### Skyrmions in Ferromagnets
+
+Chiral magnets (certain materials with Dzyaloshinskii-Moriya interaction) can host **magnetic skyrmions**; topological solitons in the magnetization field.
+
+These are being studied as potential **spintronics** elements: they can be moved with low current, have small size (nm), and are topologically stable.
+
+### Topological Defects in Liquid Crystals
+
+Liquid crystals have various topological defects: disclinations, point defects. Their structure is determined by the homotopy of the order parameter space.
+
+### Solitons in Biology and Chemistry
+
+Sine-Gordon solitons describe motion of domain walls in magnetic materials and even propagation of signals along DNA-like chains.
+
+### The Universal Structure
+
+Across all these examples, the mathematical framework is the same as in QFT:
+- Ground state manifold
+- Homotopy groups classify defects
+- Topological currents give conservation laws
+- Defects can only annihilate with opposite-type defects
+
+This universality is one of the reasons topology is such a unifying concept in physics.
+
+---
+
+## 13. Appendix: Soliton Formulas Reference
+
+### Soliton Mass Formulas
+
+**Kink (1+1D, $\phi^4$):** $M_K = (4\sqrt\lambda v^3)/3$
+
+**Vortex (2+1D, abelian Higgs, critical coupling):** $T = \pi v^2$ (tension)
+
+**Dirac monopole:** Unobservable (singular)
+
+**'t Hooft-Polyakov (weak coupling):** $M \sim 4\pi v/e$
+
+**BPS 't Hooft-Polyakov:** $M = 4\pi v/e$ (exact)
+
+**Skyrmion:** $M \sim 12\pi^2\sqrt{f_\pi}/e$ (order of magnitude)
+
+### Dirac Quantization
+
+$$eg = 2\pi n$$
+
+for integer $n$, with $e, g$ electric and magnetic charges.
+
+### BPS Bound
+
+$$M \geq \frac{4\pi v}{e}|Q|$$
+
+Saturated by BPS states satisfying first-order equations.
+
+### Topological Charge Homotopy Table
+
+| Theory | Vacuum manifold | $\pi_n$ | Soliton |
+|---|---|---|---|
+| $\phi^4$ in 1D | $\mathbb{Z}_2$ | $\pi_0 = \mathbb{Z}_2$ | Kink |
+| Abelian Higgs in 2D | $U(1)$ | $\pi_1 = \mathbb{Z}$ | Vortex |
+| SU(2) → U(1) | $S^2$ | $\pi_2 = \mathbb{Z}$ | Monopole |
+| SU(2) pure YM (Euclidean) |; | $\pi_3 = \mathbb{Z}$ | Instanton |
+
+### Montonen-Olive Duality
+
+In $\mathcal{N} = 4$ SYM: $g \leftrightarrow 4\pi/g$ is an exact duality.
+
+In general non-SUSY theories: duality is conjectured but less rigorous.
+
+### Further Reading
+
+- **Rajaraman, *Solitons and Instantons***: classic textbook
+- **Manton & Sutcliffe, *Topological Solitons***: comprehensive modern treatment
+- **Shifman, *Advanced Topics in Quantum Field Theory***: non-perturbative methods
+- **Mulders, *Topological Solitons in Field Theory***: covers physics and mathematics
+- **Seiberg & Witten, *Electric-Magnetic Duality in N = 2 Supersymmetric Gauge Theory* (1994)**: the classic paper
+
+### Problems
+
+1. Derive the kink solution for $\phi^4$ theory and compute its mass $M_K$ in terms of $\lambda$ and $v$.
+
+2. For the abelian Higgs model, derive the first-order BPS vortex equations. Show that solutions have specific mass.
+
+3. Verify the 't Hooft-Polyakov monopole ansatz is a solution to the equations of motion (at least at the level of the BPS limit).
+
+4. Compute the baryon number of the Skyrmion ansatz and verify $B = 1$.
+
+5. For $\mathcal{N} = 4$ SYM, argue that Montonen-Olive duality maps electrical to magnetic sectors consistently. What are the masses involved?
+
+6. In the context of the abelian Higgs model, derive the vortex charge quantization condition. What distinguishes Type I from Type II superconductors?
+
+7. Consider a theory where the vacuum manifold is $SO(3)$ (full rotation group). What topological solitons can exist?
+
+---
+
+## Closing Note
+
+Solitons are where field theory meets topology. Classical solutions that can't be perturbatively destroyed. Objects that carry conserved topological charges. Structures that connect to abstract mathematical machinery (homotopy theory, index theorems, cohomology) and yet have concrete physical consequences.
+
+### The Big Themes
+
+**Topology protects.** Solitons can't decay because their topological charge is conserved. They're stable against all perturbations that respect the topology.
+
+**Duality reshuffles what's fundamental.** In one description, electric charges are elementary; in the dual, magnetic charges are elementary. No absolute distinction.
+
+**Non-perturbative objects matter.** Perturbation theory misses solitons by design; they're not small fluctuations around vacuum. Yet they're real particles of the quantum theory.
+
+**BPS states are exact.** Supersymmetry protects certain masses from quantum corrections. BPS mass formulas are exact non-perturbative results.
+
+### Connections
+
+Solitons connect to:
+- **Anomalies** (document 17): instanton and soliton contributions to anomalies
+- **Large-$N$** (document 18): baryons as Skyrmion solitons at large $N$
+- **Condensed matter:** vortices, skyrmions, dislocations are ubiquitous
+- **Cosmology:** cosmic strings, domain walls, monopole problem
+- **Mathematical physics:** Donaldson invariants, Gromov-Witten theory, mirror symmetry
+
+### What's Next
+
+You now have the core non-perturbative framework: instantons + solitons + large-$N$ + dualities. Combined with the other documents, you have a comprehensive toolkit for modern theoretical physics.
+
+Remaining menu:
+- **Option E:** Beyond Standard Model (5-8 docs); SUSY, strings, holography, quantum gravity
+
+Other directions:
+- Deeper lattice QCD and numerical methods
+- Integrability and exactly solvable models
+- Topological phases of matter in depth
+- Quantum information and entanglement in QFT
+- Conformal field theory in depth
+
+Each is rich. Let me know which direction when you want to continue.
+
+This completes Option D. You have solidly covered the core of non-perturbative field theory; the part of QFT that perturbation theory can't touch.

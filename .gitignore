@@ -24,3 +24,5 @@ pnpm-debug.log*
 .idea/
 .vercel/output
 dist
+.mockups-from-drive/
+.curriculum-from-drive/

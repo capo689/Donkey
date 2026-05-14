@@ -9,6 +9,957 @@ extendsTo: [28]
 classReportTitle: "An entire theory of almost-broken symmetry."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 15: the EFT of low-energy QCD. Where pions are the stars, chiral symmetry is the skeleton, and strongly-coupled physics becomes calculable.*
 
-{/* Content from qft_15_chiral_perturbation_theory.md */}
+Document 14 developed EFT methodology in the abstract. This document applies it to the most thoroughly-developed example in physics: **chiral perturbation theory (ChPT)**, the low-energy effective theory of QCD.
+
+The problem ChPT solves is fundamental. At low energies ($E \lesssim \Lambda_\chi \sim 1$ GeV), QCD is strongly coupled. Perturbation theory in $\alpha_s$ fails. Quarks and gluons are confined into hadrons. How do you compute anything?
+
+Answer: write an EFT of the relevant low-energy degrees of freedom; the **pseudo-Goldstone bosons** ($\pi, K, \eta$) that arise from spontaneous breaking of chiral symmetry. These are the lightest hadrons (the pion is $\sim 140$ MeV, far below typical hadronic scales of $\sim 1$ GeV), and their low-energy interactions are strongly constrained by the pattern of symmetry breaking.
+
+ChPT is beautiful because everything works out: the symmetry structure, the Goldstone theorem, the power counting, the matching to QCD, the predictions verified by experiment. It's the template for how to do low-energy physics when the UV theory is strongly coupled.
+
+### Prerequisites
+
+- Document 14 (EFT methodology)
+- Particle physics document (for QCD basics)
+- Classical field theory document (for symmetry breaking)
+
+### Conventions
+
+- Mostly-minus metric
+- $\hbar = c = 1$
+- Pion decay constant: $f_\pi \approx 93$ MeV (in "chiral" normalization; other common choices: $F_\pi = f_\pi \sqrt 2 \approx 131$ MeV, physical pion decay constant)
+- Chiral scale: $\Lambda_\chi = 4\pi f_\pi \approx 1.2$ GeV
+
+---
+
+## Table of Contents
+
+1. [The QCD Low-Energy Problem](#1-the-qcd-low-energy-problem)
+2. [Chiral Symmetry in QCD](#2-chiral-symmetry-in-qcd)
+3. [Spontaneous Chiral Symmetry Breaking](#3-spontaneous-chiral-symmetry-breaking)
+4. [The Goldstone Bosons: Pions, Kaons, and Eta](#4-the-goldstone-bosons-pions-kaons-and-eta)
+5. [The Chiral Lagrangian at Leading Order](#5-the-chiral-lagrangian-at-leading-order)
+6. [Quark Masses and Pion Masses](#6-quark-masses-and-pion-masses)
+7. [The Chiral Power Counting](#7-the-chiral-power-counting)
+8. [Pion Scattering at Tree Level](#8-pion-scattering-at-tree-level)
+9. [Next-to-Leading Order: Loop Corrections](#9-next-to-leading-order-loop-corrections)
+10. [Including Baryons: Chiral Perturbation with Nucleons](#10-including-baryons-chiral-perturbation-with-nucleons)
+11. [The Axial Anomaly and the $U(1)_A$ Problem](#11-the-axial-anomaly-and-the-u1_a-problem)
+12. [Applications and Precision Tests](#12-applications-and-precision-tests)
+13. [Appendix: ChPT Formulas Reference](#appendix-chpt-formulas-reference)
+
+---
+
+## 1. The QCD Low-Energy Problem
+
+### QCD at High vs. Low Energy
+
+QCD has two qualitatively different regimes:
+
+**High energy ($E \gg \Lambda_{\rm QCD}$):** $\alpha_s$ is small. Perturbation theory works. Cross sections at LHC, deep inelastic scattering, hard processes; all computable.
+
+**Low energy ($E \lesssim \Lambda_{\rm QCD}$):** $\alpha_s$ becomes $O(1)$. Perturbation theory fails. Quarks and gluons bind into hadrons. Hadronic physics is non-perturbative.
+
+The low-energy regime is where most "everyday" nuclear and particle physics happens; pion scattering, kaon decays, nucleon-nucleon forces, atomic nuclei. Understanding it quantitatively from first principles is the central challenge of low-energy QCD.
+
+### Why Perturbative QCD Fails Here
+
+At $E \sim 1$ GeV, $\alpha_s(\mu) \sim 1$. Perturbative expansion in $\alpha_s$ doesn't converge; each term is as large as the previous. The theory is **non-perturbative** in this regime.
+
+Two traditional approaches to non-perturbative QCD:
+1. **Lattice QCD:** numerical simulation of QCD on a Euclidean lattice
+2. **Model-building:** constituent quark models, bag models, etc.
+
+Lattice QCD is rigorous but computationally expensive. Models are quicker but lack systematic error estimates.
+
+### The EFT Alternative: ChPT
+
+Chiral perturbation theory takes a different approach: **identify the relevant low-energy degrees of freedom** (the lightest hadrons, which are Goldstone bosons) and write their effective Lagrangian constrained by QCD's chiral symmetry.
+
+The advantages:
+- Systematic: clear expansion parameters, known precision
+- Symmetry-guided: respects QCD's symmetries by construction
+- Predictive: many relations between observables from symmetry alone
+- Computable: operators at each order enumerable, couplings (low-energy constants) fit from data
+
+The disadvantage:
+- Limited to energies $\lesssim \Lambda_\chi \sim 1$ GeV
+- Hard to extend to heavier hadrons (vector mesons, baryons require care)
+- Low-energy constants must be measured or computed on the lattice
+
+Still, ChPT is the most successful low-energy EFT in physics, with thousands of publications and applications across nuclear, particle, and astrophysics.
+
+---
+
+## 2. Chiral Symmetry in QCD
+
+### The QCD Lagrangian with Light Quarks
+
+Consider QCD with only the three light quarks ($u, d, s$); the heavier quarks ($c, b, t$) are too heavy to be relevant at $E \sim 1$ GeV. The Lagrangian:
+
+$$\mathcal{L}_{\rm QCD} = -\tfrac{1}{4}G^a_{\mu\nu}G^{a\mu\nu} + \bar q(i\slashed D - \mathcal{M})q$$
+
+where $q = (u, d, s)^T$ is a three-component quark vector (in flavor space) and $\mathcal{M} = \text{diag}(m_u, m_d, m_s)$ is the quark mass matrix.
+
+The quark masses are:
+- $m_u \approx 2.16$ MeV
+- $m_d \approx 4.67$ MeV
+- $m_s \approx 93$ MeV
+
+All much less than $\Lambda_{\rm QCD} \sim 200$ MeV.
+
+### Chiral Decomposition
+
+Decompose quark fields into left- and right-handed components:
+
+$$q = q_L + q_R, \quad q_L = P_L q, \quad q_R = P_R q$$
+
+with $P_{L,R} = (1 \mp \gamma^5)/2$.
+
+In terms of these:
+
+$$\bar q i\slashed D q = \bar q_L i\slashed D q_L + \bar q_R i\slashed D q_R$$
+
+The kinetic term separates into independent left and right pieces. But the mass term couples them:
+
+$$\bar q \mathcal{M} q = \bar q_L \mathcal{M} q_R + \bar q_R \mathcal{M} q_L$$
+
+### The Chiral Symmetry $SU(3)_L \times SU(3)_R$
+
+**If the quark masses were zero** ($\mathcal{M} = 0$), the Lagrangian would have the symmetry:
+
+$$q_L \to U_L q_L, \quad q_R \to U_R q_R$$
+
+with $U_L, U_R \in SU(3)$. These are independent transformations acting separately on left- and right-handed quarks. This is the **chiral symmetry group**:
+
+$$G_{\rm chiral} = SU(3)_L \times SU(3)_R$$
+
+Each factor is a global flavor symmetry: you can rotate the three light quarks into each other, independently for each chirality.
+
+### The Current Algebra
+
+The conserved currents associated with chiral symmetry:
+
+**Vector currents:** $J^{a\mu}_V = \bar q\gamma^\mu T^a q$ (combining left and right)
+
+**Axial currents:** $J^{a\mu}_A = \bar q\gamma^\mu\gamma^5 T^a q$ (differences)
+
+Here $T^a$ are $SU(3)$ generators ($a = 1, \ldots, 8$). There are 8 vector currents and 8 axial currents, totaling 16 for the full $SU(3)_L \times SU(3)_R$.
+
+### The Mass Term Breaks Chiral Symmetry Explicitly
+
+Reality: quark masses aren't zero. The mass term $\bar q\mathcal{M}q$ explicitly breaks chiral symmetry.
+
+But since $m_u, m_d \sim$ MeV and $m_s \sim 100$ MeV are small compared to $\Lambda_{\rm QCD} \sim 200$ MeV, chiral symmetry is an **approximate** symmetry of QCD. We can treat the breaking perturbatively.
+
+This is the crucial setup for ChPT: chiral symmetry is approximately exact, spontaneously broken (as we'll see), and the explicit breaking is a small perturbation.
+
+### Full Flavor Structure
+
+Actually, QCD with $n_f$ massless flavors has the larger symmetry:
+
+$$G = U(n_f)_L \times U(n_f)_R = SU(n_f)_L \times SU(n_f)_R \times U(1)_V \times U(1)_A$$
+
+The $U(1)_V$ is baryon number (exactly conserved). The $U(1)_A$ is the axial $U(1)$, which is anomalous (broken quantum-mechanically; section 11). So the relevant chiral group is $SU(n_f)_L \times SU(n_f)_R$.
+
+For $n_f = 2$ (just $u, d$): $SU(2)_L \times SU(2)_R$, relevant for pion physics alone.
+
+For $n_f = 3$ ($u, d, s$): $SU(3)_L \times SU(3)_R$, relevant for kaon and eta physics too.
+
+---
+
+## 3. Spontaneous Chiral Symmetry Breaking
+
+### The Observational Evidence
+
+Chiral symmetry, even as an approximate symmetry, should appear in the hadron spectrum. If $SU(3)_L \times SU(3)_R$ were realized Wigner-Weyl (linearly), hadrons would come in parity-doublet multiplets: for every state of definite parity, there should be a nearly-degenerate state of opposite parity.
+
+**We don't see this.** The observed hadron spectrum has no parity doublets. Pions are pseudoscalars with no scalar partners at nearby mass. Nucleons are protons/neutrons with no comparable-mass opposite-parity states.
+
+This means chiral symmetry is **spontaneously broken**: realized nonlinearly, not linearly.
+
+### The Vacuum Breaking
+
+The QCD vacuum has a nonzero expectation value for the scalar quark bilinear:
+
+$$\langle\bar q q\rangle = \langle\bar u u + \bar d d + \bar s s\rangle \neq 0$$
+
+More precisely:
+
+$$\langle\bar q q\rangle \approx -(240 \text{ MeV})^3 \approx -(1.4\times 10^7 \text{ MeV}^3)$$
+
+This is the **chiral condensate**. Its nonzero value spontaneously breaks chiral symmetry.
+
+Why does it break the symmetry? Consider the transformation under $U_L$ acting on left-handed quarks alone. The operator $\bar q_L q_R$ transforms nontrivially:
+
+$$\bar q_L q_R \to \bar q_L U_L^\dagger q_R$$
+
+For this to have a nonzero vacuum expectation value, $U_L$ must be restricted; specifically to the diagonal subgroup where $U_L = U_R$.
+
+### The Symmetry Breaking Pattern
+
+The breaking is:
+
+$$SU(3)_L \times SU(3)_R \to SU(3)_V$$
+
+where $SU(3)_V$ (vector $SU(3)$) is the diagonal subgroup with $U_L = U_R$.
+
+- $SU(3)_L \times SU(3)_R$ has $8 + 8 = 16$ generators
+- $SU(3)_V$ has 8 generators
+- **8 generators are broken**: $SU(3)_A$ (axial, where $U_L = U_R^\dagger$)
+
+By Goldstone's theorem, 8 broken generators means **8 massless Goldstone bosons**.
+
+### The Goldstone Boson Spectrum
+
+In the limit of zero quark masses, these 8 Goldstones are massless. Their quantum numbers: pseudoscalars (spin-0, odd parity), flavor multiplet under $SU(3)_V$. Identifying them with known particles:
+
+- 3 pions ($\pi^+, \pi^0, \pi^-$): isospin triplet
+- 4 kaons ($K^+, K^0, \bar K^0, K^-$): two doublets
+- 1 eta ($\eta$): isosinglet
+
+That's 8 pseudoscalars; exactly the number predicted. ✓
+
+The "$\eta'$" (eta prime, at 958 MeV) is *not* one of these Goldstones; it's the ninth pseudoscalar, related to the anomalous $U(1)_A$ symmetry (section 11). In the chiral limit + large-$N$, $\eta'$ would also be a Goldstone, but the anomaly pushes its mass up.
+
+### With Quark Masses
+
+When we include $m_u, m_d, m_s$, chiral symmetry is explicitly broken. The Goldstones are no longer exactly massless; they acquire **pseudo-Goldstone masses** proportional to $\sqrt{m_q}$ (see section 6).
+
+Observed masses:
+- $m_\pi \approx 140$ MeV
+- $m_K \approx 495$ MeV
+- $m_\eta \approx 548$ MeV
+
+All much less than typical hadronic scales ($\sim 1$ GeV). This hierarchy is what makes ChPT work; pions, kaons, and eta are light enough to be the relevant low-energy degrees of freedom.
+
+---
+
+## 4. The Goldstone Bosons: Pions, Kaons, and Eta
+
+### Parametrizing the Goldstones
+
+Goldstone bosons parameterize the coset $G/H = [SU(3)_L \times SU(3)_R]/SU(3)_V$. Concretely, we can represent them as elements of a special unitary matrix:
+
+$$U(x) = \exp\left[\frac{i\sqrt 2}{f_\pi}\pi^a(x) T^a\right]$$
+
+where $T^a$ are $SU(3)$ generators (Gell-Mann matrices divided by 2), $\pi^a$ are the 8 pseudo-Goldstone fields, and $f_\pi$ is the **pion decay constant**.
+
+Explicitly, the 3×3 matrix $\pi^a T^a$ is:
+
+$$\Pi \equiv \pi^a T^a = \frac{1}{\sqrt 2}\begin{pmatrix}\frac{\pi^0}{\sqrt 2} + \frac{\eta}{\sqrt 6} & \pi^+ & K^+ \\ \pi^- & -\frac{\pi^0}{\sqrt 2} + \frac{\eta}{\sqrt 6} & K^0 \\ K^- & \bar K^0 & -\frac{2\eta}{\sqrt 6}\end{pmatrix}$$
+
+The normalization with $\sqrt 2/f_\pi$ is conventional (with $f_\pi \approx 93$ MeV in this convention).
+
+### How $U(x)$ Transforms
+
+Under chiral transformations $(g_L, g_R) \in SU(3)_L \times SU(3)_R$:
+
+$$U(x) \to g_L\, U(x)\, g_R^\dagger$$
+
+This is the nonlinear realization of the chiral symmetry on the Goldstone fields. Under the unbroken diagonal $SU(3)_V$ (with $g_L = g_R = g_V$):
+
+$$U(x) \to g_V\, U(x)\, g_V^\dagger$$
+
+So $U$ transforms as a bi-fundamental under $SU(3)_L \times SU(3)_R$, adjoint under $SU(3)_V$.
+
+### Why This Parametrization?
+
+The advantage of $U(x) \in SU(3)$: it's a nonlinear realization, manifesting all the symmetries automatically. The pion field is defined nonlinearly, and interactions emerge from the geometry of the group manifold.
+
+This is **nonlinear sigma model** formulation; the standard approach for spontaneously-broken theories where Goldstones parameterize the broken coset.
+
+### Small-Field Expansion
+
+For small fields (low energies):
+
+$$U(x) = 1 + \frac{i\sqrt 2}{f_\pi}\Pi(x) - \frac{1}{f_\pi^2}\Pi(x)^2 + \ldots$$
+
+The leading derivative of $U$:
+
+$$\partial_\mu U = \frac{i\sqrt 2}{f_\pi}\partial_\mu\Pi + O(\Pi^2)$$
+
+$$\partial_\mu U^\dagger = -\frac{i\sqrt 2}{f_\pi}\partial_\mu\Pi + O(\Pi^2)$$
+
+Products like $U^\dagger\partial_\mu U$ are what appear in the Lagrangian:
+
+$$U^\dagger\partial_\mu U = \frac{i\sqrt 2}{f_\pi}\partial_\mu\Pi + \frac{1}{f_\pi^2}[\Pi, \partial_\mu\Pi] + \ldots$$
+
+These expansions give the tower of pion interactions; two-pion, four-pion, six-pion, etc.
+
+---
+
+## 5. The Chiral Lagrangian at Leading Order
+
+### The Lagrangian
+
+The leading-order chiral Lagrangian (in the chiral limit, zero quark masses):
+
+$$\mathcal{L}^{(2)} = \frac{f_\pi^2}{4}\text{Tr}[\partial_\mu U^\dagger\partial^\mu U]$$
+
+This is the $\sigma$-model Lagrangian on the coset $SU(3) \simeq [SU(3)_L \times SU(3)_R]/SU(3)_V$.
+
+### Why This Is the Leading Term
+
+The Lagrangian must be:
+- **Chirally invariant:** $\mathcal{L}[U] = \mathcal{L}[g_L U g_R^\dagger]$ for any $g_L, g_R$
+- **Lorentz invariant:** built from $U$, $\partial_\mu U$, $\partial^\mu\partial_\nu U$, etc.
+- **Hermitian:** $\mathcal{L} = \mathcal{L}^*$
+
+Operators with different numbers of derivatives (2, 4, 6, ...) have different scaling in $p/\Lambda_\chi$. The 2-derivative term is the leading one.
+
+The coefficient $f_\pi^2/4$ is fixed by requiring the kinetic term of pions to have canonical normalization. From the small-field expansion:
+
+$$\frac{f_\pi^2}{4}\text{Tr}[\partial U^\dagger\partial U] = \frac{f_\pi^2}{4}\text{Tr}\left[\frac{2}{f_\pi^2}\partial\Pi\partial\Pi + \ldots\right] = \tfrac{1}{2}\partial\pi^a\partial\pi^a + \ldots$$
+
+Canonical kinetic term for each pion. ✓
+
+### Higher Orders
+
+Higher-dimension operators include:
+
+**4-derivative (Gasser-Leutwyler):**
+
+$$\mathcal{L}^{(4)} = L_1[\text{Tr}(\partial_\mu U^\dagger\partial^\mu U)]^2 + L_2\text{Tr}(\partial_\mu U^\dagger\partial_\nu U)\text{Tr}(\partial^\mu U^\dagger\partial^\nu U) + \ldots$$
+
+With many terms, each with a "low-energy constant" $L_i$. These are determined from data.
+
+**6-derivative:**
+
+Even more terms. Typically not used in leading-precision predictions.
+
+### Symmetry Currents
+
+The 16 currents of chiral symmetry ($8+8$ for $SU(3)_L \times SU(3)_R$) can be computed from $\mathcal{L}^{(2)}$ via Noether's theorem.
+
+The axial current (broken):
+
+$$J^{a\mu}_A = -i f_\pi^2\text{Tr}[T^a(U^\dagger\partial^\mu U - U\partial^\mu U^\dagger)] + O(\Pi^2)$$
+
+Expanding in small fields:
+
+$$J^{a\mu}_A \approx f_\pi\partial^\mu\pi^a + O(\Pi^3)$$
+
+This says the axial current is proportional to the derivative of the pion field. The overlap between $\langle 0|J^{a\mu}_A|\pi^b\rangle = i f_\pi p^\mu\delta^{ab}$ is what identifies $f_\pi$ as the pion decay constant.
+
+### Meson Decay Constants
+
+From the leading-order Lagrangian, all meson decay constants (pion, kaon, eta) equal $f_\pi$. This is the "pion decay constant," which despite its name governs all Goldstones.
+
+Experimentally: $f_\pi \approx 93$ MeV. And the chiral scale is:
+
+$$\boxed{\Lambda_\chi = 4\pi f_\pi \approx 1.2 \text{ GeV}}$$
+
+---
+
+## 6. Quark Masses and Pion Masses
+
+### Incorporating Quark Masses
+
+The mass term $\bar q\mathcal{M}q$ in QCD transforms as $(\bar 3, 3)$ under $SU(3)_L \times SU(3)_R$ (left-handed triplet, right-handed anti-triplet). To encode this in the chiral Lagrangian, include the mass matrix as a "spurion":
+
+$$\chi \equiv 2B_0\mathcal{M} = 2B_0\text{diag}(m_u, m_d, m_s)$$
+
+where $B_0$ is a dimensionful constant ($\sim \Lambda^3_{\rm QCD}/f_\pi^2$, to be determined by the chiral condensate).
+
+The mass term in the chiral Lagrangian:
+
+$$\mathcal{L}^{(2)}_{\rm mass} = \frac{f_\pi^2}{4}\text{Tr}[\chi^\dagger U + U^\dagger\chi]$$
+
+This transforms correctly under chiral symmetry (as $(\bar 3, 3) + (3, \bar 3)$, which combines properly).
+
+### The Pion Masses
+
+Expanding the mass Lagrangian in small pion fields:
+
+$$\text{Tr}[\chi U + U^\dagger\chi] = \text{Tr}[\chi(U + U^\dagger)] = 2\text{Tr}\chi - \frac{1}{f_\pi^2}\text{Tr}[\chi\Pi^2] + O(\Pi^4)$$
+
+The constant term is irrelevant (vacuum energy). The quadratic term gives pion masses:
+
+$$-\frac{1}{f_\pi^2}\text{Tr}[\chi\Pi^2]$$
+
+Combining with the kinetic term, we get a mass matrix for the pseudo-Goldstones.
+
+### The Gell-Mann-Oakes-Renner Relation
+
+Computing the trace for the three pion states $\pi^+, \pi^-, \pi^0$:
+
+$$m_{\pi^\pm}^2 = B_0(m_u + m_d)$$
+
+$$m_{\pi^0}^2 = B_0(m_u + m_d) + O(\epsilon^2) \text{ where } \epsilon = (m_d - m_u)$$
+
+For the kaons:
+
+$$m_{K^\pm}^2 = B_0(m_u + m_s)$$
+
+$$m_{K^0}^2 = B_0(m_d + m_s)$$
+
+For the eta (at leading order in chiral symmetry breaking):
+
+$$m_\eta^2 = \frac{B_0}{3}(m_u + m_d + 4m_s)$$
+
+This is the **Gell-Mann-Oakes-Renner (GMOR) relation**; the fundamental connection between quark masses and pion masses.
+
+### Determining $B_0$
+
+The chiral condensate $\langle\bar q q\rangle = -f_\pi^2 B_0$ (at leading order). So:
+
+$$B_0 = -\frac{\langle\bar q q\rangle}{f_\pi^2}$$
+
+With $\langle\bar q q\rangle \approx -(240 \text{ MeV})^3$ and $f_\pi = 93$ MeV:
+
+$$B_0 \approx \frac{(240)^3}{(93)^2} \approx 1600 \text{ MeV}$$
+
+### The Gell-Mann-Okubo Relation
+
+From GMOR, there's a linear combination of meson masses that vanishes:
+
+$$4m_K^2 = m_\pi^2 + 3m_\eta^2$$
+
+Checking: $4\cdot 495^2 \approx 980000$ vs. $140^2 + 3\cdot 548^2 \approx 919000$. Agreement within $\sim 6\%$.
+
+This is the **Gell-Mann-Okubo relation**; a non-trivial test of chiral symmetry. The 6% disagreement reflects higher-order chiral corrections.
+
+### Why This Matters
+
+The GMOR relation is deep: it says that the squared masses of Goldstones are proportional to quark masses. Not masses themselves, but masses squared. This is what "pseudo-Goldstone boson" means; masses vanishing in the chiral limit, scaling as $\sqrt{m_q}$.
+
+This is why pions are so much lighter than other hadrons: pions are pseudo-Goldstones of broken chiral symmetry, pinned to zero mass in the chiral limit.
+
+---
+
+## 7. The Chiral Power Counting
+
+### The Expansion Parameter
+
+ChPT is organized as an expansion in:
+
+$$\frac{p, m_\pi}{\Lambda_\chi}$$
+
+where $p$ is typical momentum and $m_\pi$ the pion mass. Both are treated as the same order ("chiral order" $p^2$).
+
+Specifically, each operator in the chiral Lagrangian is classified by its "chiral dimension":
+
+- $\mathcal{L}^{(2)}$: two derivatives OR one quark-mass insertion → "chiral dimension 2"
+- $\mathcal{L}^{(4)}$: four derivatives OR two mass insertions OR two derivatives + one mass → "chiral dimension 4"
+- $\mathcal{L}^{(6)}$: six derivatives, etc.
+
+### The Weinberg Power Counting
+
+**Weinberg's theorem** (1979): for a chiral Lagrangian, a Feynman diagram with:
+- $L$ loops
+- $I_n$ internal lines
+- $V_n$ vertices of order $p^n$ (i.e., from $\mathcal{L}^{(n)}$)
+
+has chiral dimension:
+
+$$D = 2 + 2L + \sum_n V_n(n - 2)$$
+
+For $L = 0$: tree-level diagrams from $\mathcal{L}^{(n)}$ have dimension $n$. So only $\mathcal{L}^{(2)}$ contributes at leading chiral order $p^2$.
+
+For $L = 1$: loops from $\mathcal{L}^{(2)}$ contribute at order $p^4$. Together with tree-level $\mathcal{L}^{(4)}$, this gives "next-to-leading order" (NLO) $p^4$.
+
+For $L = 2$: loops from $\mathcal{L}^{(2)}$ or loops combined with $\mathcal{L}^{(4)}$ give $p^6$ (NNLO), together with tree-level $\mathcal{L}^{(6)}$.
+
+### Physical Interpretation
+
+The hierarchy of precision:
+
+- Leading order ($p^2$): tree-level from $\mathcal{L}^{(2)}$. No free parameters beyond $f_\pi, B_0, m_q$.
+- NLO ($p^4$): adds the 10 Gasser-Leutwyler coefficients $L_1, \ldots, L_{10}$.
+- NNLO ($p^6$): adds many more coefficients.
+
+At each order, the predictions are finite (after renormalization) and increasingly precise. Most ChPT calculations are done at NLO or NNLO for today's precision requirements.
+
+### Why $\Lambda_\chi = 4\pi f_\pi$
+
+Where does the scale $\Lambda_\chi \sim 1$ GeV come from? It's the scale at which loops become order 1.
+
+Each loop in ChPT contributes a factor of:
+
+$$\frac{p^2}{(4\pi f_\pi)^2}$$
+
+For $p \ll 4\pi f_\pi$, loops are small. For $p \sim 4\pi f_\pi \sim \Lambda_\chi$, loops are $O(1)$; the expansion breaks down.
+
+The hierarchy $f_\pi \ll \Lambda_\chi \sim 4\pi f_\pi \ll $ hadronic masses puts ChPT on solid ground for energies $\lesssim$ 500 MeV. Above that, the expansion is in trouble.
+
+### Why This Is "Perturbation Theory"
+
+The word "perturbation" in ChPT is about the small-momentum expansion, not about small couplings. The underlying theory (QCD) is strongly coupled; only the low-momentum approximation is perturbative.
+
+---
+
+## 8. Pion Scattering at Tree Level
+
+### The Process: $\pi\pi \to \pi\pi$
+
+Consider charged pion scattering: $\pi^+(p_1)\pi^-(p_2) \to \pi^+(p_3)\pi^-(p_4)$.
+
+At leading order (tree-level from $\mathcal{L}^{(2)}$), this is computed from the 4-pion interaction in the chiral Lagrangian.
+
+### Extracting the 4-Pion Vertex
+
+From the expansion of $\text{Tr}[\partial U^\dagger\partial U]$ to quartic order in fields:
+
+$$\text{Tr}[\partial U^\dagger\partial U] = \frac{2}{f_\pi^2}\text{Tr}[\partial\Pi\partial\Pi] + \frac{4}{3f_\pi^4}\text{Tr}[\partial\Pi[\Pi, [\Pi, \partial\Pi]]] + \ldots$$
+
+Actually, let me just use the result. Expanding $U = \exp(i\sqrt 2\Pi/f_\pi)$ and computing the kinetic term to 4-pion order:
+
+$$\mathcal{L}^{(2)}|_{4\pi} = \frac{1}{6f_\pi^2}[(\pi^a\partial_\mu\pi^a)(\pi^b\partial^\mu\pi^b) - (\pi^a\pi^a)(\partial_\mu\pi^b\partial^\mu\pi^b)]$$
+
+(There are also mass-dependent terms from the mass Lagrangian.)
+
+### The Amplitude
+
+For $\pi^+\pi^- \to \pi^+\pi^-$ scattering, the tree-level amplitude from the 4-pion vertex:
+
+$$\mathcal{A}(\pi^+\pi^- \to \pi^+\pi^-) = \frac{1}{f_\pi^2}[s - m_\pi^2]$$
+
+(At leading order in ChPT, in the isospin symmetric limit.)
+
+Similarly for other channels:
+
+$$\mathcal{A}(\pi^+\pi^+ \to \pi^+\pi^+) = \frac{t + u - 2m_\pi^2}{f_\pi^2}$$
+
+$$\mathcal{A}(\pi^+\pi^- \to \pi^0\pi^0) = \frac{s - m_\pi^2}{f_\pi^2}$$
+
+(The isospin structure constrains these to be related.)
+
+### The Weinberg-Tomozawa Relation
+
+Near threshold, the scattering lengths can be extracted. For example:
+
+$$a_0^2 = \frac{m_\pi^2}{16\pi f_\pi^2}\cdot(-)\left[\frac{1}{3}\cdot(\text{appropriate isospin coefficient})\right]$$
+
+where $a_0^I$ is the S-wave scattering length in isospin channel $I$.
+
+Weinberg's result (1966) for $\pi\pi$ scattering at threshold:
+
+$$a_0^0 \approx +0.16\, m_\pi^{-1}, \quad a_0^2 \approx -0.045\, m_\pi^{-1}$$
+
+These are predictions from current algebra + spontaneous chiral symmetry breaking, no free parameters!
+
+### Experimental Test
+
+Measurements give:
+
+$$a_0^0 = 0.220(5) m_\pi^{-1}, \quad a_0^2 = -0.044(1) m_\pi^{-1}$$
+
+The tree-level ChPT predicts the isospin-2 scattering length within experimental errors. The isospin-0 is about 30% off, consistent with NLO corrections being important.
+
+### Higher-Order Corrections
+
+At NLO ($p^4$), ChPT includes:
+- Tree-level contributions from $\mathcal{L}^{(4)}$ (with 10 low-energy constants)
+- One-loop contributions from $\mathcal{L}^{(2)}$
+
+The full NLO calculation gives:
+
+$$a_0^0 = 0.220\, m_\pi^{-1}$$
+
+at NLO, matching experiment to better than 1%.
+
+This is the power of chiral perturbation theory: a strongly-coupled theory (QCD) has its low-energy physics characterized by an expansion that converges order-by-order in $p^2/\Lambda_\chi^2$, with very few parameters (the $L_i$'s fit from data).
+
+---
+
+## 9. Next-to-Leading Order: Loop Corrections
+
+### The Gasser-Leutwyler Lagrangian
+
+At $p^4$ order, the chiral Lagrangian includes 10 independent terms (in the $SU(3)_L \times SU(3)_R$ case):
+
+$$\mathcal{L}^{(4)} = L_1[\text{Tr}(\partial_\mu U^\dagger\partial^\mu U)]^2 + L_2\text{Tr}(\partial_\mu U^\dagger\partial_\nu U)\text{Tr}(\partial^\mu U^\dagger\partial^\nu U)$$
+
+$$+ L_3\text{Tr}(\partial_\mu U^\dagger\partial^\mu U\partial_\nu U^\dagger\partial^\nu U) + L_4\text{Tr}(\partial_\mu U^\dagger\partial^\mu U)\text{Tr}(\chi^\dagger U + U^\dagger\chi)$$
+
+$$+ L_5\text{Tr}[\partial_\mu U^\dagger\partial^\mu U(\chi^\dagger U + U^\dagger\chi)] + L_6[\text{Tr}(\chi^\dagger U + U^\dagger\chi)]^2$$
+
+$$+ L_7[\text{Tr}(\chi^\dagger U - U^\dagger\chi)]^2 + L_8\text{Tr}[(\chi^\dagger U)^2 + (U^\dagger\chi)^2] + \ldots$$
+
+(With two more terms $L_9, L_{10}$ involving external vector and axial-vector sources, relevant for electromagnetic interactions.)
+
+Each $L_i$ is a low-energy constant to be determined from experiment or lattice QCD.
+
+### Loop Contributions
+
+At NLO, loops of pions contribute. Example: the pion self-energy at one loop.
+
+The one-loop pion tadpole diagram:
+
+$$\Sigma_{\rm tadpole} = \frac{1}{f_\pi^2}\int\frac{d^4 k}{(2\pi)^4}\frac{1}{k^2 - m_\pi^2 + i\epsilon}\cdot(\text{combinatorial factor})$$
+
+This integral is UV divergent. In dimensional regularization:
+
+$$\int\frac{d^d k}{(2\pi)^d}\frac{1}{k^2 - m_\pi^2} = \frac{-i m_\pi^2}{(4\pi)^2}\left[\frac{1}{\epsilon} - \ln\frac{m_\pi^2}{\mu^2} + 1 - \gamma_E + \ln(4\pi)\right]$$
+
+(At $d = 4 - 2\epsilon$.)
+
+The $1/\epsilon$ pole must be absorbed into counterterms. ChPT is renormalized order-by-order: divergences at $p^4$ are absorbed into the $L_i$'s.
+
+### The Renormalized Low-Energy Constants
+
+The $L_i$'s are "bare" coefficients that receive additive corrections from loop divergences. After subtraction:
+
+$$L_i = L_i^r(\mu) + \gamma_i\cdot(\text{universal})$$
+
+where $L_i^r(\mu)$ is the renormalized coefficient at scale $\mu$, and $\gamma_i$ are computable coefficients.
+
+The **renormalization group** then runs $L_i^r$ with $\mu$:
+
+$$\mu\frac{dL_i^r}{d\mu} = \text{finite coefficient}$$
+
+The $L_i^r$ at a standard scale ($\mu = M_\rho$, the rho meson mass, $\sim 770$ MeV) are the "physical" low-energy constants that one quotes.
+
+### Measured Values of LECs
+
+From combined fits to experimental data and lattice QCD:
+
+$$L_1^r(M_\rho) \approx 0.4\times 10^{-3}$$
+$$L_2^r(M_\rho) \approx 1.4\times 10^{-3}$$
+$$L_3^r(M_\rho) \approx -3.5\times 10^{-3}$$
+$$L_4^r(M_\rho) \approx 0.3\times 10^{-3}$$
+$$L_5^r(M_\rho) \approx 1.4\times 10^{-3}$$
+$$L_6^r(M_\rho) \approx 0.1\times 10^{-3}$$
+$$L_7^r(M_\rho) \approx -0.3\times 10^{-3}$$
+$$L_8^r(M_\rho) \approx 0.9\times 10^{-3}$$
+$$L_9^r(M_\rho) \approx 6.0\times 10^{-3}$$
+$$L_{10}^r(M_\rho) \approx -5.1\times 10^{-3}$$
+
+These are all of order $10^{-3}$; small in the appropriate sense for a good chiral expansion.
+
+### A Non-Trivial Prediction
+
+With NLO ChPT, you can compute many observables and get precision matching experiment:
+
+- Pion-pion scattering lengths: less than 1% accuracy
+- Pion form factors: few % accuracy
+- Kaon form factors: few % accuracy
+- $K \to \pi$ transitions
+- Electromagnetic polarizabilities of pions
+
+Each of these comes from the same Lagrangian, same $L_i$'s, same power counting. The agreement validates the entire chiral EFT framework.
+
+### The Role of Lattice QCD
+
+Modern precision ChPT relies heavily on lattice QCD calculations of the low-energy constants. Lattice can compute:
+- $f_\pi$ at physical quark masses (well-measured)
+- Chiral condensate $\langle\bar q q\rangle$
+- Ratios of decay constants ($f_K/f_\pi$, $f_\eta/f_\pi$)
+- Values of $L_i$ (or Gasser-Leutwyler constants directly)
+
+Combining ChPT (which organizes the expansion) with lattice QCD (which provides non-perturbative input) is the modern approach to low-energy QCD.
+
+---
+
+## 10. Including Baryons: Chiral Perturbation with Nucleons
+
+### The Problem
+
+Baryons (protons, neutrons) are *not* Goldstones. They have mass $\sim 1$ GeV, comparable to the chiral scale $\Lambda_\chi$. Including them in ChPT requires extra care.
+
+### Two Approaches
+
+**Heavy Baryon ChPT (HBChPT):** Treat nucleons as heavy static sources with non-relativistic expansion in $1/m_N$. Introduces the nucleon velocity $v^\mu$ and expands observables in small kinetic energy.
+
+**Relativistic ChPT:** Keep nucleons fully relativistic. More complicated (issues with power counting), but preserves Lorentz invariance manifestly. Recent renaissance with "infrared regularization" or "extended on-mass-shell" schemes.
+
+### The Nucleon Lagrangian
+
+The leading-order nucleon Lagrangian couples nucleons to pions:
+
+$$\mathcal{L}_{\rm N}^{(1)} = \bar N(i\slashed\partial - m_N + g_A\slashed u\gamma^5)N$$
+
+where $N = (p, n)^T$ is the nucleon doublet, $u^\mu$ is a combination of pion derivatives, and $g_A \approx 1.27$ is the axial coupling of the nucleon. Here $m_N \approx 940$ MeV is the nucleon mass.
+
+### Pion-Nucleon Coupling
+
+The axial coupling $g_A$ is measured from beta decay: $n \to p + e^- + \bar\nu_e$. The amplitude has a factor of $g_A$ from the nucleon axial current matrix element.
+
+The pion-nucleon coupling is:
+
+$$\mathcal{L}_{\pi NN} = \frac{g_A}{f_\pi}\bar N\gamma^\mu\gamma^5\vec\tau\cdot\partial_\mu\vec\pi N$$
+
+(Where $\vec\tau$ are Pauli isospin matrices.) The coupling strength $g_A/f_\pi \approx 13.7$ is related to the pion-nucleon coupling constant $g_{\pi NN}$ via the Goldberger-Treiman relation:
+
+$$g_{\pi NN} f_\pi = g_A m_N$$
+
+Checking: $13.7\cdot 93 \approx 1274$ MeV $\approx g_A m_N = 1.27\cdot 939 \approx 1193$ MeV. Agrees to ~10% (higher-order corrections).
+
+### Chiral Power Counting for Baryons
+
+With baryons, chiral power counting works but needs the modification that $m_N \sim \Lambda_\chi$. In HBChPT, the nucleon kinematics ($p = m_N v + k$ with soft $k$) gives clean power counting.
+
+The leading chiral order for a diagram with nucleons is:
+
+$$D = 2L - 2I_\pi - I_N + 2\sum V^{(n)}_n + \sum V^{(n)}_N$$
+
+(With various corrections for nucleon vs. meson lines.) This allows systematic construction of baryon chiral amplitudes.
+
+### Nuclear Physics Applications
+
+Chiral perturbation theory applied to baryons gives low-energy nuclear forces. Modern nuclear physics uses:
+
+**ChPT-based nuclear forces:** Derive the nucleon-nucleon interaction systematically from pion exchange + short-range interactions (encoded in LECs).
+
+**Few-body nuclear physics:** Solve for light nuclei (deuteron, triton, alpha particle) using ChPT interactions.
+
+**Nuclear matter:** Extrapolate to many-body systems relevant for neutron stars.
+
+The framework is systematic: at each order in the chiral expansion, you know exactly what operators to include and what their coefficients must satisfy.
+
+---
+
+## 11. The Axial Anomaly and the $U(1)_A$ Problem
+
+### The Missing Goldstone
+
+Naively, $n_f$ massless flavors give $n_f^2$ Goldstone bosons from $[U(n_f)_L \times U(n_f)_R]/U(n_f)_V$. For $n_f = 3$: $9$ Goldstones.
+
+But we identified only 8: $\pi^{\pm 0}, K^{\pm 0}, \bar K^0, \eta$. Where's the ninth?
+
+The observed 9th pseudoscalar is the **$\eta'$** at 958 MeV; much heavier than the octet. Not a Goldstone.
+
+### The $U(1)_A$ Problem
+
+The missing Goldstone corresponds to the axial $U(1)_A$ transformation:
+
+$$q \to e^{i\alpha\gamma^5}q$$
+
+Classically, this is a symmetry of the massless QCD Lagrangian. Spontaneous breaking would give a 9th Goldstone, which should be light ($\sim m_\pi$).
+
+But the $\eta'$ is heavy ($958$ MeV). What's happening?
+
+### The Resolution: The Anomaly
+
+The $U(1)_A$ symmetry is **anomalous**; broken by quantum effects (the chiral anomaly from document 10). The anomalous current has non-vanishing divergence:
+
+$$\partial_\mu J^\mu_{A,U(1)} = \frac{g_s^2 n_f}{16\pi^2}G^a_{\mu\nu}\tilde G^{a\mu\nu}$$
+
+The right side is the **topological charge density** of QCD. It's nonzero on instanton backgrounds.
+
+Because the symmetry is broken by the anomaly, there's no Goldstone. The $\eta'$ mass doesn't vanish in the chiral limit; it remains at $\sim 900$ MeV even as $m_q \to 0$.
+
+### The Witten-Veneziano Formula
+
+A quantitative relation (in the large-$N$ limit):
+
+$$m_{\eta'}^2 = m_\eta^2 + \frac{2N}{f_\pi^2}\chi_t$$
+
+where $\chi_t$ is the topological susceptibility of QCD (a non-perturbative quantity from the QCD vacuum structure).
+
+Lattice QCD measures $\chi_t \approx (180\text{ MeV})^4$, predicting $m_{\eta'} \approx 860$ MeV. Observed: 958 MeV. Reasonable agreement, confirming the anomaly-based explanation.
+
+### The Strong CP Problem
+
+The same anomaly coefficient also allows a $\theta$-term in the QCD Lagrangian:
+
+$$\mathcal{L}_\theta = \frac{\theta}{32\pi^2}g_s^2 G^a_{\mu\nu}\tilde G^{a\mu\nu}$$
+
+If $\theta \neq 0$, QCD violates CP. Experiment limits: $|\theta| < 10^{-10}$. This is the **strong CP problem**; why is $\theta$ so tiny?
+
+Proposed solution: the **Peccei-Quinn mechanism**, which introduces a new symmetry that dynamically sets $\theta \to 0$. Predicts a light pseudo-Goldstone called the **axion**. Axion searches (ADMX, MADMAX) are ongoing.
+
+### Interplay with ChPT
+
+In ChPT proper (for the 8 Goldstones), the $U(1)_A$ anomaly is accounted for by not including $\eta'$ in the effective theory. The $\eta'$ is treated as a heavier field outside ChPT.
+
+Extensions of ChPT including the $\eta'$ (for certain processes) include explicit anomaly terms modifying the chiral Lagrangian.
+
+---
+
+## 12. Applications and Precision Tests
+
+### Pion-Pion Scattering Lengths
+
+The most classic ChPT test. NLO ChPT predicts:
+
+$$a_0^0 = 0.220(5)\, m_\pi^{-1}$$
+
+Measured (from pionium at DIRAC experiment):
+
+$$a_0^0 = 0.221(18)\, m_\pi^{-1}$$
+
+Agreement within errors. Precise test of chiral dynamics.
+
+### Electromagnetic Form Factor of Pion
+
+The pion's electromagnetic form factor $F_\pi(q^2)$ is measured in $e^+e^- \to \pi^+\pi^-$ and pion scattering. NLO ChPT predicts:
+
+$$\langle r_\pi^2\rangle = 0.43\text{ fm}^2$$
+
+Measured:
+
+$$\langle r_\pi^2\rangle = 0.44\text{ fm}^2$$
+
+Match at the percent level.
+
+### $K_{\ell 3}$ Decays
+
+The semileptonic kaon decay $K \to \pi e\nu$ has a form factor $f_+(q^2)$ extracted from experiment. ChPT predicts its $q^2$ dependence:
+
+$$f_+(q^2) = f_+(0)\left[1 + \frac{q^2}{m_\pi^2}\lambda_+ + \ldots\right]$$
+
+with $\lambda_+$ calculable in ChPT. Agreement with data validates the theory.
+
+### CP Violation in Kaon System
+
+Indirect CP violation in $K \to \pi\pi$ (parameter $\epsilon$) receives contributions from box diagrams with W and top quarks. Computing the mixing amplitude requires:
+- Electroweak loops at $M_W$
+- RG evolution from $M_W$ to $m_b$
+- Hadronic matrix elements computed in ChPT + lattice
+
+This multi-scale calculation is a triumph of EFT methods + ChPT.
+
+### Chiral Extrapolation
+
+Lattice QCD calculations are typically done at quark masses heavier than physical (for computational cost reasons). ChPT provides the framework to extrapolate to physical $m_q$:
+
+$$\mathcal{O}_{\rm observed} = \mathcal{O}_{\rm lattice} + (\text{ChPT correction})(m_q^{\rm lattice} - m_q^{\rm physical})$$
+
+This is how modern lattice QCD converts unphysical-mass results into physical predictions.
+
+### Nuclear Forces and Light Nuclei
+
+ChPT for baryons + chiral nuclear forces has enabled first-principles calculations of:
+- Deuteron binding energy
+- Triton and alpha-particle structures
+- Nuclear matter equation of state (partial, depending on extrapolation)
+
+Modern nuclear physics is increasingly based on chiral EFT frameworks.
+
+### Precision on CMB
+
+The early universe's nuclear physics (at $T \sim$ MeV) affects Big Bang Nucleosynthesis predictions. ChPT provides the weak interaction rates and nuclear cross sections needed for precision BBN.
+
+### Connection to Flavor Physics
+
+Many flavor-physics observables (rare kaon and pion decays, CP violation) rely on ChPT for hadronic matrix elements. The predictions, validated by measurements, constrain beyond-SM physics indirectly.
+
+---
+
+## 13. Appendix: ChPT Formulas Reference
+
+### Parameters
+
+- Pion decay constant: $f_\pi \approx 93$ MeV
+- Chiral scale: $\Lambda_\chi \approx 4\pi f_\pi \approx 1.2$ GeV
+- Chiral condensate: $\langle\bar q q\rangle \approx -(240 \text{ MeV})^3$
+- $B_0 = -\langle\bar q q\rangle/f_\pi^2 \approx 1600$ MeV
+
+### Quark Masses (MS-bar at 2 GeV)
+
+- $m_u \approx 2.16$ MeV
+- $m_d \approx 4.67$ MeV
+- $m_s \approx 93$ MeV
+- $m_u + m_d \approx 7$ MeV
+
+### Goldstone Boson Masses
+
+- $m_{\pi^\pm} = 139.57$ MeV, $m_{\pi^0} = 134.98$ MeV
+- $m_{K^\pm} = 493.68$ MeV, $m_{K^0} = 497.61$ MeV
+- $m_\eta = 547.86$ MeV
+- $m_{\eta'} = 957.78$ MeV (not a Goldstone; $U(1)_A$ anomaly)
+
+### The $U(x)$ Field
+
+$$U(x) = \exp\left[\frac{i\sqrt 2}{f_\pi}\pi^a T^a\right]$$
+
+Transforms as $U \to g_L U g_R^\dagger$.
+
+### Leading-Order Lagrangian
+
+$$\mathcal{L}^{(2)} = \frac{f_\pi^2}{4}\text{Tr}[\partial_\mu U^\dagger\partial^\mu U + \chi^\dagger U + U^\dagger\chi]$$
+
+where $\chi = 2B_0 \mathcal{M}$.
+
+### GMOR Relation
+
+$$m_\pi^2 \approx B_0(m_u + m_d)$$
+
+$$m_K^2 \approx B_0(m_u + m_s)$$
+
+### Gell-Mann-Okubo Relation
+
+$$4m_K^2 - m_\pi^2 - 3m_\eta^2 = 0 \text{ (approximately)}$$
+
+### Axial Current (LO)
+
+$$J^{a\mu}_A = f_\pi\partial^\mu\pi^a + O(\pi^3)$$
+
+### Pion Decay Constant Definition
+
+$$\langle 0|J^{a\mu}_A|\pi^b(p)\rangle = if_\pi p^\mu\delta^{ab}$$
+
+### Power Counting
+
+Each operator in $\mathcal{L}^{(n)}$ has chiral dimension $n$:
+- $\mathcal{L}^{(2)}$: 2 derivatives or 1 mass insertion
+- $\mathcal{L}^{(4)}$: 4 derivatives, 2 masses, or 2+1
+- etc.
+
+Weinberg's formula: $D = 2 + 2L + \sum_n V^{(n)}(n-2)$
+
+### Further Reading
+
+- **Gasser & Leutwyler, *Chiral Perturbation Theory to One Loop*, Ann. Phys. 1984**: the foundational paper
+- **Pich, *Chiral Perturbation Theory*, Rep. Prog. Phys. 1995**: review
+- **Scherer, *Introduction to Chiral Perturbation Theory***: textbook
+- **Meissner, *Recent Developments in Chiral Perturbation Theory***: more recent review
+- **Kaplan, *Effective Field Theories*, nucl-th/9506035**: includes ChPT chapters
+- **Ecker, *Chiral Perturbation Theory***: concise introduction
+
+### Problems
+
+1. Derive the Gell-Mann-Okubo relation $4m_K^2 - m_\pi^2 - 3m_\eta^2 = 0$ from GMOR.
+
+2. Starting from $U = \exp(i\sqrt 2\Pi/f_\pi)$, compute $U^\dagger\partial_\mu U$ to third order in $\Pi$, identifying the 3-pion vertex.
+
+3. Show that at leading order in ChPT, $f_\pi = f_K$ (meson decay constants universal). Calculate the LO correction to this relation.
+
+4. Derive the Weinberg-Tomozawa relation for $\pi\pi$ scattering lengths at threshold.
+
+5. For the $K \to 3\pi$ decays, show that at LO, the amplitudes satisfy specific symmetry relations (this is Furry's theorem in the kaon system).
+
+6. Compute the one-loop pion tadpole and show its divergence is absorbed into a renormalization of $f_\pi$.
+
+---
+
+## Closing Note
+
+Chiral perturbation theory is the paradigm for how to do EFT with spontaneously broken symmetries and strongly coupled underlying theories. The key steps:
+
+1. **Identify symmetry:** chiral symmetry of massless QCD
+2. **Identify breaking:** spontaneous, chiral condensate
+3. **Identify Goldstones:** 8 pseudo-Goldstones ($\pi, K, \eta$)
+4. **Parametrize:** $U(x) \in SU(3)$
+5. **Write Lagrangian:** $\mathcal{L}^{(2)}$ + higher orders
+6. **Power counting:** $p/\Lambda_\chi$, $m_\pi/\Lambda_\chi$
+7. **Compute:** order by order, matching experiment
+
+### What Makes ChPT Work
+
+- Symmetries are (approximately) exact
+- Scale hierarchy ($m_\pi \ll \Lambda_\chi$) is real
+- The expansion converges in the regime $p \ll \Lambda_\chi$
+- Predictions are testable and verified
+
+The framework applies beyond QCD: any spontaneously broken symmetry gives a ChPT-like EFT for the Goldstones. This pattern recurs throughout physics:
+- Superfluids → phonon EFTs
+- Ferromagnets → magnon EFTs
+- Superconductors → Goldstone + electromagnetism
+- Spontaneous chiral symmetry breaking in BSM models
+
+### What's Next
+
+Document 16 covers **SMEFT** (Standard Model EFT) and **HQET** (Heavy Quark EFT). Both are direct applications of the EFT framework:
+
+- **SMEFT** is the bottom-up EFT for beyond-SM physics. It's what LHC phenomenology is built on; a systematic expansion in new-physics operators with cutoff $\Lambda$.
+
+- **HQET** makes heavy-quark systems ($B, D$ mesons, heavy baryons) tractable by expanding in $1/m_Q$. It's how we understand B physics.
+
+Both are modern, extensively-applied EFTs at the frontier of particle physics research. Together with ChPT, they show the breadth of EFT applications in contemporary physics.
+
+Document 16 is next.

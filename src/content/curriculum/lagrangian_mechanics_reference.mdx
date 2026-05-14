@@ -13,9 +13,9 @@ classReportTitle: "The universe is lazy."
 
 # Lagrangian and Hamiltonian Mechanics: A Comprehensive Reference
 
-*The deeper reformulation of classical mechanics — and the essential prerequisite for quantum field theory.*
+*The deeper reformulation of classical mechanics; and the essential prerequisite for quantum field theory.*
 
-Newton's laws describe mechanics in terms of forces. But forces are not the most convenient starting point for most problems — and they are not the natural language in which modern physics is written. The reformulations developed by Lagrange (1788), Hamilton (1833), and Jacobi in the 19th century reveal classical mechanics as something deeper and more elegant: a theory built on the principle that nature minimizes a quantity called the **action**.
+Newton's laws describe mechanics in terms of forces. But forces are not the most convenient starting point for most problems; and they are not the natural language in which modern physics is written. The reformulations developed by Lagrange (1788), Hamilton (1833), and Jacobi in the 19th century reveal classical mechanics as something deeper and more elegant: a theory built on the principle that nature minimizes a quantity called the **action**.
 
 These reformulations are not merely more convenient. They are how every subsequent theory has been built:
 
@@ -24,7 +24,7 @@ These reformulations are not merely more convenient. They are how every subseque
 - Classical and quantum field theory are *entirely* Lagrangian-based
 - Gauge theory and the Standard Model rest on Lagrangian symmetries
 
-This document covers Lagrangian and Hamiltonian mechanics at the senior undergraduate level, then extends to classical field theory — the genuine prerequisite to QFT.
+This document covers Lagrangian and Hamiltonian mechanics at the senior undergraduate level, then extends to classical field theory; the genuine prerequisite to QFT.
 
 ---
 
@@ -41,7 +41,7 @@ This document covers Lagrangian and Hamiltonian mechanics at the senior undergra
 9. [Phase Space and Poisson Brackets](#9-phase-space-and-poisson-brackets)
 10. [Canonical Transformations](#10-canonical-transformations)
 11. [Hamilton-Jacobi Theory (Brief)](#11-hamilton-jacobi-theory-brief)
-12. [Classical Field Theory — The Bridge to QFT](#12-classical-field-theory--the-bridge-to-qft)
+12. [Classical Field Theory; The Bridge to QFT](#12-classical-field-theory--the-bridge-to-qft)
 13. [Noether's Theorem for Fields](#13-noethers-theorem-for-fields)
 14. [Appendix: Conventions and Identities](#appendix-conventions-and-identities)
 
@@ -51,21 +51,21 @@ This document covers Lagrangian and Hamiltonian mechanics at the senior undergra
 
 Consider a bead sliding on a wire shaped like a helix, under gravity. Using Newton's second law, you'd have to analyze the normal force from the wire (unknown, depends on constraint), the tension (if any), gravity, possibly friction, and decompose everything into components along and perpendicular to the wire.
 
-Using Lagrangian mechanics, you write down one number — the Lagrangian — in terms of one coordinate (distance along the wire). One equation pops out. Done.
+Using Lagrangian mechanics, you write down one number; the Lagrangian; in terms of one coordinate (distance along the wire). One equation pops out. Done.
 
 ### Three Concrete Advantages
 
-**1. Coordinates of your choice.** Lagrangian mechanics works in any coordinates — Cartesian, spherical, rotating, oscillating, whatever fits the problem. No need to project forces onto axes.
+**1. Coordinates of your choice.** Lagrangian mechanics works in any coordinates; Cartesian, spherical, rotating, oscillating, whatever fits the problem. No need to project forces onto axes.
 
-**2. Constraints handled automatically.** Forces of constraint (normal forces, tension in inextensible strings, contact forces in rigid bodies) drop out — you don't need to know them to solve the motion.
+**2. Constraints handled automatically.** Forces of constraint (normal forces, tension in inextensible strings, contact forces in rigid bodies) drop out; you don't need to know them to solve the motion.
 
 **3. Symmetries to conservation laws.** Every continuous symmetry of the Lagrangian produces a conservation law via Noether's theorem. Translation invariance → momentum conservation. Time invariance → energy conservation. Rotation invariance → angular momentum conservation. The relationship is mechanical, not mysterious.
 
 ### The Deeper Reason
 
-More profoundly, Lagrangian mechanics reveals that classical physics is a **variational** theory. Nature does not "push things around with forces." Nature selects, out of all conceivable paths between two points in spacetime, the one that extremizes a quantity called the action. Force is a derived concept — useful, but not fundamental.
+More profoundly, Lagrangian mechanics reveals that classical physics is a **variational** theory. Nature does not "push things around with forces." Nature selects, out of all conceivable paths between two points in spacetime, the one that extremizes a quantity called the action. Force is a derived concept; useful, but not fundamental.
 
-This variational structure turns out to be universal. It survives quantization (in the path integral formulation, particles explore *all* paths, weighted by the action). It's the foundation of general relativity (Einstein's equations come from varying the Einstein-Hilbert action). It's how every quantum field theory — including the Standard Model — is defined.
+This variational structure turns out to be universal. It survives quantization (in the path integral formulation, particles explore *all* paths, weighted by the action). It's the foundation of general relativity (Einstein's equations come from varying the Einstein-Hilbert action). It's how every quantum field theory; including the Standard Model; is defined.
 
 Learning Lagrangian mechanics isn't just a reformulation. It's a shift in how you see physics.
 
@@ -81,7 +81,7 @@ Given a functional of the form
 
 $$J[y] = \int_{x_1}^{x_2} F(y(x), y'(x), x) \, dx$$
 
-find the function $y(x)$ — with fixed endpoints $y(x_1) = y_1$ and $y(x_2) = y_2$ — that makes $J$ stationary (i.e., unchanged under small variations).
+find the function $y(x)$; with fixed endpoints $y(x_1) = y_1$ and $y(x_2) = y_2$; that makes $J$ stationary (i.e., unchanged under small variations).
 
 ### The Variational Derivation
 
@@ -131,13 +131,13 @@ so $F = \sqrt{1 + y'^2}$, independent of $y$. The Euler-Lagrange equation become
 
 $$-\frac{d}{dx}\left(\frac{y'}{\sqrt{1 + y'^2}}\right) = 0$$
 
-which means $y'/\sqrt{1+y'^2}$ is constant. That in turn means $y'$ is constant, so $y(x) = mx + b$ — a straight line. Exactly what you'd hope.
+which means $y'/\sqrt{1+y'^2}$ is constant. That in turn means $y'$ is constant, so $y(x) = mx + b$; a straight line. Exactly what you'd hope.
 
 ### Classic Example: The Brachistochrone
 
 Problem (posed by Johann Bernoulli in 1696, solved by Newton overnight): what curve between two points lets a ball rolling under gravity travel from one to the other in the least time?
 
-Setting up the integral for transit time and applying the Euler-Lagrange equation yields — after some work — the **cycloid**: the curve traced by a point on a rolling wheel. This problem launched the calculus of variations.
+Setting up the integral for transit time and applying the Euler-Lagrange equation yields; after some work; the **cycloid**: the curve traced by a point on a rolling wheel. This problem launched the calculus of variations.
 
 ### Why This Matters for Physics
 
@@ -165,11 +165,11 @@ Given fixed endpoints $q(t_1) = q_1$ and $q(t_2) = q_2$, the physical trajectory
 
 $$\delta S = 0$$
 
-(Often called "least action" — usually it's actually a minimum, but strictly it just needs to be stationary. Other formulations do call out "stationary action" more carefully.)
+(Often called "least action"; usually it's actually a minimum, but strictly it just needs to be stationary. Other formulations do call out "stationary action" more carefully.)
 
 ### What "Stationary" Means
 
-Small deformations of the path $q(t) \to q(t) + \delta q(t)$ with $\delta q(t_1) = \delta q(t_2) = 0$ change the action by $\delta S$. For the physical path, $\delta S = 0$ to first order in $\delta q$. Deformations away from the true path do change $S$ (usually increasing it, sometimes decreasing — but the first-order variation vanishes).
+Small deformations of the path $q(t) \to q(t) + \delta q(t)$ with $\delta q(t_1) = \delta q(t_2) = 0$ change the action by $\delta S$. For the physical path, $\delta S = 0$ to first order in $\delta q$. Deformations away from the true path do change $S$ (usually increasing it, sometimes decreasing; but the first-order variation vanishes).
 
 ### An Important Clarification
 
@@ -181,7 +181,7 @@ leaves the equations of motion unchanged (the added term integrates to a boundar
 
 ### Why This Works
 
-Physically, one can derive Hamilton's principle from Newton's laws (or vice versa — they are equivalent for most systems). But the conceptual move — treating a trajectory as the solution of a global optimization problem rather than a step-by-step integration of forces — is profound and scales to relativistic and quantum physics in a way that force laws don't.
+Physically, one can derive Hamilton's principle from Newton's laws (or vice versa; they are equivalent for most systems). But the conceptual move; treating a trajectory as the solution of a global optimization problem rather than a step-by-step integration of forces; is profound and scales to relativistic and quantum physics in a way that force laws don't.
 
 ---
 
@@ -221,7 +221,7 @@ $$m\ddot x = -\frac{dV}{dx} = F(x)$$
 
 Newton's second law in the form $m\ddot x = F$. $\checkmark$
 
-So for simple systems, the Lagrangian formalism reproduces Newton exactly — with more work. The payoff comes when the coordinates are not Cartesian.
+So for simple systems, the Lagrangian formalism reproduces Newton exactly; with more work. The payoff comes when the coordinates are not Cartesian.
 
 ### Generalized Momentum
 
@@ -233,7 +233,7 @@ For Cartesian coordinates, $p_i$ is the ordinary momentum $m\dot{x}_i$. But in o
 
 $$\dot{p}_i = \frac{\partial L}{\partial q_i}$$
 
-— the generalized force equals the rate of change of generalized momentum.
+that is, the generalized force equals the rate of change of generalized momentum.
 
 ### Cyclic Coordinates
 
@@ -277,7 +277,7 @@ Strategy: choose generalized coordinates that automatically satisfy the constrai
 
 ### Non-Holonomic Constraints
 
-Constraints that involve velocities or inequalities and cannot be integrated into an equation of coordinates alone. Example: a ball rolling without slipping on a plane — the constraint involves the velocities and cannot be reduced to a relation between positions alone.
+Constraints that involve velocities or inequalities and cannot be integrated into an equation of coordinates alone. Example: a ball rolling without slipping on a plane; the constraint involves the velocities and cannot be reduced to a relation between positions alone.
 
 Non-holonomic systems require more care: Lagrange multipliers or d'Alembert's principle. This document sticks with holonomic cases.
 
@@ -357,7 +357,7 @@ $$\frac{\partial L}{\partial \dot x} = (m_1 + m_2) \dot x, \quad \frac{\partial 
 
 $$\boxed{\ddot x = \frac{(m_1 - m_2) g}{m_1 + m_2}}$$
 
-The standard Atwood result — and notice how the tension never appeared.
+The standard Atwood result; and notice how the tension never appeared.
 
 ### Example 3: Bead on a Rotating Hoop
 
@@ -393,7 +393,7 @@ Equation of motion:
 
 $$\boxed{R\ddot\theta = R\Omega^2 \sin\theta\cos\theta - g\sin\theta}$$
 
-**Interpretation.** There's an equilibrium at $\theta = 0$ (bottom). If $\Omega^2 > g/R$, there's also an equilibrium at $\cos\theta = g/(R\Omega^2)$ — the bead settles at a nonzero angle because centrifugal effects push it out. The $\theta = 0$ equilibrium becomes unstable above this critical rotation speed. This is a pitchfork bifurcation — a genuine structural change in the dynamics.
+**Interpretation.** There's an equilibrium at $\theta = 0$ (bottom). If $\Omega^2 > g/R$, there's also an equilibrium at $\cos\theta = g/(R\Omega^2)$; the bead settles at a nonzero angle because centrifugal effects push it out. The $\theta = 0$ equilibrium becomes unstable above this critical rotation speed. This is a pitchfork bifurcation; a genuine structural change in the dynamics.
 
 Doing this problem with Newton's laws requires juggling fictitious forces in rotating frames, keeping track of the normal force from the hoop, and carefully decomposing vectors. Lagrangian mechanics handed us the answer in four lines.
 
@@ -421,7 +421,7 @@ $$L = \tfrac{1}{2}(m_1 + m_2)\ell_1^2 \dot\theta_1^2 + \tfrac{1}{2} m_2 \ell_2^2
 
 $$+ (m_1 + m_2) g \ell_1 \cos\theta_1 + m_2 g \ell_2 \cos\theta_2$$
 
-**Euler-Lagrange equations** for $\theta_1$ and $\theta_2$ are messy but straightforward — two coupled second-order nonlinear ODEs. Writing them out:
+**Euler-Lagrange equations** for $\theta_1$ and $\theta_2$ are messy but straightforward; two coupled second-order nonlinear ODEs. Writing them out:
 
 $$(m_1 + m_2)\ell_1 \ddot\theta_1 + m_2 \ell_2 \ddot\theta_2 \cos(\theta_1 - \theta_2) + m_2 \ell_2 \dot\theta_2^2 \sin(\theta_1 - \theta_2) + (m_1 + m_2) g \sin\theta_1 = 0$$
 
@@ -485,13 +485,13 @@ is conserved. This $H$ is the **Hamiltonian** (section 8), and it equals the tot
 
 ### Why This Matters
 
-Noether's theorem is the bridge from abstract symmetries to physical conservation laws. It's used constantly — you identify a symmetry, you immediately know there's a conserved quantity, you use conservation to simplify. The procedure works the same in every formulation of physics from classical mechanics to quantum field theory. In fact, Noether's theorem is arguably *more* important in QFT than in classical mechanics, because it's how conserved currents (like electric current, baryon number, etc.) arise from the symmetries of the Standard Model.
+Noether's theorem is the bridge from abstract symmetries to physical conservation laws. It's used constantly; you identify a symmetry, you immediately know there's a conserved quantity, you use conservation to simplify. The procedure works the same in every formulation of physics from classical mechanics to quantum field theory. In fact, Noether's theorem is arguably *more* important in QFT than in classical mechanics, because it's how conserved currents (like electric current, baryon number, etc.) arise from the symmetries of the Standard Model.
 
 ---
 
 ## 8. The Hamiltonian Formulation
 
-The Lagrangian treats $q$ and $\dot q$ as the fundamental variables. The Hamiltonian treats $q$ and $p$ instead. This change of variables, called a **Legendre transform**, has far-reaching consequences — including providing the natural starting point for quantum mechanics.
+The Lagrangian treats $q$ and $\dot q$ as the fundamental variables. The Hamiltonian treats $q$ and $p$ instead. This change of variables, called a **Legendre transform**, has far-reaching consequences; including providing the natural starting point for quantum mechanics.
 
 ### The Legendre Transform
 
@@ -499,7 +499,7 @@ Starting from $L(q, \dot q, t)$, define:
 
 $$p_i = \frac{\partial L}{\partial \dot q_i}$$
 
-Solve for $\dot q_i$ in terms of $q_i, p_i$ (requires this to be invertible — usually the case). Define the Hamiltonian:
+Solve for $\dot q_i$ in terms of $q_i, p_i$ (requires this to be invertible; usually the case). Define the Hamiltonian:
 
 $$\boxed{H(q, p, t) = \sum_i p_i \dot q_i - L(q, \dot q, t)}$$
 
@@ -649,15 +649,15 @@ This is a first-order partial differential equation for $S$. Solving it gives a 
 
 ### The Quantum Connection
 
-The Hamilton-Jacobi equation is the classical limit of the Schrödinger equation. Writing $\Psi = e^{iS/\hbar}$ in the Schrödinger equation and taking $\hbar \to 0$ recovers the HJ equation at leading order. This is the **WKB approximation** — tunneling probabilities can be computed this way, and it's how semiclassical methods bridge classical and quantum physics.
+The Hamilton-Jacobi equation is the classical limit of the Schrödinger equation. Writing $\Psi = e^{iS/\hbar}$ in the Schrödinger equation and taking $\hbar \to 0$ recovers the HJ equation at leading order. This is the **WKB approximation**; tunneling probabilities can be computed this way, and it's how semiclassical methods bridge classical and quantum physics.
 
 In the path integral formulation of quantum mechanics, quantum amplitudes are sums of $e^{iS/\hbar}$ over all paths. The classical path (which extremizes $S$) gets enhanced by constructive interference of nearby paths, giving classical mechanics in the $\hbar \to 0$ limit. Hamilton-Jacobi theory, variational mechanics, and the path integral are deeply linked.
 
 ---
 
-## 12. Classical Field Theory — The Bridge to QFT
+## 12. Classical Field Theory; The Bridge to QFT
 
-Here we make the critical transition. Every concept so far has been for a finite number of degrees of freedom (particles with coordinates $q_i$). To describe fields — electromagnetism, the Higgs field, quark fields — we need infinitely many degrees of freedom, one per point of space.
+Here we make the critical transition. Every concept so far has been for a finite number of degrees of freedom (particles with coordinates $q_i$). To describe fields; electromagnetism, the Higgs field, quark fields; we need infinitely many degrees of freedom, one per point of space.
 
 ### From Particles to Fields
 
@@ -695,7 +695,7 @@ So:
 
 $$\partial_\mu \partial^\mu \phi + m^2 \phi = 0$$
 
-This is the **Klein-Gordon equation** — the relativistic wave equation for a spin-0 field. It's the starting point of quantum field theory.
+This is the **Klein-Gordon equation**; the relativistic wave equation for a spin-0 field. It's the starting point of quantum field theory.
 
 ### Example: The Electromagnetic Field
 
@@ -733,7 +733,7 @@ The classical fields $\phi$ and $\pi$ get promoted to operators satisfying:
 
 $$[\hat\phi(\vec x, t), \hat\pi(\vec y, t)] = i\hbar \delta^3(\vec x - \vec y)$$
 
-A direct generalization of $[\hat q, \hat p] = i\hbar$. This single step — promoting fields to operators — is the heart of quantum field theory. Everything else (particle creation/annihilation operators, Feynman rules, renormalization) is consequence and technique built on this foundation.
+A direct generalization of $[\hat q, \hat p] = i\hbar$. This single step; promoting fields to operators; is the heart of quantum field theory. Everything else (particle creation/annihilation operators, Feynman rules, renormalization) is consequence and technique built on this foundation.
 
 **This is why you needed Lagrangian mechanics before QFT.** Quantum field theory is the canonical quantization of classical field theory, which is the Lagrangian formalism extended to fields. Without the Lagrangian foundation, QFT looks like arbitrary rules; with it, QFT is the natural next step.
 
@@ -741,7 +741,7 @@ A direct generalization of $[\hat q, \hat p] = i\hbar$. This single step — pro
 
 ## 13. Noether's Theorem for Fields
 
-Noether's theorem extends gracefully to field theory — and becomes even more important, because it's how we identify conserved charges in the Standard Model.
+Noether's theorem extends gracefully to field theory; and becomes even more important, because it's how we identify conserved charges in the Standard Model.
 
 ### Conserved Currents
 
@@ -761,7 +761,7 @@ Then $dQ/dt = 0$ as a consequence of the continuity equation.
 
 ### Example: Spacetime Symmetries
 
-**Translation invariance** in direction $\nu$ gives a conserved current $T^{\mu\nu}$ — the **stress-energy tensor**. Its components are:
+**Translation invariance** in direction $\nu$ gives a conserved current $T^{\mu\nu}$; the **stress-energy tensor**. Its components are:
 
 - $T^{00}$ = energy density
 - $T^{0i}$ = momentum density
@@ -769,7 +769,7 @@ Then $dQ/dt = 0$ as a consequence of the continuity equation.
 
 The conserved charges are total energy (from time translation) and total momentum (from space translations). Just as Noether predicted.
 
-**Lorentz invariance** gives six more conserved quantities — three from rotations (angular momentum) and three from boosts (center-of-mass motion).
+**Lorentz invariance** gives six more conserved quantities; three from rotations (angular momentum) and three from boosts (center-of-mass motion).
 
 ### Example: Internal Symmetries
 
@@ -785,9 +785,9 @@ and the conserved charge is what we call electric charge (up to a proportionalit
 
 ### Gauge Symmetries
 
-If we promote the global symmetry to a **local** (spacetime-dependent) symmetry — called **gauging** — the theory must be extended by introducing a new field that transforms in a compensating way. For $U(1)$, this new field is the electromagnetic potential $A^\mu$, and the full theory is QED. Gauging $SU(2) \times U(1)$ gives electroweak theory; gauging $SU(3)$ gives QCD.
+If we promote the global symmetry to a **local** (spacetime-dependent) symmetry; called **gauging**; the theory must be extended by introducing a new field that transforms in a compensating way. For $U(1)$, this new field is the electromagnetic potential $A^\mu$, and the full theory is QED. Gauging $SU(2) \times U(1)$ gives electroweak theory; gauging $SU(3)$ gives QCD.
 
-**The entire Standard Model is constructed by gauging the internal symmetries of a Lagrangian.** This is what is meant by "the Standard Model is a gauge theory." Lagrangian mechanics is not just a prerequisite — it's the *language* in which particle physics is written.
+**The entire Standard Model is constructed by gauging the internal symmetries of a Lagrangian.** This is what is meant by "the Standard Model is a gauge theory." Lagrangian mechanics is not just a prerequisite; it's the *language* in which particle physics is written.
 
 ### The Chain of Conservation Laws in the Standard Model
 

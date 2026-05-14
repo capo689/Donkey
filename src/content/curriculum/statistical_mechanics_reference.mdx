@@ -13,11 +13,11 @@ classReportTitle: "Entropy, finally not vague."
 
 # Statistical Mechanics: A Comprehensive Reference
 
-*The physics of many-body systems — and the foundation underneath thermodynamics, condensed matter, and quantum field theory at finite temperature.*
+*The physics of many-body systems; and the foundation underneath thermodynamics, condensed matter, and quantum field theory at finite temperature.*
 
 Statistical mechanics is the third great pillar of modern physics, alongside mechanics and electromagnetism. Where classical mechanics describes individual trajectories and electromagnetism describes fields, statistical mechanics describes what happens when you have $10^{23}$ particles and cannot possibly track them individually. It does something remarkable: it derives thermodynamics from microscopic physics, explains why entropy increases, and provides the framework for understanding everything from phase transitions to the cosmic microwave background.
 
-This document covers statistical mechanics at the senior-undergraduate-through-early-graduate level. It's roughly the level of Reif, Kittel-Kroemer, or Kardar's *Statistical Physics of Particles* — rigorous enough to be usable, but not so formal that the physics gets buried.
+This document covers statistical mechanics at the senior-undergraduate-through-early-graduate level. It's roughly the level of Reif, Kittel-Kroemer, or Kardar's *Statistical Physics of Particles*; rigorous enough to be usable, but not so formal that the physics gets buried.
 
 ---
 
@@ -43,17 +43,17 @@ This document covers statistical mechanics at the senior-undergraduate-through-e
 
 ## 1. Why Statistical Mechanics?
 
-A cup of water contains about $10^{25}$ molecules. In principle, Newton's laws determine their motion. In practice, you cannot write down, let alone solve, $10^{25}$ coupled differential equations. And even if you could, the answer would be useless — nobody wants to know the position of molecule number 7,394,182,561,038,497,274.
+A cup of water contains about $10^{25}$ molecules. In principle, Newton's laws determine their motion. In practice, you cannot write down, let alone solve, $10^{25}$ coupled differential equations. And even if you could, the answer would be useless; nobody wants to know the position of molecule number 7,394,182,561,038,497,274.
 
-But something remarkable happens at large $N$: individual details stop mattering. The temperature of the water is a well-defined, reproducible quantity. So is the pressure. So is the rate at which it boils. These "emergent" macroscopic properties follow their own laws — the laws of thermodynamics — and statistical mechanics is the discipline that derives these laws from the underlying microphysics.
+But something remarkable happens at large $N$: individual details stop mattering. The temperature of the water is a well-defined, reproducible quantity. So is the pressure. So is the rate at which it boils. These "emergent" macroscopic properties follow their own laws; the laws of thermodynamics; and statistical mechanics is the discipline that derives these laws from the underlying microphysics.
 
 ### What Statistical Mechanics Achieves
 
-**Derives thermodynamics from mechanics.** Temperature, entropy, free energy — all emerge from averaging over microscopic states. The second law (entropy increases) becomes a statement about probability rather than a fundamental postulate.
+**Derives thermodynamics from mechanics.** Temperature, entropy, free energy; all emerge from averaging over microscopic states. The second law (entropy increases) becomes a statement about probability rather than a fundamental postulate.
 
-**Predicts the properties of matter.** Heat capacities, magnetic susceptibilities, equations of state, phase diagrams — all calculable from a Hamiltonian.
+**Predicts the properties of matter.** Heat capacities, magnetic susceptibilities, equations of state, phase diagrams; all calculable from a Hamiltonian.
 
-**Explains phase transitions.** Water boiling, magnets aligning, superconductors superconducting — all from the same framework.
+**Explains phase transitions.** Water boiling, magnets aligning, superconductors superconducting; all from the same framework.
 
 **Underlies cosmology.** The cosmic microwave background, primordial nucleosynthesis, and the thermal history of the universe all rely on statistical mechanics.
 
@@ -61,7 +61,7 @@ But something remarkable happens at large $N$: individual details stop mattering
 
 ### The Central Idea in One Sentence
 
-The macroscopic state of a system (temperature, pressure, etc.) corresponds to an enormous number of microscopic configurations, and the *overwhelmingly most likely* macroscopic state — the one with the most corresponding microstates — is what you observe.
+The macroscopic state of a system (temperature, pressure, etc.) corresponds to an enormous number of microscopic configurations, and the *overwhelmingly most likely* macroscopic state; the one with the most corresponding microstates; is what you observe.
 
 Temperature is a measure of how microstates are distributed over energy. Entropy is (essentially) the logarithm of the number of microstates. Equilibrium is the macroscopic state that maximizes entropy given the constraints.
 
@@ -73,9 +73,9 @@ Everything in this document elaborates that sentence.
 
 ### The Language of Microstates and Macrostates
 
-A **microstate** is a complete specification of the system — every particle's position and momentum (classically), or the quantum state vector (quantum mechanically).
+A **microstate** is a complete specification of the system; every particle's position and momentum (classically), or the quantum state vector (quantum mechanically).
 
-A **macrostate** is characterized by a few bulk variables — energy, volume, particle number, etc.
+A **macrostate** is characterized by a few bulk variables; energy, volume, particle number, etc.
 
 Many microstates correspond to the same macrostate. Statistical mechanics deals in probabilities over microstates consistent with a given macrostate.
 
@@ -87,7 +87,7 @@ An **ensemble** is a conceptual collection of all microstates consistent with so
 - **Canonical**: fixed $T$, $V$, $N$. The system exchanges energy with a heat reservoir.
 - **Grand canonical**: fixed $T$, $V$, and chemical potential $\mu$. Exchanges both energy and particles with a reservoir.
 
-Which ensemble to use depends on what you know about the system. For large $N$, all three give equivalent predictions for macroscopic observables — the choice is a convenience. (This equivalence is called the **equivalence of ensembles** and is itself a theorem.)
+Which ensemble to use depends on what you know about the system. For large $N$, all three give equivalent predictions for macroscopic observables; the choice is a convenience. (This equivalence is called the **equivalence of ensembles** and is itself a theorem.)
 
 ### The Fundamental Postulate
 
@@ -105,7 +105,7 @@ It cannot be proved from first principles (it's basically a statement about how 
 
 $$\text{volume} = \frac{1}{N! h^{3N}} \int d^{3N}q \, d^{3N}p$$
 
-The $N!$ is the **Gibbs correction** — it accounts for the indistinguishability of identical particles. The $h^{3N}$ gives the "volume of a cell" (quantum-correcting the classical continuum).
+The $N!$ is the **Gibbs correction**; it accounts for the indistinguishability of identical particles. The $h^{3N}$ gives the "volume of a cell" (quantum-correcting the classical continuum).
 
 **Quantum:** count discrete states directly. A volume in phase space of $h^{3N}$ corresponds to one quantum state.
 
@@ -131,7 +131,7 @@ The logarithm converts multiplication to addition. It's the only function that d
 
 ## 3. Thermodynamics, Briefly
 
-Before statistical mechanics, there was thermodynamics — the macroscopic phenomenology. Knowing the core results is useful for connecting micro to macro.
+Before statistical mechanics, there was thermodynamics; the macroscopic phenomenology. Knowing the core results is useful for connecting micro to macro.
 
 ### The Laws of Thermodynamics
 
@@ -153,13 +153,13 @@ Given variables of state, different potentials are useful:
 
 | Potential | Variables | Definition | Equilibrium condition |
 |---|---|---|---|
-| Internal energy $U$ | $S, V, N$ | — | $dU \leq 0$ at fixed $S, V, N$ |
-| Enthalpy $H$ | $S, P, N$ | $H = U + PV$ | — |
+| Internal energy $U$ | $S, V, N$ |; | $dU \leq 0$ at fixed $S, V, N$ |
+| Enthalpy $H$ | $S, P, N$ | $H = U + PV$ |; |
 | Helmholtz free energy $F$ | $T, V, N$ | $F = U - TS$ | $dF \leq 0$ at fixed $T, V, N$ |
 | Gibbs free energy $G$ | $T, P, N$ | $G = U - TS + PV$ | $dG \leq 0$ at fixed $T, P, N$ |
 | Grand potential $\Phi$ | $T, V, \mu$ | $\Phi = U - TS - \mu N$ | $d\Phi \leq 0$ at fixed $T, V, \mu$ |
 
-Each is the **Legendre transform** of $U$ with respect to specific variables — a mathematical device for changing which variables you hold fixed.
+Each is the **Legendre transform** of $U$ with respect to specific variables; a mathematical device for changing which variables you hold fixed.
 
 ### Fundamental Relations
 
@@ -253,11 +253,11 @@ The full entropy of the classical ideal gas:
 
 $$S = N k_B \left[\ln\left(\frac{V}{N}\left(\frac{4\pi m E}{3 N h^2}\right)^{3/2}\right) + \tfrac{5}{2}\right]$$
 
-The $N!$ factor (Gibbs correction) was essential — without it, this wouldn't be extensive (doubling the system would not double the entropy). This is the **Gibbs paradox**: entropy of mixing becomes nonsensical if you don't account for indistinguishability.
+The $N!$ factor (Gibbs correction) was essential; without it, this wouldn't be extensive (doubling the system would not double the entropy). This is the **Gibbs paradox**: entropy of mixing becomes nonsensical if you don't account for indistinguishability.
 
 ### Limitations
 
-The microcanonical ensemble is conceptually fundamental but practically awkward. Computing $\Omega(E)$ directly is hard. The canonical ensemble is usually easier to work with — and they give the same macroscopic results.
+The microcanonical ensemble is conceptually fundamental but practically awkward. Computing $\Omega(E)$ directly is hard. The canonical ensemble is usually easier to work with; and they give the same macroscopic results.
 
 ---
 
@@ -275,7 +275,7 @@ where $\beta = 1/(k_B T)$ and
 
 $$Z = \sum_i e^{-\beta E_i}$$
 
-is the **partition function**. It normalizes the probabilities and — it turns out — encodes all the thermodynamics.
+is the **partition function**. It normalizes the probabilities and; it turns out; encodes all the thermodynamics.
 
 ### Derivation (Sketch)
 
@@ -359,7 +359,7 @@ where the **grand partition function** is:
 
 $$\mathcal{Z} = \sum_i e^{-\beta(E_i - \mu N_i)}$$
 
-and $\mu$ is the chemical potential — the energy cost of adding one particle.
+and $\mu$ is the chemical potential; the energy cost of adding one particle.
 
 ### Grand Canonical Thermodynamics
 
@@ -415,7 +415,7 @@ where
 
 $$\lambda_T = \frac{h}{\sqrt{2\pi m k_B T}}$$
 
-is the **thermal de Broglie wavelength** — the characteristic quantum wavelength of a particle with thermal energy $k_B T$.
+is the **thermal de Broglie wavelength**; the characteristic quantum wavelength of a particle with thermal energy $k_B T$.
 
 So:
 
@@ -463,7 +463,7 @@ $$\langle E \rangle = -\frac{\partial \ln Z}{\partial \beta} = \tfrac{3}{2} N k_
 - Diatomic ideal gas (high $T$): 3 translational + 2 rotational + 2 vibrational = 7 quadratic terms, $\langle E\rangle = \tfrac{7}{2} N k_B T$.
 - But experiments show diatomic gases have $C_V \approx \tfrac{5}{2} N k_B$ at room temperature, not $\tfrac{7}{2}$!
 
-The missing $R$ is a sign that vibrational modes aren't "thermally accessible" at room temperature — a quantum effect. Equipartition breaks down when $k_B T$ is below the spacing between quantum levels.
+The missing $R$ is a sign that vibrational modes aren't "thermally accessible" at room temperature; a quantum effect. Equipartition breaks down when $k_B T$ is below the spacing between quantum levels.
 
 ### The Limits of Classical Stat Mech
 
@@ -503,13 +503,13 @@ For a set of single-particle states with energies $\epsilon_i$, let $n_i$ be the
 
 A many-body state is specified by the set $\{n_i\}$, with total energy $E = \sum_i \epsilon_i n_i$ and total particle number $N = \sum_i n_i$.
 
-### The Grand Partition Function — Quantum Version
+### The Grand Partition Function; Quantum Version
 
 In the grand canonical ensemble, summing over all possible occupation configurations:
 
 $$\mathcal{Z} = \sum_{\{n_i\}} e^{-\beta\sum_i (\epsilon_i - \mu) n_i} = \prod_i \left(\sum_{n_i} e^{-\beta(\epsilon_i - \mu) n_i}\right)$$
 
-Each single-particle state contributes independently — the key simplification of the grand canonical approach.
+Each single-particle state contributes independently; the key simplification of the grand canonical approach.
 
 **For bosons** (sum over $n = 0, 1, 2, \ldots$):
 
@@ -547,7 +547,7 @@ All three differ only in that $\pm 1$ (or $0$) in the denominator.
 
 When $e^{\beta(\epsilon - \mu)} \gg 1$ (i.e., $\mu$ very negative), both BE and FD reduce to MB. This happens at high temperature or low density.
 
-Dimensionally, the classical limit is $n\lambda_T^3 \ll 1$ — few particles per thermal wavelength cube. When this fails, quantum statistics dominate.
+Dimensionally, the classical limit is $n\lambda_T^3 \ll 1$; few particles per thermal wavelength cube. When this fails, quantum statistics dominate.
 
 ### Sum to Integral
 
@@ -571,7 +571,7 @@ For bosons, $\mu \leq \epsilon_{\text{min}} = 0$ (ground state energy); otherwis
 
 ### The Problem
 
-At high $T$, $\mu$ is very negative — classical limit. As $T$ drops, $\mu$ increases toward zero. But $\mu$ is bounded above by $0$ (for ideal massive bosons). At some critical temperature $T_c$, we reach $\mu = 0$ — and then what?
+At high $T$, $\mu$ is very negative; classical limit. As $T$ drops, $\mu$ increases toward zero. But $\mu$ is bounded above by $0$ (for ideal massive bosons). At some critical temperature $T_c$, we reach $\mu = 0$; and then what?
 
 ### The Calculation
 
@@ -581,7 +581,7 @@ $$N = \int_0^\infty \frac{g(\epsilon)}{e^{\beta\epsilon} - 1} d\epsilon = \frac{
 
 where $\zeta(3/2) \approx 2.612$ is the Riemann zeta function at $3/2$. This gives a maximum number of particles that can be in excited states (given $V, T$).
 
-If you have more particles than this maximum, they *must* go into the ground state ($\epsilon = 0$) — the only state with $\epsilon = \mu$. Macroscopic occupation of a single quantum state is **Bose-Einstein condensation**.
+If you have more particles than this maximum, they *must* go into the ground state ($\epsilon = 0$); the only state with $\epsilon = \mu$. Macroscopic occupation of a single quantum state is **Bose-Einstein condensation**.
 
 ### Critical Temperature
 
@@ -601,7 +601,7 @@ where $N_0$ is the number of particles in the ground state. At $T = 0$, all part
 
 ### Physical Realization
 
-Predicted by Bose and Einstein in 1924-25. Experimentally realized in 1995 with laser-cooled alkali atom gases (Wieman, Cornell, Ketterle — 2001 Nobel). Superfluid helium-4 below the lambda point is the original example; cold atomic gases made it a cleaner, tunable system.
+Predicted by Bose and Einstein in 1924-25. Experimentally realized in 1995 with laser-cooled alkali atom gases (Wieman, Cornell, Ketterle; 2001 Nobel). Superfluid helium-4 below the lambda point is the original example; cold atomic gases made it a cleaner, tunable system.
 
 ### Below $T_c$: Two Fluids
 
@@ -621,7 +621,7 @@ At $T = 0$, the Fermi-Dirac distribution becomes a step function:
 
 $$n_{FD}(\epsilon) = \begin{cases} 1 & \epsilon < \mu \\ 0 & \epsilon > \mu \end{cases}$$
 
-Fermions fill all states up to a maximum energy $\epsilon_F = \mu(T=0)$ — the **Fermi energy**. In momentum space, they fill a sphere up to the **Fermi momentum** $p_F = \sqrt{2m\epsilon_F}$.
+Fermions fill all states up to a maximum energy $\epsilon_F = \mu(T=0)$; the **Fermi energy**. In momentum space, they fill a sphere up to the **Fermi momentum** $p_F = \sqrt{2m\epsilon_F}$.
 
 ### Particle Number
 
@@ -637,7 +637,7 @@ $$\epsilon_F = \frac{\hbar^2}{2m}\left(\frac{6\pi^2 n}{g_s}\right)^{2/3}$$
 
 $$T_F = \epsilon_F / k_B$$
 
-For electrons in metals: $T_F \sim 10^4 - 10^5$ K. Since room temperature is only ~300 K, metals are at $T \ll T_F$ — highly degenerate. Classical statistics would give wildly wrong answers.
+For electrons in metals: $T_F \sim 10^4 - 10^5$ K. Since room temperature is only ~300 K, metals are at $T \ll T_F$; highly degenerate. Classical statistics would give wildly wrong answers.
 
 ### Ground State Energy
 
@@ -653,7 +653,7 @@ The pressure of a zero-temperature Fermi gas:
 
 $$P = -\frac{\partial U_0}{\partial V}\bigg|_N = \tfrac{2}{5} n \epsilon_F$$
 
-Pressure exists *even at absolute zero* — this is **degeneracy pressure**. It's purely a consequence of Pauli exclusion and has nothing to do with thermal motion.
+Pressure exists *even at absolute zero*; this is **degeneracy pressure**. It's purely a consequence of Pauli exclusion and has nothing to do with thermal motion.
 
 **Applications:**
 - **White dwarfs:** supported against gravitational collapse by electron degeneracy pressure
@@ -673,7 +673,7 @@ where $g(\epsilon_F)$ is the density of states at the Fermi energy.
 
 $$\boxed{C_V = \frac{\pi^2}{3} g(\epsilon_F) k_B^2 T}$$
 
-Linear in $T$, not the constant $3Nk_B/2$ of classical equipartition. The factor is suppressed by $T/T_F$ — only electrons near the Fermi surface contribute, because those deep inside can't be excited (no empty states nearby).
+Linear in $T$, not the constant $3Nk_B/2$ of classical equipartition. The factor is suppressed by $T/T_F$; only electrons near the Fermi surface contribute, because those deep inside can't be excited (no empty states nearby).
 
 This linear-in-$T$ electronic heat capacity is a signature of degenerate Fermi systems and is measured in metals.
 
@@ -681,7 +681,7 @@ This linear-in-$T$ electronic heat capacity is a signature of degenerate Fermi s
 
 ## 11. Photons and Phonons
 
-Photons and phonons are massless bosons — quanta of the electromagnetic field and of lattice vibrations respectively. Their statistics are Bose-Einstein but with one crucial twist: their number is not conserved. Chemical potential is zero.
+Photons and phonons are massless bosons; quanta of the electromagnetic field and of lattice vibrations respectively. Their statistics are Bose-Einstein but with one crucial twist: their number is not conserved. Chemical potential is zero.
 
 ### Photons: Blackbody Radiation
 
@@ -699,13 +699,13 @@ The energy density per unit frequency:
 
 $$u(\omega, T) = \frac{\hbar \omega^3}{\pi^2 c^3}\cdot \frac{1}{e^{\beta\hbar\omega} - 1}$$
 
-The **Planck distribution** — the solution to the UV catastrophe (section 5 of the Modern Physics reference, in full now).
+The **Planck distribution**; the solution to the UV catastrophe (section 5 of the Modern Physics reference, in full now).
 
 ### Total Energy Density
 
 $$u(T) = \int_0^\infty u(\omega, T) d\omega = \frac{\pi^2 (k_B T)^4}{15\hbar^3 c^3}$$
 
-Proportional to $T^4$ — the **Stefan-Boltzmann law**. Integrated flux is:
+Proportional to $T^4$; the **Stefan-Boltzmann law**. Integrated flux is:
 
 $$P/A = \sigma T^4, \quad \sigma = \frac{\pi^2 k_B^4}{60 \hbar^3 c^2}$$
 
@@ -719,7 +719,7 @@ In wavelength: $\lambda_{\max} T \approx 2.898 \times 10^{-3}$ m·K.
 
 ### Phonons: Debye Model
 
-Lattice vibrations in a solid are quantized into phonons — bosonic excitations with dispersion $\omega(k) \approx v_s |k|$ for small $k$ (where $v_s$ is sound speed).
+Lattice vibrations in a solid are quantized into phonons; bosonic excitations with dispersion $\omega(k) \approx v_s |k|$ for small $k$ (where $v_s$ is sound speed).
 
 Debye's 1912 model treats all phonons as having a linear dispersion up to a cutoff frequency $\omega_D$ (the **Debye frequency**), set by requiring the correct total number of modes ($3N$ for $N$ atoms).
 
@@ -731,7 +731,7 @@ where $\Theta_D = \hbar\omega_D/k_B$ is the **Debye temperature**.
 
 ### Heat Capacity of Solids
 
-**High $T$** ($T \gg \Theta_D$): $C_V \to 3Nk_B$ — the Dulong-Petit law, classical equipartition over $3N$ oscillators each with energy $k_B T$.
+**High $T$** ($T \gg \Theta_D$): $C_V \to 3Nk_B$; the Dulong-Petit law, classical equipartition over $3N$ oscillators each with energy $k_B T$.
 
 **Low $T$** ($T \ll \Theta_D$):
 
@@ -745,7 +745,7 @@ In a metal, both electrons and phonons contribute:
 
 $$C_V(T) = \gamma T + \beta T^3$$
 
-The linear term is the electronic contribution (Sommerfeld); the cubic is phonon (Debye). Plotting $C/T$ versus $T^2$ gives a straight line — a standard way to extract electronic and phononic contributions.
+The linear term is the electronic contribution (Sommerfeld); the cubic is phonon (Debye). Plotting $C/T$ versus $T^2$ gives a straight line; a standard way to extract electronic and phononic contributions.
 
 ---
 
@@ -759,7 +759,7 @@ For a classical gas, expand the equation of state in powers of density:
 
 $$\frac{P}{k_B T} = n + B_2(T) n^2 + B_3(T) n^3 + \ldots$$
 
-The coefficient $B_2(T)$ is the **second virial coefficient** — accounts for pair interactions.
+The coefficient $B_2(T)$ is the **second virial coefficient**; accounts for pair interactions.
 
 For an interaction potential $U(r)$:
 
@@ -777,7 +777,7 @@ or equivalently:
 
 $$P = \frac{nk_B T}{1 - nb} - an^2$$
 
-Reduces to ideal gas as $n \to 0$. Exhibits a phase transition (liquid-gas critical point) at a specific $T_c, P_c, V_c$ — the first microscopic-ish model to do so.
+Reduces to ideal gas as $n \to 0$. Exhibits a phase transition (liquid-gas critical point) at a specific $T_c, P_c, V_c$; the first microscopic-ish model to do so.
 
 ### Phase Diagrams
 
@@ -789,7 +789,7 @@ Phase transitions are studied both experimentally and theoretically with the too
 
 ## 13. Phase Transitions and Critical Phenomena
 
-Phase transitions — where systems change qualitative behavior at specific conditions — are among the most spectacular and studied phenomena in stat mech.
+Phase transitions; where systems change qualitative behavior at specific conditions; are among the most spectacular and studied phenomena in stat mech.
 
 ### Classification
 
@@ -819,10 +819,10 @@ $$H = -J\sum_{\langle ij\rangle} s_i s_j - h\sum_i s_i$$
 where $J > 0$ favors alignment (ferromagnetic) and $h$ is an external field.
 
 - **1D:** no phase transition at $T > 0$ (thermal fluctuations destroy order)
-- **2D:** exactly solved by Onsager (1944) — transition at $k_B T_c/J = 2/\ln(1 + \sqrt 2) \approx 2.269$
+- **2D:** exactly solved by Onsager (1944); transition at $k_B T_c/J = 2/\ln(1 + \sqrt 2) \approx 2.269$
 - **3D:** no exact solution; excellent numerical/approximate results
 
-The 2D Ising solution was a landmark in theoretical physics — the first exact demonstration of a phase transition in a non-trivial statistical model.
+The 2D Ising solution was a landmark in theoretical physics; the first exact demonstration of a phase transition in a non-trivial statistical model.
 
 ### Mean Field Theory
 
@@ -832,7 +832,7 @@ $$\langle s \rangle = \tanh[\beta(Jq\langle s\rangle + h)]$$
 
 where $q$ is the number of nearest neighbors. This self-consistent equation has nontrivial solutions below $T_c^{MF} = Jq/k_B$.
 
-Mean field gets qualitative behavior right (existence of the transition, saturation at low $T$) but fails at fluctuations — critical exponents are wrong.
+Mean field gets qualitative behavior right (existence of the transition, saturation at low $T$) but fails at fluctuations; critical exponents are wrong.
 
 ### Critical Exponents
 
@@ -842,7 +842,7 @@ $$M \sim (T_c - T)^\beta, \qquad \chi \sim |T - T_c|^{-\gamma}$$
 
 $$C \sim |T - T_c|^{-\alpha}, \qquad \xi \sim |T - T_c|^{-\nu}$$
 
-Values of $\alpha, \beta, \gamma, \nu, \ldots$ are the **critical exponents**. Remarkably, they depend only on a few properties (spatial dimension, symmetry of the order parameter) — not on microscopic details. This is **universality**.
+Values of $\alpha, \beta, \gamma, \nu, \ldots$ are the **critical exponents**. Remarkably, they depend only on a few properties (spatial dimension, symmetry of the order parameter); not on microscopic details. This is **universality**.
 
 ### The Universality Classes
 
@@ -856,7 +856,7 @@ The same exponents describe phenomena separated by 10-20 orders of magnitude in 
 
 ### Renormalization Group
 
-The modern framework for understanding universality is the **renormalization group** (Wilson, 1970s — Nobel 1982). RG systematically integrates out short-distance degrees of freedom, generating a flow in the space of theories. Fixed points of the flow correspond to universality classes; eigenvalues of the flow at fixed points determine critical exponents.
+The modern framework for understanding universality is the **renormalization group** (Wilson, 1970s; Nobel 1982). RG systematically integrates out short-distance degrees of freedom, generating a flow in the space of theories. Fixed points of the flow correspond to universality classes; eigenvalues of the flow at fixed points determine critical exponents.
 
 RG is deep and mathematical, but the intuition is:
 
@@ -872,7 +872,7 @@ A phenomenological field-theoretic approach: write a free energy functional in t
 
 $$F[\phi] = \int d^d x \left[\tfrac{1}{2}(\nabla \phi)^2 + \tfrac{a}{2}\phi^2 + \tfrac{b}{4}\phi^4 + \ldots\right]$$
 
-with $a = a_0(T - T_c)$. For $T > T_c$, $a > 0$: minimum at $\phi = 0$. For $T < T_c$, $a < 0$: minima at $\phi \neq 0$ — spontaneous symmetry breaking.
+with $a = a_0(T - T_c)$. For $T > T_c$, $a > 0$: minimum at $\phi = 0$. For $T < T_c$, $a < 0$: minima at $\phi \neq 0$; spontaneous symmetry breaking.
 
 **This is the Mexican-hat potential again.** The same mathematics that governs the Higgs mechanism governs ferromagnetism. The connection is not superficial: both are spontaneous symmetry breaking in different physical contexts.
 
@@ -880,7 +880,7 @@ with $a = a_0(T - T_c)$. For $T > T_c$, $a > 0$: minimum at $\phi = 0$. For $T <
 
 ## 14. Non-Equilibrium: A Brief Tour
 
-Everything so far assumed equilibrium. Non-equilibrium statistical mechanics deals with systems relaxing toward equilibrium — or driven out of it — and is much harder.
+Everything so far assumed equilibrium. Non-equilibrium statistical mechanics deals with systems relaxing toward equilibrium; or driven out of it; and is much harder.
 
 ### Linear Response Theory
 
@@ -906,13 +906,13 @@ For a dilute gas, the one-particle distribution $f(\vec r, \vec p, t)$ evolves a
 
 $$\frac{\partial f}{\partial t} + \frac{\vec p}{m}\cdot\nabla_r f + \vec F \cdot \nabla_p f = \left(\frac{\partial f}{\partial t}\right)_{\text{collision}}$$
 
-The left side is streaming (free motion); the right side is a collision term (non-trivial, often difficult). Solving the Boltzmann equation gives transport coefficients — thermal conductivity, viscosity, diffusion constant.
+The left side is streaming (free motion); the right side is a collision term (non-trivial, often difficult). Solving the Boltzmann equation gives transport coefficients; thermal conductivity, viscosity, diffusion constant.
 
 ### H-Theorem
 
 Boltzmann's **H-theorem**: the quantity $H = \int f \ln f\, d^3p \, d^3r$ decreases monotonically with time for a dilute gas, until equilibrium is reached.
 
-$H$ is (minus) the entropy up to constants. So the H-theorem is a microscopic derivation of the second law of thermodynamics — entropy increases.
+$H$ is (minus) the entropy up to constants. So the H-theorem is a microscopic derivation of the second law of thermodynamics; entropy increases.
 
 ### The Arrow of Time
 
@@ -1025,7 +1025,7 @@ $$\int_0^\infty f(\epsilon) n_{FD}(\epsilon) d\epsilon \approx \int_0^\mu f(\eps
 | Gold | $6.4 \times 10^4$ |
 | Aluminum | $1.4 \times 10^5$ |
 
-All much higher than room temperature — metals are degenerate.
+All much higher than room temperature; metals are degenerate.
 
 ---
 
@@ -1038,21 +1038,21 @@ The main conceptual takeaways:
 - **Probability isn't a workaround**, it's what makes macroscopic physics possible. $10^{23}$ trajectories can't be computed; their statistical behavior can.
 - **Temperature is not a fundamental quantity**. It's the rate at which entropy changes with energy, $1/T = \partial S/\partial E$. The "hot things have high-energy microstates" picture is accurate.
 - **Entropy is information**. $S = -k_B \sum P_i \ln P_i$ measures your ignorance about the specific microstate.
-- **Phase transitions happen in the thermodynamic limit** — at finite $N$, there's no sharp transition, just a crossover.
+- **Phase transitions happen in the thermodynamic limit**; at finite $N$, there's no sharp transition, just a crossover.
 - **Universality at critical points**: microscopic details don't matter. This suggests field-theoretic descriptions are natural.
 - **The same math appears in quantum field theory**. Partition function in stat mech $\leftrightarrow$ generating functional in QFT. Imaginary-time QFT *is* stat mech.
 
-That last connection is why statistical mechanics is essential for QFT. Path integrals at imaginary time are statistical mechanics; the entire machinery translates. When we do QFT proper, you'll find yourself computing partition functions and extracting thermodynamic quantities — just with field configurations as the sum variable.
+That last connection is why statistical mechanics is essential for QFT. Path integrals at imaginary time are statistical mechanics; the entire machinery translates. When we do QFT proper, you'll find yourself computing partition functions and extracting thermodynamic quantities; just with field configurations as the sum variable.
 
 The natural next steps:
 
 1. **Work problems.** Reif, Kardar, or Kittel-Kroemer. You haven't really learned stat mech until you've computed a few partition functions and extracted real physics.
 
-2. **General relativity** (the second item on your list) — completely different flavor, but also crucial.
+2. **General relativity** (the second item on your list); completely different flavor, but also crucial.
 
-3. **Condensed matter physics** — a major application area for statistical mechanics, and also the source of a lot of currently-active physics.
+3. **Condensed matter physics**; a major application area for statistical mechanics, and also the source of a lot of currently-active physics.
 
 4. **Then QFT.** Statistical mechanics is directly applicable to finite-temperature QFT, so you'll be using this material actively.
 
-Whenever you're ready — general relativity next?
+Whenever you're ready; general relativity next?
 

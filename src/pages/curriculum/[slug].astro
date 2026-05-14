@@ -4,21 +4,37 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const stations = await getCollection('curriculum');
-  return stations.map((entry) => ({
+  const sorted = [...stations].sort((a, b) => a.data.stationNumber - b.data.stationNumber);
+  const stationByNumber = new Map(stations.map((s) => [s.data.stationNumber, s]));
+  return sorted.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry },
+    props: {
+      entry,
+      stationByNumber,
+      prev: i > 0 ? sorted[i - 1] : null,
+      next: i < sorted.length - 1 ? sorted[i + 1] : null,
+    },
   }));
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { entry, stationByNumber, prev, next } = Astro.props;
+const { Content, headings } = await render(entry);
 const { title, stationNumber, classReportTitle, date, backdated, prerequisites, extendsTo, line } = entry.data;
 
 const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const lookup = (n: number) => {
+  const s = stationByNumber.get(n);
+  return s ? { href: `/curriculum/${s.id}`, label: s.data.classReportTitle, num: n } : null;
+};
+const prereqLinks = prerequisites.map(lookup).filter((x): x is NonNullable<typeof x> => x !== null);
+const extendsLinks = extendsTo.map(lookup).filter((x): x is NonNullable<typeof x> => x !== null);
+
+// TOC: top-level H2s only (H3s would clutter on long pages)
+const tocHeadings = headings.filter((h) => h.depth === 2);
 ---
 
 <Base title={classReportTitle} description={`Class Report ${stationNumber}: ${classReportTitle}`}>
-  <!-- Layout: ClassReport.astro (from mockup_6_class_report.html) -->
   <main class="shell">
     <header class="station-identity">
       <p class="station-eyebrow">Class Report</p>
@@ -32,12 +48,13 @@ const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long
       <p class="backdating">Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.</p>
     )}
 
-    {prerequisites.length > 0 && (
+    {prereqLinks.length > 0 && (
       <div class="prereq-col">
         <p class="prereq-col-head">Prerequisites</p>
-        {prerequisites.map((n: number) => (
-          <a href={`/curriculum/station-${String(n).padStart(2, '0')}`} class="prereq-item">
-            <span class="prereq-number">{String(n).padStart(2, '0')}</span>
+        {prereqLinks.map((p) => (
+          <a href={p.href} class="prereq-item">
+            <span class="prereq-number">{String(p.num).padStart(2, '0')}</span>
+            <span class="prereq-body"><span class="prereq-name">{p.label}</span></span>
           </a>
         ))}
       </div>
@@ -47,17 +64,74 @@ const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long
       <Content />
     </article>
 
-    {extendsTo.length > 0 && (
+    {extendsLinks.length > 0 && (
       <div class="connections">
         <p class="connections-head">Extends to</p>
         <div class="connections-grid">
-          {extendsTo.map((n: number) => (
-            <a href={`/curriculum/station-${String(n).padStart(2, '0')}`} class="conn-item">
-              <span class="prereq-number">{String(n).padStart(2, '0')}</span>
-            </a>
+          {extendsLinks.map((p) => (
+            <div class="conn-item">
+              <p class="conn-type">Station {String(p.num).padStart(2, '0')}</p>
+              <a href={p.href} class="conn-link">{p.label}</a>
+            </div>
           ))}
         </div>
       </div>
     )}
+
+    <nav class="station-pager" aria-label="Curriculum navigation">
+      {prev ? (
+        <a class="station-pager-link station-pager-prev" href={`/curriculum/${prev.id}`} rel="prev">
+          <span class="station-pager-eyebrow">Station {String(prev.data.stationNumber).padStart(2, '0')} &middot; Previous</span>
+          <span class="station-pager-title">{prev.data.classReportTitle}</span>
+        </a>
+      ) : <span class="station-pager-link station-pager-empty" aria-hidden="true"></span>}
+      <a class="station-pager-link station-pager-index" href="/curriculum">
+        <span class="station-pager-eyebrow">All Stations</span>
+        <span class="station-pager-title">Index &amp; Chart</span>
+      </a>
+      {next ? (
+        <a class="station-pager-link station-pager-next" href={`/curriculum/${next.id}`} rel="next">
+          <span class="station-pager-eyebrow">Station {String(next.data.stationNumber).padStart(2, '0')} &middot; Next</span>
+          <span class="station-pager-title">{next.data.classReportTitle}</span>
+        </a>
+      ) : <span class="station-pager-link station-pager-empty" aria-hidden="true"></span>}
+    </nav>
   </main>
+
+  {tocHeadings.length > 1 && (
+    <aside class="page-toc" aria-label="In this class report">
+      <p class="page-toc-head">In this report</p>
+      <ol class="page-toc-list">
+        {tocHeadings.map((h) => (
+          <li><a href={`#${h.slug}`} data-toc-link={h.slug}>{h.text}</a></li>
+        ))}
+      </ol>
+    </aside>
+  )}
+
+  <script>
+    // Active-section highlighting for the page TOC.
+    const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
+    if (links.length > 0) {
+      const bySlug = new Map<string, HTMLAnchorElement>();
+      links.forEach((a) => bySlug.set(a.dataset.tocLink!, a));
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            const link = bySlug.get(e.target.id);
+            if (!link) return;
+            if (e.isIntersecting) {
+              links.forEach((l) => l.removeAttribute('aria-current'));
+              link.setAttribute('aria-current', 'true');
+            }
+          });
+        },
+        { rootMargin: '-30% 0px -60% 0px', threshold: 0 }
+      );
+      bySlug.forEach((_, slug) => {
+        const el = document.getElementById(slug);
+        if (el) observer.observe(el);
+      });
+    }
+  </script>
 </Base>

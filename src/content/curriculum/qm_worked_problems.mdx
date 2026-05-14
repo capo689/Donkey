@@ -9,6 +9,392 @@ extendsTo: [13, 10, 11]
 classReportTitle: "Working the problems."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*A companion to the reference series. Reading about QM is not the same as doing it; so here are three canonical calculations, worked in full, showing every step of the algebra.*
 
-{/* Content from qm_worked_problems.md */}
+We'll do one problem of each type:
+
+1. **Computing an expectation value**; $\langle x \rangle$ and $\langle x^2 \rangle$ for the ground state of the harmonic oscillator
+2. **Solving the Schrödinger equation for a new potential**; the infinite square well (from scratch)
+3. **Diagonalizing a Hamiltonian by hand**; a two-level system (spin in a magnetic field)
+
+These three skills, practiced over and over, are the bulk of what an intro QM course trains you to do.
+
+---
+
+## Problem 1: Expectation Values for the Harmonic Oscillator Ground State
+
+### The Setup
+
+The quantum harmonic oscillator has Hamiltonian
+
+$$\hat{H} = \frac{\hat{p}^2}{2m} + \tfrac{1}{2} m\omega^2 \hat{x}^2$$
+
+Its ground state wave function is a Gaussian:
+
+$$\psi_0(x) = \left(\frac{m\omega}{\pi\hbar}\right)^{1/4} e^{-m\omega x^2 / (2\hbar)}$$
+
+Define the characteristic length $\alpha = m\omega/\hbar$ to simplify notation. Then
+
+$$\psi_0(x) = \left(\frac{\alpha}{\pi}\right)^{1/4} e^{-\alpha x^2 / 2}$$
+
+Our task: compute $\langle x \rangle$, $\langle x^2 \rangle$, and from those the uncertainty $\Delta x$.
+
+### Step 1: Verify Normalization
+
+Before anything else, check that $\int |\psi_0|^2 dx = 1$. This is a sanity check *and* a warm-up for the Gaussian integrals we'll need.
+
+$$\int_{-\infty}^\infty |\psi_0(x)|^2 \, dx = \left(\frac{\alpha}{\pi}\right)^{1/2} \int_{-\infty}^\infty e^{-\alpha x^2} \, dx$$
+
+Using the standard Gaussian integral $\int_{-\infty}^\infty e^{-\alpha x^2} dx = \sqrt{\pi/\alpha}$:
+
+$$= \left(\frac{\alpha}{\pi}\right)^{1/2} \cdot \sqrt{\frac{\pi}{\alpha}} = 1 \quad \checkmark$$
+
+Good. The normalization constant $(\alpha/\pi)^{1/4}$ is correct.
+
+### Step 2: Compute $\langle x \rangle$
+
+$$\langle x \rangle = \int_{-\infty}^\infty \psi_0^*(x) \, x \, \psi_0(x) \, dx = \left(\frac{\alpha}{\pi}\right)^{1/2} \int_{-\infty}^\infty x \, e^{-\alpha x^2} \, dx$$
+
+The integrand is $x \cdot (\text{even function})$, which is odd. **The integral of an odd function over a symmetric interval is zero.**
+
+$$\boxed{\langle x \rangle = 0}$$
+
+This makes physical sense: the ground state is symmetric around $x = 0$, so the expected position is at the center.
+
+### Step 3: Compute $\langle x^2 \rangle$
+
+$$\langle x^2 \rangle = \left(\frac{\alpha}{\pi}\right)^{1/2} \int_{-\infty}^\infty x^2 \, e^{-\alpha x^2} \, dx$$
+
+Now we need $\int_{-\infty}^\infty x^2 e^{-\alpha x^2} dx$. A nice trick: differentiate the basic Gaussian integral with respect to $\alpha$.
+
+Start from
+
+$$I(\alpha) = \int_{-\infty}^\infty e^{-\alpha x^2} dx = \sqrt{\frac{\pi}{\alpha}} = \sqrt{\pi} \cdot \alpha^{-1/2}$$
+
+Differentiate both sides with respect to $\alpha$:
+
+$$\frac{dI}{d\alpha} = -\int_{-\infty}^\infty x^2 e^{-\alpha x^2} dx = \sqrt{\pi} \cdot \left(-\tfrac{1}{2}\right) \alpha^{-3/2}$$
+
+Therefore:
+
+$$\int_{-\infty}^\infty x^2 e^{-\alpha x^2} dx = \frac{\sqrt{\pi}}{2} \alpha^{-3/2} = \frac{1}{2\alpha}\sqrt{\frac{\pi}{\alpha}}$$
+
+Plug back in:
+
+$$\langle x^2 \rangle = \left(\frac{\alpha}{\pi}\right)^{1/2} \cdot \frac{1}{2\alpha}\sqrt{\frac{\pi}{\alpha}} = \frac{1}{2\alpha}$$
+
+Recalling $\alpha = m\omega/\hbar$:
+
+$$\boxed{\langle x^2 \rangle = \frac{\hbar}{2m\omega}}$$
+
+### Step 4: Extract the Uncertainty
+
+$$(\Delta x)^2 = \langle x^2 \rangle - \langle x \rangle^2 = \frac{\hbar}{2m\omega} - 0 = \frac{\hbar}{2m\omega}$$
+
+$$\boxed{\Delta x = \sqrt{\frac{\hbar}{2m\omega}}}$$
+
+### Aside: What About $\Delta p$?
+
+By a nearly identical calculation (or by symmetry between position and momentum representations of a Gaussian), one finds
+
+$$\Delta p = \sqrt{\frac{m\omega\hbar}{2}}$$
+
+Multiplying:
+
+$$\Delta x \, \Delta p = \sqrt{\frac{\hbar}{2m\omega}} \cdot \sqrt{\frac{m\omega\hbar}{2}} = \frac{\hbar}{2}$$
+
+The ground state **saturates** the uncertainty principle; it's the minimum-uncertainty state. This is a special property of Gaussians and a key reason why coherent states (shifted Gaussians) are called "the most classical" quantum states.
+
+---
+
+## Problem 2: Solving the Schrödinger Equation for the Infinite Square Well
+
+### The Setup
+
+A particle of mass $m$ is trapped in a 1D region between $x = 0$ and $x = L$, where the potential is
+
+$$V(x) = \begin{cases} 0 & 0 < x < L \\ \infty & \text{otherwise} \end{cases}$$
+
+Our task: find the allowed energy levels and the wave functions, from first principles.
+
+### Step 1: Reason About the Wave Function Outside the Well
+
+Inside regions where $V = \infty$, the wave function must vanish (otherwise the energy $\int V|\psi|^2 dx$ diverges). So:
+
+$$\psi(x) = 0 \quad \text{for} \quad x \leq 0 \text{ and } x \geq L$$
+
+For the wave function to be continuous at the boundaries:
+
+$$\psi(0) = 0, \qquad \psi(L) = 0$$
+
+These are our **boundary conditions**. They're what force quantization.
+
+### Step 2: Write the Schrödinger Equation Inside the Well
+
+Inside, $V = 0$, so the time-independent Schrödinger equation is
+
+$$-\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} = E\psi$$
+
+Rearrange:
+
+$$\frac{d^2\psi}{dx^2} = -\frac{2mE}{\hbar^2} \psi$$
+
+Define
+
+$$k^2 = \frac{2mE}{\hbar^2} \quad \Longleftrightarrow \quad E = \frac{\hbar^2 k^2}{2m}$$
+
+Then
+
+$$\psi'' = -k^2 \psi$$
+
+A second-order ODE with constant coefficients; from section 8 of the math prereqs.
+
+### Step 3: General Solution
+
+The equation $\psi'' + k^2 \psi = 0$ has general solution
+
+$$\psi(x) = A \sin(kx) + B \cos(kx)$$
+
+where $A$ and $B$ are constants to be determined.
+
+### Step 4: Apply Boundary Conditions
+
+**Left boundary** ($x = 0$):
+
+$$\psi(0) = A \sin(0) + B \cos(0) = B = 0$$
+
+So $B = 0$ and the solution reduces to $\psi(x) = A \sin(kx)$.
+
+**Right boundary** ($x = L$):
+
+$$\psi(L) = A \sin(kL) = 0$$
+
+We can't have $A = 0$ (that's the trivial zero solution; no particle). So we need
+
+$$\sin(kL) = 0$$
+
+This is satisfied only when $kL$ is an integer multiple of $\pi$:
+
+$$kL = n\pi, \quad n = 1, 2, 3, \ldots$$
+
+(We exclude $n = 0$ because that gives $\psi = 0$ everywhere, and we exclude negative $n$ because they give the same wave function up to a sign.)
+
+### Step 5: Quantized Energy Levels
+
+From $k = n\pi/L$ and $E = \hbar^2 k^2/(2m)$:
+
+$$\boxed{E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}, \quad n = 1, 2, 3, \ldots}$$
+
+The energy is **quantized**; only discrete values are allowed. This came from nothing but the boundary conditions forcing the wave to "fit" in the box.
+
+Key observations:
+
+- The ground state ($n=1$) has nonzero energy: $E_1 = \pi^2 \hbar^2/(2mL^2)$. This is the zero-point energy; you cannot put the particle at rest, period.
+- Spacing grows as $n^2$: $E_2 = 4 E_1$, $E_3 = 9E_1$, etc.
+- Energy scales as $1/L^2$: squeeze the box, the energies skyrocket (Heisenberg again).
+
+### Step 6: Normalize the Wave Functions
+
+The wave function is $\psi_n(x) = A \sin(n\pi x/L)$. Find $A$ by demanding $\int_0^L |\psi_n|^2 dx = 1$:
+
+$$|A|^2 \int_0^L \sin^2\left(\frac{n\pi x}{L}\right) dx = 1$$
+
+Using the identity $\sin^2\theta = \tfrac{1}{2}(1 - \cos 2\theta)$:
+
+$$\int_0^L \sin^2\left(\frac{n\pi x}{L}\right) dx = \int_0^L \tfrac{1}{2}\left[1 - \cos\left(\frac{2n\pi x}{L}\right)\right] dx$$
+
+The $\cos$ integrates to zero over a full period (and $n$ full periods fit in $L$), so:
+
+$$= \tfrac{1}{2} \cdot L = \frac{L}{2}$$
+
+Therefore $|A|^2 \cdot L/2 = 1$, giving $A = \sqrt{2/L}$:
+
+$$\boxed{\psi_n(x) = \sqrt{\frac{2}{L}}\sin\left(\frac{n\pi x}{L}\right), \quad n = 1, 2, 3, \ldots}$$
+
+### Step 7: Sanity Checks
+
+**Orthogonality:** different eigenstates should be orthogonal. For $m \neq n$:
+
+$$\langle \psi_m | \psi_n \rangle = \frac{2}{L}\int_0^L \sin\left(\frac{m\pi x}{L}\right)\sin\left(\frac{n\pi x}{L}\right) dx$$
+
+Using $\sin A \sin B = \tfrac{1}{2}[\cos(A-B) - \cos(A+B)]$ and integrating, this vanishes. $\checkmark$
+
+**Nodes:** $\psi_n$ has $n - 1$ interior nodes (zeros). Ground state: 0 nodes. First excited: 1 node. Classic pattern; more nodes means more kinetic energy (wave function curves more), which matches higher $E_n$.
+
+**Classical limit:** for large $n$, $|\psi_n|^2$ oscillates rapidly and averages to $1/L$; uniform, as expected for a classical particle bouncing in a box.
+
+That's the full solution. Every step was mechanical: set up the ODE, impose boundary conditions, normalize. This template is the same for every bound-state problem; only the specific ODE and boundary conditions change.
+
+---
+
+## Problem 3: Diagonalizing a Hamiltonian by Hand
+
+### The Setup
+
+Consider a spin-½ particle (like an electron) in a magnetic field pointing along the $x$-axis. The Hamiltonian is
+
+$$\hat{H} = -\gamma \hat{S}_x B = -\gamma B \cdot \frac{\hbar}{2}\sigma_x$$
+
+where $\gamma$ is the gyromagnetic ratio and $\sigma_x$ is the Pauli matrix. Define $\omega_0 = \gamma B$ (the Larmor frequency). Then
+
+$$\hat{H} = -\frac{\hbar\omega_0}{2}\sigma_x = -\frac{\hbar\omega_0}{2}\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$$
+
+The computational basis is the eigenbasis of $\sigma_z$:
+
+$$|\uparrow\rangle = \begin{pmatrix} 1 \\ 0 \end{pmatrix}, \quad |\downarrow\rangle = \begin{pmatrix} 0 \\ 1 \end{pmatrix}$$
+
+Our task: find the eigenvalues (allowed energies) and eigenvectors (stationary states), then use them to compute the time evolution of a state that starts as $|\uparrow\rangle$.
+
+### Step 1: Find the Eigenvalues
+
+We need eigenvalues $\lambda$ of the matrix
+
+$$H = -\frac{\hbar\omega_0}{2}\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}$$
+
+The characteristic equation is $\det(H - \lambda I) = 0$:
+
+$$\det\begin{pmatrix} -\lambda & -\hbar\omega_0/2 \\ -\hbar\omega_0/2 & -\lambda \end{pmatrix} = 0$$
+
+Expanding:
+
+$$\lambda^2 - \left(\frac{\hbar\omega_0}{2}\right)^2 = 0$$
+
+$$\lambda = \pm\frac{\hbar\omega_0}{2}$$
+
+So the two energy eigenvalues are:
+
+$$\boxed{E_+ = -\frac{\hbar\omega_0}{2}, \qquad E_- = +\frac{\hbar\omega_0}{2}}$$
+
+(The labels $\pm$ indicate the sign of $\sigma_x$, not of the energy; I'll make this explicit below.)
+
+### Step 2: Find the Eigenvectors
+
+For $E_+ = -\hbar\omega_0/2$, solve $(H - E_+ I)\vec{v} = 0$:
+
+$$\left[-\frac{\hbar\omega_0}{2}\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} + \frac{\hbar\omega_0}{2}\begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix}\right]\begin{pmatrix} a \\ b \end{pmatrix} = 0$$
+
+Factor out $\hbar\omega_0/2$:
+
+$$\begin{pmatrix} 1 & -1 \\ -1 & 1 \end{pmatrix}\begin{pmatrix} a \\ b \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+
+First row: $a - b = 0$, so $a = b$. Pick $a = b = 1/\sqrt{2}$ for normalization:
+
+$$|+\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ 1 \end{pmatrix} = \frac{1}{\sqrt{2}}(|\uparrow\rangle + |\downarrow\rangle)$$
+
+For $E_- = +\hbar\omega_0/2$, solve $(H - E_- I)\vec{v} = 0$:
+
+$$\begin{pmatrix} -1 & -1 \\ -1 & -1 \end{pmatrix}\begin{pmatrix} a \\ b \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}$$
+
+First row: $-a - b = 0$, so $a = -b$. Pick $a = 1/\sqrt{2}$, $b = -1/\sqrt{2}$:
+
+$$|-\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 \\ -1 \end{pmatrix} = \frac{1}{\sqrt{2}}(|\uparrow\rangle - |\downarrow\rangle)$$
+
+These are exactly the $\sigma_x$ eigenstates; spin pointing along $\pm\hat{x}$. Makes sense: $H$ is proportional to $\sigma_x$, so they share eigenvectors.
+
+**Orthogonality check:** $\langle + | - \rangle = \tfrac{1}{2}(1 \cdot 1 + 1 \cdot (-1)) = 0$. $\checkmark$
+
+### Step 3: Verify by Explicit Diagonalization
+
+Form the matrix $P$ with eigenvectors as columns:
+
+$$P = \frac{1}{\sqrt{2}}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
+
+Notice this is Hermitian and unitary: $P^\dagger P = I$. Also $P^{-1} = P^\dagger = P$ (it happens to be self-inverse).
+
+Compute $P^\dagger H P$:
+
+$$P^\dagger H P = \frac{1}{2}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} \cdot \left(-\frac{\hbar\omega_0}{2}\right)\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \cdot \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}$$
+
+Work out the middle product first:
+
+$$\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix} = \begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix}$$
+
+Now multiply by the left factor:
+
+$$\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}\begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix} = \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix}$$
+
+Including prefactors:
+
+$$P^\dagger H P = -\frac{\hbar\omega_0}{2} \cdot \frac{1}{2} \cdot \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix} = \begin{pmatrix} -\hbar\omega_0/2 & 0 \\ 0 & +\hbar\omega_0/2 \end{pmatrix}$$
+
+Diagonal, with the eigenvalues $E_+$ and $E_-$ on the diagonal. $\checkmark$ The diagonalization is correct.
+
+### Step 4: Use It; Time Evolution
+
+Now for the payoff. Suppose at $t = 0$ the system is in state $|\uparrow\rangle$. What is $|\psi(t)\rangle$?
+
+**Strategy:** Expand in the energy eigenbasis, apply time evolution factor $e^{-iE_n t/\hbar}$ to each component, recombine.
+
+**Expand $|\uparrow\rangle$ in the $|\pm\rangle$ basis:**
+
+Inverting the definitions $|\pm\rangle = \frac{1}{\sqrt{2}}(|\uparrow\rangle \pm |\downarrow\rangle)$:
+
+$$|\uparrow\rangle = \frac{1}{\sqrt{2}}(|+\rangle + |-\rangle)$$
+
+**Apply time evolution:**
+
+$$|\psi(t)\rangle = \frac{1}{\sqrt{2}}\left(e^{-iE_+ t/\hbar}|+\rangle + e^{-iE_- t/\hbar}|-\rangle\right)$$
+
+Substituting $E_\pm = \mp\hbar\omega_0/2$:
+
+$$|\psi(t)\rangle = \frac{1}{\sqrt{2}}\left(e^{i\omega_0 t/2}|+\rangle + e^{-i\omega_0 t/2}|-\rangle\right)$$
+
+**Convert back to the $\{|\uparrow\rangle, |\downarrow\rangle\}$ basis** using $|\pm\rangle = \frac{1}{\sqrt{2}}(|\uparrow\rangle \pm |\downarrow\rangle)$:
+
+$$|\psi(t)\rangle = \frac{1}{2}\left[e^{i\omega_0 t/2}(|\uparrow\rangle + |\downarrow\rangle) + e^{-i\omega_0 t/2}(|\uparrow\rangle - |\downarrow\rangle)\right]$$
+
+Group by $|\uparrow\rangle$ and $|\downarrow\rangle$:
+
+$$= \frac{1}{2}\left[(e^{i\omega_0 t/2} + e^{-i\omega_0 t/2})|\uparrow\rangle + (e^{i\omega_0 t/2} - e^{-i\omega_0 t/2})|\downarrow\rangle\right]$$
+
+Using Euler: $e^{i\theta} + e^{-i\theta} = 2\cos\theta$ and $e^{i\theta} - e^{-i\theta} = 2i\sin\theta$:
+
+$$\boxed{|\psi(t)\rangle = \cos\left(\frac{\omega_0 t}{2}\right)|\uparrow\rangle + i\sin\left(\frac{\omega_0 t}{2}\right)|\downarrow\rangle}$$
+
+### Step 5: Interpret the Result
+
+Probability of finding the spin "down" at time $t$:
+
+$$P_\downarrow(t) = |\langle \downarrow | \psi(t)\rangle|^2 = \sin^2\left(\frac{\omega_0 t}{2}\right)$$
+
+Probability of finding it still "up":
+
+$$P_\uparrow(t) = \cos^2\left(\frac{\omega_0 t}{2}\right)$$
+
+Note $P_\uparrow + P_\downarrow = 1$ at all times. $\checkmark$
+
+**Physical picture:** The spin oscillates between $|\uparrow\rangle$ and $|\downarrow\rangle$ with frequency $\omega_0$. This is **Larmor precession**; a spin in a magnetic field perpendicular to its initial orientation rotates in the plane perpendicular to the field.
+
+This single calculation is the foundation of:
+
+- Nuclear magnetic resonance (NMR)
+- Magnetic resonance imaging (MRI)
+- Single-qubit operations in a quantum computer
+
+Every NMR machine in every hospital is running exactly this physics, driven by a magnetic field that acts as $H = -\gamma \vec{S} \cdot \vec{B}$ on nuclear spins.
+
+---
+
+## What Just Happened
+
+Look back at what these three problems actually involved:
+
+**Problem 1** was just Gaussian integrals. We wrote down $\langle x^n \rangle = \int \psi^* x^n \psi \, dx$ and ground through the algebra. Differentiating under the integral sign (a trick from multivariable calculus) gave us the extra $x^2$ factor. The "quantum" content was small; the math content was everything.
+
+**Problem 2** was a second-order ODE with boundary conditions. Exactly the kind of problem you solve in a differential equations class. What's different is the interpretation: the boundary conditions are physical, and they force the allowed energies to be discrete. **Quantization is just the eigenvalue spectrum of a boundary value problem.**
+
+**Problem 3** was diagonalizing a $2 \times 2$ matrix. Not a single calculation in problem 3 would be unfamiliar to someone who's taken linear algebra. The entire thing is find-the-eigenvalues, find-the-eigenvectors, expand-in-the-eigenbasis, apply time evolution component by component. Every ingredient is from the math prerequisites document.
+
+This is the honest truth about quantum mechanics at this level: the conceptual framework is deeply strange, but the actual day-to-day calculations are mostly just math; complex numbers, linear algebra, ODEs, and integrals; applied with physical interpretation.
+
+Learning to do these calculations fluently is the work. And the only way to get fluent is to do more of them.
+
+### Recommended Next Problems (from Griffiths or any intro QM text)
+
+1. Compute $\langle x \rangle$, $\langle x^2 \rangle$, $\langle p \rangle$, $\langle p^2 \rangle$ for the $n$-th infinite square well state. Verify the uncertainty principle.
+2. Find the transmission coefficient for a rectangular potential barrier (tunneling).
+3. Solve the finite square well (harder because the wave function doesn't vanish at the boundary).
+4. Work out the time evolution of a general spin state in an arbitrary magnetic field direction.
+5. Compute expectation values in a superposition state of two harmonic oscillator eigenstates; notice how $\langle x(t)\rangle$ oscillates at the classical frequency.
+
+Each of these uses the same three skills demonstrated here, combined in different ways. After you've done twenty or so, the template stops feeling like a template and just becomes how you think.
