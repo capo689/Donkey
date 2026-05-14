@@ -4,59 +4,258 @@ import { getCollection } from 'astro:content';
 
 const results = await getCollection('results');
 results.sort((a, b) => a.data.resultNumber - b.data.resultNumber);
+
+const ROMAN: Record<number, string> = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V' };
+
+type ResultMeta = {
+  eyebrow: string;
+  tag?: { label: string; cls: string };
+  equation: string;
+  metaSection: string;
+  metaNote: string;
+};
+
+const resultMeta: Record<number, ResultMeta> = {
+  1: {
+    eyebrow: 'THE STRUCTURAL IDENTITY &middot; THEOREM 3.2',
+    equation: '$$\\mathbb{E}_V[\\rho_{R_A}] \\;=\\; \\rho_A^{\\mathrm{bulk}} + O(1/d^2)$$',
+    metaSection: '&sect;3 OF THE PAPER',
+    metaNote: 'VERIFIED ACROSS 18 DIAGONAL ENTRIES',
+  },
+  2: {
+    eyebrow: 'PRODUCT-CLASS SCALING &middot; THEOREM 4.2',
+    equation: '$$\\mathbb{E}|S_A - S_B| \\;=\\; \\sqrt{\\tfrac{4(\\pi^2/3 - 3)}{\\pi}}\\, d_B^{-1/2}\\,(1+o(1)) \\;\\approx\\; 0.6076\\, d_B^{-1/2}$$',
+    metaSection: '&sect;4 OF THE PAPER',
+    metaNote: 'EXPONENT EXACT &middot; PREFACTOR EXACT',
+  },
+  3: {
+    eyebrow: 'HAAR-CLASS SCALING &middot; THEOREM 5.2',
+    equation: '$$\\mathbb{E}|S_A - S_B| \\;=\\; \\sqrt{\\tfrac{2}{\\pi}} \\cdot \\tfrac{1}{d_M\\, d_B^{3/2}}\\,(1+o(1)) \\;\\approx\\; \\tfrac{0.798}{d_M}\\, d_B^{-3/2}$$',
+    metaSection: '&sect;5 OF THE PAPER',
+    metaNote: 'EXPONENT EXACT &middot; PREFACTOR EXACT',
+  },
+  4: {
+    eyebrow: 'THE INTEGER EXPONENT GAP',
+    tag: { label: 'HEADLINE', cls: 'headline' },
+    equation: '$$\\alpha_P - \\alpha_H \\;=\\; \\big(-\\tfrac{1}{2}\\big) - \\big(-\\tfrac{3}{2}\\big) \\;=\\; 1 \\quad \\text{exactly.}$$',
+    metaSection: '&sect;6 OF THE PAPER',
+    metaNote: 'STABLE UNDER ALL DEFORMATIONS TESTED',
+  },
+  5: {
+    eyebrow: 'HAAR SUBLEADING STRUCTURE',
+    tag: { label: 'EMPIRICAL &middot; OPEN', cls: 'open' },
+    equation: '$$\\frac{\\mathbb{E}|S_A - S_B|}{(\\sqrt{2/\\pi}/d_M) \\cdot d_B^{-3/2}} \\;=\\; 1 - \\frac{1.1331}{d_B} + \\frac{4.6538}{d_B^2} + O(1/d_B^3)$$',
+    metaSection: '&sect;7 OF THE PAPER',
+    metaNote: 'EMPIRICAL FIT &middot; ANALYTIC FORM OPEN',
+  },
+};
+
+const middotSpan = '<span class="middot" style="margin:0 .8em;color:var(--rule-strong)">&middot;</span>';
+
+const bibtex = `@article{cagle2026complexity,
+  author  = {Cagle, Adam R.},
+  title   = {{Complexity-Sensitive Complementarity in
+             Non-Isometric Holographic Codes}},
+  journal = {arXiv preprint},
+  number  = {26XX.XXXXX},
+  year    = {2026},
+  note    = {With Claude (Anthropic) as
+             computational collaborator}
+}`;
 ---
 
 <Base
   title="The Paper"
   description="Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes. Cagle, A.R. 2026."
 >
-  <!-- Layout: PaperLanding.astro (from mockup_4_paper_landing.html) -->
-  <main class="shell">
-    <header class="frontmatter">
-      <p class="masthead-eyebrow">Paper I</p>
-      <h1 class="masthead-title">Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes</h1>
-      <p class="byline">Cagle, A.R., with Claude (Anthropic), computational collaborator</p>
-      <p class="dateline">May 2026 &middot; arXiv:26XX.XXXXX</p>
+  <div class="paper-bg">
+    <div class="noise"></div>
+    <div class="stain-a"></div>
+    <div class="stain-b"></div>
+    <div class="vignette"></div>
+  </div>
 
-      <div class="downloads">
-        <a href="/paper/Paper1.pdf" class="dl-btn" download>Download PDF</a>
-        <span class="arxiv-tag">arXiv:26XX.XXXXX</span>
-      </div>
+  <main>
+
+    <div class="running-head">
+      DONKEY ON THE EDGE<span class="middot">&middot;</span>THE PAPER<span class="middot">&middot;</span>VOL. I, NO. 1<span class="middot">&middot;</span>MAY MMXXVI
+    </div>
+
+    <header class="masthead">
+      <div class="masthead-eyebrow">PAPER I OF THE DONKEY-ON-THE-EDGE PROGRAMME</div>
+      <div class="rule-double"></div>
+      <h1 class="masthead-title">THE PAPER</h1>
+      <div class="masthead-subtitle">In which the disagreement between two observers, looking through the same noisy lens, is shown to depend in a measurable way on the complexity of what they are looking at.</div>
+      <div class="rule-double"></div>
     </header>
 
+    <section class="frontmatter">
+
+      <div class="dateline">
+        SUBMITTED MAY XI &middot; MMXXVI<span class="arxiv-tag">ARXIV : 26XX.XXXXX</span>
+      </div>
+
+      <h2 class="paper-title">
+        Complexity-Sensitive<br />
+        Complementarity in<br />
+        Non-Isometric<br />
+        Holographic Codes
+      </h2>
+
+      <div class="byline">
+        <span class="author">ADAM R. CAGLE</span>
+        <span class="with">with</span>
+        <span class="collab">CLAUDE (ANTHROPIC)</span>
+        <span class="role">computational collaborator</span>
+      </div>
+
+      <div class="downloads">
+        <a class="dl-btn" href="#"><span class="glyph">&sect;</span> READ THE PDF</a>
+        <a class="dl-btn" href="#"><span class="glyph">&#8501;</span> ON ARXIV</a>
+        <a class="dl-btn" href="#"><span class="glyph">&#8750;</span> SOURCE &amp; DATA</a>
+        <a class="dl-btn" href="#"><span class="glyph">&#8478;</span> BIBTEX</a>
+      </div>
+
+    </section>
+
     <section class="abstract">
-      <h2 class="section-head">Abstract</h2>
+      <h3 class="section-head">ABSTRACT</h3>
       <div class="abstract-body">
-        <!-- Abstract pulled from paper_full_draft.md in content load step -->
-        <p><em>Abstract loading...</em></p>
+        <p is:raw>We investigate the two-observer disagreement $\mathbb{E}|S_A - S_B|$ in Akers, Engelhardt, Harlow, Penington, and Vardhan non-isometric holographic codes, with observers included via the Harlow, Usatyuk, and Zhao cloning rule. Our central result is a <em>structural identity</em>: at leading order in $1/d_{\mathrm{eff}}$, the Haar-$V$-averaged observer-reduced state satisfies $\mathbb{E}_V[\rho_{R_A}] = \rho_A^{\mathrm{bulk}} + O(1/d^2)$, with off-diagonals in the cloning basis suppressed at the same order. This identity reduces the two-observer disagreement problem to a moment calculation of the bulk-marginal diagonal, whose scaling with observer dimension $d_B$ depends on the bulk state class.</p>
+        <p is:raw>We carry out this calculation for two extreme classes. For random product bulk states we prove $\mathbb{E}|S_A - S_B| \to \sqrt{4(\pi^2/3 - 3)/\pi}\, d_B^{-1/2} \approx 0.608\, d_B^{-1/2}$; for Haar-random bulk states, $\mathbb{E}|S_A - S_B| \to \sqrt{2/\pi}\,/(d_M\, d_B^{3/2})$. Both exponents and prefactors are exact asymptotics. The integer exponent gap of $1$ between the two classes reflects exactly one power of $d_B$ per level of structural regularity in the bulk marginal. We verify the structural identity and both scaling theorems against full-simulation data at multiple independent levels, including out-of-sample tests at sub-$\sigma$ precision.</p>
       </div>
     </section>
 
-    <section>
-      <h2 class="section-head">Results</h2>
+    <section class="summary">
+      <h3 class="section-head">A PLAIN-LANGUAGE SUMMARY</h3>
+      <div class="summary-body">
+        <p>Two observers look at the same quantum object through the same noisy lens, and disagree about what they see. The paper makes this disagreement precise: it has structure, the structure is computable, and the structure depends in a specific way on the complexity of the object being observed. For a simple object (a product state, with no internal entanglement) the two observers disagree by an amount that shrinks as one over the square root of the observer's size. For a complicated object (a maximally entangled state) they disagree by an amount that shrinks much faster, as one over the size to the three-halves power. The gap between those two scalings is exactly one, not approximately one. Integer-valued gaps in physical scaling laws tend to mean something is being counted, even when we cannot yet say what. This paper proves the structural identity that makes both scalings clean, derives the two prefactors analytically with no fitting, verifies them numerically to sub-statistical-noise precision, and leaves the analytic origin of the integer as an open question that is one of the more interesting things we now know we do not know.</p>
+      </div>
+    </section>
+
+    <section class="results">
+      <h3 class="section-head">THE FIVE RESULTS</h3>
+      <p class="results-intro">Each card states the result, summarises it in plain language, and points at the section of the paper where it is proved and the numerical evidence that supports it.</p>
+
       <div class="results-grid">
-        {results.map((r) => (
-          <a href={`/paper/results/${r.data.resultNumber}`} class="result-card">
-            <span class="result-num">Result {r.data.resultNumber}</span>
-            <h3 class="result-title">{r.data.title}</h3>
-            <p class="result-summary">{r.data.summary}</p>
-          </a>
-        ))}
+        {results.map((r) => {
+          const meta = resultMeta[r.data.resultNumber];
+          const roman = ROMAN[r.data.resultNumber];
+          const eyebrowHtml = meta.tag
+            ? `${meta.eyebrow} <span class="result-tag ${meta.tag.cls}">${meta.tag.label}</span>`
+            : meta.eyebrow;
+          const metaHtml = `${meta.metaSection}${middotSpan}${meta.metaNote}`;
+          return (
+            <article class="result-card">
+              <div class="result-head">
+                <div class="result-numeral">{roman}.</div>
+                <div class="result-title-group">
+                  <div class="result-eyebrow" set:html={eyebrowHtml} />
+                  <h4 class="result-title">{r.data.title}</h4>
+                </div>
+              </div>
+              <div class="result-equation">{meta.equation}</div>
+              <p class="result-summary">{r.data.summary}</p>
+              <div class="result-meta">
+                <span set:html={metaHtml} />
+                <a href={`/paper/${r.data.resultNumber}`}>READ THE FULL CARD &rarr;</a>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
 
-    <section>
-      <h2 class="section-head">Plain English</h2>
-      <p>A non-technical explanation of what we found and why it matters. <a href="/paper/plain-english">Read "A Little Help for My Friends" &rarr;</a></p>
-    </section>
-
-    <section>
-      <h2 class="section-head">How to cite</h2>
-      <div class="citation-block">
-        <div class="citation-inner">
-          <p class="citation-text">Cagle, A.R., 2026. <em>Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes.</em> arXiv:26XX.XXXXX.</p>
+    <section class="section">
+      <h3 class="section-head">METHODS, IN BRIEF</h3>
+      <div class="section-body">
+        <div class="method-grid">
+          <div class="method-item">
+            <h3>I &middot; THE FRAMEWORK</h3>
+            <p is:raw>The AEHPV non-isometric code $V: \mathcal{H}_{\mathrm{eff}} \to \mathcal{H}_{\mathrm{fund}}$ with Haar-distributed $V$, combined with the HUZ cloning rule for including two observers. The structural identity is established by direct Haar-measure integration over $V$ at leading order in $1/d_{\mathrm{eff}}$.</p>
+          </div>
+          <div class="method-item">
+            <h3>II &middot; THE SPECIALISATION</h3>
+            <p>Theorems II and III follow from the master identity by computing the variance of the Shannon entropy of the bulk-marginal diagonal in each state class. The product case reduces to a Dirichlet-distribution moment; the Haar case to a Gaussian-limit Isserlis identity over near-uniform amplitudes.</p>
+          </div>
+          <div class="method-item">
+            <h3>III &middot; THE VERIFICATION</h3>
+            <p is:raw>Both scaling laws are verified against full-simulation data at four independent levels: the structural identity at the diagonal-entry level, the Dirichlet-variance asymptote, the prefactor convergence at large $d_B$, and end-to-end comparison. Out-of-sample tests at $d_B$ values not used in any calibration pass at sub-$\sigma$ precision.</p>
+          </div>
+          <div class="method-item">
+            <h3>IV &middot; THE REPRODUCIBILITY</h3>
+            <p>Every CSV in the paper is reproduced bit-identically from the seeds specified in Appendix B. The computational backend (von Neumann algebra machinery, crossed-product construction, trace operations) is documented in &sect;3.1 and posted as open source. Anyone with the repository and Python 3.11 can reproduce every numerical claim.</p>
+          </div>
         </div>
       </div>
     </section>
+
+    <section class="section">
+      <h3 class="section-head">CODE &amp; DATA</h3>
+      <div class="section-body">
+        <p style="text-align:center; font-style:italic; color:var(--ink-soft); margin-bottom:8px;">
+          The verified computational backend supporting every numerical claim in the paper.
+        </p>
+        <div class="code-grid">
+          <div class="code-file"><span class="name">vnalgebra.py</span><span class="desc">VN algebra machinery</span></div>
+          <div class="code-file"><span class="name">crossed_product.py</span><span class="desc">crossed-product construction</span></div>
+          <div class="code-file"><span class="name">trace_on_crossed.py</span><span class="desc">canonical trace</span></div>
+          <div class="code-file"><span class="name">phase1_rules_canonical.py</span><span class="desc">HUZ &amp; Colorado port</span></div>
+          <div class="code-file"><span class="name">phase2_huz_verification.py</span><span class="desc">HUZ inner-product scaling</span></div>
+          <div class="code-file"><span class="name">phase2_exponents.csv</span><span class="desc">money-plot data</span></div>
+        </div>
+        <div class="code-links">
+          <a class="dl-btn" href="#"><span class="glyph">&#8984;</span> ON GITHUB</a>
+          <a class="dl-btn" href="#"><span class="glyph">&#8756;</span> ZENODO ARCHIVE</a>
+          <a class="dl-btn" href="#"><span class="glyph">&#8258;</span> REPRODUCIBILITY NOTE</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-head">VERSION HISTORY</h3>
+      <div class="version-table">
+        <div class="version-row">
+          <span class="v">v1.0</span>
+          <span class="desc">Initial submission to arXiv. 39 pages, 38 references, 3 figures, 2 appendices.</span>
+          <span class="date">MAY 11 &middot; 2026</span>
+        </div>
+        <div class="version-row">
+          <span class="v">PENDING</span>
+          <span class="desc">arXiv moderation queue. Endorsement received. Number assigned upon clearance, typically 24 to 72 hours.</span>
+          <span class="date">IN FLIGHT</span>
+        </div>
+        <div class="version-row">
+          <span class="v">FORTHCOMING</span>
+          <span class="desc">Journal submission (JHEP target) after community response window.</span>
+          <span class="date">SUMMER &middot; 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="citation">
+      <h3 class="section-head">HOW TO CITE</h3>
+
+      <div class="cite-plain">
+        <span class="author">Cagle, A.R.</span>, 2026. <span class="title">Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes.</span> <span class="arxiv">arXiv:26XX.XXXXX</span>. With Claude (Anthropic) as computational collaborator.
+      </div>
+
+      <div class="bibtex-block">
+        <div class="bibtex-head">
+          <span>BIBTEX</span>
+        </div>
+        <div class="bibtex-body" id="bib">{bibtex}</div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="colophon-text">
+        <span class="accent">DONKEY ON THE EDGE</span><br />
+        A documented case study of one person, one AI, and the full walk from Physics 101 to the edge of quantum gravity.<br />
+        Set in IM Fell DW Pica, Old Standard TT, and JetBrains Mono.<br />
+        Type-set in May MMXXVI.
+      </div>
+    </footer>
+
   </main>
 </Base>

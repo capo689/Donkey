@@ -13,90 +13,177 @@ export async function getStaticPaths() {
       stationByNumber,
       prev: i > 0 ? sorted[i - 1] : null,
       next: i < sorted.length - 1 ? sorted[i + 1] : null,
+      total: sorted.length,
+      position: i + 1,
     },
   }));
 }
 
-const { entry, stationByNumber, prev, next } = Astro.props;
+const { entry, stationByNumber, prev, next, total, position } = Astro.props;
 const { Content, headings } = await render(entry);
-const { title, stationNumber, classReportTitle, date, backdated, prerequisites, extendsTo, line } = entry.data;
+const { title, stationNumber, classReportTitle, prerequisites, extendsTo, line } = entry.data;
 
-const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const ROMAN = ['','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI','XXII','XXIII','XXIV','XXV','XXVI','XXVII','XXVIII','XXIX','XXX','XXXI','XXXII','XXXIII','XXXIV','XXXV','XXXVI','XXXVII','XXXVIII','XXXIX','XL'];
+const stationRoman = ROMAN[stationNumber] ?? String(stationNumber);
+
+// Map curriculum line key → display name (mirrors curriculum/index.astro)
+const LINES: Record<string, { name: string; cssKey: string }> = {
+  'Foundation Way':     { name: 'The Foundation Way',     cssKey: 'foundation' },
+  'Math & Quantum Hub': { name: 'The Math & Quantum Hub', cssKey: 'math' },
+  'Quantum Trunk':      { name: 'The Quantum Trunk',      cssKey: 'quantum' },
+  'Advanced QFT Loop':  { name: 'The Advanced QFT Loop',  cssKey: 'advanced' },
+  'Classical Branch':   { name: 'The Classical Branch',   cssKey: 'classical' },
+  'Gravitational Spur': { name: 'The Gravitational Spur', cssKey: 'gravity' },
+};
+const lineMeta = LINES[line] ?? { name: line, cssKey: 'foundation' };
+const isTerminus = stationNumber === total;
 
 const lookup = (n: number) => {
   const s = stationByNumber.get(n);
-  return s ? { href: `/curriculum/${s.id}`, label: s.data.classReportTitle, num: n } : null;
+  return s ? { href: `/curriculum/${s.id}`, label: s.data.classReportTitle, num: n, sub: s.data.title } : null;
 };
 const prereqLinks = prerequisites.map(lookup).filter((x): x is NonNullable<typeof x> => x !== null);
 const extendsLinks = extendsTo.map(lookup).filter((x): x is NonNullable<typeof x> => x !== null);
-
-// TOC: top-level H2s only (H3s would clutter on long pages)
 const tocHeadings = headings.filter((h) => h.depth === 2);
 ---
 
-<Base title={classReportTitle} description={`Class Report ${stationNumber}: ${classReportTitle}`}>
-  <main class="shell">
+<Base title={classReportTitle} description={`Class Report ${stationRoman}: ${classReportTitle}`}>
+  <div class="shell">
+
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span>
+        <span class="dot"></span>
+        <span>The Curriculum</span>
+        <span class="dot"></span>
+        <span>Station {stationRoman}</span>
+      </div>
+    </div>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Masthead</a>
+      <span class="sep">&rsaquo;</span>
+      <a href="/curriculum">The Curriculum</a>
+      <span class="sep">&rsaquo;</span>
+      <span>{lineMeta.name}</span>
+      <span class="sep">&rsaquo;</span>
+      <span>Station {stationNumber}</span>
+    </nav>
+
     <header class="station-identity">
-      <p class="station-eyebrow">Class Report</p>
-      <span class="station-numeral">{String(stationNumber).padStart(2, '0')}</span>
+      <div class="station-corners">
+        <span>The Curriculum &middot; Vol. I</span>
+        <span>May MMXXVI &middot; Bend, Oregon</span>
+      </div>
+
+      <div class="station-eyebrow">Class Report</div>
+      <div class="station-line-name">{lineMeta.name} &middot; Station {stationRoman}</div>
+      <div class="station-numeral">{stationRoman}</div>
       <h1 class="station-title">{classReportTitle}</h1>
       <p class="station-subtitle">{title}</p>
-      <p class="station-line-name">{line}</p>
+      <div class="station-meta-line">
+        <span>{stationNumber === 1 ? 'First' : stationNumber === total ? 'Thirty-eighth (terminus)' : `Document ${stationNumber} of ${total}`}</span>
+        {prereqLinks.length > 0 && <><span class="dot"></span><span>Prerequisite: {prereqLinks.map((p) => p.label).join(', ')}</span></>}
+        {isTerminus && <><span class="dot"></span><span class="terminus-badge">Terminus &middot; Paper I</span></>}
+      </div>
     </header>
 
-    {backdated && (
-      <p class="backdating">Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.</p>
-    )}
-
-    {prereqLinks.length > 0 && (
-      <div class="prereq-col">
-        <p class="prereq-col-head">Prerequisites</p>
-        {prereqLinks.map((p) => (
-          <a href={p.href} class="prereq-item">
-            <span class="prereq-number">{String(p.num).padStart(2, '0')}</span>
-            <span class="prereq-body"><span class="prereq-name">{p.label}</span></span>
-          </a>
-        ))}
-      </div>
-    )}
-
-    <article class="article-body main-col">
-      <Content />
-    </article>
-
-    {extendsLinks.length > 0 && (
-      <div class="connections">
-        <p class="connections-head">Extends to</p>
-        <div class="connections-grid">
-          {extendsLinks.map((p) => (
-            <div class="conn-item">
-              <p class="conn-type">Station {String(p.num).padStart(2, '0')}</p>
-              <a href={p.href} class="conn-link">{p.label}</a>
+    {(prereqLinks.length > 0 || extendsLinks.length > 0) && (
+      <div class="prereq-extends">
+        <div class="prereq-col">
+          <div class="prereq-col-head req">Required Reading</div>
+          {prereqLinks.length === 0 ? (
+            <p class="prereq-empty"><em>No prerequisites; this is a foundation station.</em></p>
+          ) : prereqLinks.map((p) => (
+            <div class="prereq-item">
+              <span class="prereq-number">Station {String(p.num).padStart(2, '0')}</span>
+              <div class="prereq-body">
+                <a class="prereq-name" href={p.href}>{p.label}</a>
+                <span class="prereq-why">{p.sub}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="prereq-col">
+          <div class="prereq-col-head ext">Unlocks</div>
+          {extendsLinks.length === 0 ? (
+            <p class="prereq-empty"><em>Terminus of its line; leads on to the paper.</em></p>
+          ) : extendsLinks.map((p) => (
+            <div class="ext-item">
+              <span class="ext-arrow">&rarr;</span>
+              <div class="ext-body">
+                <a class="ext-name" href={p.href}>{p.label}</a>
+                <span class="ext-type">Station {String(p.num).padStart(2, '0')} &middot; {p.sub}</span>
+              </div>
             </div>
           ))}
         </div>
       </div>
     )}
 
-    <nav class="station-pager" aria-label="Curriculum navigation">
+    <div class="article-body">
+      <main class="main-col" id="main">
+        <Content />
+      </main>
+    </div>
+
+    <nav class="prev-next" aria-label="Station navigation">
       {prev ? (
-        <a class="station-pager-link station-pager-prev" href={`/curriculum/${prev.id}`} rel="prev">
-          <span class="station-pager-eyebrow">Station {String(prev.data.stationNumber).padStart(2, '0')} &middot; Previous</span>
-          <span class="station-pager-title">{prev.data.classReportTitle}</span>
+        <a class="nav-btn" href={`/curriculum/${prev.id}`} rel="prev">
+          <span class="arrow">&larr;</span>
+          <span>
+            <span class="lbl">Previous Station</span>
+            <span class="dest">{ROMAN[prev.data.stationNumber] ?? prev.data.stationNumber} &middot; {prev.data.classReportTitle}</span>
+          </span>
         </a>
-      ) : <span class="station-pager-link station-pager-empty" aria-hidden="true"></span>}
-      <a class="station-pager-link station-pager-index" href="/curriculum">
-        <span class="station-pager-eyebrow">All Stations</span>
-        <span class="station-pager-title">Index &amp; Chart</span>
-      </a>
+      ) : (
+        <a class="nav-btn" href="/curriculum">
+          <span class="arrow">&larr;</span>
+          <span>
+            <span class="lbl">Begin at</span>
+            <span class="dest">The Curriculum Index</span>
+          </span>
+        </a>
+      )}
+      <span class="nav-center">Station {position} of {total}</span>
       {next ? (
-        <a class="station-pager-link station-pager-next" href={`/curriculum/${next.id}`} rel="next">
-          <span class="station-pager-eyebrow">Station {String(next.data.stationNumber).padStart(2, '0')} &middot; Next</span>
-          <span class="station-pager-title">{next.data.classReportTitle}</span>
+        <a class="nav-btn" href={`/curriculum/${next.id}`} rel="next">
+          <span>
+            <span class="lbl">Next Station</span>
+            <span class="dest">{ROMAN[next.data.stationNumber] ?? next.data.stationNumber} &middot; {next.data.classReportTitle}</span>
+          </span>
+          <span class="arrow">&rarr;</span>
         </a>
-      ) : <span class="station-pager-link station-pager-empty" aria-hidden="true"></span>}
+      ) : (
+        <a class="nav-paper-btn" href="/paper">
+          <span>
+            <span class="lbl">Continue to</span>
+            <span class="dest">Paper I &middot; The Research</span>
+          </span>
+          <span class="arrow">&rarr;</span>
+        </a>
+      )}
     </nav>
-  </main>
+
+    <footer class="station-footer">
+      <span>
+        <a href="/">The Donkey on the Edge</a>
+        &ensp;&middot;&ensp; Vol.&thinsp;I, No.&thinsp;I &ensp;&middot;&ensp; May MMXXVI
+      </span>
+      <span>
+        <a href="/curriculum">The Curriculum</a>
+        &ensp;&middot;&ensp;
+        <a href="/curriculum">Station Index</a>
+      </span>
+      <span>
+        <a href="/about">Adam R. Cagle</a>
+        &ensp;&middot;&ensp; Bend, Oregon &ensp;&middot;&ensp;
+        <a href="/about#cite">Cite</a>
+      </span>
+    </footer>
+
+  </div>
 
   {tocHeadings.length > 1 && (
     <aside class="page-toc" aria-label="In this class report">
@@ -110,7 +197,6 @@ const tocHeadings = headings.filter((h) => h.depth === 2);
   )}
 
   <script>
-    // Active-section highlighting for the page TOC.
     const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
     if (links.length > 0) {
       const bySlug = new Map<string, HTMLAnchorElement>();
