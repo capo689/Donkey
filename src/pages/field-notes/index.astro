@@ -6,7 +6,10 @@ const allEssays = await getCollection('essays');
 const phaseMemos = await getCollection('phase-memos');
 
 const fieldNoteEssays = allEssays.filter((e) => e.data.section === 'field-notes');
-const reference = fieldNoteEssays.find((e) => e.data.subsection === 'reference');
+const featured = fieldNoteEssays.find((e) => e.id === 'a-little-help-for-my-friends');
+const references = fieldNoteEssays
+  .filter((e) => e.data.subsection === 'reference' && e.id !== 'a-little-help-for-my-friends')
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
 const standalone = fieldNoteEssays.filter((e) => e.data.subsection === 'standalone').sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const workPosts = fieldNoteEssays.filter((e) => e.data.subsection === 'work-post').sort((a, b) => (a.data.workPhase ?? 0) - (b.data.workPhase ?? 0));
 
@@ -42,21 +45,21 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
         </p>
       </header>
 
-      {reference && (
+      {featured && (
         <section class="fn-featured" aria-label="Featured essay">
           <div class="fn-featured-eyebrow">
             <span>Featured</span>
             <span class="dot"></span>
             <span>The plain-English thesis</span>
           </div>
-          <a href={`/field-notes/${reference.id}`} class="fn-featured-card">
+          <a href={`/field-notes/${featured.id}`} class="fn-featured-card">
             <div class="fn-featured-side">
               <span class="fn-featured-label">If you read one thing</span>
-              <span class="fn-featured-date">{dateStr(reference.data.date)}</span>
+              <span class="fn-featured-date">{dateStr(featured.data.date)}</span>
             </div>
             <div class="fn-featured-text">
-              <h2 class="fn-featured-headline">{reference.data.title}</h2>
-              {reference.data.subtitle && <p class="fn-featured-sub">{reference.data.subtitle}</p>}
+              <h2 class="fn-featured-headline">{featured.data.title}</h2>
+              {featured.data.subtitle && <p class="fn-featured-sub">{featured.data.subtitle}</p>}
               <blockquote class="fn-featured-pull">
                 <p>&ldquo;It is not that the universe has one answer for how much two observers can disagree. It has a <em>hierarchy</em> of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy.&rdquo;</p>
               </blockquote>
@@ -75,7 +78,7 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
         <ol class="fn-memo-list">
           {phaseMemos.map((m) => (
             <li>
-              <a href={`/lab/phase-memos`} class="fn-memo-card">
+              <a href={`/lab/phase-memos#${m.id}`} class="fn-memo-card">
                 <span class="fn-memo-num">{m.data.title.match(/\d+/)?.[0] ?? '—'}</span>
                 <div class="fn-memo-body">
                   <h3 class="fn-memo-title">{m.data.title}</h3>
@@ -126,6 +129,28 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
                   <h3 class="fn-post-title">{e.data.title}</h3>
                   {e.data.subtitle && <p class="fn-post-sub">{e.data.subtitle}</p>}
                   <p class="fn-post-meta">{dateStr(e.data.date)} &middot; <em>{e.data.voice === 'paper' ? 'Paper voice' : 'Donkey voice'}</em></p>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {references.length > 0 && (
+        <section class="fn-section" aria-labelledby="reference-head">
+          <header class="fn-section-head">
+            <p class="fn-section-eyebrow">IV. The Three Catalogues</p>
+            <h2 class="fn-section-title" id="reference-head">Reference Documents</h2>
+            <p class="fn-section-deck">Three lists that fix the field in place. What modern physics has shown us; what it has not yet solved; and what it ought to be working on, but is not.</p>
+          </header>
+          <ol class="fn-post-grid">
+            {references.map((e) => (
+              <li>
+                <a href={`/field-notes/${e.id}`} class="fn-post-card">
+                  <span class="fn-post-tag">Reference Document</span>
+                  <h3 class="fn-post-title">{e.data.title}</h3>
+                  {e.data.subtitle && <p class="fn-post-sub">{e.data.subtitle}</p>}
+                  <p class="fn-post-meta">{dateStr(e.data.date)} &middot; <em>Reference</em></p>
                 </a>
               </li>
             ))}

@@ -24,7 +24,7 @@ memos.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
         {memos.map(async (memo) => {
           const { Content } = await render(memo);
           return (
-            <article class="memo-entry">
+            <article class="memo-entry" id={memo.id}>
               <header class="memo-header">
                 <h2 class="memo-title">{memo.data.title}</h2>
                 <p class="memo-meta">
