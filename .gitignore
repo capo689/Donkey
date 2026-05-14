@@ -26,3 +26,4 @@ pnpm-debug.log*
 dist
 .mockups-from-drive/
 .curriculum-from-drive/
+.field-notes-from-drive/
