@@ -94,7 +94,7 @@ const tags = tagsByResult[resultNumber] ?? [];
           <div class="section-label">Fig. 1</div>
           <h2 class="section-title" id="plot-heading">Entropy Disagreement vs. Observer Dimension</h2>
         </div>
-        <p class="plot-caption-above">Log-log axes &middot; \(d_M = 4\) &middot; Two series with fit lines &middot; Synthetic data, seed 1142</p>
+        <p class="plot-caption-above">Log-log axes &middot; <span set:html="\(d_M = 4\)"></span> &middot; Two series with fit lines &middot; Synthetic data, seed 1142</p>
 
         <div class="plot-wrap">
           <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg"
@@ -230,9 +230,9 @@ const tags = tagsByResult[resultNumber] ?? [];
 
         <p class="plot-caption-below">
           <span class="fig-label">Fig.&thinsp;1.</span>
-          Expected entropy disagreement \(\mathbb{E}|S_A - S_B|\) as a function of observer algebra dimension \(d_B\),
-          with \(d_M = 4\). Product-class states (ink) follow a \(d_B^{-1/2}\) power law;
-          Haar-class states (oxblood) follow \(d_B^{-3/2}\). The exponent gap is exactly one.
+          Expected entropy disagreement <span set:html="\(\mathbb{E}|S_A - S_B|\)"></span> as a function of observer algebra dimension <span set:html="\(d_B\)"></span>,
+          with <span set:html="\(d_M = 4\)"></span>. Product-class states (ink) follow a <span set:html="\(d_B^{-1/2}\)"></span> power law;
+          Haar-class states (oxblood) follow <span set:html="\(d_B^{-3/2}\)"></span>. The exponent gap is exactly one.
           Error bars show approximate standard error of the mean. Fit lines carry an engraved-texture filter
           to distinguish them visually from the data.
         </p>
@@ -327,7 +327,7 @@ const tags = tagsByResult[resultNumber] ?? [];
         </table>
         <p class="evidence-table note">
           The gap is 1.000 to within numerical precision across all four parameter configurations.
-          This consistency across varying \(d_M\) and \(d_B\) ranges is the robustness claim.
+          This consistency across varying <span set:html="\(d_M\)"></span> and <span set:html="\(d_B\)"></span> ranges is the robustness claim.
           See also: HUZ verification in <a href="/lab/code-data">phase2_huz_verification.py</a>.
         </p>
       </section>
