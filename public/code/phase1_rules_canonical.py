@@ -117,6 +117,7 @@ def main() -> bool:
     print("Phase 1 — HUZ + Colorado canonical tables")
     print("=" * 78)
 
+    # ---- [A] Backend self-test --------------------------------------------
     print("\n[A] Backend self-test")
     result = subprocess.run(
         [sys.executable, os.path.join(_HERE, "bh_lab_backend.py")],
@@ -132,13 +133,14 @@ def main() -> bool:
     N_SAMPLES = 80
     BASE_SEED = 424242
 
+    # ---- [B] HUZ dimension sweep ------------------------------------------
     print(f"\n[B] HUZ dimension sweep  (n_samples per row = {N_SAMPLES})")
     huz_rows = []
     for d_Ob in (2, 3, 4):
         for d_M in (2, 3, 4):
             for d_fund in (2, 3, 5, 8):
                 if d_fund > d_Ob * d_M:
-                    continue
+                    continue  # V must be non-trivially non-isometric (or equal)
                 seed = BASE_SEED + d_Ob * 10_000 + d_M * 100 + d_fund
                 stats = haar_sample_huz(d_Ob, d_M, d_fund, N_SAMPLES, seed)
                 huz_rows.append({
@@ -154,6 +156,7 @@ def main() -> bool:
     df_huz = pd.DataFrame(huz_rows)
     print(df_huz.to_string(index=False, float_format=lambda x: f"{x:.4f}"))
 
+    # ---- [C] Colorado dimension sweep ------------------------------------
     print(f"\n[C] Colorado dimension sweep  (n_samples per row = {N_SAMPLES})")
     col_rows = []
     for d_Ob in (2, 3, 4):
@@ -176,26 +179,46 @@ def main() -> bool:
     df_col = pd.DataFrame(col_rows)
     print(df_col.to_string(index=False, float_format=lambda x: f"{x:.4f}"))
 
-    print("\n[D] Rank prediction check")
+    # ---- [D] Rank prediction check ---------------------------------------
+    print("\n[D] Rank prediction check  (integer-valued, normalization-independent)")
     huz_bad = df_huz[df_huz["rank_pred"] != df_huz["rank_obs"]]
     col_bad = df_col[df_col["rank_pred"] != df_col["rank_obs"]]
-    print(f"  HUZ rows where rank_pred != rank_obs: {len(huz_bad)} / {len(df_huz)}")
+    print(f"  HUZ rows where rank_pred != rank_obs:      {len(huz_bad)} / {len(df_huz)}")
     print(f"  Colorado rows where rank_pred != rank_obs: {len(col_bad)} / {len(df_col)}")
+    if len(huz_bad):
+        print("  HUZ mismatches:");      print(huz_bad)
+    if len(col_bad):
+        print("  Colorado mismatches:"); print(col_bad)
     ranks_ok = (len(huz_bad) == 0 and len(col_bad) == 0)
 
+    # ---- [E] Reproducibility ---------------------------------------------
     print("\n[E] Reproducibility")
     seed_repro = BASE_SEED + 999
     a = haar_sample_huz(3, 4, 5, N_SAMPLES, seed_repro)
     b = haar_sample_huz(3, 4, 5, N_SAMPLES, seed_repro)
     reproducible_huz = (a["mean_S"] == b["mean_S"]) and (a["rank_mode"] == b["rank_mode"])
-    print(f"  HUZ(d_Ob=3, d_M=4, d_fund=5): reproducible = {reproducible_huz}")
+    print(f"  HUZ(d_Ob=3, d_M=4, d_fund=5), seed={seed_repro}")
+    print(f"    run 1: mean_S = {a['mean_S']:.16f}")
+    print(f"    run 2: mean_S = {b['mean_S']:.16f}")
+    print(f"    bit-identical: {reproducible_huz}")
 
     c = haar_sample_colorado(3, 4, 2, N_SAMPLES, seed_repro)
     d = haar_sample_colorado(3, 4, 2, N_SAMPLES, seed_repro)
     reproducible_col = (c["mean_S"] == d["mean_S"]) and (c["rank_mode"] == d["rank_mode"])
-    print(f"  Colorado(d_Ob=3, d_M=4, d_fundM=2): reproducible = {reproducible_col}")
+    print(f"  Colorado(d_Ob=3, d_M=4, d_fundM=2), seed={seed_repro}")
+    print(f"    run 1: mean_S = {c['mean_S']:.16f}")
+    print(f"    run 2: mean_S = {d['mean_S']:.16f}")
+    print(f"    bit-identical: {reproducible_col}")
 
-    print("\n[F] HUZ vs Colorado on product vs superposed inputs")
+    # ---- [F] Qualitative Result-4 checks ---------------------------------
+    # Product state: S_HUZ = S_Colorado = 0 exactly.
+    # Superposed state sum_i |i>|i>/sqrt(d):
+    #     rho_Ob (Colorado) = (V_M^dag V_M) / d_fundM
+    #     V_M^dag V_M is a rank-d_fundM projector on C^{d_M} (V_M is d_fundM-by-d_M
+    #     with orthonormal rows), so its nonzero eigenvalues are all 1, and
+    #     rho_Ob has d_fundM eigenvalues = 1/d_fundM and d - d_fundM zeros.
+    #     => S_Colorado = log(d_fundM) EXACTLY for this state, any Haar V_M.
+    print("\n[F] HUZ vs Colorado on product vs superposed inputs (Part 3, Result 4)")
     d_Ob, d_M = 3, 3
     d_fund = 5
     d_fundM = 2
@@ -203,12 +226,14 @@ def main() -> bool:
     V = rng.aehpv_map(d_Ob * d_M, d_fund)
     V_M = rng.aehpv_map(d_M, d_fundM)
 
+    # Product input |ob=1>|random M>
     ob_vec = np.eye(d_Ob)[1]
-    mat = rng.haar_state(d_M)
+    mat    = rng.haar_state(d_M)
     psi_prod = np.kron(ob_vec, mat)
     S_huz_prod, _ = huz_single_observer_entropy(psi_prod, V, d_Ob, d_M)
     S_col_prod, _ = colorado_single_observer_entropy(psi_prod, V_M, d_Ob)
 
+    # Superposed input sum_i |i>|i>/sqrt(d_Ob)
     psi_sup = np.zeros(d_Ob * d_M, dtype=complex)
     for i in range(min(d_Ob, d_M)):
         psi_sup += np.kron(np.eye(d_Ob)[i], np.eye(d_M)[i])
@@ -216,43 +241,55 @@ def main() -> bool:
     S_huz_sup, _ = huz_single_observer_entropy(psi_sup, V, d_Ob, d_M)
     S_col_sup, _ = colorado_single_observer_entropy(psi_sup, V_M, d_Ob)
 
-    print(f"  S_HUZ(product) = {S_huz_prod:.2e}  (expect 0)")
-    print(f"  S_Colorado(product) = {S_col_prod:.2e}  (expect 0)")
-    print(f"  S_HUZ(superposed) = {S_huz_sup:.6f}")
-    print(f"  S_Colorado(superposed) = {S_col_sup:.6f}  (expect log({d_fundM}) = {math.log(d_fundM):.6f})")
+    print(f"  Input: |ob=1>|rand_M>   (product)")
+    print(f"    S_HUZ      = {S_huz_prod:.2e}   (expect 0)")
+    print(f"    S_Colorado = {S_col_prod:.2e}   (expect 0)")
+    print(f"  Input: (1/sqrt({d_Ob})) sum_i |i>|i>  (superposed)")
+    print(f"    S_HUZ      = {S_huz_sup:.6f}")
+    print(f"    S_Colorado = {S_col_sup:.6f}   (expect log({d_fundM}) = {math.log(d_fundM):.6f})")
+    print(f"    |S_HUZ - S_Colorado| on this state = {abs(S_huz_sup - S_col_sup):.6f}")
 
-    product_agreement = (S_huz_prod < 1e-8) and (S_col_prod < 1e-8)
+    product_agreement   = (S_huz_prod < 1e-8) and (S_col_prod < 1e-8)
     colorado_analytic_ok = abs(S_col_sup - math.log(d_fundM)) < 1e-10
-    superposed_disagreement = abs(S_huz_sup - S_col_sup) > 1e-3
+    superposed_disagreement = abs(S_huz_sup - S_col_sup) > 1e-3  # qualitative: "substantial"
 
+    # ---- [G] Save tables -------------------------------------------------
     out_dir = "/mnt/user-data/outputs"
     os.makedirs(out_dir, exist_ok=True)
-    df_huz.to_csv(os.path.join(out_dir, "phase1_huz_table.csv"), index=False)
-    df_col.to_csv(os.path.join(out_dir, "phase1_colorado_table.csv"), index=False)
-    print("\n[G] Saved tables to outputs directory")
+    huz_path = os.path.join(out_dir, "phase1_huz_table.csv")
+    col_path = os.path.join(out_dir, "phase1_colorado_table.csv")
+    df_huz.to_csv(huz_path, index=False)
+    df_col.to_csv(col_path, index=False)
+    print(f"\n[G] Saved tables")
+    print(f"    {huz_path}")
+    print(f"    {col_path}")
 
+    # ---- Gate status -----------------------------------------------------
     print("\n" + "=" * 78)
     print("PHASE 1 GATE STATUS")
     print("=" * 78)
     checks = [
-        ("backend self-test passes", backend_ok),
-        ("HUZ rank predictions match in every row", len(huz_bad) == 0),
-        ("Colorado rank predictions match in every row", len(col_bad) == 0),
-        ("HUZ reproducibility", reproducible_huz),
-        ("Colorado reproducibility", reproducible_col),
-        ("product state: S_HUZ = S_Colorado = 0", product_agreement),
-        ("superposed state: S_Colorado = log(d_fundM) exactly", colorado_analytic_ok),
-        ("superposed state: HUZ and Colorado disagree", superposed_disagreement),
+        ("backend self-test passes",                                    backend_ok),
+        ("HUZ rank predictions match in every row",                     len(huz_bad) == 0),
+        ("Colorado rank predictions match in every row",                len(col_bad) == 0),
+        ("HUZ reproducibility: same seed -> bit-identical mean",        reproducible_huz),
+        ("Colorado reproducibility: same seed -> bit-identical mean",   reproducible_col),
+        ("product state: S_HUZ = S_Colorado = 0",                       product_agreement),
+        ("superposed state: S_Colorado = log(d_fundM) exactly",         colorado_analytic_ok),
+        ("superposed state: HUZ and Colorado disagree substantially",   superposed_disagreement),
     ]
     all_pass = True
     for label, ok in checks:
         tag = "PASS" if ok else "FAIL"
         print(f"  [{tag}] {label}")
         all_pass = all_pass and ok
+    print("")
     if all_pass:
-        print("\nPhase 1 gate PASSED.")
+        print("Phase 1 gate PASSED.")
+        print("Canonical entropy and rank tables recorded.")
+        print("These are the reference values going forward; prior step2a/step2b numbers are deprecated.")
     else:
-        print("\nPhase 1 gate NOT PASSED.")
+        print("Phase 1 gate NOT PASSED. Review failures above.")
     print("=" * 78)
     return all_pass
 
