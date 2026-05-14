@@ -9,6 +9,731 @@ extendsTo: [16]
 classReportTitle: "Light, properly."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 3: quantizing a gauge field, where redundancy becomes a feature and photons emerge as massless spin-1 excitations.*
 
-{/* Content from qft_3_photon_field_quantization.md */}
+Documents 1 and 2 handled scalar and Dirac fields; relatively straightforward to quantize because their classical degrees of freedom are "physical" (no redundancy). The electromagnetic field is different. The classical $A_\mu(x)$ has four components per spacetime point, but only **two** correspond to physical photon polarizations. Gauge invariance is what makes the extra components unphysical; and also what makes naive quantization fail.
+
+This document develops three approaches to quantizing electromagnetism, each with different tradeoffs. By the end, you'll have the photon propagator (which looks simple but hides subtleties) and the machinery needed to write down QED as a genuine interacting theory.
+
+### Prerequisites
+
+- The scalar and Dirac quantization documents (documents 1 and 2)
+- Classical field theory: the Lagrangian formulation of Maxwell's equations, gauge invariance
+- Covariant tensors: $F_{\mu\nu}$, four-potential $A_\mu$, index gymnastics
+
+### Conventions
+
+Same as documents 1 and 2:
+- Metric $\eta_{\mu\nu} = \text{diag}(+,-,-,-)$
+- $\hbar = c = 1$
+- $F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$
+
+---
+
+## Table of Contents
+
+1. [The Problem: Too Many Components](#1-the-problem-too-many-components)
+2. [Counting Physical Degrees of Freedom](#2-counting-physical-degrees-of-freedom)
+3. [Approach 1: Coulomb Gauge](#3-approach-1-coulomb-gauge)
+4. [Approach 2: Gupta-Bleuler Quantization](#4-approach-2-gupta-bleuler-quantization)
+5. [Approach 3: Path Integral Preview (Faddeev-Popov)](#5-approach-3-path-integral-preview-faddeev-popov)
+6. [The Photon Propagator](#6-the-photon-propagator)
+7. [Polarization States and Helicity](#7-polarization-states-and-helicity)
+8. [Gauge Fixing as Lagrange Modification](#8-gauge-fixing-as-lagrange-modification)
+9. [Coupling to Matter: QED as a Field Theory](#9-coupling-to-matter-qed-as-a-field-theory)
+10. [Masslessness and Gauge Invariance](#10-masslessness-and-gauge-invariance)
+11. [Physical Content and What's Next](#11-physical-content-and-whats-next)
+12. [Appendix: Formulas and Identities](#appendix-formulas-and-identities)
+
+---
+
+## 1. The Problem: Too Many Components
+
+### The Setup
+
+Classical electromagnetism is described by the Maxwell Lagrangian:
+
+$$\mathcal{L} = -\tfrac{1}{4}F_{\mu\nu}F^{\mu\nu}$$
+
+with $F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$. The equations of motion (for a source $J^\mu$) are:
+
+$$\partial_\mu F^{\mu\nu} = J^\nu$$
+
+### Naive Canonical Quantization Fails
+
+Let's try to proceed as with the scalar field. Conjugate momentum:
+
+$$\pi^\mu = \frac{\partial\mathcal{L}}{\partial(\partial_0 A_\mu)} = F^{\mu 0}$$
+
+Immediately we hit a problem:
+
+$$\pi^0 = F^{00} = 0$$
+
+The momentum conjugate to $A^0$ is **identically zero**; not just small, not just weakly conserved, but structurally zero. So the canonical commutation relation $[\hat A^0, \hat \pi^0] = i\delta$ cannot be imposed; it would read $[\hat A^0, 0] = i\delta$, which is inconsistent.
+
+$A^0$ is not a dynamical degree of freedom. It's a Lagrange multiplier; the equation of motion for $A^0$ gives Gauss's law $\nabla\cdot\vec E = \rho$, a **constraint**, not a time evolution equation.
+
+### Gauge Redundancy
+
+The deeper issue: even if we only had three components, that would still be too many. The gauge transformation
+
+$$A^\mu \to A^\mu + \partial^\mu \lambda(x)$$
+
+leaves $F^{\mu\nu}$ and hence the physics unchanged. So at the classical level, $A^\mu$ itself is not observable; only gauge-invariant combinations are. We have a 1-parameter family of fields all describing the same physics.
+
+### Why This Matters
+
+In ordinary quantum mechanics, we don't worry about "unphysical" degrees of freedom because there aren't any; every position $q$ and momentum $p$ is a genuine observable. The Dirac field in document 2 also had no redundancy; $\psi(x)$ is well-defined (up to a global phase, which doesn't count as redundancy).
+
+But for gauge fields, we have genuine redundancy. If we don't handle it, three things go wrong:
+
+1. **Negative norm states.** The timelike component $A^0$ has "wrong-sign" commutation relations, producing states with $\langle\psi|\psi\rangle < 0$. Probabilities don't make sense.
+2. **Propagator singularity.** The naive propagator $1/k^2$ has an *un-invertible* matrix structure; there's no way to write it down cleanly.
+3. **Wrong degree of freedom count.** We need 2 polarizations for the photon, but naive quantization gives 4.
+
+Gauge fixing is the procedure that resolves all three.
+
+### Three Approaches
+
+Historically and pedagogically, there are three main approaches:
+
+1. **Coulomb gauge:** choose $\nabla\cdot\vec A = 0$; explicit, physical, but breaks manifest Lorentz invariance
+2. **Gupta-Bleuler (Lorenz gauge):** keep Lorentz invariance but work in an indefinite-metric Hilbert space, imposing subsidiary conditions to pick out physical states
+3. **Path integral / Faddeev-Popov:** the modern approach; preview here, full development later
+
+Each has its uses. Physical results are the same; intermediate details differ dramatically.
+
+---
+
+## 2. Counting Physical Degrees of Freedom
+
+Before diving into any approach, let's count what we should get.
+
+### Starting Point
+
+$A^\mu$ has 4 components at each spacetime point. If each were independent, a massless vector field would have 4 polarization states per momentum.
+
+### Gauge Redundancy
+
+Gauge transformation $A^\mu \to A^\mu + \partial^\mu\lambda$ is a one-parameter family of redundancies per spacetime point. This kills 1 degree of freedom.
+
+### Gauss's Law Constraint
+
+$A^0$ is a Lagrange multiplier, not dynamical. Its equation of motion (Gauss's law) is a constraint on the physical states. This kills another degree of freedom.
+
+### Net Count
+
+$4 - 1 - 1 = 2$ physical polarizations per momentum. ✓
+
+These are the two transverse polarizations; the familiar horizontal and vertical polarizations of light, or equivalently left- and right-circular. In relativistic language, they correspond to helicity $\pm 1$.
+
+### Why Massive Vectors Differ
+
+A massive spin-1 particle (like the W or Z boson) has **three** polarization states: two transverse plus one longitudinal. The longitudinal mode exists because massive vectors aren't gauge-invariant in the same way.
+
+The massless limit involves the longitudinal mode decoupling from physical processes; one of those subtle "kinematic" effects that secretly involves the Higgs mechanism in the Standard Model. Massless means gauge-invariant means 2 polarizations. Massive means 3 polarizations, and the third has to come from somewhere (the Higgs).
+
+---
+
+## 3. Approach 1: Coulomb Gauge
+
+The most physical approach: pick coordinates that explicitly separate physical and unphysical parts.
+
+### The Gauge Choice
+
+Impose
+
+$$\nabla\cdot\vec A = 0$$
+
+This is the **Coulomb gauge** (also called transverse or radiation gauge). It doesn't completely fix the gauge; you can still do time-dependent transformations $\lambda(t)$ that shift $A^0$; but combined with the boundary conditions at infinity (fields vanish), it uniquely determines the potential.
+
+### The Physical Degrees of Freedom
+
+With $\nabla\cdot\vec A = 0$, the vector potential is purely transverse. Fourier-decompose:
+
+$$\vec A(\vec x, t) = \int\frac{d^3k}{(2\pi)^3}\frac{1}{\sqrt{2\omega_k}}\sum_{\lambda=1,2}\left[a^\lambda_{\vec k}\vec\epsilon^\lambda(\vec k) e^{-ik\cdot x} + a^{\lambda\dagger}_{\vec k}\vec\epsilon^\lambda(\vec k)^* e^{+ik\cdot x}\right]$$
+
+with $\omega_k = |\vec k|$ (photons are massless).
+
+The polarization vectors $\vec\epsilon^\lambda(\vec k)$ for $\lambda = 1, 2$ are transverse:
+
+$$\vec k \cdot \vec\epsilon^\lambda(\vec k) = 0$$
+
+and normalized: $\vec\epsilon^\lambda \cdot \vec\epsilon^{\lambda'} = \delta^{\lambda\lambda'}$.
+
+This is manifestly 2 polarizations per momentum; exactly what we wanted.
+
+### Commutation Relations
+
+Canonical quantization on the transverse modes:
+
+$$[a^\lambda_{\vec k}, a^{\lambda'\dagger}_{\vec k'}] = (2\pi)^3\delta^{\lambda\lambda'}\delta^3(\vec k - \vec k')$$
+
+All others vanish. Same as scalar field commutators, labeled by polarization.
+
+### Hamiltonian
+
+$$:H: = \int\frac{d^3k}{(2\pi)^3}\omega_k\sum_\lambda a^{\lambda\dagger}_{\vec k} a^\lambda_{\vec k}$$
+
+One-photon states:
+
+$$|\vec k, \lambda\rangle = \sqrt{2\omega_k} a^{\lambda\dagger}_{\vec k}|0\rangle$$
+
+have energy $\omega_k = |\vec k|$; the dispersion relation of a massless particle. ✓
+
+### The Coulomb Interaction
+
+In Coulomb gauge, $A^0$ is not a dynamical field. Its equation of motion is the Gauss's law constraint:
+
+$$-\nabla^2 A^0 = \rho \implies A^0(\vec x, t) = \int d^3y \frac{\rho(\vec y, t)}{4\pi|\vec x - \vec y|}$$
+
+This is the *instantaneous* Coulomb interaction. For a system of charges, the Hamiltonian contains a term:
+
+$$H_{\rm Coulomb} = \tfrac{1}{2}\int d^3x d^3y \frac{\rho(\vec x)\rho(\vec y)}{4\pi|\vec x - \vec y|}$$
+
+That is, action at a distance, apparently instantaneous!
+
+This looks like it violates causality, but in the full theory, radiation effects (retarded interactions through transverse photons) cancel the causality violation. Coulomb gauge is not manifestly Lorentz-invariant, but the physical predictions are.
+
+### Pros and Cons
+
+**Pros:**
+- Only physical degrees of freedom; manifestly positive-norm
+- Explicit 2-photon counting
+- Intuitive (transverse $\vec A$ = radiation; $A^0$ = static Coulomb potential)
+
+**Cons:**
+- Not manifestly Lorentz-covariant; Lorentz transformations are "hidden"
+- Instantaneous Coulomb term in the Hamiltonian looks superluminal (although physics isn't)
+- Awkward for relativistic calculations involving virtual photons
+- The polarization vectors $\vec\epsilon^\lambda(\vec k)$ don't transform as a four-vector
+
+For practical QED calculations, Coulomb gauge is often cumbersome. We need a covariant approach.
+
+---
+
+## 4. Approach 2: Gupta-Bleuler Quantization
+
+Sacrifice positive-norm Hilbert space (temporarily) to get manifest Lorentz covariance.
+
+### The Modified Lagrangian
+
+Start with:
+
+$$\mathcal{L} = -\tfrac{1}{4}F_{\mu\nu}F^{\mu\nu} - \tfrac{1}{2\xi}(\partial_\mu A^\mu)^2$$
+
+The second term; the **gauge-fixing term**; breaks gauge invariance explicitly. The parameter $\xi$ is a free choice (different values correspond to different gauges). Common choices:
+
+- $\xi = 1$: **Feynman gauge** (simplest for calculations)
+- $\xi \to 0$: **Landau gauge** (manifestly transverse)
+
+### Equations of Motion
+
+Vary with respect to $A^\mu$:
+
+$$\partial_\mu F^{\mu\nu} - \frac{1}{\xi}\partial^\nu(\partial_\mu A^\mu) = 0$$
+
+In Feynman gauge ($\xi = 1$):
+
+$$\Box A^\nu - \partial^\nu(\partial_\mu A^\mu) + \partial^\nu(\partial_\mu A^\mu) = \Box A^\nu$$
+
+wait, that's not quite right. Let me be careful. The equations of motion from the modified Lagrangian work out to:
+
+$$\Box A^\nu - (1 - 1/\xi)\partial^\nu(\partial_\mu A^\mu) = 0$$
+
+In Feynman gauge $\xi = 1$, this simplifies beautifully:
+
+$$\Box A^\nu = 0$$
+
+**Each component of $A^\mu$ obeys the same equation as a massless scalar field.** That makes quantization easy.
+
+### Canonical Quantization in Feynman Gauge
+
+Treat each component of $A^\mu$ as an independent field, like four massless scalars. Mode expansion:
+
+$$A^\mu(x) = \int\frac{d^3k}{(2\pi)^3}\frac{1}{\sqrt{2\omega_k}}\sum_{\lambda=0}^3\left[a^\lambda_{\vec k}\epsilon^{\mu,\lambda}(\vec k)e^{-ik\cdot x} + a^{\lambda\dagger}_{\vec k}\epsilon^{\mu,\lambda}(\vec k)^*e^{+ik\cdot x}\right]$$
+
+Now $\lambda$ runs from 0 to 3; four polarizations, corresponding to the four components of $A^\mu$.
+
+The polarization vectors $\epsilon^{\mu,\lambda}(\vec k)$:
+- $\lambda = 0$: timelike, $\epsilon^{\mu,0} = (1, 0, 0, 0)$
+- $\lambda = 1, 2$: transverse spatial
+- $\lambda = 3$: longitudinal (along $\vec k$)
+
+### The Sign Problem
+
+The commutation relations:
+
+$$[a^\lambda_{\vec k}, a^{\lambda'\dagger}_{\vec k'}] = -\eta^{\lambda\lambda'}(2\pi)^3\delta^3(\vec k - \vec k')$$
+
+Note the **minus sign** from the metric tensor; specifically, the $\lambda = 0$ (timelike) mode has:
+
+$$[a^0_{\vec k}, a^{0\dagger}_{\vec k'}] = -(2\pi)^3\delta^3(\vec k - \vec k')$$
+
+This is a wrong-sign commutator; the same disaster we saw when we tried commutators for fermions in document 2!
+
+Consequence: states with timelike photons have negative norm:
+
+$$\langle 0 | a^0_{\vec k} a^{0\dagger}_{\vec k}|0\rangle \propto -\delta^3(0) < 0$$
+
+Can't be a probability.
+
+### The Gupta-Bleuler Subsidiary Condition
+
+The fix: rather than making all states "physical," define physical states by a subsidiary condition:
+
+$$\partial_\mu A^\mu(x)^{(+)} |\psi\rangle_{\rm phys} = 0$$
+
+where $A^{(+)}$ is the positive-frequency part (containing only annihilation operators). This requires physical states to be annihilated by the Gauss's law operator in the appropriate sense.
+
+Physical states are superpositions of transverse photons. The timelike and longitudinal modes appear in physical states only in specific combinations (roughly, equal numbers of both) that have net zero norm contribution.
+
+**The physical Hilbert space**:
+
+1. States containing only transverse photons have positive norm
+2. States with equal numbers of timelike and longitudinal photons have zero norm
+3. Other combinations are excluded by the subsidiary condition
+
+### Why This Works
+
+The physical observables (cross-sections, decay rates) depend only on the transverse photons. The timelike and longitudinal photons are "ghosts" in the sense of unphysical degrees of freedom; they must be carried along for Lorentz covariance, but they don't contribute to physical probabilities.
+
+This is the **Gupta-Bleuler** approach (1950). Mathematically fiddly, but Lorentz-covariant.
+
+### Pros and Cons
+
+**Pros:**
+- Manifestly Lorentz-covariant at every step
+- Simple propagator (Feynman gauge: $-i\eta^{\mu\nu}/(k^2 + i\epsilon)$)
+- Four-polarization structure makes calculations algorithmic
+
+**Cons:**
+- Indefinite-metric Hilbert space (non-standard, conceptually uncomfortable)
+- Only works for abelian gauge theory (QED); fails for Yang-Mills
+- Hides the geometric content of gauge invariance
+
+For QED, Gupta-Bleuler works. For QCD or electroweak theory, you need the path integral approach.
+
+---
+
+## 5. Approach 3: Path Integral Preview (Faddeev-Popov)
+
+The modern approach, which we'll develop fully when we get to path integrals.
+
+### The Idea
+
+In the path integral, you sum over all field configurations weighted by $e^{iS[A]}$. If the action is gauge-invariant, you're over-counting: every physical configuration is represented infinitely many times (by all its gauge-equivalent partners).
+
+The fix: insert a factor into the path integral that picks one representative from each gauge orbit; a procedure called **gauge fixing**. The price of doing this consistently is the introduction of **Faddeev-Popov determinants** (1967), which for non-abelian theories produce anticommuting scalar fields called **ghosts**.
+
+### The Result for QED (Preview)
+
+For QED, the Faddeev-Popov procedure in a general $\xi$ gauge gives:
+
+$$\mathcal{L}_{\rm eff} = -\tfrac{1}{4}F_{\mu\nu}F^{\mu\nu} - \tfrac{1}{2\xi}(\partial_\mu A^\mu)^2$$
+
+exactly the gauge-fixed Lagrangian from section 4. The ghosts decouple for abelian theories (they don't interact with anything), so they play no physical role in QED.
+
+For Yang-Mills (later document), ghosts are essential; they interact with gauge bosons through the structure constants $f^{abc}$ and contribute to loop diagrams.
+
+### Pros and Cons
+
+**Pros:**
+- Most general; works for any gauge theory
+- Manifestly Lorentz-covariant
+- Geometric interpretation
+- Essential for non-abelian theories
+
+**Cons:**
+- Requires path integral machinery (later doc)
+- Introduces unphysical ghost fields
+
+We'll revisit this properly when we do path integrals. For now, just know the results of Faddeev-Popov and Gupta-Bleuler agree for QED, and the Gupta-Bleuler approach gives the same photon propagator as path-integral gauge-fixing.
+
+---
+
+## 6. The Photon Propagator
+
+### Definition
+
+$$D^{\mu\nu}_F(x - y) = \langle 0 | T\{A^\mu(x) A^\nu(y)\}|0\rangle$$
+
+### In Feynman Gauge
+
+$$\boxed{D^{\mu\nu}_F(x - y) = \int\frac{d^4k}{(2\pi)^4}\frac{-i\eta^{\mu\nu}}{k^2 + i\epsilon}e^{-ik\cdot(x - y)}}$$
+
+Same structure as a massless scalar propagator, but with the extra tensor structure $-\eta^{\mu\nu}$ reflecting the vector indices.
+
+In momentum space:
+
+$$\tilde D^{\mu\nu}_F(k) = \frac{-i\eta^{\mu\nu}}{k^2 + i\epsilon}$$
+
+Remarkably simple; and that simplicity is the main reason Feynman gauge is the standard choice for QED calculations.
+
+### In General $\xi$ Gauge
+
+$$\tilde D^{\mu\nu}_F(k) = \frac{-i}{k^2 + i\epsilon}\left[\eta^{\mu\nu} - (1 - \xi)\frac{k^\mu k^\nu}{k^2}\right]$$
+
+Setting $\xi = 1$ recovers Feynman gauge. Setting $\xi = 0$ gives Landau gauge (transverse propagator). Setting $\xi = 3$ gives Yennie gauge. Different choices are convenient for different calculations.
+
+**Gauge-independence of physical results:** Any physical observable (cross-section, decay rate) computed with the propagator must be *independent* of $\xi$. If you compute a cross-section and get a $\xi$-dependent answer, you made a mistake. This is a useful consistency check.
+
+### The Pole Structure
+
+The photon propagator has a pole at $k^2 = 0$; exactly where a massless particle should have its mass shell. The residue of the pole encodes the photon's interactions; gauge invariance ensures that only transverse polarizations contribute to physical processes.
+
+### Comparison Table
+
+Propagators from documents 1-3, in momentum space (Feynman gauge for the photon):
+
+| Field | Propagator |
+|---|---|
+| Real scalar $\phi$ | $\dfrac{i}{k^2 - m^2 + i\epsilon}$ |
+| Dirac fermion $\psi$ | $\dfrac{i(\slashed{k} + m)}{k^2 - m^2 + i\epsilon}$ |
+| Photon $A^\mu$ | $\dfrac{-i\eta^{\mu\nu}}{k^2 + i\epsilon}$ |
+
+The common structure: $i/(k^2 - m^2 + i\epsilon)$ times the appropriate tensor factor for the spin. This pattern generalizes to any free particle.
+
+---
+
+## 7. Polarization States and Helicity
+
+### Two Physical Polarizations
+
+For a photon with momentum $\vec k$ (WLOG along $\hat z$), the two physical polarizations are:
+
+**Linear polarizations:**
+- $\epsilon^{\mu, x} = (0, 1, 0, 0)$ (polarization along $\hat x$)
+- $\epsilon^{\mu, y} = (0, 0, 1, 0)$ (polarization along $\hat y$)
+
+**Circular polarizations** (eigenstates of angular momentum along $\vec k$):
+- $\epsilon^{\mu, +} = \frac{1}{\sqrt 2}(0, 1, i, 0)$ (right-circular, helicity $+1$)
+- $\epsilon^{\mu, -} = \frac{1}{\sqrt 2}(0, 1, -i, 0)$ (left-circular, helicity $-1$)
+
+For a photon moving along $\hat z$, helicity is the spin projection along $\vec k$. Right-circular light has helicity $+1$ (spin aligned with motion); left-circular has $-1$.
+
+### Why Not Helicity 0?
+
+A massive spin-1 particle can have helicity $-1, 0, +1$. A massless one is forced to have helicity $\pm 1$ only. The absence of helicity 0 is why gauge symmetry is needed; without it, the helicity-0 mode would propagate, and you'd have a massless vector with three polarizations, which doesn't make sense physically.
+
+This is the content of "massless vector = gauge field": massless = 2 polarizations = need gauge invariance to kill the third.
+
+### Photon as Force Carrier
+
+When we couple the photon field to matter, photons exchanged between particles mediate the electromagnetic force. Off-shell ("virtual") photons have $k^2 \neq 0$ and can carry non-transverse polarizations; on-shell ("real") photons always have $k^2 = 0$ and transverse polarizations.
+
+The distinction matters for calculations: internal photon lines in Feynman diagrams are off-shell (use propagator); external photon lines are on-shell (use polarization vectors satisfying $k\cdot\epsilon = 0$).
+
+### Polarization Sum
+
+When computing cross-sections involving external photons, we often sum over final photon polarizations:
+
+$$\sum_\lambda \epsilon^{\mu,\lambda}(k)\epsilon^{\nu,\lambda}(k)^* = -\eta^{\mu\nu} + (\text{terms proportional to } k^\mu\text{ or } k^\nu)$$
+
+The $k^\mu$ and $k^\nu$ terms drop out for physical processes because of gauge invariance (Ward identity, which we'll meet in document 4). So effectively:
+
+$$\sum_\lambda \epsilon^{\mu,\lambda}\epsilon^{\nu,\lambda*} \to -\eta^{\mu\nu}$$
+
+for practical cross-section calculations. This replacement is one of the most commonly used shortcuts in QED.
+
+---
+
+## 8. Gauge Fixing as Lagrange Modification
+
+Let's step back and appreciate what gauge fixing really is.
+
+### The Principle
+
+The Lagrangian $-\tfrac{1}{4}F^2$ is gauge-invariant. It has a redundancy; physically equivalent configurations are counted multiple times. To quantize, we need to either:
+
+1. Explicitly pick physical coordinates (Coulomb gauge)
+2. Add a non-invariant term to the Lagrangian that breaks the redundancy (covariant gauges)
+
+Adding the term $-(\partial_\mu A^\mu)^2/(2\xi)$ is an example of the second approach. The term is *not* gauge-invariant; it would naively be a disaster. But the point is: **it's picking one gauge from the family**, and gauge-invariant quantities (physical observables) are independent of which gauge we chose.
+
+### Different Gauges for Different Problems
+
+- **Coulomb gauge**; good for nonrelativistic QED (atomic physics), bound-state problems
+- **Feynman gauge**; simplest propagator, standard for perturbative QED
+- **Landau gauge**; manifestly transverse, useful when transversality matters
+- **Axial gauge** ($A^3 = 0$ or similar); no ghosts, but highly non-covariant
+- **Light-cone gauge** ($A^+ = 0$); used in QCD factorization theorems
+
+Each has strengths. The ultimate test: all must give the same gauge-invariant answers.
+
+### BRST as the Modern View
+
+A modern approach (Becchi-Rouet-Stora-Tyutin, 1975-1976) identifies a fermionic symmetry of the gauge-fixed Lagrangian; the **BRST symmetry**; that encodes what's left of gauge invariance after fixing. Physical states are those annihilated by the BRST charge.
+
+BRST is elegant and powerful, especially for non-abelian theories. We won't develop it fully here, but be aware it exists and provides the most sophisticated framework for handling gauge theories.
+
+---
+
+## 9. Coupling to Matter: QED as a Field Theory
+
+Now we have all the pieces. Putting fermions and photons together:
+
+### The QED Lagrangian
+
+$$\mathcal{L}_{\rm QED} = \bar\psi(i\slashed D - m)\psi - \tfrac{1}{4}F_{\mu\nu}F^{\mu\nu} - \frac{1}{2\xi}(\partial_\mu A^\mu)^2$$
+
+with $D_\mu = \partial_\mu + ieQA_\mu$ (where $Q$ is the electric charge in units of $e$; $Q = -1$ for the electron).
+
+Expanding:
+
+$$\mathcal{L}_{\rm QED} = \bar\psi(i\slashed\partial - m)\psi - \tfrac{1}{4}F_{\mu\nu}F^{\mu\nu} - \frac{1}{2\xi}(\partial_\mu A^\mu)^2 - eQ\bar\psi\gamma^\mu\psi A_\mu$$
+
+The last term is the **interaction Lagrangian**:
+
+$$\mathcal{L}_{\rm int} = -eQ\bar\psi\gamma^\mu\psi A_\mu = -eQj^\mu A_\mu$$
+
+where $j^\mu = \bar\psi\gamma^\mu\psi$ is the electron's electromagnetic current.
+
+### The QED Vertex
+
+The interaction $-eQ\bar\psi\gamma^\mu\psi A_\mu$ is a product of three fields: $\bar\psi$, $\psi$, and $A_\mu$. Each corresponds to a line in a Feynman diagram. The interaction term describes the vertex where these three lines meet:
+
+- Two fermion lines (one $\bar\psi$, one $\psi$)
+- One photon line ($A_\mu$)
+- Coupling constant $-ieQ\gamma^\mu$ (in momentum space)
+
+**This single vertex is the entirety of QED interactions.** Every QED process; $e^+e^- \to \mu^+\mu^-$, Compton scattering, the anomalous magnetic moment, the Lamb shift, everything; is built from combining copies of this vertex with propagators.
+
+### What We've Built
+
+Three types of "lines" in QED Feynman diagrams:
+
+| Line | Corresponds to |
+|---|---|
+| Electron (solid, arrowed) | Dirac fermion propagator |
+| Photon (wavy) | Photon propagator |
+| Vertex | QED interaction $-ieQ\gamma^\mu$ |
+
+External lines represent real particles (on-shell). Internal lines represent virtual particles (off-shell). Loops involve integrating over internal momenta.
+
+This is the graphical representation of the perturbative expansion we'll develop in document 4.
+
+### Coupling Strength
+
+The QED coupling is:
+
+$$\alpha = \frac{e^2}{4\pi} \approx \frac{1}{137}$$
+
+The small value of $\alpha$ is why perturbation theory works so well in QED. Each extra vertex in a diagram adds a factor of $e$, so higher-order diagrams are suppressed by powers of $\alpha$.
+
+---
+
+## 10. Masslessness and Gauge Invariance
+
+A key feature: the photon is massless. This is tied deeply to gauge invariance.
+
+### Why No Mass Term?
+
+A mass term for the photon would look like $+\tfrac{1}{2}m_\gamma^2 A_\mu A^\mu$. Under a gauge transformation $A_\mu \to A_\mu + \partial_\mu\lambda$:
+
+$$A_\mu A^\mu \to A_\mu A^\mu + 2A^\mu\partial_\mu\lambda + (\partial\lambda)^2$$
+
+Not invariant. A photon mass breaks gauge symmetry explicitly.
+
+Consequence: **Gauge invariance forces the photon to be massless.** Experimentally, the photon mass is bounded above by $\sim 10^{-18}$ eV (astonishingly stringent). As far as we know, it's exactly zero; consistent with exact gauge symmetry.
+
+### Exceptions: The Higgs Mechanism
+
+The W and Z bosons are massive, even though they're also gauge bosons (of $SU(2) \times U(1)$). They get their masses through the Higgs mechanism; spontaneous symmetry breaking in a way that doesn't explicitly break gauge invariance.
+
+The photon remains massless because the particular combination of $SU(2)$ and $U(1)$ that survives the Higgs mechanism is still an unbroken gauge symmetry. The electromagnetic $U(1)$ is exact; the weak $SU(2)$ is spontaneously broken.
+
+This is why the photon is massless but W and Z are heavy; the Higgs picks the combination.
+
+### Long-Range Force
+
+A massless force carrier gives rise to a long-range force ($1/r$ potential). Electromagnetism has infinite range; because the photon is massless.
+
+Compare: the weak force has range $\sim 10^{-18}$ m because the W and Z have masses around 80-90 GeV. The strong force is complicated (confinement means gluons don't propagate asymptotically) but at short distances it's long-range like QED.
+
+### Goldstone's Theorem and Gauge Bosons
+
+A related fact from the classical field theory document: when a continuous global symmetry is spontaneously broken, you get a massless Goldstone boson. When a *gauge* symmetry is spontaneously broken, the would-be Goldstone is "eaten" by the gauge boson, which becomes massive. The photon stays massless because its gauge symmetry isn't broken.
+
+The photon's masslessness, long range, and exact gauge invariance are all parts of the same story.
+
+---
+
+## 11. Physical Content and What's Next
+
+### What We've Accomplished
+
+- Recognized the problem of gauge redundancy; fewer physical degrees of freedom than naive field components
+- Developed three approaches: Coulomb gauge, Gupta-Bleuler, Faddeev-Popov (preview)
+- Derived the photon propagator in Feynman gauge: $-i\eta^{\mu\nu}/(k^2 + i\epsilon)$
+- Identified the two physical polarizations and their helicity content
+- Assembled the QED Lagrangian with the interaction vertex
+- Understood why gauge invariance implies massless photons
+
+### The Three Free Fields Are Done
+
+Documents 1-3 complete the free-field story:
+
+| Spin | Field | Statistics | Special features |
+|---|---|---|---|
+| 0 | Scalar $\phi$ | Boson | Commutators, Fock space |
+| 1/2 | Dirac $\psi$ | Fermion | Anticommutators, Pauli exclusion |
+| 1 (massless) | Photon $A^\mu$ | Boson | Gauge fixing, 2 polarizations |
+
+We can extend to higher spins (spin 3/2 Rarita-Schwinger, spin 2 graviton) and massive vectors (W, Z), but these all follow the patterns we've established.
+
+### What Comes Next
+
+**Document 4: Interacting Fields and Perturbation Theory.** Until now, we've only quantized *free* fields. The interaction term $-eQ\bar\psi\gamma^\mu\psi A_\mu$ couples them together, but we haven't yet developed the tools to handle interactions. Document 4 introduces:
+
+- The **interaction picture** of quantum mechanics
+- **Dyson's formula** for time evolution
+- **Wick's theorem** for contracting field products
+- **The LSZ reduction formula** connecting correlation functions to scattering amplitudes
+
+These are the mathematical prerequisites to actually computing anything.
+
+**Document 5: Feynman Diagrams and Tree-Level QED.** With the machinery in place, we finally compute. Classic processes like $e^+e^- \to \mu^+\mu^-$, Compton scattering, and Møller scattering. Feynman rules derived from first principles. Trace technology. Cross-sections extracted from amplitudes.
+
+This is where QFT becomes physics rather than mathematical framework.
+
+### The Big Picture So Far
+
+Quantum field theory, assembled from:
+
+1. Relativistic field Lagrangians (from the classical field theory document)
+2. Canonical quantization procedure (promoting fields to operators)
+3. Commutators or anticommutators depending on spin (spin-statistics)
+4. Gauge fixing for gauge fields
+5. Particles as excitations of fields; creation and annihilation operators
+6. Propagators encoding the two-point correlation functions
+
+And the coming ingredients:
+
+7. Perturbation theory for interactions (document 4)
+8. Feynman diagrams as graphical representation (document 5)
+9. Loop integrals and regularization (document 6)
+10. Renormalization (document 7)
+11. Path integrals (documents 9-10)
+12. Yang-Mills and the Standard Model (documents 11-12)
+
+You're a quarter of the way through. Keep going.
+
+---
+
+## Appendix: Formulas and Identities
+
+### The QED Lagrangian
+
+$$\mathcal{L}_{\rm QED} = \bar\psi(i\slashed\partial - m)\psi - \tfrac{1}{4}F_{\mu\nu}F^{\mu\nu} - \frac{1}{2\xi}(\partial_\mu A^\mu)^2 - eQ\bar\psi\gamma^\mu\psi A_\mu$$
+
+### Gauge Fixing Terms
+
+$$\mathcal{L}_{\rm gf} = -\frac{1}{2\xi}(\partial_\mu A^\mu)^2$$
+
+| $\xi$ | Name | Features |
+|---|---|---|
+| 1 | Feynman | Simplest propagator |
+| 0 | Landau | Manifestly transverse |
+| 3 | Yennie | Sometimes used in bound-state calculations |
+
+### Photon Propagator
+
+Feynman gauge:
+
+$$\tilde D^{\mu\nu}_F(k) = \frac{-i\eta^{\mu\nu}}{k^2 + i\epsilon}$$
+
+General $\xi$:
+
+$$\tilde D^{\mu\nu}_F(k) = \frac{-i}{k^2 + i\epsilon}\left[\eta^{\mu\nu} - (1 - \xi)\frac{k^\mu k^\nu}{k^2}\right]$$
+
+### Polarization Vectors
+
+Transverse polarizations for $\vec k$ along $\hat z$:
+
+$$\vec\epsilon^1 = (1, 0, 0), \quad \vec\epsilon^2 = (0, 1, 0)$$
+
+Circular polarizations (helicity eigenstates):
+
+$$\epsilon^{\mu, \pm} = \frac{1}{\sqrt 2}(0, 1, \pm i, 0)$$
+
+Satisfying $k_\mu \epsilon^{\mu,\lambda} = 0$ and $\epsilon^{\mu,\lambda}\epsilon^*_{\mu,\lambda'} = -\delta^{\lambda\lambda'}$.
+
+### Polarization Sum
+
+For on-shell external photons:
+
+$$\sum_\lambda \epsilon^{\mu,\lambda}(k)\epsilon^{\nu,\lambda}(k)^* = -\eta^{\mu\nu} + \text{gauge-dependent terms}$$
+
+These extra terms vanish when contracted with physical amplitudes (Ward identity), so effectively:
+
+$$\sum_\lambda \epsilon^{\mu,\lambda}\epsilon^{\nu,\lambda*} \to -\eta^{\mu\nu}$$
+
+### The QED Vertex
+
+In position space, the interaction is $-eQ\bar\psi\gamma^\mu\psi A_\mu$. In momentum space (for Feynman rules):
+
+$$\text{Vertex factor} = -ieQ\gamma^\mu$$
+
+For the electron ($Q = -1$): $+ie\gamma^\mu$. For other charged fermions, use appropriate $Q$.
+
+### Fine-Structure Constant
+
+$$\alpha = \frac{e^2}{4\pi\epsilon_0\hbar c} \approx \frac{1}{137.036}$$
+
+In natural units with $\epsilon_0 = 1$: $\alpha = e^2/(4\pi) \approx 1/137$.
+
+### Feynman Rules Summary (QED)
+
+From the Lagrangian, the Feynman rules for QED:
+
+| Element | Rule |
+|---|---|
+| Fermion line (internal) | $\dfrac{i(\slashed{p} + m)}{p^2 - m^2 + i\epsilon}$ |
+| Photon line (internal, Feynman gauge) | $\dfrac{-i\eta^{\mu\nu}}{k^2 + i\epsilon}$ |
+| Fermion-photon vertex | $-ieQ\gamma^\mu$ |
+| External electron | $u^s(p)$ or $\bar u^s(p)$ |
+| External positron | $\bar v^s(p)$ or $v^s(p)$ |
+| External photon | $\epsilon^{\mu,\lambda}(k)$ or $\epsilon^{\mu,\lambda*}(k)$ |
+| Loop momentum | $\int\frac{d^4\ell}{(2\pi)^4}$ |
+| Fermion loop | Extra factor $(-1)$ |
+
+These will be derived rigorously in document 5. For now, they're a preview of where we're heading.
+
+### Ward Identity (Preview)
+
+A crucial identity from QED, following from gauge invariance:
+
+$$k_\mu \mathcal M^\mu(k) = 0$$
+
+where $\mathcal M^\mu$ is an amplitude with one external photon of momentum $k$. Ward identities ensure that gauge-dependent propagator terms drop out of physical predictions and that the photon only has 2 physical polarizations.
+
+We'll develop Ward identities properly in later documents. Their existence is what makes QED calculationally tractable.
+
+---
+
+## Closing Note
+
+Document 3 completes the free-field trilogy. With scalars, fermions, and photons in hand, we have the ingredients for QED; the most precisely tested theory in physics.
+
+### Key Takeaways
+
+**Gauge redundancy is real.** $A^\mu$ has 4 components but the physics has only 2. Gauge fixing is how we handle this tension while maintaining computability.
+
+**Multiple gauge choices exist.** Coulomb, Feynman, Landau, axial, light-cone; each is appropriate for different problems. Physical results don't depend on the choice.
+
+**The photon propagator is clean.** In Feynman gauge, $-i\eta^{\mu\nu}/(k^2 + i\epsilon)$. The structure matches what you'd expect for a massless vector field.
+
+**Gauge invariance forces masslessness.** The photon is massless because electromagnetism has exact $U(1)$ gauge invariance. The W and Z are massive because the electroweak gauge invariance is spontaneously broken.
+
+**QED is now assembled as a Lagrangian.** We have the fermion kinetic term, photon kinetic term, gauge fixing, and interaction vertex. What's missing is the machinery to actually compute things; perturbation theory.
+
+### Where We're Going
+
+The next document is the computational heart of QFT: how do you actually *calculate* things in an interacting theory? The answer is perturbation theory, and specifically the Dyson expansion plus Wick's theorem plus the LSZ reduction formula. All three are genuinely beautiful pieces of mathematics that connect the operator formalism we've developed to actual scattering amplitudes.
+
+After that, Feynman diagrams; the graphical representation of these perturbative calculations. And then we *finally* compute cross-sections for real processes.
+
+You've built the foundation. The building starts going up.
+
+Ghosts pending.

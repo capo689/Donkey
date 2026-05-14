@@ -9,6 +9,832 @@ extendsTo: [7, 9]
 classReportTitle: "Tensors, and the geometry I had not noticed."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*The mathematical language of modern physics; and the foundation underneath field theory.*
 
-{/* Content from special_relativity_and_tensors_reference.md */}
+Special relativity is covered conceptually in the Modern Physics reference. What wasn't developed there is the mathematical structure that modern physics actually uses. Four-vectors, tensors, and index notation aren't just convenient bookkeeping; they're what make the statement "the laws of physics are the same in every inertial frame" into something you can write down and work with.
+
+This document builds that apparatus properly. By the end, you should be comfortable writing Maxwell's equations in the form $\partial_\mu F^{\mu\nu} = J^\nu$, understand why that notation is powerful, and be able to manipulate tensor expressions fluently enough to read a field theory textbook.
+
+---
+
+## Table of Contents
+
+1. [Why Tensors?](#1-why-tensors)
+2. [Four-Vectors and Minkowski Space](#2-four-vectors-and-minkowski-space)
+3. [Index Notation and the Einstein Convention](#3-index-notation-and-the-einstein-convention)
+4. [The Minkowski Metric](#4-the-minkowski-metric)
+5. [Lorentz Transformations as Matrices](#5-lorentz-transformations-as-matrices)
+6. [Tensors: General Definition](#6-tensors-general-definition)
+7. [Tensor Operations](#7-tensor-operations)
+8. [The Levi-Civita Symbol and Duality](#8-the-levi-civita-symbol-and-duality)
+9. [Covariant Formulation of Mechanics](#9-covariant-formulation-of-mechanics)
+10. [Maxwell's Equations in Covariant Form](#10-maxwells-equations-in-covariant-form)
+11. [The Stress-Energy Tensor](#11-the-stress-energy-tensor)
+12. [Worked Examples](#12-worked-examples)
+13. [Appendix: Conventions and Identity Reference](#appendix-conventions-and-identity-reference)
+
+---
+
+## 1. Why Tensors?
+
+Consider Newton's second law $\vec{F} = m\vec{a}$. This is a vector equation; both sides are vectors in 3D space. The reason we can write it this compactly is that vectors transform in a specific way under rotations: if you rotate your coordinate axes, both sides transform identically, so the equation looks the same in every rotated frame. A *scalar* equation like $F_x = m a_x$ would only hold in a particular frame; the vector equation $\vec{F} = m\vec{a}$ holds in all of them.
+
+This is what **covariance** means: an equation is covariant under a group of transformations if both sides transform the same way, so the equation's form is preserved.
+
+Special relativity demands covariance under **Lorentz transformations** (rotations plus boosts). Objects that transform appropriately under Lorentz transformations are called **tensors**. An equation written with matching tensor indices on both sides automatically holds in every inertial frame; no re-derivation needed.
+
+### The Practical Payoff
+
+Maxwell's equations in a frame-dependent form take four equations plus some definitions. In covariant tensor form:
+
+$$\partial_\mu F^{\mu\nu} = J^\nu, \qquad \partial_{[\mu} F_{\nu\rho]} = 0$$
+
+Two equations. Manifestly the same in every inertial frame. This isn't just notational compression; it's a revelation of the geometric structure underlying electromagnetism.
+
+Every modern theory of physics; QED, QCD, general relativity, the Standard Model; is written in tensor language. Getting fluent with it is non-negotiable.
+
+---
+
+## 2. Four-Vectors and Minkowski Space
+
+### Spacetime as a 4D Manifold
+
+In special relativity, space and time are unified into a four-dimensional space called **Minkowski space**, often denoted $\mathbb{M}^4$ or $\mathbb{R}^{1,3}$. A point in Minkowski space is an **event**; a place at a time.
+
+### Four-Vectors
+
+A **four-vector** has four components: one time-like and three space-like. Conventionally the components are labeled by Greek indices $\mu = 0, 1, 2, 3$, with $\mu = 0$ for time. In Cartesian spatial coordinates:
+
+$$A^\mu = (A^0, A^1, A^2, A^3) = (A^0, \vec{A})$$
+
+The **contravariant** components $A^\mu$ carry an upper index. We'll shortly introduce **covariant** components $A_\mu$ with a lower index; they carry the same physical information, differently packaged.
+
+### The Position Four-Vector
+
+$$x^\mu = (ct, x, y, z)$$
+
+Note the factor of $c$; this makes all components have dimensions of length and the metric (below) dimensionless. Most particle physics texts use natural units where $c = 1$ and drop the factor. We'll use $c = 1$ throughout unless reinstating it matters.
+
+So:
+
+$$x^\mu = (t, \vec{x})$$
+
+### Transformation Between Frames
+
+Under a Lorentz boost along the $x$-axis with velocity $v$, the components of any four-vector transform as:
+
+$$A'^0 = \gamma(A^0 - \beta A^1)$$
+
+$$A'^1 = \gamma(A^1 - \beta A^0)$$
+
+$$A'^2 = A^2, \qquad A'^3 = A^3$$
+
+where $\beta = v/c$ and $\gamma = 1/\sqrt{1-\beta^2}$. *Anything* that transforms this way (for boosts in the $x$-direction, plus the obvious generalizations for other directions and for rotations) is a four-vector.
+
+### The Invariant
+
+For any four-vector, the combination
+
+$$A^0 A^0 - \vec{A}\cdot\vec{A} = (A^0)^2 - (A^1)^2 - (A^2)^2 - (A^3)^2$$
+
+is the same in every inertial frame. You can verify directly by applying the boost formulas. This is the Minkowski analog of $|\vec{v}|^2$ in Euclidean space; but with a *minus sign* between time and space.
+
+For the position four-vector $x^\mu = (t, \vec x)$:
+
+$$x^\mu x_\mu = t^2 - |\vec x|^2 = s^2$$
+
+This is the spacetime interval. It is:
+
+- Positive (**timelike**): events causally connectable, with proper time $\tau = \sqrt{s^2}$
+- Zero (**lightlike** or **null**): lightcone, connectable only by light
+- Negative (**spacelike**): no causal connection possible
+
+### Geometry of Minkowski Space
+
+Minkowski space has the *geometric* structure of a 4D space with the indefinite metric I'll describe in section 4. The minus sign between time and space is what distinguishes it from Euclidean 4D space and is the source of every strange feature of special relativity. Time dilation, length contraction, and the relativity of simultaneity are all consequences of this single sign.
+
+---
+
+## 3. Index Notation and the Einstein Convention
+
+Before we go further, we need to be fluent with the notation. Sloppiness here is the single biggest source of confusion in learning field theory.
+
+### Upper vs. Lower Indices
+
+In Minkowski space, there are two types of indices:
+
+- **Upper (contravariant):** $A^\mu$
+- **Lower (covariant):** $A_\mu$
+
+They're related via the metric (section 4). The distinction matters because transformation laws differ.
+
+### The Einstein Summation Convention
+
+Repeated indices; one upper, one lower; are implicitly summed:
+
+$$A^\mu B_\mu \equiv \sum_{\mu=0}^{3} A^\mu B_\mu = A^0 B_0 + A^1 B_1 + A^2 B_2 + A^3 B_3$$
+
+The summation sign is omitted. **Any index that appears repeated in a term must appear once as an upper and once as a lower index.** An expression like $A^\mu B^\mu$ (both upper) is ill-formed and a warning sign that something's gone wrong.
+
+Greek indices ($\mu, \nu, \rho, \sigma, \ldots$) run over 0-3 (spacetime). Latin indices ($i, j, k, \ldots$) run over 1-3 (space only) by convention.
+
+### Free vs. Dummy Indices
+
+A **free index** appears only once in a term; a **dummy index** is summed over.
+
+$$T^\mu{}_\nu A^\nu = B^\mu$$
+
+Here $\nu$ is dummy (summed), $\mu$ is free (appears on both sides). Key rules:
+
+- Free indices must match on both sides of any equation
+- Dummy indices can be renamed freely ($A^\nu B_\nu = A^\alpha B_\alpha$) but can't collide with existing indices
+
+### Partial Derivatives
+
+The shorthand for partial derivatives:
+
+$$\partial_\mu \equiv \frac{\partial}{\partial x^\mu}$$
+
+Note: the *lower* index on $\partial$ comes from the *upper* index on $x$. This is because derivatives naturally transform oppositely to coordinates. Similarly:
+
+$$\partial^\mu = \eta^{\mu\nu}\partial_\nu \equiv \frac{\partial}{\partial x_\mu}$$
+
+In components:
+
+$$\partial_\mu = (\partial_t, \partial_x, \partial_y, \partial_z) = (\partial_t, \vec\nabla)$$
+
+$$\partial^\mu = (\partial_t, -\vec\nabla)$$
+
+(With our metric convention $\eta = \text{diag}(+,-,-,-)$; more in a moment.)
+
+### The d'Alembertian
+
+The contraction $\partial^\mu \partial_\mu$:
+
+$$\partial^\mu \partial_\mu = \partial_t^2 - \nabla^2 \equiv \Box$$
+
+This is the **d'Alembertian**, the relativistic generalization of the Laplacian. It appears everywhere in field theory; for example, Klein-Gordon: $(\Box + m^2)\phi = 0$.
+
+---
+
+## 4. The Minkowski Metric
+
+### Signature Convention
+
+The **Minkowski metric** $\eta_{\mu\nu}$ is a 4×4 matrix that defines the geometry of spacetime. Two conventions are common:
+
+- **Particle physics**: $\eta_{\mu\nu} = \text{diag}(+1, -1, -1, -1)$; "mostly minus"
+- **General relativity**: $\eta_{\mu\nu} = \text{diag}(-1, +1, +1, +1)$; "mostly plus"
+
+We'll use the particle physics convention throughout (consistent with the Lagrangian mechanics doc and standard for field theory). Physical results don't depend on the choice, but signs of intermediate expressions do.
+
+$$\boxed{\eta_{\mu\nu} = \eta^{\mu\nu} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & -1 & 0 & 0 \\ 0 & 0 & -1 & 0 \\ 0 & 0 & 0 & -1 \end{pmatrix}}$$
+
+### Raising and Lowering Indices
+
+The metric is used to convert between contravariant and covariant components:
+
+$$A_\mu = \eta_{\mu\nu} A^\nu, \qquad A^\mu = \eta^{\mu\nu} A_\nu$$
+
+In practice, for our diagonal metric, this just flips signs:
+
+$$A^\mu = (A^0, A^1, A^2, A^3) \implies A_\mu = (A^0, -A^1, -A^2, -A^3)$$
+
+The time component is unchanged; the spatial components pick up a minus sign.
+
+### The Inner Product
+
+The Minkowski inner product of two four-vectors:
+
+$$A \cdot B = \eta_{\mu\nu} A^\mu B^\nu = A^\mu B_\mu = A^0 B^0 - \vec A \cdot \vec B$$
+
+This is the Lorentz-invariant combination. For a four-vector with itself:
+
+$$A^\mu A_\mu = (A^0)^2 - |\vec A|^2$$
+
+If this is positive, the four-vector is timelike; zero, lightlike (null); negative, spacelike.
+
+### Identity: the Metric as Its Own Inverse
+
+$$\eta^{\mu\nu}\eta_{\nu\rho} = \delta^\mu_\rho$$
+
+where $\delta^\mu_\rho$ is the Kronecker delta (1 if indices match, 0 otherwise). Raising the index of the metric with itself gives the identity. This is consistent with the fact that raising and then lowering is identity: $\eta^{\mu\nu}\eta_{\nu\rho} A^\rho = A^\mu$.
+
+### Why the Minus Signs?
+
+In Euclidean geometry, $|\vec x|^2 = x^2 + y^2 + z^2$ is positive definite. In Minkowski geometry, $x^\mu x_\mu = t^2 - x^2 - y^2 - z^2$ can have any sign. This indefinite signature is the mathematical face of causality: timelike separation can be "bigger" than spacelike, and the lightcone; the null surface; marks where cause and effect meet.
+
+---
+
+## 5. Lorentz Transformations as Matrices
+
+A Lorentz transformation is a linear map on Minkowski space that preserves the metric.
+
+### Matrix Form
+
+A four-vector transforms as:
+
+$$A'^\mu = \Lambda^\mu{}_\nu A^\nu$$
+
+where $\Lambda^\mu{}_\nu$ is the transformation matrix. Note the index positions: one upper (row index, output), one lower (column index, input).
+
+### Defining Property
+
+Lorentz transformations are exactly those linear maps that preserve the inner product:
+
+$$A'^\mu B'_\mu = A^\mu B_\mu$$
+
+Expanding $A'^\mu B'_\mu = \eta_{\mu\nu} \Lambda^\mu{}_\alpha \Lambda^\nu{}_\beta A^\alpha B^\beta$ and demanding this equal $A^\alpha B_\alpha = \eta_{\alpha\beta} A^\alpha B^\beta$ gives:
+
+$$\boxed{\eta_{\mu\nu} \Lambda^\mu{}_\alpha \Lambda^\nu{}_\beta = \eta_{\alpha\beta}}$$
+
+Or in matrix form: $\Lambda^T \eta \Lambda = \eta$. This is the definition.
+
+### Examples: Rotations
+
+A rotation by angle $\theta$ about the $z$-axis:
+
+$$\Lambda^\mu{}_\nu = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & \cos\theta & \sin\theta & 0 \\ 0 & -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
+
+Time is untouched; the $(x, y)$ block is a rotation. Spatial rotations are special cases of Lorentz transformations.
+
+### Examples: Boosts
+
+A boost along the $x$-axis with velocity $v = \beta c$:
+
+$$\Lambda^\mu{}_\nu = \begin{pmatrix} \gamma & -\gamma\beta & 0 & 0 \\ -\gamma\beta & \gamma & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
+
+With $\gamma = 1/\sqrt{1-\beta^2}$. Applied to $x^\mu = (t, x, y, z)$:
+
+$$t' = \gamma(t - \beta x), \quad x' = \gamma(x - \beta t), \quad y' = y, \quad z' = z$$
+
+Exactly the Lorentz transformation from Modern Physics, now as a matrix multiplication.
+
+### Rapidity
+
+A useful parametrization: define **rapidity** $\phi$ by $\tanh\phi = \beta$. Then $\gamma = \cosh\phi$ and $\gamma\beta = \sinh\phi$, and a boost looks like:
+
+$$\Lambda = \begin{pmatrix} \cosh\phi & -\sinh\phi & 0 & 0 \\ -\sinh\phi & \cosh\phi & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix}$$
+
+Notice: this is structurally identical to a rotation, but with hyperbolic functions instead of trig. Boosts are "rotations in the time-space plane by an imaginary angle," in a sense. Rapidities also add linearly for collinear boosts; unlike velocities.
+
+### The Lorentz Group
+
+All Lorentz transformations form a group called $O(1,3)$; six-dimensional (3 rotations + 3 boosts). If we restrict to those that preserve time direction and handedness, we get the **proper orthochronous Lorentz group** $SO^+(1,3)$; still six-dimensional but now connected. Every element can be continuously deformed to the identity.
+
+This group structure matters because the irreducible representations of the Lorentz group classify what kinds of fields can exist: scalars (trivial rep), vectors (defining rep), spinors (double-cover rep), and so on. Every particle in the Standard Model corresponds to a specific representation.
+
+### Transformation of Covariant Vectors
+
+Lower-index four-vectors transform with the inverse transpose:
+
+$$A'_\mu = \Lambda_\mu{}^\nu A_\nu$$
+
+where $\Lambda_\mu{}^\nu = (\Lambda^{-1})^\nu{}_\mu$. This is why raising/lowering indices matters: the two types of components transform differently, and only the same-type contractions yield invariants.
+
+---
+
+## 6. Tensors: General Definition
+
+Four-vectors are a special case. Tensors generalize them.
+
+### Definition by Transformation
+
+A **tensor of type $(r, s)$** (rank $r+s$) has $r$ upper indices and $s$ lower indices, and transforms as:
+
+$$T'^{\mu_1 \cdots \mu_r}{}_{\nu_1 \cdots \nu_s} = \Lambda^{\mu_1}{}_{\alpha_1} \cdots \Lambda^{\mu_r}{}_{\alpha_r} \Lambda_{\nu_1}{}^{\beta_1} \cdots \Lambda_{\nu_s}{}^{\beta_s} T^{\alpha_1 \cdots \alpha_r}{}_{\beta_1 \cdots \beta_s}$$
+
+Each upper index transforms with $\Lambda^\mu{}_\nu$; each lower index with its inverse transpose. Looks horrific, but in practice you rarely need the full formula; you use the index structure to predict transformation behavior.
+
+### Special Cases
+
+- **Scalar** (rank 0): invariant, $\phi' = \phi$. Example: the spacetime interval $s^2$, electric charge.
+- **Four-vector** (rank 1, contravariant): $A'^\mu = \Lambda^\mu{}_\nu A^\nu$. Example: position, momentum.
+- **Covector** (rank 1, covariant): $A'_\mu = \Lambda_\mu{}^\nu A_\nu$. Example: $\partial_\mu$ acting on a scalar.
+- **Rank-2 tensor** (contravariant): $T'^{\mu\nu} = \Lambda^\mu{}_\alpha \Lambda^\nu{}_\beta T^{\alpha\beta}$. Example: the electromagnetic field strength $F^{\mu\nu}$.
+- **Rank-2 mixed:** $T^\mu{}_\nu$. Example: the Kronecker delta $\delta^\mu_\nu$.
+
+### Tensor Fields
+
+A **tensor field** assigns a tensor to every point of spacetime. Most physics quantities are tensor fields, not just tensors at a single point. Examples:
+
+- Scalar field: $\phi(x)$
+- Vector field: $A^\mu(x)$ (e.g., electromagnetic potential)
+- Rank-2 tensor field: $F^{\mu\nu}(x)$ (field strength)
+
+The transformation law at each point is the tensor transformation above.
+
+### The Crucial Principle
+
+If an equation is written in tensor form with matching free indices on both sides, **it automatically holds in every inertial frame**. This is the payoff of the whole formalism. You verify an equation once in any convenient frame; the tensor structure guarantees the rest.
+
+Equations with mismatched indices, or that aren't tensor-valued on both sides, are frame-dependent; possibly wrong, certainly fragile. Tensor notation provides a built-in error-checker.
+
+---
+
+## 7. Tensor Operations
+
+Here are the basic manipulations you need fluently.
+
+### Addition
+
+Tensors of the same type add componentwise:
+
+$$(T + U)^{\mu\nu} = T^{\mu\nu} + U^{\mu\nu}$$
+
+Only tensors of the same rank and index structure can be added.
+
+### Outer (Tensor) Product
+
+Multiplying two tensors gives a higher-rank tensor:
+
+$$(A \otimes B)^{\mu\nu} = A^\mu B^\nu$$
+
+Ranks add: rank-1 times rank-1 = rank-2. In general, the outer product of a type-$(r_1, s_1)$ and type-$(r_2, s_2)$ tensor yields a type-$(r_1 + r_2, s_1 + s_2)$ tensor.
+
+### Contraction
+
+Summing over a paired upper and lower index reduces rank by 2:
+
+$$T^\mu{}_\mu = \sum_\mu T^\mu{}_\mu$$
+
+(Einstein convention in force; the repeated index is summed.) For a type-$(r, s)$ tensor, contracting one upper with one lower yields a type-$(r-1, s-1)$ tensor.
+
+### Inner (Scalar) Product
+
+Contracting two tensors together:
+
+$$A^\mu B_\mu = \eta_{\mu\nu} A^\mu B^\nu$$
+
+yields a scalar. This is the invariant inner product.
+
+### Raising and Lowering
+
+Any index can be raised or lowered using the metric:
+
+$$T^{\mu\nu} = \eta^{\mu\alpha} T_\alpha{}^\nu$$
+
+$$T_{\mu\nu} = \eta_{\mu\alpha}\eta_{\nu\beta} T^{\alpha\beta}$$
+
+All the "versions" of a tensor with different index placements carry the same information.
+
+### Symmetrization and Antisymmetrization
+
+For any rank-2 tensor:
+
+$$T^{(\mu\nu)} \equiv \tfrac{1}{2}(T^{\mu\nu} + T^{\nu\mu}) \quad \text{(symmetric part)}$$
+
+$$T^{[\mu\nu]} \equiv \tfrac{1}{2}(T^{\mu\nu} - T^{\nu\mu}) \quad \text{(antisymmetric part)}$$
+
+Round brackets denote symmetrization; square brackets denote antisymmetrization. Any rank-2 tensor decomposes uniquely:
+
+$$T^{\mu\nu} = T^{(\mu\nu)} + T^{[\mu\nu]}$$
+
+For higher rank, you can symmetrize over any subset of indices. The notation $T^{(\mu\nu\rho)}$ means symmetrize over all three; you can also do partial, like $T^{(\mu\nu)\rho}$.
+
+### Symmetry Properties
+
+- A **symmetric** tensor satisfies $T^{\mu\nu} = T^{\nu\mu}$. Has 10 independent components in 4D (for a rank-2 tensor).
+- An **antisymmetric** tensor satisfies $T^{\mu\nu} = -T^{\nu\mu}$. Has 6 independent components in 4D. Diagonal elements must be zero.
+
+Symmetry properties are frame-independent; a tensor's symmetry is preserved under Lorentz transformation.
+
+### Key Identity: Contracting Symmetric with Antisymmetric
+
+$$S^{\mu\nu} A_{\mu\nu} = 0 \quad \text{if } S \text{ is symmetric, } A \text{ is antisymmetric}$$
+
+Proof: rename indices and use symmetry/antisymmetry to show the quantity equals its own negative. Used constantly.
+
+### Derivatives
+
+$\partial_\mu$ is a covector operator. Acting on a scalar, it produces a covector field:
+
+$$\partial_\mu \phi$$
+
+Acting on a vector, it produces a rank-2 tensor:
+
+$$\partial_\mu A^\nu$$
+
+Contracting:
+
+$$\partial_\mu A^\mu = \text{scalar (divergence)}$$
+
+These are tensor operations; they preserve transformation properties, because $\partial_\mu$ itself transforms as a covector under Lorentz.
+
+---
+
+## 8. The Levi-Civita Symbol and Duality
+
+### The Levi-Civita Symbol
+
+In 4D, define $\epsilon^{\mu\nu\rho\sigma}$ as:
+
+$$\epsilon^{\mu\nu\rho\sigma} = \begin{cases} +1 & \text{if } (\mu\nu\rho\sigma) \text{ is an even permutation of } (0123) \\ -1 & \text{if odd permutation} \\ 0 & \text{if any two indices repeat} \end{cases}$$
+
+So $\epsilon^{0123} = +1$, $\epsilon^{1023} = -1$, etc.
+
+Strictly, this is a *tensor density*; it transforms with an extra factor of $\det\Lambda$; but for proper Lorentz transformations $\det\Lambda = +1$, so it transforms as a tensor. (Parity flips the sign.) The lower-index version:
+
+$$\epsilon_{\mu\nu\rho\sigma} = \eta_{\mu\alpha}\eta_{\nu\beta}\eta_{\rho\gamma}\eta_{\sigma\delta}\epsilon^{\alpha\beta\gamma\delta} = -\epsilon^{\mu\nu\rho\sigma}$$
+
+(Four minus signs, one per spatial index, gives an overall $-1$ relative to $\epsilon^{\mu\nu\rho\sigma}$. The two versions differ by a sign.)
+
+### Useful Identities
+
+**Total antisymmetry:** swapping any two indices flips the sign.
+
+**Contraction identities:**
+
+$$\epsilon^{\mu\nu\rho\sigma}\epsilon_{\mu\nu\rho\sigma} = -24$$
+
+$$\epsilon^{\mu\nu\rho\sigma}\epsilon_{\mu\nu\rho\tau} = -6 \delta^\sigma_\tau$$
+
+$$\epsilon^{\mu\nu\rho\sigma}\epsilon_{\mu\nu\alpha\beta} = -2(\delta^\rho_\alpha \delta^\sigma_\beta - \delta^\rho_\beta \delta^\sigma_\alpha)$$
+
+### Dual Tensors
+
+Given an antisymmetric rank-2 tensor $F^{\mu\nu}$, define its **dual**:
+
+$$\tilde F^{\mu\nu} = \tfrac{1}{2} \epsilon^{\mu\nu\rho\sigma} F_{\rho\sigma}$$
+
+For electromagnetism, the dual of the field strength $F^{\mu\nu}$ swaps electric and magnetic fields. This duality plays a role in identifying the magnetic part of Maxwell's equations as automatic (section 10).
+
+### Relation to 3D
+
+The 4D Levi-Civita generalizes the familiar 3D symbol $\epsilon^{ijk}$ that appears in cross products. Many 3D vector identities (like $\vec A \times (\vec B \times \vec C) = \vec B(\vec A \cdot \vec C) - \vec C(\vec A \cdot \vec B)$) have direct 4D analogs using $\epsilon^{\mu\nu\rho\sigma}$.
+
+---
+
+## 9. Covariant Formulation of Mechanics
+
+Now we use tensor language to restate special-relativistic mechanics properly.
+
+### Proper Time
+
+Along a worldline, the proper time interval is:
+
+$$d\tau = \sqrt{dx^\mu dx_\mu} = \sqrt{dt^2 - |d\vec x|^2} = dt \sqrt{1 - v^2}$$
+
+(with $c = 1$). Integrating gives the total proper time along a worldline; the time measured by a clock carried along that worldline.
+
+$\tau$ is a Lorentz invariant. It is the natural "time" parameter for the particle.
+
+### Four-Velocity
+
+$$u^\mu = \frac{dx^\mu}{d\tau}$$
+
+In components:
+
+$$u^\mu = \gamma (1, \vec v)$$
+
+Key property: $u^\mu u_\mu = \gamma^2(1 - v^2) = 1$ (always). The four-velocity is a unit timelike vector.
+
+### Four-Momentum
+
+$$p^\mu = m u^\mu = \gamma m(1, \vec v) = (E, \vec p)$$
+
+Components:
+
+- $p^0 = E = \gamma m$ (with $c = 1$; restore $c$: $E = \gamma mc^2$)
+- $\vec p = \gamma m \vec v$
+
+Invariant:
+
+$$p^\mu p_\mu = m^2$$
+
+This is the famous energy-momentum relation $E^2 - |\vec p|^2 = m^2$ (or $E^2 = p^2 c^2 + m^2 c^4$ with units restored).
+
+For massless particles ($m = 0$): $p^\mu$ is a null vector, $E = |\vec p|$ (or $E = |\vec p| c$).
+
+### Four-Force and Four-Acceleration
+
+$$a^\mu = \frac{du^\mu}{d\tau}, \qquad F^\mu = \frac{dp^\mu}{d\tau} = m a^\mu$$
+
+Relativistic Newton's second law in tensor form. Note that four-acceleration is orthogonal to four-velocity: $u_\mu a^\mu = 0$ (differentiate $u_\mu u^\mu = 1$).
+
+### Four-Wavevector
+
+For a plane wave:
+
+$$k^\mu = (\omega, \vec k)$$
+
+Invariant: $k^\mu k_\mu = \omega^2 - |\vec k|^2$. For light (dispersion $\omega = |\vec k|$): null four-vector.
+
+### Relativistic Doppler Effect
+
+The invariant combination $k^\mu u_\mu = \omega'$ gives the frequency seen by an observer with four-velocity $u^\mu$. Working this out reproduces the Doppler formulas from Modern Physics; but now as a one-line invariant calculation.
+
+---
+
+## 10. Maxwell's Equations in Covariant Form
+
+This is the payoff; electromagnetism revealed as a tensor theory on Minkowski space.
+
+### The Four-Potential
+
+Combine the scalar and vector potentials of electromagnetism:
+
+$$A^\mu = (\phi, \vec A)$$
+
+This is a four-vector: it transforms under Lorentz boosts as $A^\mu$ should.
+
+### The Field Strength Tensor
+
+Define:
+
+$$F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu$$
+
+This is antisymmetric: $F^{\mu\nu} = -F^{\nu\mu}$. It has 6 independent components. Writing them out in Cartesian coordinates:
+
+$$F^{\mu\nu} = \begin{pmatrix} 0 & -E^1 & -E^2 & -E^3 \\ E^1 & 0 & -B^3 & B^2 \\ E^2 & B^3 & 0 & -B^1 \\ E^3 & -B^2 & B^1 & 0 \end{pmatrix}$$
+
+The electric and magnetic fields, packaged into a single rank-2 antisymmetric tensor. Six components ↔ six field components ($\vec E$ and $\vec B$, three each).
+
+Under boosts, $F^{\mu\nu}$ mixes $\vec E$ and $\vec B$; they are frame-dependent manifestations of the same underlying geometric object.
+
+### The Four-Current
+
+$$J^\mu = (\rho, \vec J)$$
+
+The charge density and current density, packaged as a four-vector. Conservation of charge becomes:
+
+$$\partial_\mu J^\mu = 0$$
+
+(The 3D continuity equation $\partial_t \rho + \nabla\cdot\vec J = 0$ written in covariant form.)
+
+### The Two Inhomogeneous Maxwell Equations
+
+$$\boxed{\partial_\mu F^{\mu\nu} = J^\nu}$$
+
+This single four-vector equation encodes **Gauss's law** (the $\nu = 0$ component) and **Ampère-Maxwell** (the spatial components). Let's verify:
+
+For $\nu = 0$: $\partial_\mu F^{\mu 0} = J^0$. The terms are:
+
+$$\partial_0 F^{00} + \partial_i F^{i0} = \rho$$
+
+$F^{00} = 0$ (diagonal of antisymmetric), and $F^{i0} = E^i$, so:
+
+$$\partial_i E^i = \rho \quad \Longrightarrow \quad \nabla \cdot \vec E = \rho$$
+
+Gauss's law. $\checkmark$
+
+For $\nu = i$ (spatial): $\partial_\mu F^{\mu i} = J^i$:
+
+$$\partial_0 F^{0i} + \partial_j F^{ji} = J^i$$
+
+$F^{0i} = -E^i$ and $F^{ji}$ encodes the curl of $\vec B$; working it out gives:
+
+$$-\partial_t E^i + (\nabla \times \vec B)^i = J^i \quad \Longrightarrow \quad \nabla \times \vec B = \vec J + \partial_t \vec E$$
+
+Ampère-Maxwell. $\checkmark$
+
+### The Two Homogeneous Maxwell Equations
+
+$$\boxed{\partial_{[\mu} F_{\nu\rho]} = 0}$$
+
+Square brackets denote antisymmetrization. This is equivalent to the Bianchi identity. Writing it out in 3D gives $\nabla\cdot\vec B = 0$ (no magnetic monopoles) and $\nabla\times\vec E = -\partial_t \vec B$ (Faraday's law).
+
+These equations are *automatically* satisfied when $F^{\mu\nu}$ is written as $\partial^\mu A^\nu - \partial^\nu A^\mu$; you can check directly that antisymmetrizing derivatives of this form gives zero. So introducing the four-potential solves half of Maxwell's equations identically; the other half become the equation of motion.
+
+### Gauge Invariance
+
+The potential $A^\mu$ is not unique. The transformation
+
+$$A^\mu \to A^\mu + \partial^\mu \Lambda$$
+
+for any scalar function $\Lambda(x)$ leaves $F^{\mu\nu}$ unchanged (since $\partial^\mu \partial^\nu \Lambda - \partial^\nu \partial^\mu \Lambda = 0$). This is **gauge invariance**; a redundancy in the description that turns out to be the key to constructing all modern interactions.
+
+### The Lagrangian Density
+
+All of electromagnetism follows from the action
+
+$$S = \int d^4x \left(-\tfrac{1}{4} F_{\mu\nu} F^{\mu\nu} - J^\mu A_\mu\right)$$
+
+Applying the Euler-Lagrange equation for the field $A^\mu$ gives $\partial_\mu F^{\mu\nu} = J^\nu$. (We did this in the Lagrangian mechanics doc.)
+
+The single scalar $-\tfrac{1}{4} F_{\mu\nu} F^{\mu\nu}$; a Lorentz invariant and gauge invariant combination; is *the* Lagrangian of electromagnetism. This is a dramatic consolidation: one number contains all of Maxwell's theory.
+
+### Another Invariant
+
+A second Lorentz invariant exists:
+
+$$F_{\mu\nu} \tilde F^{\mu\nu} \propto \vec E \cdot \vec B$$
+
+This is a pseudoscalar (flips sign under parity). It doesn't appear in the standard Maxwell Lagrangian, but related terms appear in certain extensions (e.g., axion physics, the theta-term of QCD).
+
+---
+
+## 11. The Stress-Energy Tensor
+
+For a field theory, the stress-energy tensor $T^{\mu\nu}$ collects all the conserved currents associated with spacetime translations.
+
+### Physical Meaning of Components
+
+- $T^{00}$: energy density
+- $T^{0i}$: energy flux density (energy flowing in direction $i$)
+- $T^{i0}$: momentum density (component $i$)
+- $T^{ij}$: stress tensor (flow of momentum $i$ in direction $j$)
+
+For symmetric $T^{\mu\nu}$ (which holds for systems without intrinsic angular momentum), $T^{0i} = T^{i0}$, meaning energy flux equals momentum density; a relativistic identity.
+
+### Conservation
+
+$$\partial_\mu T^{\mu\nu} = 0$$
+
+This is the covariant expression of energy and momentum conservation. Four equations: $\nu = 0$ is energy conservation; $\nu = i$ is momentum conservation in direction $i$.
+
+### The Stress-Energy of the Electromagnetic Field
+
+$$T^{\mu\nu}_{\text{EM}} = F^{\mu\alpha} F^\nu{}_\alpha - \tfrac{1}{4} \eta^{\mu\nu} F_{\alpha\beta} F^{\alpha\beta}$$
+
+Some components:
+
+- $T^{00}_{\text{EM}} = \tfrac{1}{2}(|\vec E|^2 + |\vec B|^2)$; electromagnetic energy density
+- $T^{0i}_{\text{EM}} = (\vec E \times \vec B)^i$; the Poynting vector (energy flux = momentum density)
+
+Every term you've seen for EM energy, momentum, and stress is packaged into this single rank-2 tensor.
+
+### Source of Gravity
+
+In general relativity, the stress-energy tensor is the source of spacetime curvature: Einstein's equations are
+
+$$G^{\mu\nu} = 8\pi G T^{\mu\nu}$$
+
+where $G^{\mu\nu}$ is the Einstein curvature tensor. Matter tells spacetime how to curve via its stress-energy. That's why $T^{\mu\nu}$ matters so much: it's the bridge from matter to geometry.
+
+---
+
+## 12. Worked Examples
+
+Three calculations that show the machinery in action.
+
+### Example 1: Invariant Mass from Two Four-Momenta
+
+Two particles collide with four-momenta $p_1^\mu$ and $p_2^\mu$. The invariant mass of the system is defined by:
+
+$$M^2 = (p_1 + p_2)^\mu (p_1 + p_2)_\mu = p_1^\mu p_{1\mu} + p_2^\mu p_{2\mu} + 2 p_1^\mu p_{2\mu}$$
+
+$$= m_1^2 + m_2^2 + 2 p_1 \cdot p_2$$
+
+In any frame, this is the same number. In the center-of-mass frame, where $\vec p_1 = -\vec p_2$ and total energy is $E_{\text{cm}}$:
+
+$$M^2 = E_{\text{cm}}^2$$
+
+So the invariant mass is the center-of-mass energy. This is how the Higgs was found; reconstructing $M$ for various particle combinations and looking for a peak.
+
+For a lab frame where particle 2 is at rest ($p_2^\mu = (m_2, \vec 0)$):
+
+$$p_1 \cdot p_2 = E_1 m_2$$
+
+$$M^2 = m_1^2 + m_2^2 + 2 E_1 m_2$$
+
+So the CM energy squared is $\sqrt s = M$, giving
+
+$$\sqrt s = \sqrt{m_1^2 + m_2^2 + 2 E_1 m_2}$$
+
+For large $E_1 \gg m_1, m_2$: $\sqrt s \approx \sqrt{2 E_1 m_2}$; growing only as $\sqrt{E_1}$. This is why fixed-target colliders are inefficient.
+
+### Example 2: Length Contraction from Four-Vectors
+
+Consider a rod at rest in frame $S'$, with one end at $x'_A = 0$ and the other at $x'_B = L_0$ (proper length). In the primed frame, both ends are "at rest"; they exist at all primed times.
+
+Transform to frame $S$ in which $S'$ moves with velocity $v$. To measure the length in $S$, we need positions of both ends at the *same* $S$-time, say $t = 0$.
+
+Using the Lorentz transformation:
+
+$$x' = \gamma(x - vt), \quad t' = \gamma(t - vx)$$
+
+For the end at $x'_A = 0$ at $S$-time $t = 0$: $0 = \gamma(x_A - 0)$, so $x_A = 0$.
+
+For the end at $x'_B = L_0$ at $S$-time $t = 0$: $L_0 = \gamma(x_B - 0)$, so $x_B = L_0/\gamma$.
+
+Length in $S$: $L = x_B - x_A = L_0/\gamma$. Length contraction. $\checkmark$
+
+The four-vector calculation makes explicit what was happening in the formula: it's all about simultaneity; what $t = 0$ means in $S$ doesn't correspond to the same slice in $S'$.
+
+### Example 3: Verifying Maxwell's Equations Transform Correctly
+
+Take Gauss's law $\nabla\cdot\vec E = \rho$ in frame $S$. In covariant form, this is $\partial_\mu F^{\mu 0} = J^0$. In another frame $S'$, the equation becomes
+
+$$\partial'_\mu F'^{\mu \nu'} = J'^{\nu'}$$
+
+by tensor transformation. Expanding the $\nu' = 0$ component in the new frame:
+
+- $F'^{i0}$ contains both $E$ fields and (after transforming) some $B$ fields
+- $J'^0$ contains both $\rho$ and (after transforming) some of $\vec J$
+
+Result: Gauss's law in the new frame mixes what were originally purely electric and purely magnetic phenomena. What looks like a static charge in one frame is a moving charge (current + charge) in another. The single covariant equation $\partial_\mu F^{\mu\nu} = J^\nu$ is simultaneously all four Maxwell equations for the $\vec E$ and $\vec B$ fields in every frame.
+
+No calculation of this mixing is required when using tensor notation; it's automatic. That's the power of the formalism.
+
+---
+
+## Appendix: Conventions and Identity Reference
+
+### Sign Conventions
+
+We use:
+
+- Metric: $\eta_{\mu\nu} = \text{diag}(+, -, -, -)$
+- Index ordering: $\mu = 0, 1, 2, 3$ with 0 = time
+- Natural units: $c = 1$ (and typically $\hbar = 1$)
+
+Alternative convention (GR texts): $\eta_{\mu\nu} = \text{diag}(-, +, +, +)$. Intermediate signs differ; physical observables are the same.
+
+### Key Objects
+
+| Symbol | Meaning |
+|---|---|
+| $\eta_{\mu\nu}$, $\eta^{\mu\nu}$ | Minkowski metric |
+| $\delta^\mu_\nu$ | Kronecker delta |
+| $\epsilon^{\mu\nu\rho\sigma}$ | Levi-Civita symbol |
+| $x^\mu$ | Spacetime position |
+| $p^\mu = (E, \vec p)$ | Four-momentum |
+| $u^\mu = \gamma(1, \vec v)$ | Four-velocity |
+| $A^\mu = (\phi, \vec A)$ | EM four-potential |
+| $J^\mu = (\rho, \vec J)$ | Four-current |
+| $F^{\mu\nu}$ | EM field strength |
+| $T^{\mu\nu}$ | Stress-energy tensor |
+| $\Lambda^\mu{}_\nu$ | Lorentz transformation |
+| $\partial_\mu$ | Partial derivative |
+| $\Box = \partial_\mu \partial^\mu$ | d'Alembertian |
+
+### Key Invariants
+
+- $x^\mu x_\mu = t^2 - |\vec x|^2$: spacetime interval
+- $p^\mu p_\mu = m^2$: mass shell
+- $u^\mu u_\mu = 1$: four-velocity normalization (if $c = 1$)
+- $F_{\mu\nu}F^{\mu\nu} = 2(|\vec B|^2 - |\vec E|^2)$: EM scalar
+- $F_{\mu\nu}\tilde F^{\mu\nu} = -4 \vec E\cdot\vec B$: EM pseudoscalar
+
+### Common Contraction Tricks
+
+**Rename dummy indices** freely:
+
+$$A_\mu B^\mu = A_\alpha B^\alpha = A_\beta B^\beta$$
+
+**Swap order** in scalars:
+
+$$A_\mu B^\mu = B^\mu A_\mu$$
+
+**Contract symmetric with antisymmetric** gives zero:
+
+$$S^{\mu\nu} A_{\mu\nu} = 0 \quad (S \text{ symmetric, } A \text{ antisymmetric})$$
+
+**Factor out shared index**:
+
+$$T^{\mu\nu} \partial_\mu A_\nu = T^{(\mu\nu)} \partial_\mu A_\nu + T^{[\mu\nu]} \partial_{[\mu} A_{\nu]}$$
+
+(Separating into symmetric and antisymmetric parts clarifies structure.)
+
+### Transformation Rules
+
+For a scalar: $\phi'(x') = \phi(x)$.
+
+For a vector: $A'^\mu(x') = \Lambda^\mu{}_\nu A^\nu(x)$.
+
+For a rank-2 tensor: $T'^{\mu\nu}(x') = \Lambda^\mu{}_\alpha \Lambda^\nu{}_\beta T^{\alpha\beta}(x)$.
+
+For a covector: $A'_\mu(x') = \Lambda_\mu{}^\nu A_\nu(x)$.
+
+Basic Lorentz transformation condition: $\Lambda^T \eta \Lambda = \eta$, equivalently $\eta_{\mu\nu} \Lambda^\mu{}_\alpha \Lambda^\nu{}_\beta = \eta_{\alpha\beta}$.
+
+### Useful Identities
+
+$$\partial_\mu x^\nu = \delta^\nu_\mu$$
+
+$$\partial^\mu x_\mu = 4$$ (in 4D)
+
+$$\partial_\mu(\phi \psi) = (\partial_\mu \phi)\psi + \phi(\partial_\mu \psi)$$
+
+$$\Box e^{ik\cdot x} = -k^2 e^{ik\cdot x}$$
+
+(where $k \cdot x = k_\mu x^\mu$)
+
+### Levi-Civita Reminders
+
+Total antisymmetry: swapping any two indices flips the sign.
+
+Contractions (with signs that depend on metric convention; these are for mostly-minus):
+
+$$\epsilon^{\mu\nu\rho\sigma}\epsilon_{\mu\nu\rho\sigma} = -24$$
+
+$$\epsilon^{\mu\nu\rho\sigma}\epsilon_{\alpha\beta\rho\sigma} = -2(\delta^\mu_\alpha \delta^\nu_\beta - \delta^\mu_\beta \delta^\nu_\alpha)$$
+
+---
+
+## Closing Note
+
+Tensor notation is a language; and like any language, fluency comes from use, not from reading about it. Ten carefully worked problems will do more than a hundred pages of reading. Recommended practice:
+
+1. **Verify all of Maxwell's equations** in covariant form. Start with $\partial_\mu F^{\mu\nu} = J^\nu$, expand component by component, recover the 3D versions.
+
+2. **Derive the transformation of $\vec E$ and $\vec B$** under a boost by transforming $F^{\mu\nu}$ as a rank-2 tensor.
+
+3. **Prove that $F_{\mu\nu}F^{\mu\nu}$ is a Lorentz invariant.** Compute it in terms of $\vec E$ and $\vec B$.
+
+4. **Construct the stress-energy tensor of a massive scalar field** from its Lagrangian $\mathcal{L} = \tfrac{1}{2}\partial_\mu\phi\partial^\mu\phi - \tfrac{1}{2}m^2\phi^2$. Verify $\partial_\mu T^{\mu\nu} = 0$ on shell.
+
+5. **Practice index manipulations** until the rules are automatic: raising, lowering, contracting, symmetrizing.
+
+Once you can do these without hesitation, you have the foundation for classical field theory proper; which is the next document. There, tensors become the default language, and we'll develop scalar fields with spontaneous symmetry breaking, gauge theory with the covariant derivative, and the Dirac equation. From there, quantum field theory is genuinely in reach.

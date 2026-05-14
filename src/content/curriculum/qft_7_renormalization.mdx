@@ -9,6 +9,730 @@ extendsTo: [20]
 classReportTitle: "How we agreed the infinities were fine."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 7: the systematic procedure that turns infinite loop integrals into finite physical predictions; and reveals that "bare" and "physical" parameters are different things.*
 
-{/* Content from qft_7_renormalization.md */}
+Document 6 exposed the problem: loop integrals in QFT are generally divergent, and naive perturbation theory gives infinite answers for physical observables. Document 6 also gave us regularization; tools for making the divergences finite and manipulable.
+
+This document completes the story. Renormalization is the procedure that systematically absorbs divergences into redefinitions of the parameters of the theory (mass, coupling, field strength), leaving finite, well-defined predictions for all physical observables.
+
+Historically, this was one of the most conceptually difficult developments in physics. Dirac famously complained that renormalization was "sweeping infinities under the rug." What changed the view was Wilson's reformulation in the 1970s, which showed that renormalization isn't a trick but a deep statement about effective field theories and scales. Document 8 will develop Wilson's picture fully. This document focuses on the *procedure*: how you actually do renormalization in practice.
+
+### Prerequisites and Conventions
+
+- QFT documents 1-6
+- Familiarity with loop integrals, dimensional regularization, and the three one-loop QED diagrams
+- Same conventions: mostly-minus metric, $\hbar = c = 1$
+
+---
+
+## Table of Contents
+
+1. [The Problem Restated](#1-the-problem-restated)
+2. [Bare vs. Renormalized: The Key Distinction](#2-bare-vs-renormalized-the-key-distinction)
+3. [Counterterms: The Mechanical Procedure](#3-counterterms-the-mechanical-procedure)
+4. [Renormalization Conditions](#4-renormalization-conditions)
+5. [On-Shell Renormalization](#5-on-shell-renormalization)
+6. [Minimal Subtraction ($\overline{MS}$)](#6-minimal-subtraction-overlineMS)
+7. [QED Renormalization at One Loop](#7-qed-renormalization-at-one-loop)
+8. [The Ward-Takahashi Identity: $Z_1 = Z_2$](#8-the-ward-takahashi-identity-z_1--z_2)
+9. [Renormalization to All Orders: Consistency](#9-renormalization-to-all-orders-consistency)
+10. [Power Counting and Renormalizability](#10-power-counting-and-renormalizability)
+11. [Non-Renormalizable Theories as EFTs](#11-non-renormalizable-theories-as-efts)
+12. [Physical Meaning: What Is Renormalization Really Doing?](#12-physical-meaning-what-is-renormalization-really-doing)
+13. [Appendix: Renormalization Formulas](#appendix-renormalization-formulas)
+
+---
+
+## 1. The Problem Restated
+
+After one-loop calculations, we have divergent expressions:
+
+**Electron self-energy:**
+$$\Sigma(p) = \frac{e^2}{16\pi^2 \epsilon}[\slashed{p} A + m B] + \text{finite}$$
+
+**Vacuum polarization:**
+$$\Pi(q^2) = \frac{e^2}{12\pi^2 \epsilon} + \text{finite}$$
+
+**Vertex correction:**
+$$\Lambda^\mu(p', p) = \frac{e^2}{16\pi^2 \epsilon}\gamma^\mu C + \text{finite}$$
+
+(With specific coefficients $A, B, C$ from document 6.)
+
+These are all $1/\epsilon$ poles (in dimensional regularization). Something needs to be done to extract physical predictions.
+
+### The Key Observation
+
+Notice what the divergences *aren't*: they're not new operator structures. The self-energy has the structure $\slashed{p}$ and $m$; the same structures as $\bar\psi(i\slashed\partial - m)\psi$ in the original Lagrangian. The vacuum polarization has the gauge-invariant structure $(q^\mu q^\nu - q^2 \eta^{\mu\nu})$, same structure as the photon kinetic term $-\tfrac{1}{4}F^2$. The vertex correction is $\propto \gamma^\mu$, same structure as the QED interaction $\bar\psi\gamma^\mu\psi A_\mu$.
+
+**Every divergence matches an operator already in the Lagrangian.** This is the miracle of renormalizable theories; the divergent corrections have the same form as terms already there. We can therefore absorb them by redefining the coefficients of those terms.
+
+---
+
+## 2. Bare vs. Renormalized: The Key Distinction
+
+### The Two Sets of Parameters
+
+Introduce two different sets of parameters:
+
+**Bare parameters**; the ones appearing in the "original" Lagrangian. Let's call them $m_0$, $e_0$, and let the bare fields be $\psi_0$, $A_0^\mu$. These are the symbolic quantities in the Lagrangian.
+
+**Renormalized (or physical) parameters**; what you actually measure. Let's call them $m$, $e$, $\psi$, $A^\mu$ (no subscript).
+
+The bare and renormalized quantities are related by:
+
+$$\psi_0 = \sqrt{Z_2}\,\psi$$
+
+$$A_0^\mu = \sqrt{Z_3}\,A^\mu$$
+
+$$m_0 = Z_m m = m + \delta m$$
+
+$$e_0 = \frac{Z_1}{Z_2\sqrt{Z_3}}e = Z_e e$$
+
+where $Z_1, Z_2, Z_3$ are **renormalization constants**, and $\delta m$ is the **mass counterterm**. Each $Z_i$ is 1 at tree level and receives corrections at each loop order.
+
+### Why Two Sets?
+
+Here's the conceptual point: the bare parameters are *formal*; they're just symbols in the Lagrangian, and their numerical values depend on the regularization scheme. The renormalized parameters are what you actually measure in experiments.
+
+**In the regularized theory** (say, dimensional regularization with finite $\epsilon > 0$):
+- Bare parameters $m_0$, $e_0$ are finite
+- Renormalized parameters $m$, $e$ are also finite
+- The relationship between them contains $1/\epsilon$ terms that diverge as $\epsilon \to 0$
+
+**As you take the regulator away** ($\epsilon \to 0$):
+- The renormalized parameters remain finite (they're what experiments measure)
+- The bare parameters *must diverge* in a specific way to compensate
+- This divergence is exactly what absorbs the loop divergences
+
+The divergence isn't a problem; it's a *feature*. The bare parameters were never physical to begin with. Only the renormalized parameters need to be finite.
+
+### Mental Model
+
+Imagine a theory where the electron's "raw" mass (the $m_0$ in the Lagrangian) is actually infinite, but surrounded by a cloud of virtual particles that contribute a subtraction, leaving the observed mass finite. The divergence in $m_0 - m$ is the "correction from the virtual cloud."
+
+This picture is qualitatively right but quantitatively misleading; the actual picture requires Wilson's effective-field-theory view (document 8). But it captures the idea: the bare parameters and renormalized parameters are different things, and only the renormalized ones are measurable.
+
+### A Technical Note
+
+In dimensional regularization, the renormalization constants take the form:
+
+$$Z_i = 1 + \delta Z_i = 1 + \frac{a_i}{\epsilon} + \text{finite scheme-dependent part}$$
+
+The $1/\epsilon$ pole is divergent as $\epsilon \to 0$. The finite part depends on the renormalization scheme (below).
+
+---
+
+## 3. Counterterms: The Mechanical Procedure
+
+### Splitting the Lagrangian
+
+Write the Lagrangian in terms of bare fields, then substitute the bare-to-renormalized relations:
+
+$$\mathcal{L}_{\rm QED} = \bar\psi_0(i\slashed\partial - m_0)\psi_0 - \tfrac{1}{4}(F_{0\mu\nu})^2 - e_0\bar\psi_0\gamma^\mu\psi_0 A_{0\mu}$$
+
+With $\psi_0 = \sqrt{Z_2}\psi$, $A_0^\mu = \sqrt{Z_3}A^\mu$, $m_0 = m + \delta m$, $e_0 = Z_e e$:
+
+$$\mathcal{L} = Z_2\bar\psi(i\slashed\partial)\psi - Z_2(m + \delta m/Z_2)\bar\psi\psi - \tfrac{Z_3}{4}F_{\mu\nu}^2 - eZ_1\bar\psi\gamma^\mu\psi A_\mu$$
+
+Now write $Z_i = 1 + \delta_i$:
+
+$$\mathcal{L} = \underbrace{\bar\psi(i\slashed\partial - m)\psi - \tfrac{1}{4}F^2 - e\bar\psi\gamma^\mu\psi A_\mu}_{\mathcal{L}_{\rm physical}}$$
+
+$$+ \underbrace{\delta_2\bar\psi i\slashed\partial\psi - (Z_2\delta m + m\delta_2)\bar\psi\psi - \tfrac{\delta_3}{4}F^2 - e\delta_1\bar\psi\gamma^\mu\psi A_\mu}_{\mathcal{L}_{\rm counterterms}}$$
+
+The first piece is the "physical" Lagrangian; identical to the original, but with renormalized parameters and fields. The second piece is the **counterterm Lagrangian**; extra vertices and corrections whose job is to cancel the loop divergences.
+
+### Counterterm Feynman Rules
+
+Each counterterm corresponds to a new Feynman rule. At order $O(e^2)$:
+
+- **Electron counterterm** $\delta_2\bar\psi i\slashed\partial\psi - (Z_2\delta m + m\delta_2)\bar\psi\psi$: an "insertion" in an electron propagator line that contributes $i(\slashed{p}\delta_2 - \delta m)$ (after simplification).
+
+- **Photon counterterm** $-\tfrac{\delta_3}{4}F^2$: an insertion in a photon propagator that contributes $-i(q^2\eta^{\mu\nu} - q^\mu q^\nu)\delta_3$.
+
+- **Vertex counterterm** $-e\delta_1\bar\psi\gamma^\mu\psi A_\mu$: an extra vertex with factor $-ie\gamma^\mu\delta_1$.
+
+(Different textbook conventions give these with slightly different signs or factors; I'm using Peskin-like conventions.)
+
+### The Key Idea
+
+The counterterms are *chosen* such that they cancel the $1/\epsilon$ poles in the one-loop calculations. Since the counterterms have the same form as the loop corrections (both give contributions with $\slashed p$, $m$, $q^\mu q^\nu - q^2\eta^{\mu\nu}$, $\gamma^\mu$ structures), they can match pole-for-pole.
+
+The counterterm coefficients $\delta_i, \delta m$ are therefore divergent ($1/\epsilon$ poles) in a specific way that mirrors the loop divergences.
+
+### Order-by-Order
+
+- At tree level: $\delta_i = 0$, $\delta m = 0$. Just the original Lagrangian.
+- At one loop: $\delta_i = O(e^2)/\epsilon + \text{finite scheme-dependent}$.
+- At two loops: $\delta_i$ receives further corrections at $O(e^4)$.
+- At $n$ loops: $\delta_i$ at $O(e^{2n})$.
+
+Each order of perturbation theory requires its own adjustments to the counterterms.
+
+---
+
+## 4. Renormalization Conditions
+
+There's something still unfixed: *which* finite parts do the counterterms absorb? The $1/\epsilon$ poles are forced (to cancel the divergences), but the finite parts can be anything. Different choices give different **renormalization schemes**.
+
+### The Choice to Make
+
+The renormalization conditions are a set of rules fixing the finite parts of the counterterms. They're typically defined by specifying the values of physical (renormalized) parameters at specific kinematic points.
+
+### Common Schemes
+
+**On-shell (OS) scheme:** Define parameters by their "on-mass-shell" values. The renormalized mass equals the physical pole mass; the renormalized coupling equals the coupling measured at zero momentum transfer (Thomson limit in QED). Most physical, but technically more complex.
+
+**Minimal subtraction (MS):** Absorb only the $1/\epsilon$ pole (and nothing else) into the counterterms. The finite parts stay in the physical amplitude. Simplest, but the "renormalized coupling" is a formal parameter, not directly measured.
+
+**Modified minimal subtraction ($\overline{MS}$):** Absorb the $1/\epsilon$ pole plus specific "universal" finite pieces ($-\gamma_E + \ln(4\pi)$) that always accompany the pole in dim reg. Standard in modern calculations.
+
+**Momentum subtraction (MOM):** Define the coupling by matching to the amplitude at specific momenta. Used in some QCD contexts.
+
+### Physical Equivalence
+
+**Important:** All schemes give the same physical predictions. The "coupling at a given scale" differs between schemes, but observable quantities (cross sections, decay rates) are scheme-independent; once you express everything in the same scheme consistently.
+
+The scheme is like a gauge in gauge theory; a choice that simplifies calculations but doesn't affect physics.
+
+### Why Multiple Schemes Exist
+
+Different schemes are convenient for different problems:
+
+- On-shell: good for theories with few masses, gives a "physical" interpretation
+- $\overline{MS}$: good for high-energy calculations where masses are neglected; standard in QCD
+- MOM: useful when there are specific kinematic regions you want to emphasize
+
+Modern practice: compute in $\overline{MS}$, convert to on-shell (or other schemes) when comparing to specific experiments.
+
+---
+
+## 5. On-Shell Renormalization
+
+The most physically intuitive scheme. We'll use QED to illustrate.
+
+### The Renormalization Conditions (On-Shell)
+
+**Condition 1: Pole of the electron propagator at $p^2 = m^2$.**
+
+The full electron propagator in the interacting theory is:
+
+$$S(p) = \frac{i}{\slashed{p} - m_0 - \Sigma(p)}$$
+
+Where $\Sigma(p)$ is the electron self-energy (including all loop corrections). On-shell, we demand:
+
+$$\boxed{\Sigma(\slashed{p} = m) = 0, \qquad \frac{\partial \Sigma(\slashed p)}{\partial \slashed p}\bigg|_{\slashed p = m} = 0}$$
+
+The first condition says the pole is at the physical mass $m$ (not some shifted location). The second says the residue of the pole is 1; no wave function modification at the pole.
+
+**Condition 2: Photon propagator pole at $q^2 = 0$.**
+
+The full photon propagator includes vacuum polarization:
+
+$$D^{\mu\nu}(q) = \frac{-i[\eta^{\mu\nu} - (q^\mu q^\nu/q^2)\Pi(q^2)]}{q^2[1 - \Pi(q^2)]}$$
+
+(Schematic; see document 6.) On-shell condition: residue at $q^2 = 0$ is 1, i.e.:
+
+$$\boxed{\Pi(q^2 = 0) = 0}$$
+
+This ensures the photon is exactly massless and has unit residue at the pole.
+
+**Condition 3: Coupling at $q^2 = 0$ (Thomson limit).**
+
+The QED vertex with all corrections is $-ie\Gamma^\mu(p', p) = -ie\gamma^\mu + (\text{loop corrections})$. At on-shell electrons and zero photon momentum, we demand:
+
+$$\boxed{\bar u(p)\Gamma^\mu(p, p) u(p) = \bar u(p)\gamma^\mu u(p)\bigg|_{q=0}}$$
+
+The coupling at zero momentum transfer equals the classical electron charge; the Thomson limit defines $e$.
+
+### Determining Counterterms
+
+These three conditions determine the three counterterms $\delta_1, \delta_2, \delta_3$ (and implicitly $\delta m$) uniquely at each order in perturbation theory.
+
+### At One Loop: The Result
+
+Working through the one-loop QED diagrams with these conditions (I won't do the full calculation; Peskin Chapter 10 does):
+
+$$\delta m = \frac{3e^2 m}{8\pi^2}\left[\frac{1}{\epsilon} + \text{finite}\right]$$
+
+$$\delta_2 = -\frac{e^2}{8\pi^2}\left[\frac{1}{\epsilon} + \text{finite}\right]$$
+
+$$\delta_3 = -\frac{e^2}{6\pi^2}\left[\frac{1}{\epsilon} + \text{finite}\right]$$
+
+$$\delta_1 = -\frac{e^2}{8\pi^2}\left[\frac{1}{\epsilon} + \text{finite}\right]$$
+
+(Values are scheme-dependent; these use on-shell conditions.)
+
+Note: $\delta_1 = \delta_2$ at one loop (and all orders; this is the Ward-Takahashi identity, section 8).
+
+### Physical Consequence
+
+With these renormalization conditions:
+- The electron pole is at the measured mass $m$ (by definition)
+- The photon is massless (by gauge invariance + condition)
+- The coupling is $e$ defined at $q^2 = 0$
+
+All physical quantities computed from the theory are finite and match experiments.
+
+---
+
+## 6. Minimal Subtraction ($\overline{MS}$)
+
+The dimensionally-regularized version of renormalization. Simpler to use in practice, especially for high-energy calculations.
+
+### The Prescription
+
+**MS scheme:** Each counterterm absorbs exactly the $1/\epsilon$ pole, nothing else:
+
+$$\delta_i^{\rm MS} = -\frac{1}{\epsilon}\cdot(\text{coefficient of pole})$$
+
+**$\overline{MS}$ scheme:** Absorb the pole plus a universal finite piece $-\gamma_E + \ln(4\pi)$ that always accompanies poles in dim-reg integrals. Define $\overline{MS}$ by rescaling the dimensional-regularization scale:
+
+$$\mu^2 \to \bar\mu^2 = \mu^2 e^{-\gamma_E}(4\pi)^{-1}$$
+
+Then absorbing the $1/\epsilon$ pole gets rid of the $-\gamma_E + \ln 4\pi$ factors too.
+
+The resulting scheme is **very clean**; coefficients are just the leading-log parts of physical quantities.
+
+### Comparison to On-Shell
+
+In on-shell, the mass $m$ is the physical pole mass; directly measurable.
+
+In $\overline{MS}$, the mass $\bar m(\mu)$ is a formal parameter that depends on the renormalization scale $\mu$. It's not directly measurable but is useful for calculation.
+
+Conversion formula (one-loop):
+
+$$m_{\rm pole} = \bar m(\mu)\left[1 + \frac{\alpha_s}{\pi}(\text{finite stuff depending on }\mu)\right]$$
+
+(For QCD masses; analogous for other theories.)
+
+### Why $\overline{MS}$ Is Standard
+
+**Simpler calculations.** In $\overline{MS}$, you don't have to evaluate complicated kinematic functions at specific points. Just subtract the pole.
+
+**Systematic.** Every quantity in $\overline{MS}$ is defined by a clear rule. No human judgement required.
+
+**RG-friendly.** The renormalization group equations (document 8) take their cleanest form in $\overline{MS}$.
+
+**Good for high energies.** When particle masses are negligible compared to the relevant energy scale, on-shell subtraction gets clumsy while $\overline{MS}$ remains simple.
+
+Modern particle physics papers overwhelmingly report results in $\overline{MS}$, with conversion to on-shell for specific comparisons.
+
+### An Important Point
+
+In $\overline{MS}$, the "renormalized coupling" $\alpha(\mu)$ is explicitly $\mu$-dependent. The running coupling; the fact that the measured strength of the interaction depends on the probe energy; is encoded in this $\mu$-dependence. Document 8 will make this the central concept.
+
+---
+
+## 7. QED Renormalization at One Loop
+
+Let me assemble the full story with explicit formulas.
+
+### The Renormalized Lagrangian
+
+$$\mathcal{L} = \bar\psi(i\slashed\partial - m)\psi - \tfrac{1}{4}F_{\mu\nu}F^{\mu\nu} - e\bar\psi\gamma^\mu\psi A_\mu + \mathcal{L}_{\rm ct}$$
+
+$$\mathcal{L}_{\rm ct} = \delta_2 \bar\psi i\slashed\partial\psi - (m\delta_2 + Z_2\delta m)\bar\psi\psi - \tfrac{\delta_3}{4}F^2 - e\delta_1\bar\psi\gamma^\mu\psi A_\mu$$
+
+### One-Loop Counterterm Values (On-Shell)
+
+| Parameter | Divergent part | Physical interpretation |
+|---|---|---|
+| $\delta_2$ | $-\frac{e^2}{8\pi^2}\cdot\frac{1}{\epsilon}$ | Electron field-strength renormalization |
+| $\delta_3$ | $-\frac{e^2}{6\pi^2}\cdot\frac{1}{\epsilon}$ | Photon field-strength renormalization |
+| $\delta_1$ | $-\frac{e^2}{8\pi^2}\cdot\frac{1}{\epsilon}$ | Vertex renormalization |
+| $\delta m$ | $\frac{3e^2 m}{8\pi^2}\cdot\frac{1}{\epsilon}$ | Mass counterterm |
+
+### The Bare Coupling
+
+From $e_0 = Z_1 e/(Z_2\sqrt{Z_3})$:
+
+$$e_0 = e\cdot\frac{Z_1}{Z_2\sqrt{Z_3}} = e\cdot\frac{1 + \delta_1}{(1 + \delta_2)\sqrt{1 + \delta_3}}$$
+
+Expanding to first order in the small $\delta_i$:
+
+$$e_0 = e(1 + \delta_1 - \delta_2 - \tfrac{1}{2}\delta_3)$$
+
+With $\delta_1 = \delta_2$ (Ward-Takahashi):
+
+$$e_0 = e(1 - \tfrac{1}{2}\delta_3) = e\left[1 + \frac{e^2}{12\pi^2}\frac{1}{\epsilon}\right]$$
+
+This is the bare coupling in terms of the renormalized one. The divergence is absorbed by the bare coupling becoming formally infinite.
+
+### Physical Amplitudes
+
+Every physical amplitude, computed using:
+- The renormalized Lagrangian
+- Plus counterterms
+- Matched at one-loop
+
+gives a finite result. All $1/\epsilon$ poles from loop diagrams are canceled by matching $1/\epsilon$ poles from counterterms.
+
+### Explicit Example: Electron Self-Energy
+
+Full electron self-energy at one loop:
+
+$$\Sigma_{\rm total}(p) = \Sigma_{\rm loop}(p) + \Sigma_{\rm ct}(p)$$
+
+Where:
+- $\Sigma_{\rm loop}$ is the one-loop integral (divergent)
+- $\Sigma_{\rm ct} = \slashed{p}\delta_2 - \delta m$ is the counterterm contribution
+
+By the on-shell condition, these two pieces sum to zero at $\slashed p = m$, and the renormalized self-energy vanishes at the pole. For $\slashed p \neq m$, you get a finite, calculable correction.
+
+This gives the electron propagator its full structure: free propagator + small finite corrections from loops, all well-defined.
+
+---
+
+## 8. The Ward-Takahashi Identity: $Z_1 = Z_2$
+
+A remarkable relation that makes QED cleaner than generic theories.
+
+### The Statement
+
+$$\boxed{Z_1 = Z_2 \quad (\text{equivalently, } \delta_1 = \delta_2)}$$
+
+The coupling renormalization equals the electron wave function renormalization.
+
+### Physical Content
+
+From our formula $e_0 = e Z_1/(Z_2\sqrt{Z_3})$, if $Z_1 = Z_2$:
+
+$$e_0 = \frac{e}{\sqrt{Z_3}}$$
+
+**The electron charge is only affected by the photon field strength renormalization.** The electron's self-energy and vertex modifications don't contribute to charge renormalization; they cancel exactly.
+
+### Why This Is True
+
+The Ward-Takahashi identity:
+
+$$q_\mu\Gamma^\mu(p', p) = S^{-1}(p') - S^{-1}(p)$$
+
+relates the vertex function to the propagator. It comes from gauge invariance of the underlying theory.
+
+At $q = 0$ (zero photon momentum), setting $p' = p$:
+
+$$0 = S^{-1}(p) - S^{-1}(p) = 0 \quad (\text{trivial})$$
+
+But taking the derivative with respect to $p^\mu$:
+
+$$\frac{\partial \Gamma^\mu}{\partial p^\nu}\bigg|_{q=0} = \frac{\partial S^{-1}}{\partial p^\nu}$$
+
+This relates the residue of the vertex at zero momentum to the derivative of the inverse propagator; which, on-shell, determines $Z_2$. The conclusion: the vertex renormalization at $q = 0$ equals the wave function renormalization. Hence $Z_1 = Z_2$.
+
+### Universal Consequence
+
+This is important because it means:
+
+**The electron charge renormalization depends only on the photon self-energy.**
+
+So if you measured charge renormalization from $e^-\mu^-$ scattering (electron vertex correction) vs. $e^-e^-$ scattering (electron self-energy) vs. Thomson scattering (photon polarization), you'd get the same answer. This is a consistency check that QED passes beautifully.
+
+### Why Universal Charge Screening?
+
+Here's the remarkable physical consequence of $Z_1 = Z_2$: **every charged particle in QED is screened by exactly the same factor** (coming from $Z_3$). The electron charge, the muon charge, the W-boson charge; all are renormalized identically.
+
+This is why electric charge is exactly conserved: the one-loop corrections to charge are universal. If this weren't true, different particles would have different renormalized charges, and charge wouldn't be a consistent concept.
+
+### In Non-Abelian Theories
+
+In non-abelian gauge theories (Yang-Mills), there are multiple analogous identities called **Slavnov-Taylor identities**. They're more complex (because of the self-interactions of gauge bosons and the presence of ghosts) but play a similar role; ensuring gauge invariance of the renormalized theory.
+
+This will come up in document 11 when we quantize Yang-Mills.
+
+---
+
+## 9. Renormalization to All Orders: Consistency
+
+The one-loop story is clean. What about higher orders?
+
+### The Question
+
+At two loops, you get new divergent diagrams. Do the counterterms from one loop plus *additional* two-loop counterterms absorb the new divergences?
+
+### The Answer: Yes, If Renormalizable
+
+For a renormalizable theory like QED, at every order in perturbation theory:
+- New divergences appear
+- All new divergences have the same operator structures as the original Lagrangian
+- They can be absorbed by adjusting the same counterterms order-by-order
+
+Schematically:
+
+$$\delta_i = \delta_i^{(1)} e^2 + \delta_i^{(2)} e^4 + \delta_i^{(3)} e^6 + \cdots$$
+
+At each order, the new contribution $\delta_i^{(n)}$ is determined by matching renormalization conditions.
+
+### The Non-Trivial Check
+
+The non-trivial statement is that this *works*; that the counterterm structure is consistent at all orders. This was shown by Dyson (1949), 't Hooft and Veltman (for gauge theories, 1972), and many others.
+
+The key technical results:
+
+**BPHZ theorem** (Bogoliubov-Parasiuk-Hepp-Zimmermann): a rigorous proof that the counterterm procedure is consistent and produces finite results at all orders for renormalizable theories.
+
+**'t Hooft-Veltman theorem**: gauge theories like QED are renormalizable, with the counterterm structure preserving gauge invariance at all orders.
+
+These results are reasonably technical (BPHZ requires careful handling of "nested" and "overlapping" divergences). The bottom line is: renormalization isn't a trick that happens to work at one loop. It's a systematic procedure that works to arbitrarily high orders.
+
+### Nested vs. Overlapping Divergences
+
+At two loops and beyond, some divergences come from "inner" loops that are themselves divergent, plus "outer" loops that contain the inner ones. Handling these systematically requires care:
+
+**Nested divergence:** A sub-diagram that's divergent, appearing inside a larger diagram.
+**Overlapping divergence:** Two sub-diagrams that share lines, both divergent.
+
+The BPHZ theorem essentially says: subtract inner divergences first (using the inner counterterms), then subtract the remaining outer divergence. This forest formula systematically handles all cases.
+
+### The Consistency Principle
+
+The reason this all works is that the counterterm structure has exactly the same symmetries as the original Lagrangian. Lorentz invariance, gauge invariance, renormalizability; all are preserved. New divergences can't appear with structures that weren't there from the start.
+
+In theories with *less* symmetry, renormalization can fail or require additional counterterms. This is why gauge invariance is so precious; it constrains the divergence structure.
+
+---
+
+## 10. Power Counting and Renormalizability
+
+### The Dimension of Operators
+
+In $d = 4$ spacetime dimensions, each field has a natural mass dimension (from requiring the action to be dimensionless):
+
+| Field | Dimension |
+|---|---|
+| Scalar $\phi$ | 1 |
+| Fermion $\psi$ | 3/2 |
+| Gauge field $A^\mu$ | 1 |
+
+Each derivative $\partial_\mu$ has dimension 1.
+
+An operator $\mathcal{O}$ has some dimension $[\mathcal{O}]$. In the Lagrangian $\mathcal{L} \supset c\,\mathcal{O}$, the coefficient $c$ has dimension $4 - [\mathcal{O}]$ (since the Lagrangian itself has dimension 4).
+
+### Three Classes of Operators
+
+- **Relevant** ($[\mathcal{O}] < 4$): coupling has positive mass dimension. At low energies, these dominate. Examples: $\phi^2$ (mass term), $\psi^2$ (mass term).
+
+- **Marginal** ($[\mathcal{O}] = 4$): dimensionless coupling. Equally important at all scales (classically). Examples: $\phi^4$, $\bar\psi\gamma^\mu\psi A_\mu$.
+
+- **Irrelevant** ($[\mathcal{O}] > 4$): coupling has negative mass dimension. Suppressed at low energies. Examples: $\phi^6$, $(\bar\psi\psi)^2$.
+
+### Power Counting for Renormalizability
+
+A theory with only **relevant + marginal** couplings is **power-counting renormalizable**. All divergences can be absorbed into terms already in the Lagrangian.
+
+A theory with any **irrelevant** couplings is non-renormalizable. Divergences appear in arbitrarily high-dimension operators, requiring infinitely many counterterms.
+
+### QED Example
+
+QED has:
+- $\bar\psi(i\slashed\partial - m)\psi$: relevant + marginal
+- $-\tfrac{1}{4}F^2$: marginal
+- $-e\bar\psi\gamma^\mu\psi A_\mu$: marginal
+
+No irrelevant operators. QED is renormalizable.
+
+### $\phi^4$ Theory
+
+$\mathcal{L} = \tfrac{1}{2}(\partial\phi)^2 - \tfrac{1}{2}m^2\phi^2 - \tfrac{\lambda}{4!}\phi^4$
+
+- $(\partial\phi)^2$: marginal
+- $m^2\phi^2$: relevant
+- $\phi^4$: marginal ($[\phi^4] = 4$)
+
+Renormalizable.
+
+### Standard Model
+
+The Standard Model contains only relevant and marginal operators. This is why it's renormalizable and predictive.
+
+### Gravity
+
+General relativity has coupling $1/M_P^2$ where $M_P$ is the Planck mass; negative mass dimension. This makes the theory (as a QFT) non-renormalizable. Quantum gravity effects at high energies require new physics (string theory, loop quantum gravity, etc.).
+
+---
+
+## 11. Non-Renormalizable Theories as EFTs
+
+Even though non-renormalizable theories can't be UV-complete, they're extremely useful as **effective field theories** (EFTs); valid below some cutoff scale.
+
+### The EFT Framework
+
+An EFT is a theory valid below some UV cutoff $\Lambda$. The Lagrangian contains:
+
+$$\mathcal{L}_{\rm EFT} = \mathcal{L}_{\rm renormalizable} + \frac{c_5}{\Lambda}\mathcal{O}_5 + \frac{c_6}{\Lambda^2}\mathcal{O}_6 + \cdots$$
+
+Each higher-dimension operator is suppressed by appropriate powers of the cutoff. At energies $E \ll \Lambda$, the irrelevant operators are suppressed by $(E/\Lambda)^n$ and can be treated as small corrections.
+
+### Examples
+
+**Fermi theory of weak interactions:** $G_F(\bar\psi\psi)^2$ is non-renormalizable. But it's the low-energy limit of the electroweak theory (valid below the $W$ boson mass). The cutoff is $\Lambda \sim M_W$, and the higher-dimension Fermi operator is suppressed appropriately.
+
+**Chiral perturbation theory:** low-energy QCD, valid below the chiral symmetry breaking scale. Contains non-renormalizable interactions but is predictive at energies $\ll \Lambda_\chi \sim 1$ GeV.
+
+**General relativity:** an EFT valid below the Planck scale. Quantum corrections calculable order-by-order in $E^2/M_P^2$, even though the theory isn't UV-complete.
+
+### Renormalization in EFTs
+
+EFTs can be renormalized order by order in the EFT expansion. At each order, finitely many operators contribute, and their coefficients are either matched to experiments or computed by matching to a UV-complete theory (if known).
+
+This framework is extraordinarily powerful. It decouples short-distance physics (encoded in the operator coefficients) from long-distance dynamics (handled by the EFT). The Wilsonian view of renormalization (document 8) formalizes this.
+
+### The Lesson
+
+Renormalizability isn't a sacred property required of fundamental theories. Nature seems to be described, at energies below the Planck scale, by a renormalizable theory (the Standard Model); but that's an empirical fact, not a logical necessity. Non-renormalizable theories are fine, as long as you interpret them as EFTs with a specified cutoff.
+
+The "true" laws of physics may well be non-renormalizable from the perspective of our present theories. What we call renormalizable is simply "the leading terms in an EFT valid at accessible energies."
+
+---
+
+## 12. Physical Meaning: What Is Renormalization Really Doing?
+
+Let me step back and try to convey what's genuinely happening.
+
+### The Traditional View (Pre-Wilson)
+
+Renormalization was originally viewed as an *ad hoc* procedure: subtract infinite constants, pretend you've defined a finite theory, hope the subtractions are consistent. Many physicists (including Dirac) found this unsatisfying.
+
+### The Wilson View (Post-Wilson)
+
+Wilson's 1970s reformulation changed this completely. The key idea:
+
+**Every QFT should be understood as an effective theory at an energy scale $\Lambda$.** The Lagrangian at scale $\Lambda$ contains all operators compatible with the symmetries, with coefficients that may or may not be small.
+
+**Integrating out high-energy modes** (going from scale $\Lambda$ to scale $\Lambda' < \Lambda$) changes the coefficients of operators in a calculable way. This is the **renormalization group flow**.
+
+**At low energies** (much less than any cutoff), only relevant and marginal operators dominate. Irrelevant operators are suppressed by $(E/\Lambda)^n$.
+
+### What Renormalization Means
+
+In the Wilsonian picture:
+
+1. **Start** with a Lagrangian at some high scale $\Lambda_{\rm UV}$ with specific coefficients (these are the "bare" parameters).
+2. **Integrate out** modes between $\Lambda_{\rm UV}$ and some lower scale $\Lambda_{\rm IR}$. This produces a modified Lagrangian with renormalized coefficients.
+3. **The modified coefficients** depend on $\Lambda_{\rm IR}$; this dependence is the running.
+4. **Physical predictions** for observables at scale $\Lambda_{\rm IR}$ are computed using the renormalized coefficients.
+
+The divergences appear because we're asking what happens as $\Lambda_{\rm UV} \to \infty$; sending the cutoff to infinity. The bare parameters then have to run to specific divergent values to keep low-energy physics fixed.
+
+**Renormalization is the change of variables from bare (UV-scale) parameters to renormalized (low-scale) ones.** The infinities are artifacts of a particular parameterization, not physical phenomena.
+
+### Why It's Deep
+
+This reinterpretation connects QFT to **critical phenomena in statistical mechanics** (second-order phase transitions):
+
+- The RG flow for QFT ↔ the RG flow for critical systems
+- Universality classes in stat mech ↔ universality of low-energy EFTs
+- Relevant/irrelevant/marginal operators apply to both
+
+The mathematical structure; operators flowing under coarse-graining; is identical. Document 8 will develop this parallel properly.
+
+### Practical Consequence
+
+For practical calculations, all this structure means:
+
+- Divergences are handled systematically by counterterms
+- Physical predictions are finite
+- Running couplings can be computed and compared to experiment (for QED, the running of $\alpha$; for QCD, the running of $\alpha_s$; etc.)
+- The theory has full predictive power, at the cost of inputting a finite number of parameters from experiment
+
+This is how modern particle physics works. The Standard Model has roughly 20 free parameters (masses, couplings, mixing angles). Everything else is computed. The agreement with experiment is spectacular.
+
+---
+
+## 13. Appendix: Renormalization Formulas
+
+### QED Renormalization Constants
+
+**Bare-to-renormalized relations:**
+
+$$\psi_0 = \sqrt{Z_2}\,\psi$$
+
+$$A_0^\mu = \sqrt{Z_3}\,A^\mu$$
+
+$$m_0 = m + \delta m$$
+
+$$e_0 = \frac{Z_1}{Z_2\sqrt{Z_3}}e = \frac{e}{\sqrt{Z_3}} \quad \text{(using } Z_1 = Z_2\text{)}$$
+
+$$Z_i = 1 + \delta_i$$
+
+### One-Loop On-Shell Values (Feynman Gauge)
+
+$$\delta_2 = -\frac{e^2}{8\pi^2 \epsilon} + O(\text{finite})$$
+
+$$\delta_3 = -\frac{e^2}{6\pi^2 \epsilon} + O(\text{finite})$$
+
+$$\delta_1 = \delta_2 \quad \text{(Ward-Takahashi)}$$
+
+$$\delta m = \frac{3 e^2 m}{8\pi^2 \epsilon} + O(\text{finite})$$
+
+### Renormalization Conditions (On-Shell)
+
+**Electron:**
+$$\Sigma(\slashed{p} = m) = 0, \quad \frac{d\Sigma}{d\slashed{p}}\bigg|_{\slashed{p} = m} = 0$$
+
+**Photon:**
+$$\Pi(q^2 = 0) = 0$$
+
+**Vertex:**
+$$\bar u(p)\Gamma^\mu(p, p)u(p) = \bar u(p)\gamma^\mu u(p)$$
+
+### $\overline{MS}$ Scheme
+
+$$\delta Z_i^{\overline{MS}} = -\frac{1}{\epsilon}(\text{pole coefficient})$$
+
+Running coupling in $\overline{MS}$:
+
+$$\alpha(\mu) = \frac{\alpha(\mu_0)}{1 - (\alpha(\mu_0)/3\pi)\ln(\mu^2/\mu_0^2)} \quad (\text{QED, one-loop})$$
+
+### Operator Dimensions in 4D
+
+$$[\phi] = 1, \quad [\psi] = 3/2, \quad [A^\mu] = 1, \quad [\partial_\mu] = 1$$
+
+Renormalizable interactions in 4D: $[\mathcal{O}] \leq 4$.
+
+### Further Reading
+
+- **Peskin & Schroeder, Chapter 10:** standard treatment of renormalization
+- **Schwartz, Chapters 21-22:** clean modern presentation
+- **Srednicki, Chapters 51-55:** careful and systematic
+- **Weinberg, Vol. 1, Chapters 10-12:** rigorous foundations
+- **Collins, *Renormalization*:** the deep technical reference
+
+### Problems
+
+1. Show $Z_1 = Z_2$ at one loop by explicit calculation, not just citing the Ward-Takahashi identity. This is Peskin 10.2.
+
+2. Compute the one-loop $\delta_3$ from the vacuum polarization in $\overline{MS}$ scheme, and show it gives the leading-log running of $\alpha$.
+
+3. Write down all possible dimension-$\leq 4$ operators invariant under QED's symmetries (Lorentz, gauge, CPT). Verify that they're exactly the terms in the QED Lagrangian.
+
+4. For a fictional $\phi^6$ theory, show that loop divergences generate operators $\phi^8, \phi^{10}, \ldots$, so the theory is non-renormalizable.
+
+5. Using the renormalized Lagrangian, compute the one-loop electron-muon scattering amplitude at $O(e^4)$. Show all divergences cancel between loop and counterterm contributions.
+
+---
+
+## Closing Note
+
+Renormalization completes the conceptual journey from "here's a QFT Lagrangian" to "here's a finite prediction." The procedure:
+
+1. Write down bare parameters and counterterms
+2. Compute loop diagrams (divergent)
+3. Compute counterterm diagrams (finite coefficients, to be determined)
+4. Impose renormalization conditions (on-shell, $\overline{MS}$, or other)
+5. Extract finite physical predictions
+
+Along the way, you've seen:
+
+- **Bare vs. renormalized parameters**; only the latter are physical
+- **Counterterms**; corrections to the Lagrangian that absorb divergences
+- **Renormalization conditions**; define the finite parts of counterterms
+- **Ward-Takahashi identity** ($Z_1 = Z_2$); makes QED charge renormalization universal
+- **Renormalizability**; a technical property requiring only finitely many counterterms
+- **Non-renormalizable theories as EFTs**; still useful, just at finite energies
+
+### What's Next
+
+Document 8 develops the **renormalization group**; the beautiful modern framework that shows renormalization isn't just a procedure but a deep structural property of QFT. We'll see running couplings, beta functions, asymptotic freedom, and Wilson's effective-theory picture. The RG connects QFT to statistical mechanics, critical phenomena, and the structure of physics at different energy scales.
+
+The RG is where renormalization stops being a calculational necessity and becomes physics.
