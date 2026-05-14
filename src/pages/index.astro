@@ -61,35 +61,33 @@ const featuredEssay = essays.find((e) => e.id === 'a-little-help-for-my-friends'
 
       <!-- ━━ LEAD ━━ -->
       <section class="lead" aria-label="Lead Story">
-        <div class="lead-text">
-          <p class="lead-kicker">Lead Story &middot; Vol. I, No. I &middot; The Frontier</p>
-          <h2 class="lead-headline">
-            A Non-Physicist and an A.I.<br />
-            Walked to the Frontier of<br />
-            <em>Quantum Gravity.</em>
-          </h2>
-          <p class="lead-deck">
-            Eighteen days. Thirty-eight reference documents. One paper, headed for the arXiv. The full record, begun in Bend, Oregon and ended at the edge of the field, is presented herein.
-          </p>
-          <div class="lead-body">
-            <p><span class="lead-dropcap">O</span>n the twenty-third of April in the year MMXXVI, a man in Bend, Oregon asked an artificial intelligence where to start learning quantum mechanics. The conversation proceeded, in a single unbroken thread, from <em>F&nbsp;=&nbsp;ma</em> to the open problems of quantum gravity. By the eleventh of May, a paper had been written: a proof of two theorems, a verified empirical scaling law, and one integer-valued exponent gap that nobody has yet explained.</p>
-            <p>This site is the record. It is presented as a Victorian scientific journal because the work it documents,  a generalist setting out from first principles in pursuit of a question at the edge of human knowledge, belongs to that tradition.</p>
-          </div>
-          <div class="lead-cta">
-            <a class="btn-primary" href="/paper">Read the Paper</a>
-            <a class="btn-secondary" href="/field-notes/a-little-help-for-my-friends">Start with the Symphony</a>
-          </div>
-        </div>
-        <figure class="lead-plate">
-          <div class="plate">
-            <div class="plate-inner">
-              <img src="/images/donkeyedge.png" alt="A donkey upon the edge of a cliff, looking out over the investigation." width="800" height="600" />
+        <p class="lead-kicker">Lead Story &middot; Vol. I, No. I &middot; The Frontier</p>
+        <h2 class="lead-headline">
+          A Non-Physicist and an A.I. Walked to the Frontier of <em>Quantum Gravity.</em>
+        </h2>
+        <p class="lead-deck">
+          Eighteen days. Thirty-eight reference documents. One paper, headed for the arXiv. The full record, begun in Bend, Oregon and ended at the edge of the field, is presented herein.
+        </p>
+        <div class="lead-body">
+          <figure class="lead-plate">
+            <div class="plate">
+              <div class="plate-inner">
+                <img src="/images/donkeyedge.png" alt="A donkey upon the edge of a cliff, looking out over the investigation." width="800" height="600" />
+              </div>
             </div>
-          </div>
-          <figcaption class="plate-caption">
-            <span class="fig">Fig. I.</span> Donkey upon the Edge of the Investigation. Drawn from life, April MMXXVI.
-          </figcaption>
-        </figure>
+            <figcaption class="plate-caption">
+              <span class="fig">Fig. I.</span> Donkey upon the Edge of the Investigation. Drawn from life, April MMXXVI.
+            </figcaption>
+          </figure>
+          <p><span class="lead-dropcap">O</span>n the twenty-third of April in the year MMXXVI, a man in Bend, Oregon asked an artificial intelligence where to start learning quantum mechanics. The conversation proceeded, in a single unbroken thread, from <em>F&nbsp;=&nbsp;ma</em> to the open problems of quantum gravity. By the eleventh of May, a paper had been written: a proof of two theorems, a verified empirical scaling law, and one integer-valued exponent gap that nobody has yet explained.</p>
+          <p>This site is the record. It is presented as a Victorian scientific journal because the work it documents, a generalist setting out from first principles in pursuit of a question at the edge of human knowledge, belongs to that tradition. The curriculum is presented as a railway chart. The paper is presented as a folio. The field notes are presented as a notebook, open. Everything is here; the wrong turns are kept on the page along with the right ones, because the texture of doing the work is itself part of the record.</p>
+          <p>What sits at the end of the walk is small and specific. Two observers of the same quantum object, looking through a noisy and irreversible code, disagree about what they see by an amount that depends on the <em>structure</em> of the object. The dependence has a clean closed form for two extremal cases and an integer-valued gap between them. The integer is exactly one. Nobody yet knows why.</p>
+        </div>
+        <div class="lead-cta">
+          <a class="btn-primary" href="/paper">Read the Paper</a>
+          <a class="btn-secondary" href="/field-notes/a-little-help-for-my-friends">Start with the Symphony</a>
+          <a class="btn-secondary" href="/curriculum">Study the Map</a>
+        </div>
       </section>
 
       <div class="band-rule" aria-hidden="true">
@@ -210,43 +208,5 @@ const featuredEssay = essays.find((e) => e.id === 'a-little-help-for-my-friends'
       </section>
 
     </main>
-
-    <footer class="colophon">
-      <span class="colophon-mark">Colophon</span>
-      <div class="colophon-inner">
-        <figure class="colophon-portrait">
-          <img src="/images/donkeyportrait.png" alt="" aria-hidden="true" />
-        </figure>
-        <h2 class="colophon-byline">Adam R. Cagle</h2>
-        <p class="colophon-role">Editor &amp; Author</p>
-        <p class="colophon-with">
-          with <em>Claude</em> of Anthropic, in the role of computational collaborator.
-        </p>
-        <div class="colophon-rule" aria-hidden="true">
-          <span class="colophon-rule-line"></span>
-          <span class="colophon-rule-mark">&#8258;</span>
-          <span class="colophon-rule-line"></span>
-        </div>
-        <div class="colophon-notes">
-          <p>
-            Composed at Bend, in the State of Oregon, in the months of April and May, in the Year of Our Lord Two Thousand and Twenty-Six.
-          </p>
-          <p>
-            Set in <em>IM Fell DW Pica</em> for display matter, <em>Old Standard</em> for the body, and <em>JetBrains Mono</em> for the technical apparatus. Illustrations executed in pen and ink.
-          </p>
-        </div>
-        <nav class="colophon-links" aria-label="Footer links">
-          <a href="/paper">The Paper</a>
-          <a href="/curriculum">The Curriculum</a>
-          <a href="/field-notes">Field Notes</a>
-          <a href="/method">The Method</a>
-          <a href="/lab">The Lab</a>
-          <a href="/about">About</a>
-          <a href="/about#citation">Cite</a>
-          <a href="mailto:adamrcagle@gmail.com">Correspondence</a>
-        </nav>
-        <p class="colophon-meta">&copy; MMXXVI</p>
-      </div>
-    </footer>
   </div>
 </Base>

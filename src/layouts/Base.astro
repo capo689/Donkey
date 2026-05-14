@@ -2,6 +2,7 @@
 import '../styles/tokens.css';
 import '../styles/global.css';
 import '../styles/components.css';
+import SiteFooter from '../components/SiteFooter.astro';
 
 export interface Props {
   title: string;
@@ -68,5 +69,6 @@ const fullTitle = title === 'Home'
   </head>
   <body>
     <slot />
+    <SiteFooter />
   </body>
 </html>
