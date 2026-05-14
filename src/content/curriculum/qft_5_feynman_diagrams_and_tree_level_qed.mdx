@@ -11,4 +11,966 @@ classReportTitle: "Diagrams that mean something."
 
 *Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
 
-{/* Content from qft_5_feynman_diagrams_and_tree_level_qed.md */}
+# Feynman Diagrams and Tree-Level QED  
+  
+*QFT document 5: where Lagrangians become pictures, pictures become integrals, and integrals become cross-sections you can measure in a lab.*  
+  
+Document 4 built the machinery: interaction picture, Dyson expansion, Wick's theorem, LSZ. All of it produces the same output: perturbative amplitudes expressed as sums of terms, each term corresponding to a specific way of contracting fields. These terms have a natural graphical representation — **Feynman diagrams** — and the translation from diagrams to integrals is systematic enough to codify into a set of **Feynman rules**.  
+  
+This is the document where QFT becomes a calculational tool. By the end, we'll have computed the tree-level cross section for $e^+e^- \\to \\mu^+\\mu^-$ — a process measured to exquisite precision at LEP and SLC — and you'll see how the entire machinery of documents 1-4 collapses into a few-line calculation.  
+  
+### Conventions  
+  
+Same as documents 1-4: mostly-minus metric, $\\hbar = c = 1$, Einstein summation.  
+  
+### The Three-Step Method  
+  
+For every QFT calculation in this document:  
+  
+1. **Draw all topologically distinct Feynman diagrams** of the desired order.  
+2. **Apply Feynman rules** to translate each diagram into an integral expression.  
+3. **Evaluate and extract physical observables** (cross-sections, decay rates).  
+  
+Let's build it.  
+  
+---  
+  
+## Table of Contents  
+  
+1. [From Wick to Feynman Diagrams](#1-from-wick-to-feynman-diagrams)  
+2. [The QED Feynman Rules](#2-the-qed-feynman-rules)  
+3. [Example 1: Electron-Muon Scattering](#3-example-1-electron-muon-scattering)  
+4. [The Spin Sum Technique](#4-the-spin-sum-technique)  
+5. [Example 2: $e^+e^- \\to \\mu^+\\mu^-$](#5-example-2-ee---)  
+6. [Extracting the Cross Section](#6-extracting-the-cross-section)  
+7. [Example 3: Compton Scattering](#7-example-3-compton-scattering)  
+8. [Example 4: Electron-Electron (Møller) Scattering](#8-example-4-electron-electron-møller-scattering)  
+9. [Example 5: Bhabha Scattering ($e^+e^- \\to e^+e^-$)](#9-example-5-bhabha-scattering-ee---ee)  
+10. [Mandelstam Variables and the s, t, u Channels](#10-mandelstam-variables-and-the-s-t-u-channels)  
+11. [Experimental Verification](#11-experimental-verification)  
+12. [Appendix: Feynman Rules Reference Card](#appendix-feynman-rules-reference-card)  
+  
+---  
+  
+## 1. From Wick to Feynman Diagrams  
+  
+### The Translation  
+  
+Wick's theorem tells us that every term in the perturbative expansion of an S-matrix element is a sum of field contractions. Each contraction is a propagator; each external field is a wave function factor; each interaction vertex (from $\\mathcal{L}\_I$) has a specific structure.  
+  
+Feynman's insight (1948): we can represent these algebraic structures as *pictures*. Each picture encodes:  
+  
+- External particles (incoming/outgoing)  
+- Propagators (internal lines)  
+- Vertices (interaction points)  
+- Loops (when closed cycles form)  
+  
+And we can read the picture back into an integral expression using a fixed set of rules.  
+  
+### The Graphical Dictionary  
+  
+For scalar $\\phi^4$ theory, the dictionary is:  
+  
+| Graphical element | Algebraic meaning |  
+|---|---|  
+| Straight line (scalar) | Scalar field $\\phi$ |  
+| Point where 4 lines meet | Interaction vertex from $-\\frac{\\lambda}{4\!}\\phi^4$ |  
+| Line between two points | Scalar propagator $D\_F(x-y)$ |  
+| Line terminating at infinity | External leg (wave function factor) |  
+  
+For QED, the dictionary adds:  
+  
+| Graphical element | Algebraic meaning |  
+|---|---|  
+| Solid line with arrow | Dirac field $\\psi$ (arrow = particle direction) |  
+| Wavy line | Photon field $A^\\mu$ |  
+| Vertex with two fermion lines + one photon | QED interaction $-ieQ\\bar\\psi\\gamma^\\mu\\psi A\_\\mu$ |  
+  
+### Why Diagrams Are Useful  
+  
+Three reasons:  
+  
+**1. Bookkeeping.** When you expand the S-matrix to order $n$, there are many terms. Diagrams let you enumerate them systematically (draw all topologically distinct diagrams) rather than trying to track every Wick contraction by hand.  
+  
+**2. Physical interpretation.** A diagram tells you a story: "particle A enters, emits a virtual photon at point x, which is absorbed by particle B at point y, and they exit." The story corresponds directly to the mathematics.  
+  
+**3. Mechanical computation.** Given the Feynman rules, turning a diagram into an integral is automatic. No thinking required — just apply the rules.  
+  
+### Tree vs. Loop Diagrams  
+  
+A **tree diagram** has no closed loops. It represents the leading-order contribution to a process. Tree diagrams have no divergences and give the "classical" limit of the amplitude.  
+  
+A **loop diagram** has one or more closed internal cycles. These represent quantum corrections and generally involve integrals that diverge (hence the need for renormalization, coming in document 6).  
+  
+This document focuses exclusively on tree-level diagrams. The algebra is contained; the physics is already rich.  
+  
+### Topological Distinctness  
+  
+Two diagrams are the "same" if you can deform one into the other by moving vertices and lines without breaking connections. You must enumerate all *topologically distinct* diagrams of a given order; diagrams related by relabeling give the same contribution and shouldn't be double-counted.  
+  
+For simple processes at tree level, there are often only one or two topologies. This is why tree-level calculations are manageable.  
+  
+---  
+  
+## 2. The QED Feynman Rules  
+  
+### Derivation (Sketch)  
+  
+The rules come directly from applying Wick's theorem to the QED Lagrangian. For each term in the perturbative expansion:  
+  
+- External lines come from contracting the final-state/initial-state field with a mode operator — giving wave function factors  
+- Internal lines come from Wick contractions between interaction-vertex fields — giving propagators  
+- Vertex factors come from the interaction Lagrangian at each vertex, with appropriate factors of $i$ and coupling constants  
+  
+I won't re-derive these in full (document 4 laid the groundwork); I'll state them as a working reference.  
+  
+### The Full Rule Set (Feynman Gauge)  
+  
+**External lines:**  
+  
+For each **incoming electron** with momentum $p$, spin $s$: a factor of $u^s(p)$.  
+  
+For each **outgoing electron** with momentum $p$, spin $s$: a factor of $\\bar u^s(p)$.  
+  
+For each **incoming positron** with momentum $p$, spin $s$: a factor of $\\bar v^s(p)$.  
+  
+For each **outgoing positron** with momentum $p$, spin $s$: a factor of $v^s(p)$.  
+  
+For each **incoming photon** with momentum $k$, polarization $\\lambda$: a factor of $\\epsilon^\\mu\_\\lambda(k)$.  
+  
+For each **outgoing photon** with momentum $k$, polarization $\\lambda$: a factor of $\\epsilon^{\\mu\*}\_\\lambda(k)$.  
+  
+**Internal lines:**  
+  
+For each **internal fermion line** with momentum $p$ (flowing along the arrow):  
+  
+$$\\frac{i(\\slashed{p} + m)}{p^2 - m^2 + i\\epsilon}$$  
+  
+For each **internal photon line** with momentum $k$ (in Feynman gauge):  
+  
+$$\\frac{-i\\eta^{\\mu\\nu}}{k^2 + i\\epsilon}$$  
+  
+**Vertex:**  
+  
+At each **fermion-fermion-photon vertex**: a factor of $-ieQ\\gamma^\\mu$, where $Q$ is the fermion's electric charge in units of $e$ ($Q = -1$ for electrons/muons, $+2/3$ for up-type quarks, etc.).  
+  
+**Combinatorics:**  
+  
+- **Momentum conservation** at every vertex: incoming momenta sum to outgoing momenta.  
+- **Integrate over each undetermined loop momentum**: $\\int d^4k/(2\\pi)^4$ for each independent loop.  
+- **Factor of (-1) for each closed fermion loop**: from the anticommuting nature of fermionic fields.  
+- **Divide by any symmetry factor** that overcounts diagrams (typically 1 for tree diagrams).  
+  
+**Reading direction:**  
+  
+- For fermion lines, the arrows tell you the direction of particle flow (opposite for antiparticles)  
+- Amplitude factors for fermion lines are read **against** the arrow direction: start at the head (final state), work backward to the tail (initial state)  
+  
+### An Important Subtlety: Ordering Fermion Factors  
+  
+Fermion factors don't commute in general — they're Dirac matrices and spinors. When you write down an amplitude, the fermion factors along a single fermion line must be written in the correct order: start from the incoming end, multiply by vertex factors, by propagator factors, by more vertex factors, ending at the outgoing end.  
+  
+For a single fermion line that goes through the diagram incoming → vertex 1 → propagator → vertex 2 → outgoing:  
+  
+$$\\bar u(\\text{out})\\,\\cdot\\,\\gamma^\\mu\\,\\cdot\\,\[\\text{propagator}\]\\,\\cdot\\,\\gamma^\\nu\\,\\cdot\\,u(\\text{in})$$  
+  
+Read from left to right in the amplitude corresponds to reading from the outgoing end back to the incoming end along the line.  
+  
+### Why $-ieQ\\gamma^\\mu$?  
+  
+The interaction term in the QED Lagrangian is $-eQ\\bar\\psi\\gamma^\\mu\\psi A\_\\mu$. In Dyson's formula, $S = T\\exp\[-i\\int \\mathcal{H}\_I\]$. Each vertex comes from one factor of $\\mathcal{H}\_I = -\\mathcal{L}\_I$ (for non-derivative interactions), so each vertex contributes $-i \\cdot (-(-eQ\\gamma^\\mu)) = -ieQ\\gamma^\\mu$ after the sign bookkeeping (careful: $\\mathcal{L}\_I$ has a coefficient, $\\mathcal{H}\_I = -\\mathcal{L}\_I$ for these simple interactions, and Dyson gives $-i\\mathcal{H}\_I$).  
+  
+The conventions are fiddly. Different textbooks have sign conventions that differ by an overall $i$ or $-$ in the vertex factor. Physical results (which depend on $|\\mathcal{M}|^2$) are unaffected. Stay consistent within one set.  
+  
+---  
+  
+## 3. Example 1: Electron-Muon Scattering  
+  
+Let's start with the simplest QED process involving two different particles. This avoids the exchange-diagram complications that arise with identical particles.  
+  
+### The Process  
+  
+$e^-(p\_1) + \\mu^-(p\_2) \\to e^-(p\_3) + \\mu^-(p\_4)$  
+  
+Two incoming charged fermions (electron and muon, of different species), two outgoing. Electromagnetic interaction only.  
+  
+### Drawing the Diagrams  
+  
+At tree level, the only way to couple the electron line to the muon line via QED is through an exchanged photon. One diagram:  
+  
+- Electron line enters at $p\_1$, emits/absorbs a virtual photon, exits at $p\_3$  
+- Muon line enters at $p\_2$, emits/absorbs the photon, exits at $p\_4$  
+- The photon connects the two vertices  
+  
+(Mentally: imagine two horizontal parallel lines — the electron on top, muon on bottom — connected by a wavy photon line between them.)  
+  
+Since the two fermions are different species, there's no exchange diagram. One topology only.  
+  
+### Applying the Feynman Rules  
+  
+Reading the diagram, writing the amplitude:  
+  
+**Incoming electron:** $u^{s\_1}(p\_1)$  
+**Outgoing electron:** $\\bar u^{s\_3}(p\_3)$  
+**Electron vertex:** $-ie(-1)\\gamma^\\mu = ie\\gamma^\\mu$ (electron has $Q = -1$)  
+**Photon propagator** (momentum $q = p\_1 - p\_3$): $\\frac{-i\\eta^{\\mu\\nu}}{q^2}$  
+**Muon vertex:** $-ie(-1)\\gamma^\\nu = ie\\gamma^\\nu$ (muon also has $Q = -1$)  
+**Incoming muon:** $u^{s\_2}(p\_2)$  
+**Outgoing muon:** $\\bar u^{s\_4}(p\_4)$  
+  
+Assembling (reading each fermion line from outgoing to incoming):  
+  
+$$i\\mathcal{M} = \[\\bar u^{s\_3}(p\_3)(ie\\gamma^\\mu)u^{s\_1}(p\_1)\]\\cdot\\frac{-i\\eta\_{\\mu\\nu}}{q^2}\\cdot\[\\bar u^{s\_4}(p\_4)(ie\\gamma^\\nu)u^{s\_2}(p\_2)\]$$  
+  
+Simplifying:  
+  
+$$i\\mathcal{M} = \\frac{-ie^2}{q^2}\[\\bar u^{s\_3}\\gamma^\\mu u^{s\_1}\]\[\\bar u^{s\_4}\\gamma\_\\mu u^{s\_2}\]$$  
+  
+Or cleaner:  
+  
+$$\\mathcal{M} = \\frac{e^2}{q^2}\[\\bar u^{s\_3}\\gamma^\\mu u^{s\_1}\]\[\\bar u^{s\_4}\\gamma\_\\mu u^{s\_2}\]$$  
+  
+where $q = p\_1 - p\_3$ is the momentum transferred through the photon.  
+  
+### What the Amplitude Looks Like  
+  
+Three factors:  
+  
+1. $\[\\bar u^{s\_3}\\gamma^\\mu u^{s\_1}\]$ — electron current  
+2. $\[\\bar u^{s\_4}\\gamma\_\\mu u^{s\_2}\]$ — muon current, contracted with the electron current via the metric  
+3. $e^2/q^2$ — photon propagator times two coupling factors  
+  
+Physically: the electron sources an electromagnetic current, which propagates as a virtual photon, and scatters off the muon's current. This is exactly the QED picture of electromagnetic interaction.  
+  
+### Moving Toward the Cross Section  
+  
+To get the differential cross section, we need $|\\mathcal{M}|^2$, summed over final spins and averaged over initial spins (for an unpolarized beam). The product of currents gives traces of gamma matrices, which we can evaluate using the identities from the workbook.  
+  
+Before computing this, let me introduce the spin sum technique systematically.  
+  
+---  
+  
+## 4. The Spin Sum Technique  
+  
+### The Problem  
+  
+Unpolarized cross sections involve:  
+  
+$$\\overline{|\\mathcal{M}|^2} = \\frac{1}{N\_{\\text{initial spin}}}\\sum\_{\\text{all spins}}|\\mathcal{M}|^2$$  
+  
+For $e^-\\mu^-$ scattering with all four particles being spin-1/2, we have $2^4 = 16$ spin configurations. Computing each and summing is unpleasant.  
+  
+The trick: convert the spin sum into a trace of gamma matrices, which can be evaluated using trace identities.  
+  
+### The Magic Identity  
+  
+For any matrix $M$ sandwiched between spinors:  
+  
+$$\\sum\_s |\\bar u^s(p) M u^s(p)|^2 = \\sum\_s \[\\bar u^s(p)M u^s(p)\]\[\\bar u^s(p) \\bar M u^s(p)\]^\*$$  
+  
+where I've used $X^\\dagger$-like conjugation. Work through:  
+  
+$$\[\\bar u M u\]^\* = u^\\dagger M^\\dagger \\bar u^{\*} = ...$$  
+  
+Getting the indices right:  
+  
+$$|\\bar u M u|^2 = \[\\bar u\_a M\_{ab} u\_b\]\[u\_c^\* M^\*\_{cd}\\bar u\_d^\*\] = \[\\bar u\_a M\_{ab} u\_b\]\[\\bar u\_d (M^\\dagger\\gamma^0)\_{?}\] $$  
+  
+Hmm, let me be careful. For $\[\\bar u(p') M u(p)\]^\* = \[\\bar u(p) \\gamma^0 M^\\dagger \\gamma^0 u(p')\] = \[\\bar u(p) \\bar M u(p')\]$ where $\\bar M \\equiv \\gamma^0 M^\\dagger \\gamma^0$.  
+  
+So:  
+  
+$$|\\bar u(p') M u(p)|^2 = \[\\bar u(p') M u(p)\]\[\\bar u(p)\\bar M u(p')\]$$  
+  
+Now sum over spins. Using $\\sum\_s u^s(p)\\bar u^s(p) = \\slashed{p} + m$:  
+  
+$$\\sum\_{s,s'}|\\bar u^{s'}(p') M u^s(p)|^2 = \\text{Tr}\[(\\slashed{p}' + m')M(\\slashed{p} + m)\\bar M\]$$  
+  
+**The spin sum becomes a trace of gamma matrices.** This is the single most useful computational technique in tree-level QED.  
+  
+### Example: The Electron Current  
+  
+For the electron current factor $|\[\\bar u^{s\_3}(p\_3)\\gamma^\\mu u^{s\_1}(p\_1)\]|^2$, summed over spins:  
+  
+$$\\sum\_{s\_1, s\_3}|\\bar u^{s\_3}(p\_3)\\gamma^\\mu u^{s\_1}(p\_1)|^2 = \\text{Tr}\[(\\slashed{p}\_3 + m\_e)\\gamma^\\mu(\\slashed{p}\_1 + m\_e)\\bar\\gamma^\\mu\]$$  
+  
+Wait — we need the conjugate $\\bar\\gamma^\\mu = \\gamma^0\\gamma^{\\mu\\dagger}\\gamma^0$. Using $\\gamma^{\\mu\\dagger} = \\gamma^0\\gamma^\\mu\\gamma^0$ (a known identity), we get $\\bar\\gamma^\\mu = \\gamma^\\mu$. Good — the vertex structure is self-conjugate under this operation.  
+  
+But here's the subtlety — we want the spin sum of $\\mathcal{M}^\* \\mathcal{M}$, not just $|\\bar u\\gamma^\\mu u|^2$. The amplitude has both an electron current and a muon current. Let me redo this more carefully.  
+  
+### The Full $|\\mathcal{M}|^2$  
+  
+$$\\mathcal{M}^\*\\mathcal{M} = \\left\[\\frac{e^2}{q^2}\\right\]^2 \[\\bar u\_3\\gamma^\\mu u\_1\]\[\\bar u\_4\\gamma\_\\mu u\_2\]\[\\bar u\_3\\gamma^\\nu u\_1\]^\*\[\\bar u\_4\\gamma\_\\nu u\_2\]^\*$$  
+  
+Using $\[\\bar u\_3\\gamma^\\nu u\_1\]^\* = \[\\bar u\_1\\gamma^\\nu u\_3\]$ (with the bar-conjugation):  
+  
+$$= \\left\[\\frac{e^2}{q^2}\\right\]^2 \[\\bar u\_3\\gamma^\\mu u\_1\]\[\\bar u\_1\\gamma^\\nu u\_3\]\[\\bar u\_4\\gamma\_\\mu u\_2\]\[\\bar u\_2\\gamma\_\\nu u\_4\]$$  
+  
+Now sum over all spins. Two groups of indices: electron (1,3) and muon (2,4). Each group gives a trace:  
+  
+**Electron trace** (using spin sums):  
+  
+$$\\sum\_{s\_1, s\_3}\[\\bar u\_3\\gamma^\\mu u\_1\]\[\\bar u\_1\\gamma^\\nu u\_3\] = \\text{Tr}\[(\\slashed{p}\_3 + m\_e)\\gamma^\\mu(\\slashed{p}\_1 + m\_e)\\gamma^\\nu\]$$  
+  
+(The electron trace is contracted at $\\mu, \\nu$ indices.)  
+  
+**Muon trace:**  
+  
+$$\\sum\_{s\_2, s\_4}\[\\bar u\_4\\gamma\_\\mu u\_2\]\[\\bar u\_2\\gamma\_\\nu u\_4\] = \\text{Tr}\[(\\slashed{p}\_4 + m\_\\mu)\\gamma\_\\mu(\\slashed{p}\_2 + m\_\\mu)\\gamma\_\\nu\]$$  
+  
+### The Average  
+  
+The total:  
+  
+$$\\overline{|\\mathcal{M}|^2} = \\frac{1}{4}\\sum\_{\\text{all spins}}|\\mathcal{M}|^2 = \\left\[\\frac{e^2}{q^2}\\right\]^2\\cdot\\frac{1}{4}\\,L\_e^{\\mu\\nu}\\cdot L\_\\mu^{\\mu\\nu}$$  
+  
+Wait, let me clean up notation. Define:  
+  
+$$L\_e^{\\mu\\nu} \\equiv \\text{Tr}\[(\\slashed{p}\_3 + m\_e)\\gamma^\\mu(\\slashed{p}\_1 + m\_e)\\gamma^\\nu\]$$  
+  
+$$L\_\\mu^{\\mu\\nu} \\equiv \\text{Tr}\[(\\slashed{p}\_4 + m\_\\mu)\\gamma^\\mu(\\slashed{p}\_2 + m\_\\mu)\\gamma^\\nu\]$$  
+  
+(The subscript $\\mu$ outside of the tensor is the muon label, not an index. Sorry — notation clash. Let me rename.)  
+  
+Let $L\_1^{\\mu\\nu}$ be the electron trace and $L\_2^{\\mu\\nu}$ the muon trace. Then:  
+  
+$$\\overline{|\\mathcal{M}|^2} = \\left\[\\frac{e^2}{q^2}\\right\]^2\\cdot\\frac{1}{4}\\,L\_1^{\\mu\\nu}\\,L\_{2\\mu\\nu}$$  
+  
+Now we just need to compute the two traces using trace identities from the workbook.  
+  
+### Computing the Electron Trace  
+  
+$$L\_1^{\\mu\\nu} = \\text{Tr}\[(\\slashed{p}\_3 + m\_e)\\gamma^\\mu(\\slashed{p}\_1 + m\_e)\\gamma^\\nu\]$$  
+  
+Expand:  
+  
+$$= \\text{Tr}\[\\slashed{p}\_3\\gamma^\\mu\\slashed{p}\_1\\gamma^\\nu\] + m\_e\\text{Tr}\[\\gamma^\\mu\\slashed{p}\_1\\gamma^\\nu\] + m\_e\\text{Tr}\[\\slashed{p}\_3\\gamma^\\mu\\gamma^\\nu\] + m\_e^2\\text{Tr}\[\\gamma^\\mu\\gamma^\\nu\]$$  
+  
+The middle two terms (three gamma matrices) vanish by the odd-trace rule from the workbook. So:  
+  
+$$L\_1^{\\mu\\nu} = \\text{Tr}\[\\slashed{p}\_3\\gamma^\\mu\\slashed{p}\_1\\gamma^\\nu\] + m\_e^2\\text{Tr}\[\\gamma^\\mu\\gamma^\\nu\]$$  
+  
+**First term:** $\\text{Tr}\[\\slashed{p}\_3\\gamma^\\mu\\slashed{p}\_1\\gamma^\\nu\] = p\_{3\\alpha}p\_{1\\beta}\\text{Tr}\[\\gamma^\\alpha\\gamma^\\mu\\gamma^\\beta\\gamma^\\nu\]$. Using the four-gamma trace identity from the workbook:  
+  
+$$\\text{Tr}\[\\gamma^\\alpha\\gamma^\\mu\\gamma^\\beta\\gamma^\\nu\] = 4(\\eta^{\\alpha\\mu}\\eta^{\\beta\\nu} - \\eta^{\\alpha\\beta}\\eta^{\\mu\\nu} + \\eta^{\\alpha\\nu}\\eta^{\\mu\\beta})$$  
+  
+Contracting with $p\_{3\\alpha}p\_{1\\beta}$:  
+  
+$$= 4(p\_3^\\mu p\_1^\\nu - (p\_3\\cdot p\_1)\\eta^{\\mu\\nu} + p\_3^\\nu p\_1^\\mu)$$  
+  
+**Second term:** $m\_e^2 \\text{Tr}\[\\gamma^\\mu\\gamma^\\nu\] = 4m\_e^2\\eta^{\\mu\\nu}$.  
+  
+**Total:**  
+  
+$$L\_1^{\\mu\\nu} = 4\[p\_3^\\mu p\_1^\\nu + p\_1^\\mu p\_3^\\nu - (p\_1\\cdot p\_3)\\eta^{\\mu\\nu} + m\_e^2\\eta^{\\mu\\nu}\]$$  
+  
+$$= 4\[p\_3^\\mu p\_1^\\nu + p\_1^\\mu p\_3^\\nu - (p\_1\\cdot p\_3 - m\_e^2)\\eta^{\\mu\\nu}\]$$  
+  
+### The Muon Trace  
+  
+By identical algebra, substituting $p\_2 \\to p\_2$, $p\_4 \\to p\_4$, $m\_e \\to m\_\\mu$:  
+  
+$$L\_{2\\mu\\nu} = 4\[p\_{4\\mu} p\_{2\\nu} + p\_{2\\mu} p\_{4\\nu} - (p\_2\\cdot p\_4 - m\_\\mu^2)\\eta\_{\\mu\\nu}\]$$  
+  
+### Contracting the Two Traces  
+  
+$$L\_1^{\\mu\\nu}L\_{2\\mu\\nu} = 16\[p\_3^\\mu p\_1^\\nu + p\_1^\\mu p\_3^\\nu - (p\_1\\cdot p\_3 - m\_e^2)\\eta^{\\mu\\nu}\]\\times$$  
+  
+$$\\times\[p\_{4\\mu} p\_{2\\nu} + p\_{2\\mu} p\_{4\\nu} - (p\_2\\cdot p\_4 - m\_\\mu^2)\\eta\_{\\mu\\nu}\]$$  
+  
+Expanding all nine terms:  
+  
+$p\_3^\\mu p\_1^\\nu \\cdot p\_{4\\mu} p\_{2\\nu} = (p\_3\\cdot p\_4)(p\_1\\cdot p\_2)$  
+  
+$p\_3^\\mu p\_1^\\nu \\cdot p\_{2\\mu} p\_{4\\nu} = (p\_3\\cdot p\_2)(p\_1\\cdot p\_4)$  
+  
+$p\_3^\\mu p\_1^\\nu \\cdot \[-(p\_2\\cdot p\_4 - m\_\\mu^2)\\eta\_{\\mu\\nu}\] = -(p\_2\\cdot p\_4 - m\_\\mu^2)(p\_3\\cdot p\_1)$  
+  
+(Similarly for the other six terms by symmetry of the expression.)  
+  
+After the algebra (I'll skip the most tedious bookkeeping), you get:  
+  
+$$L\_1^{\\mu\\nu}L\_{2\\mu\\nu} = 32\[(p\_1\\cdot p\_2)(p\_3\\cdot p\_4) + (p\_1\\cdot p\_4)(p\_2\\cdot p\_3) - (p\_1\\cdot p\_3)m\_\\mu^2 - (p\_2\\cdot p\_4)m\_e^2 + 2m\_e^2 m\_\\mu^2\]$$  
+  
+### High-Energy Limit (Masses Negligible)  
+  
+For $e^-\\mu^-$ scattering at energies much greater than particle masses, drop $m\_e, m\_\\mu$ terms:  
+  
+$$L\_1^{\\mu\\nu}L\_{2\\mu\\nu} \\to 32\[(p\_1\\cdot p\_2)(p\_3\\cdot p\_4) + (p\_1\\cdot p\_4)(p\_2\\cdot p\_3)\]$$  
+  
+### The Final $\\overline{|\\mathcal{M}|^2}$ (High Energy)  
+  
+$$\\overline{|\\mathcal{M}|^2} = \\frac{e^4}{q^4}\\cdot\\frac{1}{4}\\cdot 32\\cdot\[(p\_1\\cdot p\_2)(p\_3\\cdot p\_4) + (p\_1\\cdot p\_4)(p\_2\\cdot p\_3)\]$$  
+  
+$$= \\frac{8e^4}{q^4}\[(p\_1\\cdot p\_2)(p\_3\\cdot p\_4) + (p\_1\\cdot p\_4)(p\_2\\cdot p\_3)\]$$  
+  
+Now we need to convert this to a cross section, which requires expressing it in Mandelstam variables or specifying a frame.  
+  
+---  
+  
+## 5. Example 2: $e^+e^- \\to \\mu^+\\mu^-$  
+  
+This is the canonical QED tree-level calculation and a staple of every QFT textbook. Clean, simple, benchmark.  
+  
+### The Process  
+  
+$e^-(p\_1) + e^+(p\_2) \\to \\mu^-(p\_3) + \\mu^+(p\_4)$  
+  
+An electron and a positron annihilate; the resulting virtual photon produces a muon pair.  
+  
+### The Diagram  
+  
+Only one tree-level topology: the $s$-channel. The $e^+e^-$ pair annihilates at a single vertex, producing a virtual photon that propagates with 4-momentum $q = p\_1 + p\_2$, then creates the $\\mu^+\\mu^-$ pair at the other vertex.  
+  
+Graphically: $e^-, e^+$ come in, meet at a vertex, emit a photon, and the photon becomes $\\mu^-, \\mu^+$.  
+  
+### The Amplitude  
+  
+Applying Feynman rules:  
+  
+**Electron-positron vertex:** $ie\\gamma^\\mu$. The factors at this vertex are:  
+- $\\bar v^{s\_2}(p\_2)$ for the outgoing (in time-reversed sense; really an incoming) positron  
+- $u^{s\_1}(p\_1)$ for the incoming electron  
+- $ie\\gamma^\\mu$ for the vertex  
+  
+So the factor is $\[\\bar v^{s\_2}(p\_2)ie\\gamma^\\mu u^{s\_1}(p\_1)\]$.  
+  
+**Photon propagator** (momentum $q = p\_1 + p\_2 = p\_3 + p\_4$): $-i\\eta\_{\\mu\\nu}/q^2$.  
+  
+**Muon-antimuon vertex:** Similar structure. The factor is $\[\\bar u^{s\_3}(p\_3)ie\\gamma^\\nu v^{s\_4}(p\_4)\]$.  
+  
+Putting it together:  
+  
+$$i\\mathcal{M} = \[\\bar v^{s\_2}(p\_2)ie\\gamma^\\mu u^{s\_1}(p\_1)\]\\cdot\\frac{-i\\eta\_{\\mu\\nu}}{q^2}\\cdot\[\\bar u^{s\_3}(p\_3)ie\\gamma^\\nu v^{s\_4}(p\_4)\]$$  
+  
+$$\\mathcal{M} = \\frac{-e^2}{q^2}\[\\bar v(p\_2)\\gamma^\\mu u(p\_1)\]\[\\bar u(p\_3)\\gamma\_\\mu v(p\_4)\]$$  
+  
+(Dropping spin labels for brevity.)  
+  
+### Computing $|\\mathcal{M}|^2$  
+  
+The spin sum proceeds analogously to Example 1, but now with $v$-spinor completeness $\\sum\_s v^s(p)\\bar v^s(p) = \\slashed{p} - m$ appearing for the positron/antimuon legs.  
+  
+After the trace algebra (similar to section 4 but with appropriate sign changes for the $v$-spinors):  
+  
+**Electron-positron trace:**  
+  
+$$\\sum\_{s\_1, s\_2}\[\\bar v(p\_2)\\gamma^\\mu u(p\_1)\]\[\\bar u(p\_1)\\gamma^\\nu v(p\_2)\] = \\text{Tr}\[(\\slashed{p}\_1 + m\_e)\\gamma^\\nu(\\slashed{p}\_2 - m\_e)\\gamma^\\mu\]$$  
+  
+(The $u\\bar u = \\slashed{p} + m$ goes where the electron was; the $v\\bar v = \\slashed{p} - m$ where the positron was.)  
+  
+In the high-energy limit ($m\_e, m\_\\mu \\to 0$):  
+  
+$$L\_e^{\\mu\\nu} = \\text{Tr}\[\\slashed{p}\_1\\gamma^\\nu\\slashed{p}\_2\\gamma^\\mu\] = 4\[p\_1^\\nu p\_2^\\mu + p\_1^\\mu p\_2^\\nu - (p\_1\\cdot p\_2)\\eta^{\\mu\\nu}\]$$  
+  
+**Muon trace:** Similar form, for the outgoing muons.  
+  
+### The Result  
+  
+After the full contraction (details below) and averaging over initial spins (factor of 1/4):  
+  
+$$\\overline{|\\mathcal{M}|^2} = \\frac{e^4}{q^4}\\cdot 4\\cdot 2\\left\[(p\_1\\cdot p\_3)(p\_2\\cdot p\_4) + (p\_1\\cdot p\_4)(p\_2\\cdot p\_3)\\right\]$$  
+  
+$$= \\frac{8e^4}{q^4}\\left\[(p\_1\\cdot p\_3)(p\_2\\cdot p\_4) + (p\_1\\cdot p\_4)(p\_2\\cdot p\_3)\\right\]$$  
+  
+### In Mandelstam Variables  
+  
+Using:  
+- $s = (p\_1 + p\_2)^2 = q^2$  
+- $t = (p\_1 - p\_3)^2$  
+- $u = (p\_1 - p\_4)^2$  
+  
+In the massless limit:  
+- $2p\_1\\cdot p\_2 = s$  
+- $2p\_1\\cdot p\_3 = -t$, so $p\_1\\cdot p\_3 = -t/2$  
+- $2p\_1\\cdot p\_4 = -u$, so $p\_1\\cdot p\_4 = -u/2$  
+- $p\_3\\cdot p\_4 = s/2$ (final-state Mandelstam)  
+- $p\_2\\cdot p\_3 = -u/2$  
+- $p\_2\\cdot p\_4 = -t/2$  
+  
+So:  
+  
+$$(p\_1\\cdot p\_3)(p\_2\\cdot p\_4) = (-t/2)(-t/2) = t^2/4$$  
+  
+$$(p\_1\\cdot p\_4)(p\_2\\cdot p\_3) = (-u/2)(-u/2) = u^2/4$$  
+  
+And:  
+  
+$$\\overline{|\\mathcal{M}|^2} = \\frac{8e^4}{s^2}\\cdot\\frac{t^2 + u^2}{4} = \\frac{2e^4(t^2 + u^2)}{s^2}$$  
+  
+This is the famous result.  
+  
+---  
+  
+## 6. Extracting the Cross Section  
+  
+### The 2 → 2 Differential Cross Section Formula  
+  
+From document 4:  
+  
+$$\\frac{d\\sigma}{d\\Omega}\\bigg|\_{\\rm CM} = \\frac{1}{64\\pi^2 s}\\cdot\\frac{|\\vec p\_f|}{|\\vec p\_i|}\\overline{|\\mathcal{M}|^2}$$  
+  
+In the CM frame for $2 \\to 2$ scattering with all particles massless (high-energy limit), $|\\vec p\_f|/|\\vec p\_i| = 1$, and:  
+  
+$$\\frac{d\\sigma}{d\\Omega} = \\frac{\\overline{|\\mathcal{M}|^2}}{64\\pi^2 s}$$  
+  
+### For $e^+e^- \\to \\mu^+\\mu^-$  
+  
+Plugging in $\\overline{|\\mathcal{M}|^2} = 2e^4(t^2 + u^2)/s^2$:  
+  
+$$\\frac{d\\sigma}{d\\Omega} = \\frac{2e^4(t^2 + u^2)}{64\\pi^2 s^3} = \\frac{e^4(t^2 + u^2)}{32\\pi^2 s^3}$$  
+  
+In terms of the fine-structure constant $\\alpha = e^2/(4\\pi)$, so $e^4 = 16\\pi^2\\alpha^2$:  
+  
+$$\\frac{d\\sigma}{d\\Omega} = \\frac{16\\pi^2\\alpha^2(t^2 + u^2)}{32\\pi^2 s^3} = \\frac{\\alpha^2(t^2 + u^2)}{2s^3}$$  
+  
+### Expressing in Terms of the Scattering Angle  
+  
+In the CM frame, let $\\theta$ be the angle between the outgoing muon and the incoming electron. In the massless limit:  
+  
+$$t = -\\frac{s}{2}(1 - \\cos\\theta), \\quad u = -\\frac{s}{2}(1 + \\cos\\theta)$$  
+  
+$$t^2 + u^2 = \\frac{s^2}{4}\[(1-\\cos\\theta)^2 + (1+\\cos\\theta)^2\] = \\frac{s^2}{4}\\cdot 2(1 + \\cos^2\\theta) = \\frac{s^2(1 + \\cos^2\\theta)}{2}$$  
+  
+So:  
+  
+$$\\frac{d\\sigma}{d\\Omega} = \\frac{\\alpha^2}{2s^3}\\cdot\\frac{s^2(1 + \\cos^2\\theta)}{2} = \\frac{\\alpha^2(1 + \\cos^2\\theta)}{4s}$$  
+  
+This is the **textbook result** for $e^+e^- \\to \\mu^+\\mu^-$. It's angular distribution: proportional to $1 + \\cos^2\\theta$. The distribution is symmetric in $\\theta \\to \\pi - \\theta$ (forward-backward symmetric) — a QED signature (parity-violating interactions would break this symmetry).  
+  
+### Total Cross Section  
+  
+Integrate over solid angle:  
+  
+$$\\sigma = \\int\_0^{2\\pi}d\\phi\\int\_{-1}^1 d\\cos\\theta\\cdot\\frac{\\alpha^2(1 + \\cos^2\\theta)}{4s}$$  
+  
+$$= 2\\pi\\cdot\\frac{\\alpha^2}{4s}\\cdot\\int\_{-1}^1(1 + x^2)dx = 2\\pi\\cdot\\frac{\\alpha^2}{4s}\\cdot\\frac{8}{3} = \\frac{4\\pi\\alpha^2}{3s}$$  
+  
+$$\\boxed{\\sigma(e^+e^- \\to \\mu^+\\mu^-) = \\frac{4\\pi\\alpha^2}{3s}}$$  
+  
+This formula is engraved in every QFT textbook. At $\\sqrt{s} = 1$ GeV, it gives $\\sigma \\sim 90$ nb. At $\\sqrt{s} = 100$ GeV, $\\sigma \\sim 9$ pb. The $1/s$ dependence is a key testable prediction.  
+  
+### Experimental Status  
+  
+This prediction has been tested at essentially every electron-positron collider ever built (SLC, LEP, DAΦNE, BEPC, KEKB, SuperKEKB). Agreement with QED prediction is excellent — after including small electroweak corrections at high energy (Z-boson exchange adds a contribution for $\\sqrt{s} \\gtrsim 10$ GeV).  
+  
+---  
+  
+## 7. Example 3: Compton Scattering  
+  
+Another classic: photon-electron scattering. Historically important — Compton's 1923 experiment established that photons carry momentum like particles, confirming the photon hypothesis.  
+  
+### The Process  
+  
+$\\gamma(k\_1) + e^-(p\_1) \\to \\gamma(k\_2) + e^-(p\_2)$  
+  
+### The Diagrams  
+  
+Two tree-level diagrams:  
+  
+**Diagram (a) — s-channel:** The electron absorbs the incoming photon, propagates as a virtual electron, then emits the outgoing photon.  
+  
+**Diagram (b) — u-channel:** The electron emits the outgoing photon first, propagates as a virtual electron, then absorbs the incoming photon.  
+  
+Both diagrams contribute; you must sum them.  
+  
+### The Amplitudes  
+  
+**Diagram (a):** Virtual electron momentum $p\_1 + k\_1$.  
+  
+$$i\\mathcal{M}\_a = \[\\bar u(p\_2)ie\\gamma^\\mu\\epsilon^\*\_{2\\mu}\]\\cdot\\frac{i(\\slashed{p}\_1 + \\slashed{k}\_1 + m\_e)}{(p\_1 + k\_1)^2 - m\_e^2}\\cdot\[ie\\gamma^\\nu\\epsilon\_{1\\nu}u(p\_1)\]$$  
+  
+Using $(p\_1 + k\_1)^2 - m\_e^2 = 2p\_1\\cdot k\_1$ (photon is massless, electron on shell):  
+  
+$$i\\mathcal{M}\_a = ie^2\\bar u(p\_2)\\epsilon^\*\_{2\\mu}\\gamma^\\mu\\frac{\\slashed{p}\_1 + \\slashed{k}\_1 + m\_e}{2p\_1\\cdot k\_1}\\epsilon\_{1\\nu}\\gamma^\\nu u(p\_1)$$  
+  
+**Diagram (b):** Virtual electron momentum $p\_1 - k\_2$.  
+  
+$$i\\mathcal{M}\_b = ie^2\\bar u(p\_2)\\epsilon\_{1\\nu}\\gamma^\\nu\\frac{\\slashed{p}\_1 - \\slashed{k}\_2 + m\_e}{-2p\_1\\cdot k\_2}\\epsilon^\*\_{2\\mu}\\gamma^\\mu u(p\_1)$$  
+  
+Note the order of factors: diagram (b) has the photon orders reversed compared to (a).  
+  
+### The Klein-Nishina Formula  
+  
+Squaring $|\\mathcal{M}\_a + \\mathcal{M}\_b|^2$, averaging over initial spins and polarizations, and summing over final ones gives a classic result. The trace algebra is significantly longer than the $e^+e^- \\to \\mu^+\\mu^-$ case (because of the two diagrams and the mass terms), but fully tractable.  
+  
+After the dust settles:  
+  
+$$\\frac{d\\sigma}{d\\Omega}\\bigg|\_{\\rm lab} = \\frac{\\alpha^2}{2m\_e^2}\\left(\\frac{\\omega'}{\\omega}\\right)^2\\left\[\\frac{\\omega}{\\omega'} + \\frac{\\omega'}{\\omega} - \\sin^2\\theta\\right\]$$  
+  
+This is the **Klein-Nishina formula**. Here $\\omega, \\omega'$ are the incoming and outgoing photon energies (in the electron rest frame), and $\\theta$ is the scattering angle.  
+  
+The energy relation is:  
+  
+$$\\frac{1}{\\omega'} - \\frac{1}{\\omega} = \\frac{1 - \\cos\\theta}{m\_e}$$  
+  
+— the **Compton wavelength shift**, derived from 4-momentum conservation.  
+  
+### Low-Energy Limit: Thomson Scattering  
+  
+For $\\omega \\ll m\_e$, $\\omega' \\approx \\omega$ and:  
+  
+$$\\frac{d\\sigma}{d\\Omega} \\to \\frac{\\alpha^2}{2m\_e^2}\[1 + 1 - \\sin^2\\theta\] = \\frac{\\alpha^2}{2m\_e^2}(1 + \\cos^2\\theta)$$  
+  
+Total Thomson cross section:  
+  
+$$\\sigma\_T = \\frac{8\\pi\\alpha^2}{3m\_e^2} \\approx 0.665 \\text{ barn}$$  
+  
+This is the classical limit — scattering of low-energy light off free electrons. Important for atmospheric physics, CMB astrophysics, and plasma physics.  
+  
+### High-Energy Limit  
+  
+For $\\omega \\gg m\_e$:  
+  
+$$\\sigma \\sim \\frac{\\alpha^2}{m\_e\\omega}\\ln(\\omega/m\_e)$$  
+  
+The cross section *decreases* at high energy — another testable prediction, confirmed in high-energy gamma ray experiments.  
+  
+---  
+  
+## 8. Example 4: Electron-Electron (Møller) Scattering  
+  
+Two electrons scattering. Because the particles are identical, we need to account for the fact that "exchanging outgoing electrons" gives a different but indistinguishable final state.  
+  
+### The Process  
+  
+$e^-(p\_1) + e^-(p\_2) \\to e^-(p\_3) + e^-(p\_4)$  
+  
+### The Diagrams  
+  
+**Diagram (a) — t-channel:** $p\_1 \\to p\_3$, $p\_2 \\to p\_4$ through a photon exchange (momentum transfer $t = (p\_1 - p\_3)^2$).  
+  
+**Diagram (b) — u-channel:** $p\_1 \\to p\_4$, $p\_2 \\to p\_3$ through a photon exchange (momentum transfer $u = (p\_1 - p\_4)^2$).  
+  
+These are distinct diagrams because the electrons are identical — you can't tell which outgoing electron "was originally" electron 1.  
+  
+### The Amplitude  
+  
+The amplitude is the sum with a minus sign for fermion exchange:  
+  
+$$\\mathcal{M} = \\mathcal{M}\_t - \\mathcal{M}\_u$$  
+  
+Each individual amplitude has the $e^-\\mu^-$-like form from section 3, but now with both fermion lines being electrons:  
+  
+$$\\mathcal{M}\_t = \\frac{e^2}{t}\[\\bar u(p\_3)\\gamma^\\mu u(p\_1)\]\[\\bar u(p\_4)\\gamma\_\\mu u(p\_2)\]$$  
+  
+$$\\mathcal{M}\_u = \\frac{e^2}{u}\[\\bar u(p\_4)\\gamma^\\mu u(p\_1)\]\[\\bar u(p\_3)\\gamma\_\\mu u(p\_2)\]$$  
+  
+### The Minus Sign  
+  
+The minus sign between $\\mathcal{M}\_t$ and $\\mathcal{M}\_u$ is crucial. It comes from the requirement that the amplitude be antisymmetric under exchange of the two identical fermions — a direct consequence of Fermi-Dirac statistics.  
+  
+Without this sign, you'd get wrong predictions. With it, you get interference between the two channels — the squared amplitude has $|\\mathcal{M}\_t|^2 + |\\mathcal{M}\_u|^2 - 2\\text{Re}(\\mathcal{M}\_t^\*\\mathcal{M}\_u)$, with the interference term proportional to Pauli exclusion effects.  
+  
+### The Result (High Energy, Massless Limit)  
+  
+After the full spin sum and trace algebra:  
+  
+$$\\overline{|\\mathcal{M}|^2} = 2e^4\\left\[\\frac{s^2 + u^2}{t^2} + \\frac{s^2 + t^2}{u^2} + \\frac{2s^2}{tu}\\right\]$$  
+  
+The first two terms are $|\\mathcal{M}\_t|^2$ and $|\\mathcal{M}\_u|^2$; the third is the interference term. All terms are $s$-channel squared divided by channel propagator squared — beautifully symmetric.  
+  
+Differential cross section:  
+  
+$$\\frac{d\\sigma}{d\\Omega} = \\frac{\\alpha^2}{2s}\\left\[\\frac{s^2 + u^2}{t^2} + \\frac{s^2 + t^2}{u^2} + \\frac{2s^2}{tu}\\right\]$$  
+  
+### Physical Consequence: Identical-Particle Effects  
+  
+Because of the interference term, the differential cross section is different from what you'd get from two independent particle exchanges. The Pauli principle is encoded automatically in the sign of the exchange term.  
+  
+For small-angle scattering (Rutherford-like), the interference can be significant. At 90° it's zero. At large angles, it shows up as a measurable deviation from the "two particles scattering independently" prediction.  
+  
+---  
+  
+## 9. Example 5: Bhabha Scattering ($e^+e^- \\to e^+e^-$)  
+  
+One last canonical QED calculation.  
+  
+### The Process  
+  
+$e^-(p\_1) + e^+(p\_2) \\to e^-(p\_3) + e^+(p\_4)$  
+  
+### The Diagrams  
+  
+Like Møller, this has two tree-level diagrams:  
+  
+**Diagram (a) — t-channel:** Like $e^-\\mu^-$ scattering — the initial electron and positron interact via a photon exchange, with $p\_1 \\to p\_3$ and $p\_2 \\to p\_4$.  
+  
+**Diagram (b) — s-channel:** Like $e^+e^- \\to \\mu^+\\mu^-$ — the $e^+e^-$ annihilate to a virtual photon, which then pair-produces another $e^+e^-$.  
+  
+These are genuinely different topologies (not related by relabeling), and both contribute.  
+  
+### The Amplitude  
+  
+$$\\mathcal{M} = \\mathcal{M}\_s + \\mathcal{M}\_t$$  
+  
+No minus sign this time because we're not exchanging identical particles — the $e^-$ and $e^+$ are different states.  
+  
+$$\\mathcal{M}\_s = -\\frac{e^2}{s}\[\\bar v(p\_2)\\gamma^\\mu u(p\_1)\]\[\\bar u(p\_3)\\gamma\_\\mu v(p\_4)\]$$  
+  
+$$\\mathcal{M}\_t = \\frac{e^2}{t}\[\\bar u(p\_3)\\gamma^\\mu u(p\_1)\]\[\\bar v(p\_2)\\gamma\_\\mu v(p\_4)\]$$  
+  
+### The Result  
+  
+$$\\overline{|\\mathcal{M}|^2} = 2e^4\\left\[\\frac{s^2 + u^2}{t^2} + \\frac{t^2 + u^2}{s^2} + \\frac{2u^2}{st}\\right\]$$  
+  
+Differential cross section:  
+  
+$$\\frac{d\\sigma}{d\\Omega} = \\frac{\\alpha^2}{2s}\\left\[\\frac{s^2 + u^2}{t^2} + \\frac{t^2 + u^2}{s^2} + \\frac{2u^2}{st}\\right\]$$  
+  
+### The $t \\to 0$ Divergence  
+  
+At small-angle scattering, $t \\to 0$ (forward scattering), and the $1/t^2$ term diverges. Physically: the long-range Coulomb interaction dominates, and the differential cross section becomes large for small-angle deflections.  
+  
+This divergence is not a bug — it reflects the infinite-range nature of electromagnetism. It's the QFT analog of the classical Rutherford scattering $1/\\sin^4(\\theta/2)$ behavior.  
+  
+Total cross sections are finite (the singular region is integrable) but dominated by small-angle scattering.  
+  
+### LEP Verification  
+  
+Bhabha scattering was used at LEP as a *luminosity monitor* — because its cross section is so well-known theoretically, measuring it lets you calibrate the beam luminosity. Millions of Bhabha events were used at LEP to enable the precision tests of the Standard Model.  
+  
+---  
+  
+## 10. Mandelstam Variables and the s, t, u Channels  
+  
+A few words about the organizing principle behind these calculations.  
+  
+### The Three Mandelstam Variables  
+  
+For a 2 → 2 process $p\_1 p\_2 \\to p\_3 p\_4$, define:  
+  
+$$s = (p\_1 + p\_2)^2, \\quad t = (p\_1 - p\_3)^2, \\quad u = (p\_1 - p\_4)^2$$  
+  
+All three are Lorentz-invariant. They satisfy:  
+  
+$$s + t + u = m\_1^2 + m\_2^2 + m\_3^2 + m\_4^2$$  
+  
+For massless scattering, $s + t + u = 0$.  
+  
+### The Three "Channels"  
+  
+Different Feynman diagrams contribute to a given process depending on which momentum combination flows through the virtual intermediate state:  
+  
+- **s-channel:** $q^2 = s$. Initial particles annihilate or merge, producing a virtual particle that then decays.  
+- **t-channel:** $q^2 = t$. Exchange of a virtual particle between two distinct fermion lines.  
+- **u-channel:** $q^2 = u$. Similar to t-channel but with particles exchanged.  
+  
+For many processes, only some channels contribute. For example:  
+- $e^+e^- \\to \\mu^+\\mu^-$: s-channel only  
+- $e^-\\mu^- \\to e^-\\mu^-$: t-channel only  
+- Møller $e^-e^- \\to e^-e^-$: t and u channels  
+- Bhabha $e^+e^- \\to e^+e^-$: s and t channels  
+- Compton $\\gamma e^- \\to \\gamma e^-$: s and u channels  
+  
+Learning to identify the relevant channels is a key skill in QFT calculations.  
+  
+### Kinematic Regions  
+  
+Physical scattering requires specific kinematic conditions:  
+- **s-channel physical region:** $s \\geq (m\_3 + m\_4)^2$ (enough CM energy to produce the final state)  
+- **Threshold:** $s = (m\_3 + m\_4)^2$ is the minimum CM energy  
+- **t-channel:** $t \\leq 0$ in physical scattering (spacelike momentum transfer)  
+- **u-channel:** similar  
+  
+When theoretical predictions extend into "unphysical" kinematic regions, they encode information about the analytic structure of the amplitude — poles correspond to bound states and resonances, branch cuts to particle creation thresholds.  
+  
+---  
+  
+## 11. Experimental Verification  
+  
+The calculations in this document have been tested to extraordinary precision.  
+  
+### The Anomalous Magnetic Moment  
+  
+Beyond the vertex $-ieQ\\gamma^\\mu$ at tree level, loop corrections modify the vertex function to $F\_1(q^2)\\gamma^\\mu + F\_2(q^2)\\frac{i\\sigma^{\\mu\\nu}q\_\\nu}{2m}$. The quantity $F\_2(0)$ determines the anomalous magnetic moment:  
+  
+$$a \\equiv \\frac{g - 2}{2} = F\_2(0)$$  
+  
+For the electron, QED (through five loops!) predicts:  
+  
+$$a\_e = 0.00115965218073(28)$$  
+  
+Experimental measurement (Hanneke, Fogwell, Gabrielse, 2008, improved since):  
+  
+$$a\_e = 0.00115965218091(26)$$  
+  
+**Agreement to 10 significant figures.** This is perhaps the most precise confrontation between theory and experiment in all of science.  
+  
+### $e^+e^- \\to \\mu^+\\mu^-$  
+  
+The total cross section prediction $\\sigma = 4\\pi\\alpha^2/(3s)$ has been verified at all $e^+e^-$ colliders from the 1970s onward. At high energies ($\\sqrt{s} \\gtrsim 10$ GeV), Z-boson exchange starts to contribute significantly, and the measured cross section deviates from pure QED — providing precision tests of the full electroweak Standard Model.  
+  
+### Compton Scattering  
+  
+The Klein-Nishina cross section is confirmed in gamma ray experiments and underlies the interpretation of the cosmic microwave background (CMB photons Compton-scattering off early-universe electrons).  
+  
+### Bhabha Scattering  
+  
+Used for luminosity measurement at all $e^+e^-$ colliders. Agreement with QED prediction is essential for interpreting all other measurements at these machines.  
+  
+### The Lamb Shift and Other Precision Tests  
+  
+The 1S-2S splitting of hydrogen has been measured to 14 significant figures. QED (plus proton structure) predicts it to within this precision. Similar precision tests exist for muonium, positronium, helium, and other simple systems.  
+  
+**No discrepancies with QED have been found.** QED is the most successful theory in the history of physics.  
+  
+---  
+  
+## 12. Appendix: Feynman Rules Reference Card  
+  
+### QED Feynman Rules in Feynman Gauge  
+  
+**External Lines:**  
+  
+| Element | Factor |  
+|---|---|  
+| Incoming electron | $u^s(p)$ |  
+| Outgoing electron | $\\bar u^s(p)$ |  
+| Incoming positron | $\\bar v^s(p)$ |  
+| Outgoing positron | $v^s(p)$ |  
+| Incoming photon | $\\epsilon^\\mu\_\\lambda(k)$ |  
+| Outgoing photon | $\\epsilon^{\\mu\*}\_\\lambda(k)$ |  
+  
+**Internal Lines:**  
+  
+| Element | Factor |  
+|---|---|  
+| Fermion propagator (momentum $p$) | $\\dfrac{i(\\slashed{p} + m)}{p^2 - m^2 + i\\epsilon}$ |  
+| Photon propagator (Feynman gauge) | $\\dfrac{-i\\eta^{\\mu\\nu}}{k^2 + i\\epsilon}$ |  
+  
+**Vertex:**  
+  
+$-ieQ\\gamma^\\mu$ (where $Q$ is the particle's electric charge in units of $e$)  
+  
+**Combinatorics:**  
+  
+- Conserve 4-momentum at every vertex  
+- Integrate over each loop momentum: $\\int\\frac{d^4\\ell}{(2\\pi)^4}$  
+- Factor of $(-1)$ for each closed fermion loop  
+- Divide by appropriate symmetry factor  
+  
+**Reading fermion lines:**  
+  
+Write spinor factors from outgoing to incoming (reading backward along the arrow).  
+  
+### Mandelstam Variables (2 → 2)  
+  
+$$s = (p\_1 + p\_2)^2 = (p\_3 + p\_4)^2$$  
+  
+$$t = (p\_1 - p\_3)^2 = (p\_2 - p\_4)^2$$  
+  
+$$u = (p\_1 - p\_4)^2 = (p\_2 - p\_3)^2$$  
+  
+$$s + t + u = m\_1^2 + m\_2^2 + m\_3^2 + m\_4^2$$  
+  
+### Spin Sum Identities  
+  
+$$\\sum\_s u^s(p)\\bar u^s(p) = \\slashed{p} + m$$  
+  
+$$\\sum\_s v^s(p)\\bar v^s(p) = \\slashed{p} - m$$  
+  
+### Trace Identities (from Workbook II.3)  
+  
+$$\\text{Tr}\[\\gamma^\\mu\\gamma^\\nu\] = 4\\eta^{\\mu\\nu}$$  
+  
+$$\\text{Tr}\[\\gamma^\\mu\\gamma^\\nu\\gamma^\\rho\\gamma^\\sigma\] = 4(\\eta^{\\mu\\nu}\\eta^{\\rho\\sigma} - \\eta^{\\mu\\rho}\\eta^{\\nu\\sigma} + \\eta^{\\mu\\sigma}\\eta^{\\nu\\rho})$$  
+  
+$$\\text{Tr}\[\\text{odd number of }\\gamma\\text{'s}\] = 0$$  
+  
+$$\\text{Tr}\[\\gamma^5\\gamma^\\mu\\gamma^\\nu\\gamma^\\rho\\gamma^\\sigma\] = -4i\\epsilon^{\\mu\\nu\\rho\\sigma}$$  
+  
+### Contracted Gammas  
+  
+$$\\gamma^\\mu\\gamma\_\\mu = 4$$  
+  
+$$\\gamma^\\mu\\gamma^\\nu\\gamma\_\\mu = -2\\gamma^\\nu$$  
+  
+$$\\gamma^\\mu\\gamma^\\nu\\gamma^\\rho\\gamma\_\\mu = 4\\eta^{\\nu\\rho}$$  
+  
+### Cross Section Formulas  
+  
+2 → 2 differential cross section, CM frame:  
+  
+$$\\frac{d\\sigma}{d\\Omega}\\bigg|\_{\\rm CM} = \\frac{1}{64\\pi^2 s}\\cdot\\frac{|\\vec p\_f|}{|\\vec p\_i|}\\overline{|\\mathcal{M}|^2}$$  
+  
+Masslessly: $|\\vec p\_f|/|\\vec p\_i| = 1$ and:  
+  
+$$\\frac{d\\sigma}{d\\Omega} = \\frac{\\overline{|\\mathcal{M}|^2}}{64\\pi^2 s}$$  
+  
+### Key Results  
+  
+| Process | $\\overline{|\\mathcal{M}|^2}$ (high-energy) | Comments |  
+|---|---|---|  
+| $e^+e^- \\to \\mu^+\\mu^-$ | $\\frac{2e^4(t^2 + u^2)}{s^2}$ | s-channel only |  
+| $e^-\\mu^- \\to e^-\\mu^-$ | $\\frac{2e^4(s^2 + u^2)}{t^2}$ | t-channel only |  
+| Møller $e^-e^- \\to e^-e^-$ | $2e^4\\left\[\\frac{s^2+u^2}{t^2} + \\frac{s^2+t^2}{u^2} + \\frac{2s^2}{tu}\\right\]$ | t + u channels |  
+| Bhabha $e^+e^- \\to e^+e^-$ | $2e^4\\left\[\\frac{s^2+u^2}{t^2} + \\frac{t^2+u^2}{s^2} + \\frac{2u^2}{st}\\right\]$ | s + t channels |  
+| Compton $\\gamma e^- \\to \\gamma e^-$ | Klein-Nishina formula | s + u channels |  
+  
+### Famous Total Cross Sections  
+  
+$$\\sigma(e^+e^- \\to \\mu^+\\mu^-) = \\frac{4\\pi\\alpha^2}{3s}$$  
+  
+$$\\sigma\_{\\rm Thomson} = \\frac{8\\pi\\alpha^2}{3m\_e^2} \\approx 0.665 \\text{ barn}$$  
+  
+### The Fine-Structure Constant  
+  
+$$\\alpha = \\frac{e^2}{4\\pi\\epsilon\_0 \\hbar c} \\approx \\frac{1}{137.036}$$  
+  
+In natural units: $\\alpha = e^2/(4\\pi) \\approx 1/137$.  
+  
+### Problems to Work  
+  
+1. **Derive the $e^+e^- \\to \\mu^+\\mu^-$ amplitude squared** starting from the amplitude, including all trace algebra. This is the benchmark calculation — doing it once builds complete fluency.  
+  
+2. **Compute the Rutherford cross section** from the $t$-channel electron-muon scattering at low energies (where the electron is non-relativistic and the muon infinitely heavy). Show it reproduces the classical result $\\sigma \\propto 1/\\sin^4(\\theta/2)$.  
+  
+3. **Show that the Møller $|\\mathcal{M}|^2$ is symmetric under $t \\leftrightarrow u$** — reflecting the identical-particle symmetry.  
+  
+4. **Derive the Thomson limit** of the Klein-Nishina formula: $\\omega \\ll m\_e$.  
+  
+5. **Compute the total $e^+e^- \\to \\text{hadrons}$ cross section at lowest order** by summing over all quark flavors, and compare to the experimentally measured ratio $R = \\sigma(e^+e^- \\to \\text{hadrons})/\\sigma(e^+e^- \\to \\mu^+\\mu^-)$. Below charm threshold, $R$ should be $3(e\_u^2 + e\_d^2 + e\_s^2) = 3(4/9 + 1/9 + 1/9) = 2$.  
+  
+Problem 1 is genuinely the most important exercise in tree-level QED. Problem 5 is a nice physics application — and historically, the ratio $R$ was one of the cleanest confirmations of the color quantum number of quarks.  
+  
+### Further Reading  
+  
+- **Peskin & Schroeder, Chapter 5:** exhaustive treatment of tree-level QED. Problem 5.1 computes $e^+e^- \\to \\mu^+\\mu^-$ with full trace algebra.  
+- **Schwartz, Chapters 13-14:** modern treatment with pedagogical examples.  
+- **Halzen & Martin, Chapters 6-8:** more physics-oriented, good for building intuition.  
+- **Particle Data Group Review:** pdg.lbl.gov — for experimental values, decay rates, etc.  
+  
+---  
+  
+## Closing Note  
+  
+This document completes the QFT "arithmetic" sequence. You can now:  
+  
+- Draw tree-level Feynman diagrams for QED processes  
+- Translate diagrams into amplitudes using Feynman rules  
+- Compute spin sums via gamma matrix traces  
+- Extract differential and total cross sections  
+- Compare to experimental data  
+  
+Everything done here is at tree level — no loops, no divergences, no need for regularization or renormalization. The predictions are finite, well-defined, and directly comparable to experiment.  
+  
+### What's Next: Loops  
+  
+At the next order in perturbation theory (one loop in coupling), diagrams contain closed loops. These introduce two complications:  
+  
+1. **Integrals over loop momentum.** Each closed loop has an undetermined internal momentum $\\ell^\\mu$, integrated over $\\int d^4\\ell/(2\\pi)^4$.  
+  
+2. **Ultraviolet divergences.** Many of these integrals diverge as $\\ell \\to \\infty$. The amplitude, naively computed, is infinite.  
+  
+Document 6 will confront these divergences: how to regularize the integrals (making them finite through a parameter), and document 7 will develop renormalization (absorbing the divergences into redefinitions of physical parameters).  
+  
+This is where QFT's most profound conceptual lessons emerge: the distinction between "bare" and "physical" parameters, the renormalization group, asymptotic freedom, running couplings. The payoff is precision matching experiment to 12 digits.  
+  
+### A Moment to Pause  
+  
+You've now done what takes a full semester in a standard graduate QFT course: quantize free fields, develop perturbation theory, derive Feynman rules, and compute scattering cross sections. The framework you have is genuinely used in every particle physics paper — LHC analyses, precision electroweak tests, and the theoretical predictions the Standard Model is built on.  
+  
+The next layer (loops, renormalization, RG) is where QFT becomes technically harder but also more profound. The beauty isn't in the calculations — it's in what they reveal about the structure of quantum field theory itself.  
+  
+When you're ready for document 6, we'll start down that path.  
