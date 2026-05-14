@@ -2,61 +2,158 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-const essays = await getCollection('essays');
-const workPosts = essays.filter(e => e.data.subsection === 'work-post').sort((a, b) => (a.data.workPhase ?? 0) - (b.data.workPhase ?? 0));
-const standalonePosts = essays.filter(e => e.data.subsection === 'standalone').sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const referencePosts = essays.filter(e => e.data.subsection === 'reference');
+const allEssays = await getCollection('essays');
+const phaseMemos = await getCollection('phase-memos');
+
+const fieldNoteEssays = allEssays.filter((e) => e.data.section === 'field-notes');
+const reference = fieldNoteEssays.find((e) => e.data.subsection === 'reference');
+const standalone = fieldNoteEssays.filter((e) => e.data.subsection === 'standalone').sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const workPosts = fieldNoteEssays.filter((e) => e.data.subsection === 'work-post').sort((a, b) => (a.data.workPhase ?? 0) - (b.data.workPhase ?? 0));
+
+const totalCount = fieldNoteEssays.length + phaseMemos.length;
+const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <Base
   title="Field Notes"
-  description="The record of the work. Class reports, research phase posts, and essays on what happened and how."
+  description="The record of the work, written as it happened. Phase memos, work posts, and essays from the eighteen-day walk to the frontier."
 >
-  <main class="shell">
-    <header class="article-byline">
-      <p class="rh-mark">Field Notes</p>
-      <h1 class="article-title">Field Notes</h1>
-      <p class="article-preamble">The record of the work. Forty class reports, ten research phase posts, and essays on method and meaning.</p>
-    </header>
+  <div class="shell">
 
-    <section>
-      <h2 class="section-head">The Work</h2>
-      <p class="article-preamble">Ten posts documenting the research from picking the problem to submitting to arXiv.</p>
-      <nav class="related">
-        {workPosts.map((e) => (
-          <a href={`/field-notes/${e.id}`} class="related-entry">
-            <span class="related-num">Phase {e.data.workPhase}</span>
-            <span class="related-title">{e.data.title}</span>
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span><span class="dot"></span><span>Field Notes</span><span class="dot"></span><span>&sect; III</span>
+      </div>
+    </div>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Masthead</a>
+      <span class="sep">&rsaquo;</span>
+      <span>Field Notes</span>
+    </nav>
+
+    <article>
+      <header class="article-preamble">
+        <div class="article-section">Field Notes &nbsp;&middot;&nbsp; &sect; III</div>
+        <h1 class="article-title">The Notebook, Open.</h1>
+        <p class="article-subtitle">
+          The plain-English record of an eighteen-day walk from <em>Physics&nbsp;101</em> to the frontier. {totalCount} entries; phase memos written during the work, essays written about it, and one symphony of an analogy that started the whole thing.
+        </p>
+      </header>
+
+      {reference && (
+        <section class="fn-featured" aria-label="Featured essay">
+          <div class="fn-featured-eyebrow">
+            <span>Featured</span>
+            <span class="dot"></span>
+            <span>The plain-English thesis</span>
+          </div>
+          <a href={`/field-notes/${reference.id}`} class="fn-featured-card">
+            <div class="fn-featured-side">
+              <span class="fn-featured-label">If you read one thing</span>
+              <span class="fn-featured-date">{dateStr(reference.data.date)}</span>
+            </div>
+            <div class="fn-featured-text">
+              <h2 class="fn-featured-headline">{reference.data.title}</h2>
+              {reference.data.subtitle && <p class="fn-featured-sub">{reference.data.subtitle}</p>}
+              <blockquote class="fn-featured-pull">
+                <p>&ldquo;It is not that the universe has one answer for how much two observers can disagree. It has a <em>hierarchy</em> of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy.&rdquo;</p>
+              </blockquote>
+              <span class="fn-featured-cta">Read the essay &rsaquo;</span>
+            </div>
           </a>
-        ))}
-      </nav>
-    </section>
+        </section>
+      )}
 
-    <section>
-      <h2 class="section-head">Essays</h2>
-      <nav class="related">
-        {standalonePosts.map((e) => (
-          <a href={`/field-notes/${e.id}`} class="related-entry">
-            <span class="related-title">{e.data.title}</span>
+      <section class="fn-section" aria-labelledby="phase-memos-head">
+        <header class="fn-section-head">
+          <p class="fn-section-eyebrow">I. The Work, Phase by Phase</p>
+          <h2 class="fn-section-title" id="phase-memos-head">Phase Memos</h2>
+          <p class="fn-section-deck">Written during the research, in the working voice. Each memo covers a defined phase of the investigation: what was attempted, what was true, what survived.</p>
+        </header>
+        <ol class="fn-memo-list">
+          {phaseMemos.map((m) => (
+            <li>
+              <a href={`/lab/phase-memos`} class="fn-memo-card">
+                <span class="fn-memo-num">{m.data.title.match(/\d+/)?.[0] ?? '—'}</span>
+                <div class="fn-memo-body">
+                  <h3 class="fn-memo-title">{m.data.title}</h3>
+                  {m.data.subtitle && <p class="fn-memo-sub">{m.data.subtitle}</p>}
+                  <p class="fn-memo-meta">Memo &middot; written in the working voice</p>
+                </div>
+                <span class="fn-memo-arrow">&rsaquo;</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {workPosts.length > 0 && (
+        <section class="fn-section" aria-labelledby="work-posts-head">
+          <header class="fn-section-head">
+            <p class="fn-section-eyebrow">II. Decisions on the Record</p>
+            <h2 class="fn-section-title" id="work-posts-head">Work Posts</h2>
+            <p class="fn-section-deck">Specific moments in the work. The pivots, the wrong turns, the catches. Documented as they happened.</p>
+          </header>
+          <ol class="fn-post-grid">
+            {workPosts.map((e) => (
+              <li>
+                <a href={`/field-notes/${e.id}`} class="fn-post-card">
+                  <span class="fn-post-tag">Work Post {e.data.workPhase ? `· Phase ${e.data.workPhase}` : ''}</span>
+                  <h3 class="fn-post-title">{e.data.title}</h3>
+                  {e.data.subtitle && <p class="fn-post-sub">{e.data.subtitle}</p>}
+                  <p class="fn-post-meta">{dateStr(e.data.date)} &middot; <em>Donkey voice</em></p>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {standalone.length > 0 && (
+        <section class="fn-section" aria-labelledby="essays-head">
+          <header class="fn-section-head">
+            <p class="fn-section-eyebrow">III. Stepping Back</p>
+            <h2 class="fn-section-title" id="essays-head">Standalone Essays</h2>
+            <p class="fn-section-deck">Longer pieces on the texture of doing real research as a generalist. Not tied to a particular phase.</p>
+          </header>
+          <ol class="fn-post-grid">
+            {standalone.map((e) => (
+              <li>
+                <a href={`/field-notes/${e.id}`} class="fn-post-card">
+                  <span class="fn-post-tag">Essay</span>
+                  <h3 class="fn-post-title">{e.data.title}</h3>
+                  {e.data.subtitle && <p class="fn-post-sub">{e.data.subtitle}</p>}
+                  <p class="fn-post-meta">{dateStr(e.data.date)} &middot; <em>{e.data.voice === 'paper' ? 'Paper voice' : 'Donkey voice'}</em></p>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <aside class="fn-related">
+        <p class="fn-related-eyebrow">Adjacent records</p>
+        <div class="fn-related-grid">
+          <a href="/curriculum" class="fn-related-card">
+            <span class="fn-related-num">II.</span>
+            <span class="fn-related-title">The Curriculum</span>
+            <span class="fn-related-deck">Thirty-eight class reports from the walk in.</span>
           </a>
-        ))}
-      </nav>
-    </section>
-
-    <section>
-      <h2 class="section-head">Reference</h2>
-      <nav class="related">
-        {referencePosts.map((e) => (
-          <a href={`/field-notes/${e.id}`} class="related-entry">
-            <span class="related-title">{e.data.title}</span>
+          <a href="/method" class="fn-related-card">
+            <span class="fn-related-num">IV.</span>
+            <span class="fn-related-title">The Method</span>
+            <span class="fn-related-deck">The thesis and the protocol behind the field notes.</span>
           </a>
-        ))}
-      </nav>
-    </section>
+          <a href="/lab" class="fn-related-card">
+            <span class="fn-related-num">V.</span>
+            <span class="fn-related-title">The Laboratory</span>
+            <span class="fn-related-deck">What is happening, now. Paper II in progress.</span>
+          </a>
+        </div>
+      </aside>
 
-    <section>
-      <h2 class="section-head">Class Reports</h2>
-      <p>All 38 class reports are also in <a href="/curriculum">The Curriculum</a>, organized as a subway map.</p>
-    </section>
-  </main>
+    </article>
+  </div>
 </Base>
