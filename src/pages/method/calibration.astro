@@ -2,56 +2,400 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-const entries = await getCollection('calibration');
-entries.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+const all = await getCollection('calibration');
+
+// Helper for short date label, e.g. "May 10"
+const shortDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+
+// In-Project (Table I): all Paper 1 confirmed entries, sorted by date asc then by probabilityBefore desc
+const inProject = all
+  .filter((e) => e.data.outcome === 'confirmed' && e.data.phase.startsWith('Paper 1'))
+  .sort((a, b) => {
+    const ta = a.data.date.getTime();
+    const tb = b.data.date.getTime();
+    if (ta !== tb) return ta - tb;
+    return (b.data.probabilityBefore ?? 0) - (a.data.probabilityBefore ?? 0);
+  });
+
+// Annotations keyed by entry id for per-row notes the collection doesn't carry
+const annotations: Record<string, { resolved: string; surprise?: boolean }> = {
+  'p1-chosen-problem': { resolved: 'May 11' },
+  'p1-phase1-reproduction': { resolved: 'May 10' },
+  'p1-phase3-egh': { resolved: 'May 11' },
+  'p1-phase4-rational': { resolved: 'May 11 PM' },
+  'p1-phase7-prefactor': { resolved: 'May 11' },
+  'p1-integer-gap': { resolved: 'May 11', surprise: true },
+  'p1-arxiv-submission': { resolved: 'May 11' },
+  'p1-arxiv-endorsement': { resolved: 'May 11' },
+};
 ---
 
 <Base
   title="The Calibration Log"
-  description="A structured record of predictions made and outcomes observed during the research program."
+  description="A running record of predictions made during the project, with probabilities estimated at the time and outcomes recorded when they land."
 >
-  <!-- Layout: StructuredData.astro (from mockup_8_calibration_log.html) -->
-  <main class="shell">
+  <div class="shell">
+
+    <!-- Running head -->
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span>
+        <span class="dot"></span>
+        <span>The Method</span>
+        <span class="dot"></span>
+        <span>Calibration Log</span>
+      </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Masthead</a>
+      <span class="sep">&rsaquo;</span>
+      <a href="/method">The Method</a>
+      <span class="sep">&rsaquo;</span>
+      <span>Calibration Log</span>
+    </nav>
+
+    <!-- ================================================================
+         PAGE HEADER
+         ================================================================ -->
     <header class="page-header">
-      <p class="header-eyebrow">The Method</p>
-      <h1 class="header-title">The Calibration Log</h1>
-      <p class="header-meta">A structured record of predictions made and outcomes observed. Probability estimates given before each phase; outcomes recorded after.</p>
+      <div class="header-eyebrow">The Method &middot; Protocol Principle VI</div>
+      <h1 class="header-title">The calibration log.</h1>
+      <div class="header-meta">
+        <span>Running record</span>
+        <span class="dot"></span>
+        <span>Predictions with probabilities</span>
+        <span class="dot"></span>
+        <span>Last updated May 11, 2026</span>
+        <span class="dot"></span>
+        <span>Paper Voice</span>
+      </div>
     </header>
 
-    <div class="update-note">Last updated May 2026.</div>
+    <!-- ================================================================
+         SUMMARY LEDGER STRIP
+         ================================================================ -->
+    <div class="summary-strip" role="region" aria-label="Prediction summary">
+      <div class="summary-cell">
+        <div class="summary-cell-label">Total Predictions</div>
+        <div class="summary-cell-value">13</div>
+        <div class="summary-cell-note">Across 3 categories</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">Resolved</div>
+        <div class="summary-cell-value resolved">8</div>
+        <div class="summary-cell-note">All during Paper 1</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">Open</div>
+        <div class="summary-cell-value open">5</div>
+        <div class="summary-cell-note">Long-horizon, pending</div>
+      </div>
+      <div class="summary-cell">
+        <div class="summary-cell-label">Calibration Score</div>
+        <div class="summary-cell-value" style="font-size:26px;padding-top:4px;font-style:italic;color:var(--ink-3);">Evaluating</div>
+        <div class="summary-cell-note">Insufficient resolved N</div>
+      </div>
+    </div>
 
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th class="col-date">Date</th>
-          <th class="col-pred">Prediction</th>
-          <th class="col-prob">Prob. before</th>
-          <th class="col-outcome">Outcome</th>
-          <th class="col-notes">Notes</th>
-        </tr>
-      </thead>
-      <tbody>
-        {entries.map((e) => (
+    <!-- ================================================================
+         PREAMBLE
+         ================================================================ -->
+    <div class="preamble">
+      <p>
+        Calibration is the practice of giving probability estimates that match reality over the long run.
+        If predictions estimated at 80% likely come true 80% of the time, across many such predictions, the forecasts are well-calibrated.
+        If they come true 50% of the time, the forecaster is overconfident.
+        If they come true 95% of the time, the forecaster is underconfident.
+      </p>
+      <p>
+        This log is the public record of predictions made during the project, with the probabilities estimated at the time of prediction and the outcomes recorded when they land. <strong>It is not edited retroactively.</strong> If a prediction was wrong, it stands in the log exactly as it was originally stated, alongside the outcome. The log is a measure of forecast quality, not of project quality.
+      </p>
+    </div>
+
+    <!-- ================================================================
+         TABLE I — IN-PROJECT PREDICTIONS
+         ================================================================ -->
+    <section class="table-section" aria-labelledby="table1-head">
+      <div class="table-section-head">
+        <span class="table-section-numeral">I.</span>
+        <span class="table-section-title" id="table1-head">Paper 1 &middot; In-Project Predictions</span>
+        <span class="table-section-rule"></span>
+      </div>
+      <p class="table-section-note">
+        Short-horizon predictions made on May 10 and 11, 2026, during active research. Biased toward success because the work was already well-advanced at the point of prediction. All eight resolved.
+      </p>
+
+      <table class="data-table" aria-labelledby="table1-head">
+        <thead>
           <tr>
-            <td class="col-date">{e.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
-            <td class="col-pred">{e.data.prediction}</td>
-            <td class="col-prob">
-              {e.data.probabilityBefore !== undefined && (
-                <div class="prob-gauge">
-                  <div class="prob-bar-track">
-                    <div class="prob-bar-fill" style={`width: ${e.data.probabilityBefore * 100}%`}></div>
-                  </div>
-                  <span class="prob-value">{Math.round(e.data.probabilityBefore * 100)}%</span>
-                </div>
-              )}
-            </td>
-            <td class="col-outcome">
-              <span class={`verdict ${e.data.outcome}`}>{e.data.outcome}</span>
-            </td>
-            <td class="col-notes">{e.data.notes}</td>
+            <th class="col-date">Date</th>
+            <th>Prediction</th>
+            <th class="center">Probability</th>
+            <th class="center">Outcome</th>
+            <th class="col-resolved">Resolved</th>
+            <th class="col-notes">Notes</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </main>
+        </thead>
+        <tbody>
+          {inProject.map((e) => {
+            const ann = annotations[e.id] ?? { resolved: shortDate(e.data.date) };
+            const pct = Math.round((e.data.probabilityBefore ?? 0) * 100);
+            return (
+              <tr style={ann.surprise ? 'background:rgba(138,24,24,0.045);' : undefined}>
+                <td class="col-date">{shortDate(e.data.date)}</td>
+                <td class="col-pred">{e.data.prediction}</td>
+                <td class="col-prob">
+                  <div class="prob-gauge">
+                    <span class="prob-value">{pct}%</span>
+                    <div class="prob-bar-track">
+                      <div class={`prob-bar-fill${ann.surprise ? ' surprise' : ''}`} style={`width:${pct}%`}></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="col-outcome"><span class="verdict yes">Resolved Yes</span></td>
+                <td class="col-resolved">{ann.resolved}</td>
+                <td class="col-notes">{e.data.notes}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+
+      <!-- Surprise callout for the integer gap row -->
+      <p style="font-family:var(--display-sc);font-size:10px;letter-spacing:.20em;color:var(--red);margin-top:12px;padding-left:2px;">
+        &uarr; &nbsp; Oxblood bar denotes a prediction that surprised us when it resolved. The integer gap was estimated at 35% likely. It is now Result IV.
+      </p>
+    </section>
+
+    <!-- ================================================================
+         TABLE II — TIER PREDICTIONS
+         ================================================================ -->
+    <section class="table-section" aria-labelledby="table2-head">
+      <div class="table-section-head">
+        <span class="table-section-numeral">II.</span>
+        <span class="table-section-title" id="table2-head">Paper 1 &amp; 2 &middot; Tier Predictions</span>
+        <span class="table-section-rule"></span>
+      </div>
+      <p class="table-section-note">
+        Predicted at the moment of submission. Mutually exclusive and exhaustive within each paper. Summing to 100% is a constraint, not a rhetorical device. Resolution for Paper 1: approximately one year post-arXiv, based on citation count and named-specialist commentary.
+      </p>
+
+      <table class="tier-table" aria-labelledby="table2-head">
+        <thead>
+          <tr>
+            <th>Paper</th>
+            <th>Outcome Predicted</th>
+            <th class="center">Probability</th>
+            <th class="center">Status</th>
+            <th>Resolution criteria</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="font-family:var(--mono);font-size:13px;color:var(--ink-2);white-space:nowrap;">Paper 1</td>
+            <td>Tier-one result: substantial impact within the subfield, several citations in year one, considered meaningful by named specialists.</td>
+            <td class="tier-prob-cell">
+              <div class="tier-prob-row">
+                <span class="tier-prob-num">30%</span>
+                <div class="tier-bar-track"><div class="tier-bar-fill" style="width:30%"></div></div>
+              </div>
+            </td>
+            <td style="text-align:center;"><span class="verdict open">Open</span></td>
+            <td style="font-size:13.5px;font-style:italic;color:var(--ink-2);">Awaiting community response. Predicted May 11, 2026.</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:13px;color:var(--ink-2);">Paper 1</td>
+            <td>Tier-two result: publishable, useful within the subfield, not landmark.</td>
+            <td class="tier-prob-cell">
+              <div class="tier-prob-row">
+                <span class="tier-prob-num">50%</span>
+                <div class="tier-bar-track"><div class="tier-bar-fill" style="width:50%"></div></div>
+              </div>
+            </td>
+            <td style="text-align:center;"><span class="verdict open">Open</span></td>
+            <td style="font-size:13.5px;font-style:italic;color:var(--ink-2);">Modal outcome at time of prediction.</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:13px;color:var(--ink-2);">Paper 1</td>
+            <td>Below tier-two: corrected and republished, withdrawn, or quietly ignored.</td>
+            <td class="tier-prob-cell">
+              <div class="tier-prob-row">
+                <span class="tier-prob-num">20%</span>
+                <div class="tier-bar-track"><div class="tier-bar-fill" style="width:20%"></div></div>
+              </div>
+            </td>
+            <td style="text-align:center;"><span class="verdict open">Open</span></td>
+            <td style="font-size:13.5px;font-style:italic;color:var(--ink-2);">Honest tail. Sums to 100% with rows above.</td>
+          </tr>
+
+          <tr style="border-top: 1.5px solid var(--rule-strong);">
+            <td style="font-family:var(--mono);font-size:13px;color:var(--ink-2);">Paper 2</td>
+            <td>Tier-one result.</td>
+            <td class="tier-prob-cell">
+              <div class="tier-prob-row">
+                <span class="tier-prob-num">25%</span>
+                <div class="tier-bar-track"><div class="tier-bar-fill" style="width:25%"></div></div>
+              </div>
+            </td>
+            <td style="text-align:center;"><span class="verdict open">Open</span></td>
+            <td style="font-size:13.5px;font-style:italic;color:var(--ink-2);">Extension to evaporating black holes plus rank-r interpolation.</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:13px;color:var(--ink-2);">Paper 2</td>
+            <td>Tier-two result: publishable, useful, not landmark.</td>
+            <td class="tier-prob-cell">
+              <div class="tier-prob-row">
+                <span class="tier-prob-num">40%</span>
+                <div class="tier-bar-track"><div class="tier-bar-fill" style="width:40%"></div></div>
+              </div>
+            </td>
+            <td style="text-align:center;"><span class="verdict open">Open</span></td>
+            <td style="font-size:13.5px;font-style:italic;color:var(--ink-2);">Modal outcome at time of prediction.</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:13px;color:var(--ink-2);">Paper 2</td>
+            <td>Publishable null result: framework does not extend cleanly in the way we hope.</td>
+            <td class="tier-prob-cell">
+              <div class="tier-prob-row">
+                <span class="tier-prob-num">20%</span>
+                <div class="tier-bar-track"><div class="tier-bar-fill" style="width:20%"></div></div>
+              </div>
+            </td>
+            <td style="text-align:center;"><span class="verdict open">Open</span></td>
+            <td style="font-size:13.5px;font-style:italic;color:var(--ink-2);">Null results in this subfield are still publishable.</td>
+          </tr>
+          <tr>
+            <td style="font-family:var(--mono);font-size:13px;color:var(--ink-2);">Paper 2</td>
+            <td>Not publishable: framework breaks, question ill-posed, or work gets scooped.</td>
+            <td class="tier-prob-cell">
+              <div class="tier-prob-row">
+                <span class="tier-prob-num">15%</span>
+                <div class="tier-bar-track"><div class="tier-bar-fill" style="width:15%"></div></div>
+              </div>
+            </td>
+            <td style="text-align:center;"><span class="verdict open">Open</span></td>
+            <td style="font-size:13.5px;font-style:italic;color:var(--ink-2);">Sums to 100% with rows above.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================================================================
+         TABLE III — METHODOLOGY PREDICTIONS
+         ================================================================ -->
+    <section class="table-section" aria-labelledby="table3-head">
+      <div class="table-section-head">
+        <span class="table-section-numeral">III.</span>
+        <span class="table-section-title" id="table3-head">Methodology &middot; Long-Horizon Predictions</span>
+        <span class="table-section-rule"></span>
+      </div>
+      <p class="table-section-note">
+        Predictions about the broader fate of the methodology itself. One and five year horizons. Higher uncertainty. These are the predictions we care most about, and the ones we can say least about right now.
+      </p>
+
+      <table class="data-table" aria-labelledby="table3-head">
+        <thead>
+          <tr>
+            <th class="col-date">Predicted</th>
+            <th>Prediction</th>
+            <th class="center">Probability</th>
+            <th class="center">Outcome</th>
+            <th class="col-notes">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="open-row">
+            <td class="col-date">May 11</td>
+            <td class="col-pred">Within one year, at least one other generalist will attempt a similar project in a different field, citing this methodology.</td>
+            <td class="col-prob">
+              <div class="prob-gauge">
+                <span class="prob-value">70%</span>
+                <div class="prob-bar-track"><div class="prob-bar-fill" style="width:70%"></div></div>
+              </div>
+            </td>
+            <td class="col-outcome"><span class="verdict open">Open</span></td>
+            <td class="col-notes">Prerequisite: the site, the paper, and the methodology essays must be public. They are.</td>
+          </tr>
+          <tr class="open-row">
+            <td class="col-date">May 11</td>
+            <td class="col-pred">Within five years, AI-augmented research of this type will be a recognized category of scientific work, with conferences, methodology papers, and a community of practitioners.</td>
+            <td class="col-prob">
+              <div class="prob-gauge">
+                <span class="prob-value">60%</span>
+                <div class="prob-bar-track"><div class="prob-bar-fill" style="width:60%"></div></div>
+              </div>
+            </td>
+            <td class="col-outcome"><span class="verdict open">Open</span></td>
+            <td class="col-notes">Higher uncertainty. The field is moving fast enough that the prediction may resolve in either direction within two years.</td>
+          </tr>
+          <tr class="open-row">
+            <td class="col-date">May 11</td>
+            <td class="col-pred">The Phase 4 wrong-exponent episode will be referenced in at least one external methodology paper within two years.</td>
+            <td class="col-prob">
+              <div class="prob-gauge">
+                <span class="prob-value">35%</span>
+                <div class="prob-bar-track"><div class="prob-bar-fill surprise" style="width:35%"></div></div>
+              </div>
+            </td>
+            <td class="col-outcome"><span class="verdict open">Open</span></td>
+            <td class="col-notes">Conditional on the project getting any meaningful press at all. If the press strip stays empty, this resolves No.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================================================================
+         CALIBRATION SCORE NOTE
+         ================================================================ -->
+    <div class="calib-score">
+      <div class="calib-score-head">On Calibration Quality, Current Assessment</div>
+      <div class="calib-score-body">
+        <p>
+          With eight resolved predictions, all resolving Yes, we cannot yet assess calibration quality. A forecaster who says "60%" and is right eight times in a row is consistent with being well-calibrated, overconfident, or very lucky. Distinguishing these cases requires many more predictions across the full probability range.
+        </p>
+        <p>
+          The resolved predictions are also short-horizon and biased toward success: they were made when the work was already well-advanced. They are included for completeness, not as evidence of calibration skill.
+        </p>
+        <p>
+          <strong>The methodology predictions are the real test.</strong> If the 70% prediction about other generalists resolves No, and the 60% prediction about community formation resolves No, we are overconfident and our future forecasts should be adjusted downward. The log will show this clearly. That is the point of the log.
+        </p>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         UPDATE CADENCE NOTE
+         ================================================================ -->
+    <div class="update-note">
+      <div class="update-note-body">
+        The log is updated when predictions resolve. New predictions are added when the project makes calibrated statements about future events. Both types of updates carry the date they were made. <strong>The log is not edited retroactively.</strong> If a prediction was wrong, the prediction stands in the log as it was originally stated, alongside the outcome.
+      </div>
+    </div>
+
+    <!-- ================================================================
+         FOOTER
+         ================================================================ -->
+    <footer>
+      <span>
+        <a href="/">The Donkey on the Edge</a>
+        &ensp;&middot;&ensp; Vol.&thinsp;I, No.&thinsp;I &ensp;&middot;&ensp; May MMXXVI
+      </span>
+      <span>
+        <a href="/method">The Method</a>
+        &ensp;&middot;&ensp;
+        <a href="/method/protocol">Protocol</a>
+        &ensp;&middot;&ensp;
+        <a href="/method/failure-modes">Failure Modes</a>
+      </span>
+      <span>
+        <a href="/about">Adam R. Cagle</a>
+        &ensp;&middot;&ensp; Bend, Oregon &ensp;&middot;&ensp;
+        <a href="/about#cite">Cite</a>
+      </span>
+    </footer>
+
+  </div><!-- /.shell -->
 </Base>

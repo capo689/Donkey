@@ -12,38 +12,132 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { title, date, backdated, voice, section } = entry.data;
+const { title, subtitle, date, backdated, voice, section } = entry.data;
 
 const dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const sectionLabel = section === 'method' ? 'The Method' : 'Field Notes';
 ---
 
 <Base title={title}>
-  <!-- Layout: Essay.astro (from mockup_2_essay.html) -->
-  <main class="shell">
-    <header class="running-head">
-      <span class="rh-mark">Field Notes</span>
-      <span class="rh-meta">{dateStr}</span>
-    </header>
+  <a href="#main" class="skip">Skip to article</a>
 
-    <article class={`article-body ${voice === 'paper' ? 'paper-voice' : ''}`}>
-      <header>
+  <div class="shell">
+
+    <!-- RUNNING HEAD -->
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span>
+        <span class="dot"></span>
+        <span>{sectionLabel}</span>
+        <span class="dot"></span>
+        <time datetime={date.toISOString()}>{dateStr}</time>
+      </div>
+    </div>
+
+    <!-- ARTICLE -->
+    <article id="main">
+
+      <header class="article-preamble">
+        <div class="article-section">{sectionLabel} &nbsp;&middot;&nbsp; {dateStr}</div>
         <h1 class="article-title">{title}</h1>
+        {subtitle && (
+          <p class="article-subtitle">{subtitle}</p>
+        )}
+
         <div class="article-byline">
-          <span class="article-byline-name">Adam Cagle</span>
-          <span class="article-byline-meta">with Claude (Anthropic), computational collaborator</span>
-          <time class="article-byline-meta" datetime={date.toISOString()}>{dateStr}</time>
+          <span class="article-byline-mark" aria-hidden="true"></span>
+          <div class="article-byline-text">
+            <p class="article-byline-name">By Adam R. Cagle</p>
+            <p class="article-byline-meta">
+              with <em>Claude</em> of Anthropic, as computational collaborator
+              <span> &middot; </span>
+              <time datetime={date.toISOString()}>{dateStr}</time>
+            </p>
+          </div>
         </div>
       </header>
 
+      <div class="article-open-ornament" aria-hidden="true">
+        <span class="ln"></span>
+        <span class="mark">&#10086;</span>
+        <span class="ln"></span>
+      </div>
+
+      <div class={`article-body is-lede${voice === 'paper' ? ' paper-voice' : ''}`}>
+        <Content />
+      </div>
+
+      <!-- END ORNAMENT -->
+      <div class="end-ornament" aria-hidden="true">&#8290;</div>
+
       {backdated && (
-        <p class="backdating">Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.</p>
+        <div class="backdating">
+          Written in May 2026, backdated to when the work happened.<br>
+          This article is a reflection, not a contemporaneous journal entry.
+        </div>
       )}
 
-      <div class="article-open-ornament"></div>
+      <!-- RELATED -->
+      <section class="related" aria-labelledby="related-head">
+        <header class="related-head">
+          <h2 class="related-head-mark" id="related-head">Also in this Volume</h2>
+          <p class="related-head-sub">further articles bearing on the same matter</p>
+        </header>
+        <div class="related-list">
+          <a class="related-entry" href="/method/thesis">
+            <span class="related-num">i.</span>
+            <div>
+              <h3 class="related-title">A non-physicist and an AI walked from Physics 101...</h3>
+              <p class="related-sub">The Method &middot; The Thesis. The frame of the methodology, anchored.</p>
+            </div>
+            <span class="related-page">Read &nbsp;&sect; IV.i</span>
+          </a>
+          <a class="related-entry" href="/field-notes/the-exponent-that-wasnt">
+            <span class="related-num">ii.</span>
+            <div>
+              <h3 class="related-title">The exponent that wasn't.</h3>
+              <p class="related-sub">Field Notes &middot; No. IV. The Phase 4 episode, told from inside the moment.</p>
+            </div>
+            <span class="related-page">Read &nbsp;&sect; III.iv</span>
+          </a>
+          <a class="related-entry" href="/method/roles-and-credits">
+            <span class="related-num">iii.</span>
+            <div>
+              <h3 class="related-title">Roles &amp; credits.</h3>
+              <p class="related-sub">The Method &middot; Formal statement of who did what. The companion to this article.</p>
+            </div>
+            <span class="related-page">Read &nbsp;&sect; IV.vi</span>
+          </a>
+          <a class="related-entry" href="/field-notes/how-to-read-a-physics-paper">
+            <span class="related-num">iv.</span>
+            <div>
+              <h3 class="related-title">How to read a physics paper when you're not a physicist.</h3>
+              <p class="related-sub">Field Notes &middot; No. II. The practical companion to the methodology.</p>
+            </div>
+            <span class="related-page">Read &nbsp;&sect; III.ii</span>
+          </a>
+        </div>
+      </section>
 
-      <Content />
-
-      <div class="end-ornament"></div>
     </article>
-  </main>
+
+    <!-- COMPACT FOOTER -->
+    <footer class="foot">
+      <p class="foot-title">The Donkey <span class="foot-title-conn">on the</span> Edge</p>
+      <p class="foot-strap">A Naturalist's Record &middot; Vol. I, No. I &middot; May 2026</p>
+      <div class="foot-rule" aria-hidden="true">
+        <span class="foot-rule-ln"></span>
+        <span class="foot-rule-mark">&#8290;</span>
+        <span class="foot-rule-ln"></span>
+      </div>
+      <nav class="foot-links" aria-label="Footer links">
+        <a href="/">Masthead</a>
+        <a href="/field-notes">Field Notes Contents</a>
+        <a href="/about#citation">Cite</a>
+        <a href="mailto:adamrcagle@gmail.com">Correspondence</a>
+      </nav>
+      <p class="foot-meta">&copy; 2026 &middot; Bend, Oregon</p>
+    </footer>
+  </div>
 </Base>
