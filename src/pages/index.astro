@@ -96,55 +96,74 @@ const featuredEssay = essays.find((e) => e.id === 'a-little-help-for-my-friends'
         <span class="band-rule-line"></span>
       </div>
 
-      <!-- ━━ THREE FEATURES: PAPER · CURRICULUM · FIELD NOTES ━━ -->
-      <section class="features" aria-label="Featured sections">
+      <!-- ━━ BELOW THE FOLD : I. THE PAPER (banner) ━━ -->
+      <section class="below-fold-head" aria-hidden="true">
+        <span class="bf-rule"></span>
+        <span class="bf-label">Below the Fold &middot; The Three Articles</span>
+        <span class="bf-rule"></span>
+      </section>
 
-        <article class="feature feature-paper">
-          <div class="feature-num">I.</div>
-          <p class="feature-eyebrow">The Paper</p>
-          <h3 class="feature-headline">Five Results.<br />Three Theorems.<br />One Integer Gap.</h3>
-          <p class="feature-deck">
-            <em>Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes.</em> Two observers look at the same quantum object and disagree, by an amount we can now compute, with a gap of exactly one that we cannot yet explain.
-          </p>
-          <ul class="feature-stats">
-            <li><span class="stat-n">5</span> <span class="stat-l">Results</span></li>
-            <li><span class="stat-n">3</span> <span class="stat-l">Theorems</span></li>
-            <li><span class="stat-n">38</span> <span class="stat-l">References</span></li>
-            <li><span class="stat-n">1</span> <span class="stat-l">Integer Gap</span></li>
-          </ul>
-          <a class="feature-cta" href="/paper">Read the Paper &rsaquo;</a>
-          <a class="feature-cta-secondary" href="/paper/paper1.pdf" target="_blank" rel="noopener">PDF (668 kB) &darr;</a>
-        </article>
+      <article class="banner banner-paper" aria-label="The Paper">
+        <header class="banner-head">
+          <span class="banner-num">I.</span>
+          <p class="banner-eyebrow">The Paper &middot; Article &sect; I</p>
+        </header>
+        <div class="banner-body">
+          <div class="banner-text">
+            <h3 class="banner-headline">Five Results. Three Theorems. One Integer Gap.</h3>
+            <p class="banner-deck"><em>Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes.</em></p>
+            <p class="banner-lede">Two observers look at the same quantum object through the same noisy lens, and disagree. The paper makes the disagreement precise; it has structure, the structure is computable, and the structure depends in a specific way on the complexity of what is being observed. A simple object yields a slow drop in disagreement. A complicated object, a fast one. The gap between the two scalings is <em>exactly one</em>. Nobody yet knows why.</p>
+            <div class="banner-cta">
+              <a class="btn-primary" href="/paper">Read the Paper</a>
+              <a class="btn-secondary" href="/paper/paper1.pdf" target="_blank" rel="noopener">PDF (668 kB)</a>
+            </div>
+          </div>
+          <aside class="banner-side">
+            <ul class="banner-stats">
+              <li><span class="stat-n">5</span> <span class="stat-l">Results</span></li>
+              <li><span class="stat-n">3</span> <span class="stat-l">Theorems</span></li>
+              <li><span class="stat-n">38</span> <span class="stat-l">References</span></li>
+              <li><span class="stat-n">1</span> <span class="stat-l">Integer Gap</span></li>
+            </ul>
+            <p class="banner-caption">
+              <span class="banner-caption-eyebrow">Submitted</span>
+              May XI &middot; MMXXVI, headed for arXiv.
+            </p>
+          </aside>
+        </div>
+      </article>
 
-        <article class="feature feature-curriculum">
-          <div class="feature-num">II.</div>
-          <p class="feature-eyebrow">The Curriculum</p>
-          <h3 class="feature-headline">Physics 101 to<br />Quantum Gravity,<br />in Eighteen Days.</h3>
-          <p class="feature-deck">
-            The full path of study, drawn as a Victorian railway chart. Thirty-eight stations on six lines, from Newtonian mechanics to the speculative frontier. All routes terminate at Paper&nbsp;I.
-          </p>
-          <figure class="feature-map">
-            <div class="feature-map-frame" aria-hidden="true">
+      <!-- ━━ II. THE CURRICULUM + III. FIELD NOTES (two-up) ━━ -->
+      <section class="duo" aria-label="Curriculum and Field Notes">
+
+        <article class="duo-card duo-curriculum">
+          <header class="duo-head">
+            <span class="duo-num">II.</span>
+            <p class="duo-eyebrow">The Curriculum &middot; Article &sect; II</p>
+          </header>
+          <h3 class="duo-headline">Physics 101 to Quantum Gravity, Mapped.</h3>
+          <p class="duo-deck">The full path of study, drawn as a Victorian railway chart. Thirty-eight stations on six lines, from Newtonian mechanics to the speculative frontier. All routes terminate at Paper&nbsp;I.</p>
+          <figure class="duo-map">
+            <div class="duo-map-frame" aria-hidden="true">
               <Fragment set:html={SubwayMap} />
             </div>
-            <figcaption>Pl. II &middot; A Chart of the Curriculum</figcaption>
+            <figcaption>Pl. II &middot; A Chart of the Curriculum &middot; Click stations to read</figcaption>
           </figure>
-          <a class="feature-cta" href="/curriculum">Study the Map &rsaquo;</a>
+          <a class="duo-cta" href="/curriculum">Study the Map &rsaquo;</a>
         </article>
 
-        <article class="feature feature-field-notes">
-          <div class="feature-num">III.</div>
-          <p class="feature-eyebrow">Field Notes</p>
-          <h3 class="feature-headline">The Notebook,<br />Open. Eighteen<br />Days, Visible.</h3>
-          <p class="feature-deck">
-            Work posts and essays written as the research happened. The plain-English record of doing real physics from first principles, with the wrong turns kept on the page.
-          </p>
-          <div class="feature-quote">
-            <p>&ldquo;It is not that the universe has one answer for how much two observers can disagree. It has a hierarchy of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy.&rdquo;</p>
-            <cite>&mdash; A Little Help for My Friends</cite>
-          </div>
-          <a class="feature-cta" href="/field-notes">Open the Notebook &rsaquo;</a>
-          <a class="feature-cta-secondary" href={`/field-notes/${featuredEssay.id}`}>Featured Essay &rsaquo;</a>
+        <article class="duo-card duo-field-notes">
+          <header class="duo-head">
+            <span class="duo-num">III.</span>
+            <p class="duo-eyebrow">Field Notes &middot; Article &sect; III</p>
+          </header>
+          <h3 class="duo-headline">The Notebook, Open. Eighteen Days, Visible.</h3>
+          <p class="duo-deck">Phase memos written during the work, essays written about it, and one symphony of an analogy that started the whole thing. The plain-English record, with the wrong turns kept on the page.</p>
+          <blockquote class="duo-quote">
+            <p>&ldquo;It is not that the universe has one answer for how much two observers can disagree. It has a <em>hierarchy</em> of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy.&rdquo;</p>
+            <cite>From <a href="/field-notes/a-little-help-for-my-friends">A Little Help for My Friends</a></cite>
+          </blockquote>
+          <a class="duo-cta" href="/field-notes">Open the Notebook &rsaquo;</a>
         </article>
 
       </section>
