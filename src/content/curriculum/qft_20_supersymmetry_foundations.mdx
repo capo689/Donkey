@@ -9,6 +9,1067 @@ extendsTo: [33]
 classReportTitle: "Why supersymmetry was so appealing."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 20: the symmetry that relates bosons and fermions. Still the most elegant proposed extension of the Standard Model, even if LHC hasn't found it. Superspace and superfields, the Wess-Zumino model, non-renormalization theorems, SUSY breaking, and the MSSM.*
 
-{/* Content from qft_20_supersymmetry_foundations.md */}
+Supersymmetry (SUSY) is an extension of spacetime symmetry that relates particles of different spin. Every boson has a fermionic partner, every fermion has a bosonic partner; "superpartners." The resulting extra structure does remarkable things:
+
+- **Solves the hierarchy problem** (if realized at low enough scales)
+- **Unifies gauge couplings** at the GUT scale
+- **Provides a natural dark matter candidate** (the lightest superpartner)
+- **Produces exact non-perturbative results** (BPS states, Seiberg-Witten, dualities)
+- **Cancels many UV divergences** via boson-fermion cancellations
+- **Connects to string theory** (where SUSY emerges naturally on the worldsheet)
+
+SUSY is the most beautiful theoretical extension of the Standard Model. The math is rigorous and well-understood. The question is whether nature uses it at the TeV scale (where LHC would see superpartners) or at much higher scales (which would make it harder to probe experimentally). The LHC has pushed typical TeV-scale SUSY out; simple forms are gone. But SUSY remains a central framework in theoretical physics regardless.
+
+This document covers SUSY foundations. Document 21 will cover extended SUSY and the exact non-perturbative results that make SUSY a research tool even beyond phenomenology.
+
+### Prerequisites
+
+- QFT documents 1-19 (especially 11 for gauge theories, 12 for SM, 17 for anomalies)
+- Some group theory (Lie algebras, representations)
+- Spinor notation (reviewed briefly)
+
+### Conventions
+
+- Mostly-minus metric
+- $\hbar = c = 1$
+- Two-component Weyl spinors: $\psi_\alpha$ (left) and $\bar\psi_{\dot\alpha}$ (right)
+- $\sigma^\mu = (1, \vec\sigma)$, $\bar\sigma^\mu = (1, -\vec\sigma)$
+- Grassmann coordinates $\theta^\alpha$, $\bar\theta^{\dot\alpha}$
+- Peskin & Schroeder SUSY conventions where applicable
+
+---
+
+## Table of Contents
+
+1. [Why Supersymmetry?](#1-why-supersymmetry)
+2. [The Coleman-Mandula Theorem and Its Evasion](#2-the-coleman-mandula-theorem-and-its-evasion)
+3. [The SUSY Algebra](#3-the-susy-algebra)
+4. [Two-Component Spinor Notation](#4-two-component-spinor-notation)
+5. [Superspace and Superfields](#5-superspace-and-superfields)
+6. [Chiral Superfields](#6-chiral-superfields)
+7. [Vector Superfields](#7-vector-superfields)
+8. [The Wess-Zumino Model](#8-the-wess-zumino-model)
+9. [SUSY Gauge Theories](#9-susy-gauge-theories)
+10. [Non-Renormalization Theorems](#10-non-renormalization-theorems)
+11. [SUSY Breaking](#11-susy-breaking)
+12. [The Minimal Supersymmetric Standard Model (MSSM)](#12-the-minimal-supersymmetric-standard-model-mssm)
+13. [SUSY Phenomenology and Current Status](#13-susy-phenomenology-and-current-status)
+14. [Appendix: SUSY Formulas Reference](#14-appendix-susy-formulas-reference)
+
+---
+
+## 1. Why Supersymmetry?
+
+### The Hierarchy Problem
+
+The Standard Model Higgs boson has a mass $m_H \approx 125$ GeV. Quantum corrections to this mass, from loops involving heavy particles at some scale $\Lambda$, are quadratically divergent:
+
+$$\delta m_H^2 \sim \frac{1}{(4\pi)^2}\Lambda^2$$
+
+If $\Lambda$ is the Planck scale ($\sim 10^{19}$ GeV), this gives corrections $\sim 10^{34}$ GeV²; 34 orders of magnitude larger than $m_H^2 \sim 1.6\times 10^4$ GeV². The "bare" Higgs mass parameter would need to be fine-tuned to 32 decimal places to produce the observed value after these huge loop corrections.
+
+This fine-tuning is the **hierarchy problem**; why is $m_H$ so much smaller than $M_{\rm Pl}$?
+
+### How SUSY Solves It
+
+In a supersymmetric theory, every boson has a fermionic superpartner. Loop corrections from bosons and fermions to the Higgs mass have opposite signs:
+
+$$\delta m_H^2|_{\rm boson} = +c\Lambda^2/(4\pi)^2$$
+
+$$\delta m_H^2|_{\rm fermion} = -c\Lambda^2/(4\pi)^2$$
+
+**They cancel exactly** if supersymmetry is exact. The quadratic divergence is absent.
+
+When SUSY is broken at scale $M_{\rm SUSY}$, the cancellation is imperfect:
+
+$$\delta m_H^2 \sim \frac{M_{\rm SUSY}^2}{(4\pi)^2}\ln(\Lambda/M_{\rm SUSY})$$
+
+Logarithmic, not quadratic. For naturalness, we want $M_{\rm SUSY} \lesssim $ few TeV, which is why SUSY was expected at the LHC.
+
+### Gauge Coupling Unification
+
+In the Standard Model, the three gauge couplings $g_1, g_2, g_3$ (for $U(1)_Y$, $SU(2)_L$, $SU(3)_C$) run with energy. Extrapolating from measured values at $M_Z$ to very high scales:
+
+- **Without SUSY:** they approach each other but don't meet exactly
+- **With SUSY (TeV scale):** they meet at a single point, $M_{\rm GUT} \approx 2\times 10^{16}$ GeV
+
+This "unification" is a striking coincidence; the extra SUSY particles modify the running precisely to produce it. If SUSY at TeV scale is real, GUT unification works beautifully.
+
+### Dark Matter
+
+In SUSY models with conserved "R-parity" (discussed in section 12), the lightest supersymmetric particle (LSP) is stable. If it's neutral and weakly interacting, it's a natural dark matter candidate.
+
+Typical candidates: neutralinos (mixtures of photino, zino, higgsinos) with masses $\sim 100$ GeV to TeV. The relic abundance from thermal freeze-out typically matches observed dark matter density for reasonable parameter values; the "WIMP miracle."
+
+### Aesthetic and Mathematical Appeal
+
+Beyond phenomenology:
+
+- SUSY is the **unique** extension of spacetime symmetry (by the Coleman-Mandula theorem; see below)
+- SUSY has remarkable **mathematical structures**: superspace, superfields, holomorphic properties
+- SUSY theories have **non-renormalization theorems** that forbid certain loop corrections
+- SUSY provides **exact non-perturbative results** (BPS states, Seiberg-Witten, AdS/CFT)
+- SUSY is **natural in string theory**; worldsheet SUSY is essential for consistency
+
+Even if SUSY isn't realized in our universe at low energies, it's become a central tool in theoretical physics.
+
+### What LHC Has Done
+
+The LHC has excluded simple SUSY scenarios:
+- Gluinos (superpartners of gluons): masses below $\sim 2.2$ TeV excluded
+- Squarks (superpartners of quarks): masses below $\sim 1.5$ TeV excluded
+- Neutralino LSP: various bounds depending on model
+
+This pushes SUSY out of the "natural" region. The question now is whether SUSY exists at scales $\sim 10$ TeV or higher (making it harder to probe), or whether the hierarchy problem has a completely different resolution.
+
+---
+
+## 2. The Coleman-Mandula Theorem and Its Evasion
+
+### The No-Go Theorem
+
+Coleman and Mandula (1967) proved a fundamental constraint: in any 4D QFT with:
+- Massive one-particle states
+- Interactions with nontrivial S-matrix
+- A finite number of particle types below any mass
+
+the symmetry group of the S-matrix can only be a direct product:
+
+$$\text{Poincaré} \times \text{internal symmetries}$$
+
+You **cannot** have symmetries that mix spacetime and internal structure (like flavor with spin).
+
+### Why This Matters
+
+This is bad news for anyone wanting to unify internal symmetries with Poincaré transformations. It says: if you try, you'll run into contradictions with interactions and mass spectra.
+
+In particular, it forbids straightforward extensions of Poincaré symmetry that relate particles of different spin.
+
+### The SUSY Escape
+
+Haag, Lopuszanski, Sohnius (1975) showed: the Coleman-Mandula theorem assumes all symmetry generators are **bosonic** (they commute: $[Q_1, Q_2]$). If we allow **fermionic** generators (they anticommute: $\{Q_1, Q_2\}$), the theorem's assumptions are violated.
+
+**SUSY is the unique extension of Poincaré symmetry by fermionic generators.**
+
+The new fermionic generators $Q_\alpha$ transform as spinors (spin 1/2) under the Lorentz group. They relate bosons and fermions. This is the only consistent way to extend spacetime symmetry beyond Poincaré.
+
+### The Structure of SUSY Algebra
+
+The fermionic generators $Q_\alpha, \bar Q_{\dot\alpha}$ combine with Poincaré generators $P_\mu, M_{\mu\nu}$ to form a **graded Lie algebra** (or "super-Lie algebra"): some brackets are commutators, others are anticommutators.
+
+The signature relation:
+
+$$\{Q_\alpha, \bar Q_{\dot\alpha}\} = 2\sigma^\mu_{\alpha\dot\alpha}P_\mu$$
+
+"Two SUSY transformations equal a translation." SUSY is intrinsically linked to spacetime translations.
+
+---
+
+## 3. The SUSY Algebra
+
+### The Generators
+
+For minimal ($\mathcal{N}=1$) SUSY in 4D:
+
+- Spin-1/2 supercharges: $Q_\alpha$ ($\alpha = 1, 2$) and $\bar Q_{\dot\alpha}$ ($\dot\alpha = 1, 2$)
+- Satisfies $Q_\alpha^\dagger = \bar Q_{\dot\alpha}$ (Hermitian conjugate)
+
+### The Algebra
+
+$$\{Q_\alpha, \bar Q_{\dot\alpha}\} = 2\sigma^\mu_{\alpha\dot\alpha}P_\mu$$
+
+$$\{Q_\alpha, Q_\beta\} = 0, \quad \{\bar Q_{\dot\alpha}, \bar Q_{\dot\beta}\} = 0$$
+
+$$[Q_\alpha, P_\mu] = 0, \quad [\bar Q_{\dot\alpha}, P_\mu] = 0$$
+
+$$[Q_\alpha, M^{\mu\nu}] = (\sigma^{\mu\nu})_\alpha{}^\beta Q_\beta$$
+
+$$[\bar Q^{\dot\alpha}, M^{\mu\nu}] = (\bar\sigma^{\mu\nu})^{\dot\alpha}{}_{\dot\beta}\bar Q^{\dot\beta}$$
+
+The supercharges commute with translations but rotate as spinors under Lorentz transformations.
+
+### Extended SUSY
+
+For $\mathcal{N}$ supercharges ($\mathcal{N} = 1, 2, 4, 8, \ldots$), the algebra extends:
+
+$$\{Q_\alpha^I, \bar Q_{\dot\alpha}^J\} = 2\sigma^\mu_{\alpha\dot\alpha}P_\mu\delta^{IJ}$$
+
+$$\{Q_\alpha^I, Q_\beta^J\} = \epsilon_{\alpha\beta}Z^{IJ}$$
+
+where $I, J = 1, \ldots, \mathcal{N}$ and $Z^{IJ}$ are **central charges** (commute with everything in the algebra).
+
+Extended SUSY is restricted: in 4D, the maximum is $\mathcal{N}=8$. Higher $\mathcal{N}$ requires more dimensions or is inconsistent.
+
+### Implications of the Algebra
+
+**Energy is non-negative.** From $\{Q_\alpha, \bar Q_{\dot\alpha}\} = 2\sigma^\mu P_\mu$:
+
+$$\langle\phi|\{Q, Q^\dagger\}|\phi\rangle \geq 0$$
+
+Expanding: $\langle|QQ^\dagger|\rangle + \langle|Q^\dagger Q|\rangle \geq 0$. Combined with the algebra: $\langle|P^0|\rangle \geq 0$.
+
+So in any SUSY theory, **the energy is bounded below by zero**. The vacuum (if SUSY is unbroken) has exactly zero energy. This is different from non-SUSY theories where zero-point energies can be anything.
+
+**SUSY implies equal boson and fermion numbers.** In every irreducible representation (multiplet), the numbers of bosonic and fermionic degrees of freedom are equal. This follows from the algebra.
+
+**BPS states exist.** When central charges are nonzero, states satisfying $M \geq |Z|$ (with equality for BPS states) are stable. BPS masses are exact; protected from quantum corrections (document 19, 21).
+
+### Multiplets
+
+Irreducible representations of SUSY algebra are **supermultiplets**. Each contains particles of different spin, all with the same mass.
+
+**Massless $\mathcal{N}=1$ multiplets:**
+
+- **Chiral multiplet:** one Weyl fermion (spin 1/2) + one complex scalar (2 real bosonic d.o.f.). Total: 2 bosonic + 2 fermionic = 4 d.o.f.
+- **Vector multiplet:** one gauge boson (spin 1, 2 transverse polarizations) + one Weyl fermion (gaugino). Total: 2 + 2 = 4 d.o.f.
+- **Gravity multiplet:** graviton (spin 2, 2 polarizations) + gravitino (spin 3/2, 2 polarizations). Total: 2 + 2 = 4 d.o.f.
+
+Equal boson-fermion counting is automatic.
+
+**Massive $\mathcal{N}=1$ multiplets** have more d.o.f.:
+
+- **Massive chiral multiplet:** complex scalar + Weyl fermion (completes to Dirac). 4 + 4 = 8 d.o.f.
+- **Massive vector multiplet:** massive gauge boson (3 pol.) + Dirac fermion (4 pol.) + real scalar (1 pol.). 3 + 4 + 1 = 8, matching 4 + 4.
+
+---
+
+## 4. Two-Component Spinor Notation
+
+SUSY is most naturally written in **two-component Weyl spinor** notation. Let's review.
+
+### Left and Right Weyl Spinors
+
+Decompose Dirac fermions into left and right pieces: $\Psi = (\psi_\alpha, \bar\chi^{\dot\alpha})^T$.
+
+- $\psi_\alpha$: left-handed Weyl spinor ($\alpha = 1, 2$, undotted)
+- $\bar\chi^{\dot\alpha}$: right-handed Weyl spinor ($\dot\alpha = 1, 2$, dotted)
+
+They transform differently under Lorentz: $\psi$ under $(1/2, 0)$, $\bar\chi$ under $(0, 1/2)$.
+
+### Raising and Lowering Indices
+
+Use antisymmetric $\epsilon$ symbols:
+
+$$\psi^\alpha = \epsilon^{\alpha\beta}\psi_\beta, \quad \psi_\alpha = \epsilon_{\alpha\beta}\psi^\beta$$
+
+with $\epsilon^{12} = -\epsilon^{21} = 1$, $\epsilon^{11} = \epsilon^{22} = 0$. And similarly for dotted indices.
+
+### Sigma Matrices
+
+Define:
+
+$$\sigma^\mu_{\alpha\dot\alpha} = (1, \vec\sigma)_{\alpha\dot\alpha}$$
+
+$$\bar\sigma^{\mu\dot\alpha\alpha} = (1, -\vec\sigma)^{\dot\alpha\alpha}$$
+
+These intertwine undotted and dotted indices.
+
+Useful identities:
+
+$$\sigma^\mu\bar\sigma^\nu + \sigma^\nu\bar\sigma^\mu = 2\eta^{\mu\nu}$$
+
+$$\text{Tr}[\sigma^\mu\bar\sigma^\nu] = 2\eta^{\mu\nu}$$
+
+### Bilinears
+
+Lorentz scalars from Weyl spinors:
+
+$$\psi\chi \equiv \psi^\alpha\chi_\alpha = -\psi_\alpha\chi^\alpha$$
+
+$$\bar\psi\bar\chi \equiv \bar\psi_{\dot\alpha}\bar\chi^{\dot\alpha} = -\bar\psi^{\dot\alpha}\bar\chi_{\dot\alpha}$$
+
+Lorentz vectors:
+
+$$\psi\sigma^\mu\bar\chi \equiv \psi^\alpha(\sigma^\mu)_{\alpha\dot\alpha}\bar\chi^{\dot\alpha}$$
+
+### Advantage for SUSY
+
+Two-component notation makes SUSY manipulations cleaner. The supercharges $Q_\alpha, \bar Q_{\dot\alpha}$ have one undotted and one dotted index respectively. Products like $\theta^\alpha Q_\alpha$ are Lorentz scalars when $\theta$ is a Grassmann parameter.
+
+Most modern SUSY literature uses two-component notation. Our treatment will too.
+
+### Translating to 4-Component
+
+A 4-component Majorana fermion has both left and right parts equal:
+
+$$\Psi_M = \begin{pmatrix}\psi_\alpha \\ \bar\psi^{\dot\alpha}\end{pmatrix}$$
+
+For a Dirac fermion: $\psi$ and $\chi$ are independent.
+
+---
+
+## 5. Superspace and Superfields
+
+### The Big Idea
+
+SUSY can be made manifest by extending spacetime to **superspace**; spacetime with additional Grassmann (anticommuting) coordinates.
+
+Ordinary spacetime: 4 commuting coordinates $x^\mu$.
+
+Superspace: $x^\mu$ plus 4 Grassmann coordinates $\theta^\alpha, \bar\theta^{\dot\alpha}$ (2 complex, 4 real Grassmann d.o.f.).
+
+### Properties of Grassmann Coordinates
+
+$$\theta^\alpha\theta^\beta = -\theta^\beta\theta^\alpha, \quad (\theta^\alpha)^2 = 0$$
+
+$$\{\theta^\alpha, \bar\theta^{\dot\alpha}\} = 0$$
+
+$$\theta\theta \equiv \theta^\alpha\theta_\alpha = -2\theta^1\theta^2, \quad \bar\theta\bar\theta \equiv \bar\theta_{\dot\alpha}\bar\theta^{\dot\alpha}$$
+
+Any function of $\theta$ terminates: $(\theta^\alpha)^2 = 0$ means power series truncate.
+
+### Integration Over Grassmann
+
+$$\int d\theta^\alpha\, 1 = 0, \quad \int d\theta^\alpha\, \theta^\beta = \delta^\alpha_\beta$$
+
+Measure: $d^2\theta = -\tfrac{1}{4}d\theta^\alpha d\theta^\beta\epsilon_{\alpha\beta}$, with $\int d^2\theta\,\theta\theta = 1$.
+
+Similarly: $\int d^2\bar\theta\,\bar\theta\bar\theta = 1$.
+
+Superspace measure: $d^4x\,d^2\theta\,d^2\bar\theta$.
+
+### Superfields: Functions of Superspace
+
+A **superfield** is a function $\Phi(x, \theta, \bar\theta)$. Since $\theta$ is Grassmann with only 4 real components, the power series terminates:
+
+$$\Phi(x, \theta, \bar\theta) = f(x) + \theta\psi(x) + \bar\theta\bar\chi(x) + \theta\theta F(x) + \bar\theta\bar\theta G(x) + \theta\sigma^\mu\bar\theta V_\mu(x) + \theta\theta\bar\theta\bar\lambda(x) + \bar\theta\bar\theta\theta\rho(x) + \theta\theta\bar\theta\bar\theta D(x)$$
+
+Each coefficient (called a **component field**) is an ordinary field. Total: 9 component fields in a general superfield.
+
+A general superfield contains too many fields; it's a **reducible** representation. Irreducible representations are obtained by imposing constraints.
+
+### The SUSY Transformation
+
+Under a SUSY transformation with parameters $(\epsilon, \bar\epsilon)$, Grassmann spinors:
+
+$$\delta\Phi = (\epsilon Q + \bar\epsilon\bar Q)\Phi$$
+
+where in superspace:
+
+$$Q_\alpha = \partial_\alpha - i\sigma^\mu_{\alpha\dot\alpha}\bar\theta^{\dot\alpha}\partial_\mu$$
+
+$$\bar Q^{\dot\alpha} = -\bar\partial^{\dot\alpha} + i\theta^\alpha\sigma^\mu_{\alpha\dot\alpha}\partial_\mu$$
+
+(Using $\partial_\alpha = \partial/\partial\theta^\alpha$, etc.)
+
+These satisfy the SUSY algebra by direct calculation.
+
+### Covariant Derivatives
+
+Define:
+
+$$D_\alpha = \partial_\alpha + i\sigma^\mu_{\alpha\dot\alpha}\bar\theta^{\dot\alpha}\partial_\mu$$
+
+$$\bar D^{\dot\alpha} = -\bar\partial^{\dot\alpha} - i\theta^\alpha\sigma^\mu_{\alpha\dot\alpha}\partial_\mu$$
+
+These **anticommute** with $Q, \bar Q$. They're the SUSY-covariant derivatives, useful for imposing constraints that preserve SUSY.
+
+---
+
+## 6. Chiral Superfields
+
+### The Chiral Constraint
+
+A **chiral superfield** $\Phi$ satisfies:
+
+$$\bar D^{\dot\alpha}\Phi = 0$$
+
+This is a SUSY-covariant constraint (it's preserved under SUSY transformations).
+
+### Component Expansion
+
+A chiral superfield depends only on $y^\mu = x^\mu + i\theta\sigma^\mu\bar\theta$ and $\theta$:
+
+$$\Phi(y, \theta) = \phi(y) + \sqrt 2\theta\psi(y) + \theta\theta F(y)$$
+
+Expanding $y$ in terms of $x$ and the Grassmann coordinates:
+
+$$\Phi(x, \theta, \bar\theta) = \phi(x) + \sqrt 2\theta\psi(x) + \theta\theta F(x) + i\theta\sigma^\mu\bar\theta\partial_\mu\phi(x) + \ldots$$
+
+### Component Fields
+
+A chiral superfield has **3 component fields**:
+
+- $\phi(x)$: **complex scalar** (2 real bosonic d.o.f.)
+- $\psi_\alpha(x)$: **Weyl fermion** (2 complex = 4 real d.o.f., but on-shell only 2)
+- $F(x)$: **auxiliary complex scalar** (2 real d.o.f.)
+
+The $F$ field is called "auxiliary" because its equation of motion is algebraic (no kinetic term). It's a convenience that makes SUSY manifest off-shell.
+
+**Off-shell counting:** $\phi$ has 2 real d.o.f., $F$ has 2. Total bosons: 4. $\psi$ has 4 real d.o.f. off-shell. Matches: 4 = 4. ✓
+
+**On-shell counting:** $F$ is eliminated by its equation of motion, so bosons: 2. $\psi$ on-shell: 2 (Majorana half). Matches: 2 = 2. ✓
+
+The auxiliary field $F$ is what lets SUSY close off-shell (without using equations of motion).
+
+### Products and Holomorphy
+
+Products of chiral superfields are chiral:
+
+$$\bar D^{\dot\alpha}(\Phi_1\Phi_2) = 0$$
+
+So any holomorphic function $W(\Phi_i)$ of chiral superfields is chiral. This is the **superpotential**; a holomorphic function of chiral superfields.
+
+### The F-Term Lagrangian
+
+For chiral superfields, the Lagrangian has two parts:
+
+**Kinetic term ($D$-term):** $\int d^4\theta\,\Phi^\dagger\Phi$
+
+**Potential term ($F$-term):** $\int d^2\theta\, W(\Phi) + \text{h.c.}$
+
+where $\int d^2\theta$ picks out the $\theta\theta$ component. For holomorphic $W$, only $F$-term combinations appear.
+
+Expanding the $F$-term of $W(\Phi_i)$:
+
+$$\int d^2\theta\, W(\Phi_i)|_{\theta\theta} = F_i\frac{\partial W}{\partial\phi_i} - \frac{1}{2}\frac{\partial^2 W}{\partial\phi_i\partial\phi_j}\psi_i\psi_j$$
+
+Eliminating $F_i$ via its equation of motion $F_i^* = \partial W^*/\partial\phi_i^*$:
+
+$$V(\phi, \phi^*) = \sum_i|\partial W/\partial\phi_i|^2$$
+
+This is the scalar potential from the superpotential. It's always $\geq 0$, consistent with SUSY's energy positivity.
+
+### Fermion Masses and Yukawa Couplings
+
+From $-\tfrac{1}{2}\partial^2 W/(\partial\phi_i\partial\phi_j)\psi_i\psi_j$: the second derivative of $W$ gives fermion masses (when evaluated at the vacuum) and Yukawa couplings (when involving three fields).
+
+So $W$ encodes:
+- Scalar potential (via $|\partial W|^2$)
+- Fermion masses ($\partial^2 W$ evaluated at VEV)
+- Yukawa couplings (cubic $W$ terms)
+
+A single function determines everything.
+
+---
+
+## 7. Vector Superfields
+
+### The Vector Constraint
+
+A **vector superfield** $V$ satisfies:
+
+$$V = V^\dagger$$
+
+(Hermitian.) This is a constraint on the general superfield.
+
+### Component Expansion
+
+With appropriate gauge choice (Wess-Zumino gauge), the vector superfield has components:
+
+$$V(x, \theta, \bar\theta) = -\theta\sigma^\mu\bar\theta A_\mu(x) + i\theta\theta\bar\theta\bar\lambda(x) - i\bar\theta\bar\theta\theta\lambda(x) + \tfrac{1}{2}\theta\theta\bar\theta\bar\theta D(x)$$
+
+Component fields:
+
+- $A_\mu(x)$: **gauge field** (4 components, 2 physical polarizations on-shell for massless)
+- $\lambda_\alpha(x)$, $\bar\lambda^{\dot\alpha}(x)$: **gaugino** (Weyl fermion)
+- $D(x)$: **auxiliary real scalar**
+
+**Off-shell counting:** 4 ($A_\mu$) + 1 ($D$) = 5 bosonic. 4 ($\lambda$) fermionic. Match by gauge redundancy: 4 - 1 = 3 + 1 = 4 matches 4. ✓
+
+**On-shell counting:** 2 ($A_\mu$ physical) + 2 ($\lambda$ on-shell) = equal. ✓
+
+### Super-Gauge Transformations
+
+Under a gauge transformation with chiral parameter $\Lambda$:
+
+$$V \to V + i(\Lambda - \Lambda^\dagger)$$
+
+In components, this produces standard gauge transformations of $A_\mu$ plus transformations of $\lambda$ and $D$.
+
+### The Field Strength Superfield
+
+The super-gauge-invariant **chiral field strength superfield**:
+
+$$W_\alpha = -\tfrac{1}{4}\bar D\bar D D_\alpha V$$
+
+(With appropriate non-abelian generalization.) $W_\alpha$ is chiral ($\bar D W_\alpha = 0$).
+
+In components:
+
+$$W_\alpha = -i\lambda_\alpha + \theta_\alpha D + i(\sigma^\mu\bar\sigma^\nu\theta)_\alpha F_{\mu\nu}/2 + \theta\theta(\sigma^\mu\partial_\mu\bar\lambda)_\alpha$$
+
+The gauge-invariant Lagrangian:
+
+$$\int d^2\theta\, W^\alpha W_\alpha + \text{h.c.}$$
+
+Expanding: this gives $-\tfrac{1}{4}F_{\mu\nu}F^{\mu\nu} + i\bar\lambda\bar\sigma^\mu\partial_\mu\lambda + \tfrac{1}{2}D^2 + \ldots$; the kinetic terms for gauge field and gaugino.
+
+### Non-Abelian Extension
+
+For non-abelian gauge theories, $V = V^a T^a$ (Lie-algebra valued), and the gauge transformations are:
+
+$$e^{2gV} \to e^{-2ig\Lambda^\dagger}e^{2gV}e^{2ig\Lambda}$$
+
+Non-abelian super-Yang-Mills Lagrangian:
+
+$$\mathcal{L} = \frac{1}{4g^2}\int d^2\theta\,\text{tr}[W^\alpha W_\alpha] + \text{h.c.} + \text{matter terms}$$
+
+This generates non-abelian field strengths, gaugino-gauge boson couplings, and gauge boson self-interactions, all in a SUSY-covariant way.
+
+### Charged Matter
+
+A chiral superfield $\Phi$ with charge $q$ under a $U(1)$ with vector superfield $V$ transforms as:
+
+$$\Phi \to e^{-2iqg\Lambda}\Phi$$
+
+The gauge-invariant kinetic term:
+
+$$\int d^4\theta\,\Phi^\dagger e^{2qgV}\Phi$$
+
+Expanding: standard kinetic terms for $\phi$ and $\psi$, plus gauge couplings, plus $D$-term contributions.
+
+### D-Terms in the Potential
+
+The $D$ auxiliary field contributes to the scalar potential:
+
+$$V_D = \frac{1}{2}D^2 = \frac{1}{2}\left(\sum_i q_i|\phi_i|^2\right)^2\cdot g^2/2$$
+
+Combined with $F$-terms:
+
+$$V(\phi) = \sum_i|F_i|^2 + \frac{1}{2}\sum_a(D^a)^2$$
+
+Both sums are positive. The vacuum minimizes $V$.
+
+---
+
+## 8. The Wess-Zumino Model
+
+### The Simplest SUSY Theory
+
+The Wess-Zumino model has just one chiral superfield $\Phi$ with superpotential:
+
+$$W(\Phi) = \frac{m}{2}\Phi^2 + \frac{\lambda}{3}\Phi^3$$
+
+Component Lagrangian:
+
+$$\mathcal{L} = \int d^4\theta\,\Phi^\dagger\Phi + \int d^2\theta\, W(\Phi) + \text{h.c.}$$
+
+### Expanding in Components
+
+After expanding in components and eliminating $F$ via equations of motion:
+
+$$\mathcal{L} = -\partial_\mu\phi^*\partial^\mu\phi - i\bar\psi\bar\sigma^\mu\partial_\mu\psi - |m\phi + \lambda\phi^2|^2 - \tfrac{1}{2}(m + 2\lambda\phi)\psi\psi + \text{h.c.}$$
+
+Particle content:
+- One complex scalar $\phi$ with mass $|m|$
+- One Weyl fermion $\psi$ with mass $|m|$
+- Yukawa coupling $\lambda$
+- Scalar quartic coupling $|\lambda|^2$
+
+### The Key Feature
+
+**Boson and fermion have the same mass.** This is the hallmark of unbroken SUSY: every particle has a superpartner with equal mass.
+
+The scalar quartic coupling is related to the Yukawa by SUSY: $|\lambda|^2$. Not independent.
+
+### UV Behavior
+
+Even though this theory has renormalizable interactions, SUSY forces specific relations between couplings. Quantum corrections preserve these relations; for example:
+
+- **Mass renormalization:** $\delta m^2 = 0$ (exactly, not just at some order)
+- **Yukawa renormalization:** $\lambda$ gets renormalized only by wave-function renormalization
+- **Scalar quartic coupling** tied to Yukawa at all orders
+
+This is an example of **non-renormalization theorems** (section 10).
+
+### The Wess-Zumino Model as Toy
+
+This simple model teaches many lessons:
+- How SUSY relates bosons and fermions
+- How superpotential generates masses and interactions
+- How auxiliary fields are eliminated
+- How SUSY constrains coupling relations
+- How SUSY protects certain quantities from renormalization
+
+It's not realistic (has no gauge structure), but it's the basic template.
+
+---
+
+## 9. SUSY Gauge Theories
+
+### Super-Yang-Mills
+
+Pure super-Yang-Mills with gauge group $G$:
+
+$$\mathcal{L}_{\rm SYM} = \frac{1}{4g^2}\int d^2\theta\,\text{tr}[W^\alpha W_\alpha] + \text{h.c.}$$
+
+Expanding:
+
+$$\mathcal{L}_{\rm SYM} = -\tfrac{1}{4}\text{tr}[F_{\mu\nu}F^{\mu\nu}] - i\bar\lambda^a\bar\sigma^\mu D_\mu\lambda^a + \tfrac{1}{2}(D^a)^2$$
+
+where $\lambda^a$ is the gaugino (in adjoint representation).
+
+### Particle Content
+
+Pure $\mathcal{N}=1$ SYM with gauge group $G$:
+- Gauge bosons $A^a_\mu$ (dim $G$ of them)
+- Gauginos $\lambda^a$ (dim $G$ Weyl fermions)
+
+Number of bosonic d.o.f. = number of fermionic d.o.f. ✓ (for massless: 2 physical polarizations for gauge boson, 2 for Weyl fermion on-shell).
+
+### Super-QCD and Matter
+
+Adding matter in representations $R, \bar R$ of the gauge group: chiral superfields $Q_i$ and anti-chiral $\tilde Q_i$. Typical setup:
+
+$$\mathcal{L}_{\rm SQCD} = \mathcal{L}_{\rm SYM} + \int d^4\theta\,[Q^\dagger e^{2gV}Q + \tilde Q^\dagger e^{-2gV}\tilde Q] + \int d^2\theta\,W(Q, \tilde Q) + \text{h.c.}$$
+
+Particle content:
+- Gauge bosons + gauginos (pure SYM)
+- Quarks ($\psi_Q$) and squarks ($\phi_Q$): SUSY partners
+- Mirror quarks ($\psi_{\tilde Q}$) and mirror squarks ($\phi_{\tilde Q}$)
+
+Unlike standard QCD, SUSY QCD has both quarks and squarks. Each quark has a scalar partner (squark).
+
+### Beta Function of SUSY QCD
+
+The one-loop beta function of $SU(N_c)$ with $N_f$ pairs of $(Q, \tilde Q)$ in the fundamental:
+
+$$\beta_1 = -\frac{g^3}{16\pi^2}(3N_c - N_f)$$
+
+For $N_f < 3N_c$: asymptotically free.
+For $N_f = 3N_c$: finite one-loop beta function (the "conformal window" starts).
+For $N_f > 3N_c$: IR-free.
+
+For pure $SU(N_c)$ (no matter, $N_f = 0$): $\beta_1 = -3N_c g^3/(16\pi^2)$, strongly asymptotically free.
+
+### Seiberg's Exact Results
+
+Seiberg (1994) exactly solved $\mathcal{N}=1$ SQCD for various $N_c$ and $N_f$, finding:
+- Different phases depending on $N_f/N_c$
+- **Seiberg duality**: two theories with different gauge groups give the same IR physics
+- Exact quantum corrections to the superpotential in some regimes
+
+This is one of the most beautiful applications of SUSY; exact non-perturbative results using non-renormalization theorems and holomorphy. We'll cover this in document 21.
+
+---
+
+## 10. Non-Renormalization Theorems
+
+### The Miracle
+
+SUSY imposes remarkable constraints on quantum corrections:
+
+**Superpotential non-renormalization:** The superpotential $W$ receives **no perturbative quantum corrections**. At all orders in perturbation theory:
+
+$$W_{\rm quantum} = W_{\rm classical}$$
+
+(Up to wave-function renormalizations, which affect kinetic terms but not $W$.)
+
+### Proof Sketch
+
+The non-renormalization theorem relies on **holomorphy**: the superpotential is a holomorphic function of chiral superfields.
+
+Argument by Seiberg (1993):
+1. Treat couplings in $W$ as background chiral superfields (spurions)
+2. The quantum-corrected $W$ must be a holomorphic function of these spurions
+3. Various limits (small or large coupling) restrict the allowed form
+4. Only the tree-level form is consistent
+
+This is an argument from symmetry + holomorphy, not from specific loop calculations.
+
+### What Gets Renormalized
+
+Non-renormalization theorems say $W$ isn't renormalized. But:
+
+- **Kinetic terms** (Kähler potential) are renormalized by loops
+- **Gauge couplings** are renormalized (same as non-SUSY)
+- **Vacuum energies** can get corrections if SUSY is broken
+
+The combination of holomorphic protection for $W$ plus standard running for gauge couplings gives the specific structure of SUSY quantum corrections.
+
+### Non-Perturbative Corrections
+
+Non-renormalization is exact in perturbation theory. Non-perturbatively (instantons), the superpotential can get corrections:
+
+$$W_{\rm non-pert} \sim e^{-S_{\rm inst}/\hbar}$$
+
+These are calculable in SUSY theories; unlike non-SUSY theories where instanton calculations are difficult.
+
+### Consequence: Hierarchy Problem Solution
+
+In the non-SUSY SM, the Higgs mass parameter $\mu^2$ gets quadratic quantum corrections: $\delta\mu^2 \sim \Lambda^2/(4\pi)^2$.
+
+In SUSY: $\mu$ is a parameter in the superpotential. **Non-renormalization theorem forbids quantum corrections to $\mu$.** So the Higgs mass is protected from the hierarchy problem; as long as SUSY is exact.
+
+When SUSY is broken, corrections appear but are only logarithmic (instead of quadratic). This is the formal statement of how SUSY solves the hierarchy problem.
+
+### Consequence: Exact Results
+
+Non-renormalization allows exact calculations of certain SUSY quantities:
+- **BPS masses** are classical
+- **Central charges** in supersymmetry algebra are classical
+- **Effective superpotentials** receive only specific non-perturbative corrections
+- **Vacuum structure** is rigid in many cases
+
+This is what makes SUSY a research tool; you can compute things exactly that would be impossible in non-SUSY theories.
+
+---
+
+## 11. SUSY Breaking
+
+### Why SUSY Must Be Broken
+
+If SUSY were exact, each quark would have a squark of the same mass. Each electron would have a selectron of the same mass. But no one has ever observed a selectron or squark at the electron or quark masses.
+
+Conclusion: **SUSY must be broken at some scale**; low enough to solve the hierarchy problem (say, TeV), high enough to make superpartners invisible in current experiments.
+
+### Types of SUSY Breaking
+
+**Spontaneous:** The Lagrangian is SUSY-invariant, but the vacuum isn't. Like the Higgs mechanism for gauge symmetry.
+
+**Explicit (soft):** The Lagrangian has terms that break SUSY, but in a way that preserves the key benefits (no quadratic divergences). These are called "soft SUSY-breaking terms."
+
+Most realistic models use a combination: SUSY is spontaneously broken in a hidden sector and transmitted to visible-sector particles, giving rise to effective soft-breaking terms in the MSSM.
+
+### F-Term Breaking
+
+If any $F_i$ auxiliary field has a nonzero VEV $\langle F_i\rangle \neq 0$, SUSY is spontaneously broken. In this case:
+
+$$\langle V\rangle = \sum|\partial W/\partial\phi_i|^2 > 0$$
+
+The vacuum has positive energy, a signature of SUSY breaking.
+
+Example: O'Raifeartaigh model with specific superpotential structures that prevent the $F$-equations from having simultaneous zero solutions, forcing $\langle F\rangle \neq 0$ at the vacuum.
+
+### D-Term Breaking
+
+If the $D$ auxiliary field of a gauge multiplet has nonzero VEV $\langle D\rangle \neq 0$, SUSY is spontaneously broken.
+
+In $U(1)$ gauge theory with Fayet-Iliopoulos term $\xi D$:
+
+$$V_D = \tfrac{1}{2}D^2 + \xi D$$
+
+Eliminating $D$: $D = -\xi$, giving $\langle V\rangle = \xi^2/2 > 0$.
+
+### The Goldstino
+
+By the Nambu-Goldstone theorem for fermionic symmetries: SUSY breaking produces a **massless fermion**; the **goldstino**.
+
+In gravity-mediated scenarios, the goldstino is "eaten" by the gravitino via the super-Higgs mechanism (analog to the Higgs mechanism for gauge theory). The gravitino becomes massive:
+
+$$m_{3/2} \sim \frac{F}{M_{\rm Pl}}$$
+
+where $F$ is the SUSY-breaking scale.
+
+### Soft SUSY-Breaking Lagrangian
+
+In the effective theory below the SUSY-breaking scale, soft terms appear:
+
+$$\mathcal{L}_{\rm soft} = -m^2_i|\phi_i|^2 - (A_{ijk}\phi_i\phi_j\phi_k + B_{ij}\phi_i\phi_j + m_{1/2}\bar\lambda\lambda + \text{h.c.})$$
+
+These are:
+- **Squark and slepton masses** $m^2_i$
+- **Trilinear A-terms** $A_{ijk}$ (coupling soft-masses to Yukawa structure)
+- **Bilinear B-terms** $B_{ij}$ (similar to $\mu B$ mixing)
+- **Gaugino masses** $m_{1/2}$
+
+These terms break SUSY explicitly but softly; they don't introduce quadratic divergences. The Higgs mass is still protected (only logarithmic corrections).
+
+### SUSY-Breaking Transmission Mechanisms
+
+How is SUSY breaking in one sector communicated to the visible sector?
+
+**Gravity mediation:** SUSY is broken in a hidden sector, communicated to visible fields via Planck-suppressed operators ($\sim F/M_{\rm Pl}$). Generic masses $\sim F/M_{\rm Pl}$.
+
+**Gauge mediation:** "Messenger" fields charged under both hidden and SM gauge groups mediate SUSY breaking. Masses $\sim \alpha/(4\pi)\cdot F/M_{\rm mess}$ where $M_{\rm mess}$ is the messenger scale.
+
+**Anomaly mediation:** Breaking communicated through super-Weyl anomaly, giving specific mass formulas. Very predictive.
+
+Each mechanism has phenomenological implications (mass hierarchies, FCNC suppression, collider signatures).
+
+### Where Does Breaking Come From?
+
+In realistic models, SUSY breaking is typically dynamical; caused by gauge dynamics in a hidden sector. This is the **ISS mechanism** (Intriligator, Seiberg, Shih, 2006) or its variants. Dynamical SUSY breaking is natural and calculable.
+
+The SUSY-breaking scale is set by the dynamical scale of the hidden gauge group, which can be much lower than $M_{\rm Pl}$ via dimensional transmutation.
+
+---
+
+## 12. The Minimal Supersymmetric Standard Model (MSSM)
+
+### Particle Content
+
+The MSSM is the minimal SUSY extension of the SM. Each SM particle gets a superpartner:
+
+| SM particle | Superpartner | Symbol |
+|---|---|---|
+| quark $q$ | squark | $\tilde q$ |
+| lepton $\ell$ | slepton | $\tilde\ell$ |
+| gluon | gluino | $\tilde g$ |
+| W, Z bosons | winos, zinos | $\tilde W$, $\tilde Z$ |
+| photon | photino | $\tilde\gamma$ |
+| Higgs (2 doublets) | higgsinos | $\tilde H$ |
+
+### The Two Higgs Doublets
+
+SUSY requires **two Higgs doublets** (unlike the SM's one):
+
+$$H_u = (H_u^+, H_u^0), \quad H_d = (H_d^0, H_d^-)$$
+
+with hypercharges $+1/2$ and $-1/2$ respectively.
+
+Why two? Because:
+- **Anomaly cancellation:** a single Higgs doublet would give anomalous hypercharge contributions. Two doublets with opposite hypercharges cancel.
+- **Quark masses:** In the SM, down-type quarks get mass from $\tilde H$, but $\tilde H$ is the complex conjugate. In SUSY, can't use both $H$ and $H^\dagger$ in superpotential. Need separate $H_u$ (up-type) and $H_d$ (down-type).
+
+### The Superpotential
+
+The MSSM superpotential:
+
+$$W_{\rm MSSM} = Y^{ij}_u Q_i H_u U^c_j + Y^{ij}_d Q_i H_d D^c_j + Y^{ij}_e L_i H_d E^c_j + \mu H_u H_d$$
+
+where $Q_i$ are quark doublets, $U^c_j, D^c_j$ are anti-up-type and anti-down-type quarks, etc.
+
+This gives:
+- Yukawa interactions (quark and lepton masses after EWSB)
+- The $\mu$-term (mixing between $H_u$ and $H_d$, analog of $\mu^2|H|^2$ in SM)
+
+### Soft Breaking Terms
+
+Soft SUSY-breaking Lagrangian:
+
+$$\mathcal{L}_{\rm soft} = -m^2_{\tilde Q}|\tilde Q|^2 - m^2_{\tilde U}|\tilde U^c|^2 - \ldots - m^2_{H_u}|H_u|^2 - m^2_{H_d}|H_d|^2$$
+
+$$-(A_u^{ij}\tilde Q_i H_u \tilde U^c_j + A_d^{ij}\tilde Q_i H_d\tilde D^c_j + A_e^{ij}\tilde L_i H_d\tilde E^c_j + B_\mu H_u H_d + \text{h.c.})$$
+
+$$-\tfrac{1}{2}(M_3\tilde g\tilde g + M_2\tilde W^a\tilde W^a + M_1\tilde B\tilde B + \text{h.c.})$$
+
+All coefficients are free parameters in the "full" MSSM; there are ~100 of them. Minimal versions (mSUGRA, CMSSM) reduce to ~5 parameters with universal masses at the GUT scale.
+
+### The Higgs Potential
+
+After EWSB, the two Higgs doublets acquire VEVs:
+
+$$\langle H_u^0\rangle = v_u/\sqrt 2, \quad \langle H_d^0\rangle = v_d/\sqrt 2$$
+
+with $v_u^2 + v_d^2 = v^2 = (246 \text{ GeV})^2$ and $\tan\beta = v_u/v_d$.
+
+Physical Higgs states: two scalars ($h^0$ light, $H^0$ heavy), one pseudoscalar ($A^0$), charged pair ($H^\pm$). The light scalar $h^0$ is SM-like.
+
+At tree level: $m_{h^0} < M_Z|\cos 2\beta|$. But loop corrections (from top/stop) can raise $m_{h^0}$ to ~125 GeV, consistent with observation.
+
+### R-Parity
+
+R-parity is a discrete symmetry:
+
+$$R_P = (-1)^{3(B-L) + 2s}$$
+
+SM particles have $R_P = +1$, superpartners have $R_P = -1$.
+
+If R-parity is conserved:
+- Superpartners must be produced in pairs
+- The lightest supersymmetric particle (LSP) is stable
+- LSP is a natural dark matter candidate (if neutral)
+
+Most phenomenological analyses assume R-parity. It forbids certain dangerous operators (like rapid proton decay via superpartner exchange).
+
+### Neutralinos and Charginos
+
+After EWSB, the neutral gauginos and higgsinos mix into **neutralinos**:
+
+$$\tilde\chi^0_i \sim (\tilde B, \tilde W^3, \tilde H_u^0, \tilde H_d^0)_{\rm mixed}$$
+
+Four neutralinos with complicated mixing. The lightest is often the LSP and a dark matter candidate.
+
+Charged counterparts mix into **charginos** $\tilde\chi^\pm_1, \tilde\chi^\pm_2$.
+
+### Unification of Gauge Couplings
+
+With MSSM particle content, the running of $g_1, g_2, g_3$ gives remarkable unification at $\sim 10^{16}$ GeV. Without SUSY, the couplings nearly meet but don't precisely converge.
+
+This unification is one of the strongest theoretical motivations for SUSY; it suggests gauge couplings really do unify, into a single gauge group at the GUT scale.
+
+---
+
+## 13. SUSY Phenomenology and Current Status
+
+### Searches at LHC
+
+ATLAS and CMS have run extensive searches for SUSY particles. Typical bounds:
+
+- **Gluinos:** $m_{\tilde g} \gtrsim 2.2$ TeV
+- **Squarks (first/second generation):** $m_{\tilde q} \gtrsim 1.5-2$ TeV
+- **Stops:** $m_{\tilde t} \gtrsim 1.2$ TeV (depending on decay modes)
+- **Neutralinos:** depend on model; often LEP-era bounds still apply for certain corners
+- **Charginos:** $m_{\tilde\chi^\pm} \gtrsim 700$ GeV for electroweak production
+
+These bounds push simple SUSY scenarios out of the "natural" regime where the hierarchy problem is solved without fine-tuning.
+
+### Is SUSY Dead?
+
+**Short answer:** No, but simple SUSY is ruled out.
+
+**Longer answer:** Various SUSY scenarios remain viable:
+
+- **Heavy SUSY** ($M_{\rm SUSY} \sim 10-100$ TeV): unification still works, but hierarchy problem is partially fine-tuned
+- **Split SUSY**: Hierarchy problem requires strict SUSY, but sparticle masses are TeV-scale
+- **Compressed spectra:** Different SUSY masses are close together, evading typical searches
+- **Hidden-sector SUSY:** Sparticles are weakly coupled to SM, hard to produce
+- **R-parity violating SUSY:** Different signatures
+
+### What Would Convincing Evidence Look Like?
+
+For SUSY to be firmly established:
+- Direct detection of sparticles (a gluino or squark or neutralino)
+- Consistent pattern of sparticle masses
+- Confirmation of predicted decay modes and widths
+- Verification of SUSY-predicted relations (coupling unification, specific mass hierarchies)
+
+Just seeing one particle wouldn't be enough; it would need to fit into a consistent SUSY framework.
+
+### Alternatives to SUSY
+
+If SUSY isn't realized, what replaces it for solving the hierarchy problem?
+
+- **Composite Higgs models:** Higgs as pseudo-Goldstone of composite dynamics
+- **Extra dimensions:** Lower Planck scale, reducing the hierarchy
+- **Little Higgs:** Additional symmetry protecting Higgs mass
+- **Conformal extensions:** CFT structure above TeV
+- **Anthropic reasoning:** Multiverse with fine-tuned vacua
+
+Or: the hierarchy problem might simply not have an elegant solution, and SUSY was an aesthetically appealing idea that nature didn't use.
+
+### Current Status Summary
+
+SUSY is an extraordinary theoretical framework:
+- Solves the hierarchy problem (if realized at TeV)
+- Explains gauge coupling unification
+- Provides dark matter
+- Has exact mathematical structures (non-renormalization, BPS)
+- Is essential in string theory
+
+But experimentally, simple SUSY at TeV scale is ruled out. What remains:
+- SUSY at higher scales (with some fine-tuning)
+- Non-minimal SUSY models
+- SUSY as a theoretical tool regardless of phenomenology
+
+The next generation of colliders (HL-LHC, possible 100-TeV collider) will probe higher mass ranges. If nothing is found there, TeV SUSY is fully excluded.
+
+---
+
+## 14. Appendix: SUSY Formulas Reference
+
+### The SUSY Algebra
+
+$$\{Q_\alpha, \bar Q_{\dot\alpha}\} = 2\sigma^\mu_{\alpha\dot\alpha}P_\mu$$
+
+$$\{Q_\alpha, Q_\beta\} = 0$$
+
+$$[Q_\alpha, P_\mu] = 0$$
+
+### Superspace Coordinates
+
+$$x^\mu, \theta^\alpha, \bar\theta^{\dot\alpha}$$
+
+$$d^4x\,d^2\theta\,d^2\bar\theta$$
+
+### Covariant Derivatives
+
+$$D_\alpha = \partial_\alpha + i\sigma^\mu\bar\theta\partial_\mu$$
+
+$$\bar D^{\dot\alpha} = -\bar\partial^{\dot\alpha} - i\theta\sigma^\mu\partial_\mu$$
+
+$$\{D_\alpha, \bar D^{\dot\alpha}\} = -2i\sigma^\mu_{\alpha\dot\alpha}\partial_\mu$$
+
+### Chiral Superfield
+
+$$\Phi(y, \theta) = \phi + \sqrt 2\theta\psi + \theta\theta F$$
+
+where $y^\mu = x^\mu + i\theta\sigma^\mu\bar\theta$.
+
+### Vector Superfield (WZ Gauge)
+
+$$V = -\theta\sigma^\mu\bar\theta A_\mu + i\theta\theta\bar\theta\bar\lambda - i\bar\theta\bar\theta\theta\lambda + \tfrac{1}{2}\theta\theta\bar\theta\bar\theta D$$
+
+### Action
+
+$$S = \int d^4x\left[\int d^4\theta\,\Phi^\dagger\Phi + \int d^2\theta\,W(\Phi) + \int d^2\bar\theta\,\bar W(\Phi^\dagger)\right]$$
+
+### Scalar Potential
+
+$$V = \sum_i|\partial W/\partial\phi_i|^2 + \frac{g^2}{2}\sum_a(\phi_i^*T^a_{ij}\phi_j)^2$$
+
+($F$-term and $D$-term contributions.)
+
+### SUSY Particles (MSSM)
+
+| Particle | Spin | Symbol |
+|---|---|---|
+| Squark | 0 | $\tilde q$ |
+| Slepton | 0 | $\tilde\ell$ |
+| Gluino | 1/2 | $\tilde g$ |
+| Wino | 1/2 | $\tilde W$ |
+| Photino | 1/2 | $\tilde\gamma$ |
+| Zino | 1/2 | $\tilde Z$ |
+| Higgsino | 1/2 | $\tilde H$ |
+| Neutralino | 1/2 | $\tilde\chi^0$ |
+| Chargino | 1/2 | $\tilde\chi^\pm$ |
+
+### Further Reading
+
+- **Wess & Bagger, *Supersymmetry and Supergravity***: the standard textbook
+- **Weinberg, *Quantum Theory of Fields, Volume III***: comprehensive, includes SUSY and supergravity
+- **Martin, *A Supersymmetry Primer***: freely available online (hep-ph/9709356)
+- **Aitchison, *Supersymmetry in Particle Physics***: introductory
+- **Dine, *Supersymmetry and String Theory***: modern context
+- **Csaki, *The Minimal Supersymmetric Standard Model***: MSSM phenomenology
+
+### Problems
+
+1. Verify the SUSY algebra by computing $\{Q_\alpha, \bar Q_{\dot\alpha}\}$ from the superspace generators.
+
+2. For the Wess-Zumino model, derive the component Lagrangian and verify that bosons and fermions have the same mass when SUSY is unbroken.
+
+3. Show that a chiral superfield has exactly 2 bosonic + 2 fermionic on-shell degrees of freedom (one Weyl fermion, one complex scalar; auxiliary $F$ eliminated).
+
+4. For pure $\mathcal{N}=1$ SYM, derive the one-loop beta function and show it's negative (asymptotic freedom).
+
+5. Verify that $V_{\rm scalar} = \sum|\partial W/\partial\phi_i|^2 \geq 0$ in the Wess-Zumino model, with equality at the vacuum when SUSY is unbroken.
+
+6. For the MSSM, enumerate the particle content and verify that boson and fermion degrees of freedom match (in the absence of SUSY breaking).
+
+7. Write down the soft SUSY-breaking Lagrangian for the MSSM squark sector. Which terms give squark masses after EWSB?
+
+---
+
+## Closing Note
+
+Supersymmetry is the most elegant proposed extension of the Standard Model. It:
+
+- **Solves the hierarchy problem** (if at low enough scale)
+- **Provides a dark matter candidate**
+- **Explains gauge coupling unification**
+- **Has rich non-perturbative structure** (BPS, exact results, dualities)
+- **Is central to string theory**
+
+The framework is rigorous and well-understood. The phenomenology is constrained by LHC, but not ruled out; just pushed out of the "most natural" region.
+
+### What You Now Have
+
+A working knowledge of SUSY foundations:
+- The algebra and its motivations
+- Superspace and superfields
+- How to construct SUSY Lagrangians
+- The MSSM particle content and superpotential
+- SUSY breaking mechanisms
+- Current experimental status
+
+### What's Next
+
+Document 21 will cover **extended SUSY and exact results**; where SUSY becomes a research tool rather than just phenomenology. Topics:
+
+- $\mathcal{N}=2$ SUSY and BPS states
+- Seiberg-Witten theory in full (document 19 gave an overview)
+- $\mathcal{N}=4$ SYM; the "simplest" 4D gauge theory
+- Electric-magnetic dualities in SUSY
+- Seiberg duality and IR phases
+- Moduli space geometry
+
+This is where SUSY gets genuinely exciting: exact non-perturbative results that are impossible without SUSY structure. Many of the beautiful developments of the past 30 years in theoretical physics come from SUSY analysis.
+
+After that, document 22 starts string theory; where SUSY emerges automatically from consistency requirements on the string worldsheet.
+
+Take a break if you want one. The speculative territory is getting deep. Let me know when to continue.

@@ -9,6 +9,899 @@ extendsTo: [38]
 classReportTitle: "Black holes and quantum gravity."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 25: where quantum mechanics and general relativity genuinely collide. Black hole thermodynamics, Hawking radiation, the information paradox, and the recent revolution via quantum extremal surfaces and islands. The Page curve, now computed. What this tells us about quantum gravity.*
 
-{/* Content from qft_25_black_holes_and_quantum_gravity.md */}
+Black holes are where physics gets weirdest. General relativity predicts them (solutions to Einstein's equations). Astronomical observations confirm them (LIGO mergers, Event Horizon Telescope images). Their thermodynamic behavior (Bekenstein-Hawking entropy, Hawking radiation) bridges quantum mechanics and gravity. And they pose what Hawking called "the most important issue in theoretical physics": **the information paradox**.
+
+The paradox: quantum mechanics requires evolution to be unitary (information preserved). But Hawking's calculation suggests black holes evaporate into thermal radiation, losing all information about what fell in. These two facts seem incompatible.
+
+For 45 years, this paradox was considered unsolved. Proposed resolutions (complementarity, firewalls, fuzzballs, ER=EPR) each had problems. But around 2019, something remarkable happened: using quantum extremal surfaces and the "islands" formula from AdS/CFT, physicists *computed the Page curve* for evaporating black holes. The computation shows the evaporation is unitary; information is preserved. The paradox has essentially been resolved (at least for holographic black holes), though the full mechanism is still being understood.
+
+This document walks through the story: from classical black hole thermodynamics, through Hawking's original calculation, to the information paradox, the various failed and partial resolutions, and finally the island formula and its implications.
+
+### Prerequisites
+
+- Documents 20-24 (SUSY, strings, AdS/CFT especially important)
+- Document 13 (finite-T QFT, for thermal field theory)
+- General relativity (document 11 in foundation series)
+- Some quantum information basics (entanglement, entropy)
+
+### Conventions
+
+- Mostly-minus metric for spacetime; switch to mostly-plus for GR context
+- $\hbar = c = 1$
+- $G$ = Newton's constant
+- $k_B = 1$ (temperature in energy units)
+
+---
+
+## Table of Contents
+
+1. [Why Black Holes Matter for Quantum Gravity](#1-why-black-holes-matter-for-quantum-gravity)
+2. [Classical Black Hole Thermodynamics](#2-classical-black-hole-thermodynamics)
+3. [Hawking Radiation](#3-hawking-radiation)
+4. [The Bekenstein-Hawking Entropy](#4-the-bekenstein-hawking-entropy)
+5. [The Information Paradox](#5-the-information-paradox)
+6. [The Page Curve](#6-the-page-curve)
+7. [Traditional Proposed Resolutions](#7-traditional-proposed-resolutions)
+8. [Holographic Perspective](#8-holographic-perspective)
+9. [Quantum Extremal Surfaces](#9-quantum-extremal-surfaces)
+10. [The Island Formula](#10-the-island-formula)
+11. [Unitarity Recovered](#11-unitarity-recovered)
+12. [What Is a Black Hole Microstate?](#12-what-is-a-black-hole-microstate)
+13. [Open Problems and the Big Picture](#13-open-problems-and-the-big-picture)
+14. [Appendix: Black Hole Formulas Reference](#14-appendix-black-hole-formulas-reference)
+
+---
+
+## 1. Why Black Holes Matter for Quantum Gravity
+
+### The Universality
+
+Black holes are universal objects:
+- Formed by generic matter collapse above a critical density
+- "No-hair theorem": classical black holes are characterized by just 3 numbers (mass, charge, angular momentum)
+- Their thermodynamic properties depend only on geometry, not matter content
+- Exist at all scales: stellar-mass black holes, supermassive black holes, primordial black holes, and (in principle) quantum black holes near the Planck scale
+
+This universality makes black holes an ideal probe of quantum gravity. Any quantum gravity theory must have a consistent description of black holes.
+
+### The Regime of Strong Gravity
+
+Black holes are the one class of systems where gravity is unambiguously strong. The curvature near the singularity is infinite (classically). Quantum effects must become important somewhere.
+
+This is the opposite regime of most of physics, where gravity is weak and can be ignored. For black holes, you can't ignore gravity. If quantum gravity effects are real anywhere, they're real near black hole singularities and horizons.
+
+### The Meeting Point
+
+Black holes are where:
+- **General relativity** describes the classical geometry
+- **Quantum field theory** describes matter fields and their fluctuations
+- **Thermodynamics** describes their bulk behavior
+- **Quantum information** describes entanglement and information flow
+- **String theory / AdS/CFT** provides holographic frameworks
+
+All these structures must be consistent for a complete quantum theory of gravity. Black holes force us to integrate them.
+
+### The Paradox as a Guide
+
+The information paradox has guided quantum gravity thinking for decades:
+- It pointed toward holography (if information is preserved, it must be encoded somewhere)
+- It motivated AdS/CFT (providing concrete holography)
+- It motivated fuzzball programs (string theory constructions of black hole microstates)
+- It motivated firewalls (suggesting the black hole interior is singular)
+- It now seems resolved via islands and quantum extremal surfaces
+
+The paradox has taught us more about quantum gravity than most positive constructions.
+
+---
+
+## 2. Classical Black Hole Thermodynamics
+
+### The Four Laws
+
+Bardeen, Carter, and Hawking (1973) established four laws of black hole mechanics, remarkably parallel to the laws of thermodynamics:
+
+**Zeroth law:** The surface gravity $\kappa$ of a stationary black hole is constant over the horizon. (Analog of temperature uniformity in equilibrium.)
+
+**First law:** For changes between stationary black holes:
+
+$$dM = \frac{\kappa}{8\pi G}dA + \Omega dJ + \Phi dQ$$
+
+(Energy conservation.)
+
+**Second law:** In any physical process, the total horizon area cannot decrease:
+
+$$dA \geq 0$$
+
+(Area theorem; analog of entropy increase.)
+
+**Third law:** Cannot reach extremality ($\kappa = 0$) in a finite process.
+
+### Are These Just Analogies?
+
+Originally, these were viewed as formal analogies. But Bekenstein (1972-1974) and Hawking (1974-1975) argued they're more than that:
+
+**Bekenstein:** Throwing objects into black holes seems to decrease entropy unless the black hole itself has entropy proportional to the area.
+
+**Hawking:** Quantum field theory in curved spacetime predicts black holes radiate thermally at temperature:
+
+$$T_H = \frac{\kappa}{2\pi} = \frac{1}{8\pi G M}$$
+
+(For Schwarzschild; $M$ is the black hole mass.)
+
+So the analogies are **real thermodynamics**. Black holes have:
+- Temperature (Hawking temperature)
+- Entropy (area/4G)
+- They're thermal objects
+
+### Schwarzschild Specifics
+
+For a Schwarzschild black hole of mass $M$:
+
+**Horizon radius:** $r_H = 2GM$
+
+**Area:** $A = 4\pi r_H^2 = 16\pi G^2 M^2$
+
+**Entropy:** $S_{BH} = A/(4G) = 4\pi G M^2$
+
+**Temperature:** $T_H = 1/(8\pi G M)$
+
+**Heat capacity:** $C = -8\pi G M^2 < 0$ (negative!)
+
+**Negative specific heat** is striking; add energy to the black hole, temperature *decreases*. This is actually characteristic of systems with self-gravity and signals instability. Schwarzschild black holes in empty space evaporate completely given enough time.
+
+### Black Hole Lifetime
+
+A black hole of mass $M$ loses mass at a rate $dM/dt \sim -1/M^2$, giving a total lifetime:
+
+$$\tau \sim G^2 M^3$$
+
+For solar-mass ($M \sim M_\odot$): $\tau \sim 10^{67}$ years (vastly longer than the age of the universe).
+
+For a primordial black hole at $M \sim 10^{15}$ g: $\tau \sim $ age of the universe.
+
+Smaller black holes evaporate faster.
+
+### Entropy Scaling
+
+The entropy $S = A/(4G)$ scales as $M^2$ (for Schwarzschild). For a rotating or charged black hole, there are modifications, but area/4G universal formula holds.
+
+For a stellar-mass black hole: $S \sim 10^{76}$ (in units of $k_B$). Enormous.
+
+---
+
+## 3. Hawking Radiation
+
+### The Heuristic Picture
+
+Near the horizon, the vacuum contains quantum fluctuations; virtual particle pairs that normally annihilate.
+
+If the pair forms near the horizon, sometimes:
+- One member falls into the black hole (negative energy from outside perspective)
+- The other escapes as real radiation (positive energy)
+
+Net effect: black hole loses mass, radiation escapes. This radiation has a thermal spectrum at temperature $T_H$.
+
+This picture is schematic but captures the physics.
+
+### The Derivation (Sketch)
+
+Hawking's 1974 calculation:
+
+**Setup:** Consider a collapsing star forming a black hole. Quantize a scalar field on this background spacetime.
+
+**Key result:** The "in" vacuum (defined at past null infinity) is not the same as the "out" vacuum (defined at future null infinity). They differ by a Bogoliubov transformation.
+
+**Particle creation:** The difference in vacua means particles are created during the collapse and subsequent spacetime evolution. The flux of particles at future null infinity is:
+
+$$\langle N_\omega\rangle = \frac{1}{e^{\omega/T_H} - 1}$$
+
+where $\omega$ is the frequency of the mode. This is a **Planck spectrum** at temperature $T_H = \kappa/2\pi$.
+
+### Why It's Thermal
+
+The thermality is surprising. Why should radiation from a black hole be thermal?
+
+The deep answer involves the behavior of modes near the horizon. The horizon acts like a "one-way filter"; modes crossing the horizon experience red-shifts that map nicely to thermal distributions. Hawking's calculation extracts this systematically.
+
+### Particle Content
+
+The spectrum is thermal for each species; not just photons, but also neutrinos, electrons (for hot-enough black holes), and eventually all Standard Model particles.
+
+A stellar-mass black hole at $T_H \sim 10^{-8}$ K radiates essentially only gravitons and neutrinos. Much smaller black holes at Planckian temperatures would radiate all particles.
+
+### The Back-Reaction
+
+Hawking's original calculation treated the black hole background as fixed and quantized fields on top. This is valid when back-reaction is small.
+
+As the black hole loses mass, it shrinks and heats up (negative specific heat). Near the end, back-reaction becomes large, and Hawking's semi-classical calculation breaks down. This is where quantum gravity effects become important.
+
+### What Hawking Didn't Ask
+
+Hawking's original paper focused on particle production. He didn't ask whether the radiation process is **unitary**. Later, this question became central.
+
+---
+
+## 4. The Bekenstein-Hawking Entropy
+
+### The Formula
+
+$$S_{BH} = \frac{A}{4G\hbar}$$
+
+(Including all constants.) With $\hbar = 1$: $S = A/(4G)$.
+
+### What Is Being Counted?
+
+Bekenstein's argument: a black hole should have entropy proportional to the area. But entropy of what?
+
+**Thermodynamic entropy** makes sense; the black hole behaves as a thermodynamic system. We have $dS = dQ/T$ satisfied.
+
+**Information-theoretic entropy** is more subtle. What does "information" mean for a black hole?
+
+**Microstates** is the most physical interpretation. The entropy should count microstates consistent with the macroscopic black hole properties. But what are these microstates?
+
+### The Counting Problem
+
+For ordinary thermal systems, we can count microstates: positions and momenta of particles. For black holes, what fills this role?
+
+In string theory (Strominger-Vafa 1996): for specific extremal black holes (BPS states), the microstates can be counted as D-brane configurations. The count matches $A/(4G)$ exactly. This was a major success for string theory.
+
+For generic black holes: the microstate interpretation is less clear. The entropy is real, but the underlying degrees of freedom aren't obvious without more structure.
+
+### Area Not Volume
+
+The striking feature: entropy scales with area, not volume.
+
+For an ordinary thermodynamic system, entropy is extensive: $S \propto $ volume. Information content scales with volume.
+
+For a black hole, $S \propto$ area. Information content scales with surface area. This is the holographic principle in action; the bulk degrees of freedom are really encoded on the boundary.
+
+### Comparison to Other Entropies
+
+For a ball of gas at the same size:
+
+$$S_{\rm gas} \sim V\cdot T^3 \cdot N$$
+
+For the same size as a Schwarzschild black hole: $V \sim r_H^3 = (2GM)^3$. Typical temperature $T \sim 1/r_H = 1/(2GM)$.
+
+$S_{\rm gas} \sim (2GM)^3\cdot (2GM)^{-3} \sim 1$
+
+(In Planck units.) So $S_{\rm gas} \sim $ order 1, vs. $S_{BH} \sim (GM)^2$ which is huge.
+
+A black hole has enormously more entropy than any other object of the same size. This is striking.
+
+### Holographic Bound
+
+Bekenstein-Hawking entropy provides a universal bound: the maximum entropy in a region is:
+
+$$S_{\rm max} = \frac{A_{\rm bounding}}{4G}$$
+
+Any physical process that would exceed this bound would form a black hole. This is the origin of the **holographic bound**; the idea that degrees of freedom in a region are limited by its area.
+
+---
+
+## 5. The Information Paradox
+
+### Hawking's Formulation
+
+Here's the paradox as Hawking originally stated it:
+
+1. Form a black hole by collapsing a specific configuration (e.g., a book full of information).
+2. The black hole radiates via Hawking radiation.
+3. The radiation is thermal; depends only on the black hole's mass (and charge, spin).
+4. The radiation carries no specific information about what formed the black hole.
+5. Eventually, the black hole evaporates completely; only thermal radiation remains.
+6. **The information about the initial configuration is gone.**
+
+But quantum mechanics requires unitary evolution: pure states evolve to pure states. Information is conserved.
+
+The paradox: either quantum mechanics is wrong for black holes, or Hawking's calculation is incomplete.
+
+### Why It's a Real Puzzle
+
+Hawking's calculation is reliable:
+- Based on well-established QFT in curved spacetime
+- Valid in the regime of large black holes (semi-classical)
+- Checked in many ways
+
+Quantum mechanics is reliable:
+- Testing unitarity is one of the most established parts of physics
+- Violations would have profound consequences throughout physics
+
+So both can't be fully right together; one must be wrong somewhere.
+
+### Where Does Information Go?
+
+Various possibilities:
+1. **Information is lost.** (Hawking's original position.) Quantum mechanics breaks down in gravity.
+2. **Information is in the radiation.** The radiation isn't truly thermal; subtle correlations carry the information.
+3. **Information is in a remnant.** Black hole evaporation leaves a Planck-mass remnant containing the info.
+4. **Information escapes early.** Hawking's calculation is wrong; info actually leaks out during evaporation.
+
+Different proposals favor different answers.
+
+### Why Thermal Radiation Is the Crux
+
+If Hawking radiation is *really* thermal (featureless), information has to be destroyed.
+
+If it's not thermal; if there are subtle quantum correlations; information is preserved.
+
+The question is: at what stage, and by what mechanism, does Hawking's thermal calculation fail?
+
+### The Black Hole as Quantum System
+
+The modern view: a black hole is a quantum system with $\sim e^{A/(4G)}$ microstates. Its evaporation is a complicated unitary process. Hawking's calculation describes one aspect (the thermal spectrum of emitted quanta) but misses the quantum correlations between different emissions.
+
+The information is in these correlations. Over the course of evaporation, the correlations build up to encode the initial state.
+
+Making this concrete is what the modern program achieves.
+
+---
+
+## 6. The Page Curve
+
+### Page's Insight
+
+Don Page (1993) asked a simple question: as a black hole evaporates, how does the entanglement entropy of the radiation change over time?
+
+Consider a pure initial state (black hole + nothing else). As evaporation proceeds:
+
+**Early times:** Few particles emitted. Radiation entanglement is small. The radiation is highly entangled with the black hole.
+
+**Late times:** Most of the black hole is gone. Only a few degrees of freedom left in the BH. Radiation entanglement must be limited by the remaining BH entropy.
+
+**Halfway point** ("Page time"): the entanglement is at a maximum.
+
+For a unitary evaporation (information preserved), the entropy of the radiation follows a specific curve:
+
+- Rising from zero
+- Reaching maximum at the Page time
+- Decreasing back to zero as evaporation completes
+
+This is the **Page curve**.
+
+### The Hawking Curve
+
+Hawking's calculation gives a very different answer. Since radiation is thermal, the entanglement grows monotonically:
+
+$$S_{\rm rad}(t) \text{ grows monotonically, never decreases}$$
+
+At end of evaporation: $S_{\rm rad} \sim S_{BH,\rm initial}$ (large!)
+
+But the initial state was pure: $S_{\rm initial} = 0$. So entanglement grew from 0 to something large. The process isn't unitary.
+
+**Page curve (unitary) vs. Hawking curve (non-unitary) is the sharp form of the paradox.**
+
+### The Page Time
+
+For a black hole that evaporates completely, the Page time is when half the entropy has been emitted. After this time, each additional emission is correlated with previous emissions.
+
+The Page time is a key timescale. Things happening before or after it are qualitatively different:
+- **Before Page time:** radiation appears truly thermal
+- **After Page time:** subtle correlations become visible
+
+### The Challenge
+
+Computing the Page curve from first principles was unknown for 25 years. The semi-classical approximation (Hawking's calculation) always gave the non-unitary Hawking curve.
+
+To get the Page curve, you need contributions beyond semi-classical gravity; quantum gravity effects, or non-perturbative contributions.
+
+### The Recent Breakthrough
+
+Around 2019-2020, using the quantum extremal surface formalism and "islands," physicists actually computed the Page curve from semi-classical gravity + a specific formula. The calculation gives the unitary Page curve.
+
+This is essentially a resolution of the information paradox; at least for certain holographic setups. The mechanism is the "island formula" (section 10).
+
+---
+
+## 7. Traditional Proposed Resolutions
+
+Before the recent breakthrough, various proposals tried to resolve the paradox:
+
+### Black Hole Complementarity
+
+Susskind (1993): different observers see different physics, but no single observer sees a contradiction.
+
+An observer outside sees: information is encoded in Hawking radiation (thermalized by the stretched horizon).
+
+An observer falling in sees: information crosses the horizon and ends up inside. But such an observer can't communicate with outside observer.
+
+**Complementarity:** these two pictures are complementary descriptions, neither wrong, but they can't be combined.
+
+**Problem:** Complementarity requires non-trivial properties of the quantum state (e.g., monogamy of entanglement). It's not clear all observers can be consistent.
+
+### Firewalls
+
+AMPS (Almheiri-Marolf-Polchinski-Sully 2013): Complementarity leads to contradictions. Specifically:
+
+- Standard Hawking argument requires early and late Hawking radiation to be entangled
+- But late radiation is also entangled with "infalling" modes (via horizon structure)
+- Monogamy of entanglement forbids both: a particle can't be maximally entangled with two different things
+
+One possible resolution: **Firewall**. When you cross the horizon, you don't see smooth spacetime. Instead, you see a "firewall" of high-energy radiation that destroys you.
+
+This violates the equivalence principle (free-fall should be smooth). It was a controversial proposal.
+
+### Fuzzballs
+
+Mathur and collaborators (2000s): black hole microstates have geometric resolutions in string theory; they're not point-like but "fuzzy," extending to the horizon scale.
+
+A fuzzball has no smooth classical geometry. It's a quantum superposition of microstates, each a different specific geometry.
+
+From outside, a fuzzball looks like a classical black hole. From inside, there's no "inside" in the traditional sense.
+
+**Problem:** Constructing fuzzballs for generic (non-BPS) black holes is hard. Connection to Hawking radiation is unclear.
+
+### Remnants
+
+Idea: Black hole evaporation stops before complete evaporation, leaving a Planck-mass "remnant" containing all the information.
+
+**Problem:** Remnants would need to have enormous entropy (order of initial black hole), stored in a Planckian-sized object. This leads to infinite production of remnants and other pathologies.
+
+### ER = EPR
+
+Maldacena-Susskind 2013: entangled pairs of particles are connected by wormholes.
+
+**Black hole interpretation:** the Hawking radiation is "connected" to the black hole interior via wormhole-like entanglement. The interior is accessible via the radiation's entanglement.
+
+**Mathematical progress:** this conjecture has led to many insights in holography and entanglement structure.
+
+### Why These Weren't Enough
+
+Each proposal had elements of truth. But none was a complete, first-principles resolution. The field was gridlocked until recently.
+
+The islands breakthrough provided a concrete, calculable resolution in holographic settings. Let's now see how it works.
+
+---
+
+## 8. Holographic Perspective
+
+### AdS/CFT and Information
+
+In AdS/CFT (document 24), the boundary CFT evolves **unitarily**. If you prepare any pure state and evolve it, you get another pure state. Information is preserved.
+
+**Consequently:** the bulk gravitational theory must also be unitary. Since they're the same theory, whatever happens in the bulk must be consistent with unitary evolution on the boundary.
+
+This was an important clue. AdS/CFT tells us unitarity is preserved, even for black holes. The question is: how does this manifest in the gravitational description?
+
+### Black Hole = Thermal State
+
+In AdS/CFT: a Schwarzschild-AdS black hole in the bulk corresponds to a thermal state in the CFT. The black hole's thermodynamic properties match the CFT's thermal properties.
+
+**Entropy:** Black hole entropy = CFT thermal entropy
+**Temperature:** Black hole temperature = CFT temperature
+**Energy:** Black hole mass = CFT energy
+
+So a black hole is literally a thermal state of the boundary CFT. The CFT description is manifestly unitary (just thermal physics).
+
+### Eternal Black Holes
+
+An eternal black hole (two-sided, connected via wormhole) corresponds to an **entangled state** of two copies of the CFT:
+
+$$|\text{eternal BH}\rangle = \sum_n e^{-\beta E_n/2}|n\rangle_L\otimes|n\rangle_R$$
+
+(Thermofield double state.) The left and right CFTs are entangled.
+
+This picture shows explicitly how entanglement and geometry are related.
+
+### Evaporating Black Holes Holographically
+
+An **evaporating** black hole requires coupling the CFT to a "bath"; an auxiliary system where Hawking radiation can go.
+
+In AdS/CFT: attach the CFT to a "bath CFT" on a different region. The bath provides the "outside" where radiation escapes.
+
+This setup allows studying evaporation explicitly in a controlled framework, which was crucial for recent progress.
+
+### Why Holography Suggests a Resolution
+
+Even before the islands breakthrough, holography suggested that:
+1. Black hole evaporation is unitary (boundary CFT is unitary)
+2. Information is preserved somewhere
+3. Some aspect of Hawking's calculation is incomplete
+
+The question was: what's missing from semi-classical gravity?
+
+### The Recent Breakthrough
+
+The answer (2019-2020): **quantum extremal surfaces** and **islands**. These provide quantum corrections to the Ryu-Takayanagi formula (from document 24) that account for the entanglement structure of Hawking radiation correctly.
+
+Let's build this up systematically.
+
+---
+
+## 9. Quantum Extremal Surfaces
+
+### From Classical to Quantum Extremal Surfaces
+
+Classical Ryu-Takayanagi (document 24): entanglement entropy of boundary region = (minimal area)/(4G).
+
+**Problem:** this doesn't account for quantum entanglement of bulk fields.
+
+**Refinement:** add bulk entanglement term.
+
+### The Formula
+
+Faulkner-Lewkowycz-Maldacena (2013) proposed:
+
+$$S_A = \min_\gamma\left[\frac{A(\gamma)}{4G} + S_{\rm bulk}(\gamma)\right]$$
+
+where:
+- $\gamma$ is an extremal surface in the bulk, anchored on $\partial A$
+- $S_{\rm bulk}(\gamma)$ is the entanglement entropy of bulk fields on one side of $\gamma$
+- Minimize over all such surfaces
+
+This is the **quantum extremal surface (QES) formula**.
+
+### Why Quantum Corrections Matter
+
+For generic states, classical RT is accurate at leading order in $1/N$. But at higher orders, and especially for states with large bulk entanglement, quantum corrections become important.
+
+For black holes, the interior is highly entangled (Hawking entanglement). Including this entanglement in the QES formula changes the answer.
+
+### Extremization
+
+QES are **extrema** (not just minima) of the total functional. The min is over extremal surfaces.
+
+This subtlety matters for evaporating black holes: as evaporation proceeds, the extremal surface changes nontrivially. Different surfaces dominate at different times.
+
+### Multiple Extremal Surfaces
+
+In general, multiple extremal surfaces exist. You pick the one with minimum generalized entropy:
+
+$$S_{\rm gen} = \frac{A(\gamma)}{4G} + S_{\rm bulk}(\gamma)$$
+
+**The smallest $S_{\rm gen}$ is the physical entropy.**
+
+When multiple surfaces have similar $S_{\rm gen}$, the dominant one can change as the state evolves. This is what produces the Page curve.
+
+---
+
+## 10. The Island Formula
+
+### The Formula
+
+For a black hole evaporating into a bath, the entanglement entropy of the radiation (in the bath) is:
+
+$$S_{\rm rad} = \min_{\cal I}\left[\frac{A(\partial{\cal I})}{4G} + S_{\rm bulk}({\cal I}\cup{\rm rad})\right]$$
+
+where:
+- $\mathcal{I}$ is an "island"; a region inside the black hole
+- $\partial\mathcal{I}$ is its boundary
+- The generalized entropy is the area of $\partial\mathcal{I}$ over $4G$, plus the bulk entanglement entropy of the combined region (island + radiation)
+
+### Why "Island"?
+
+The island is a region of the black hole interior that contains information entangled with the radiation. Physically: parts of the black hole interior are encoded in the radiation.
+
+At early times: no island, or trivial island. Entropy grows with radiation.
+
+At late times (after Page time): an island contains a large portion of the BH interior. The generalized entropy is computed with this island included, and the answer is dominated by the interior degrees of freedom rather than the naive Hawking entanglement.
+
+The transition between these regimes gives the Page curve.
+
+### The Calculation for a Specific Example
+
+Consider an evaporating black hole in AdS coupled to a bath. At early times (before Page time):
+
+- **No island:** $\partial\mathcal{I}$ = empty, so $A = 0$. $S_{\rm bulk}$ = entanglement of Hawking radiation with BH interior, which grows with time.
+- **Trivial answer:** $S_{\rm rad} = S_{\rm Hawking}$ (grows monotonically, non-unitary).
+
+At late times (after Page time):
+
+- **Non-trivial island:** $\mathcal{I}$ = most of the black hole interior. $\partial\mathcal{I}$ near the horizon. $A(\partial\mathcal{I}) \approx A_{\rm horizon}$. $S_{\rm bulk}(\mathcal{I}\cup\text{rad}) \approx$ small, because including the island "captures" the entanglement.
+- **Island dominates:** $S_{\rm rad} \approx A_{\rm horizon}/(4G)$, roughly the BH entropy at that time.
+
+**The switch happens at the Page time.** Before: no-island answer dominates. After: island answer dominates.
+
+### The Page Curve Emerges
+
+Plotting both branches and taking the minimum:
+
+- **Before Page time:** $S_{\rm rad}$ rises linearly (Hawking-like)
+- **At Page time:** transition to island-dominated branch
+- **After Page time:** $S_{\rm rad}$ decreases, following the remaining BH entropy
+- **End of evaporation:** $S_{\rm rad} \to 0$
+
+This is the Page curve, computed from semi-classical gravity + the island formula. **Unitarity is preserved.**
+
+### Why This Works
+
+The island formula captures subtle quantum gravity effects (non-perturbative in $G$) that Hawking's original calculation missed. These effects are:
+- Encoded in the "area over 4G" term
+- Exponentially small when $A/(4G)$ is small
+- Important when comparing to bulk entanglement that's also exponentially small (or large)
+
+The balancing of two exponentially small quantities gives the Page curve.
+
+### Derivation
+
+The formula was derived using replica trick methods applied to the gravitational path integral, considering "replica wormholes"; topologically non-trivial contributions to the gravitational path integral where different replicas are connected.
+
+These wormholes are semi-classical contributions that are exponentially small, but they dominate at the Page time and resolve the paradox.
+
+---
+
+## 11. Unitarity Recovered
+
+### The Current Understanding
+
+For an evaporating black hole (in a holographic setup), the island formula gives:
+
+**The evaporation is unitary.** Information is preserved.
+
+**The Page curve is computed correctly.** Entanglement entropy follows the unitary curve.
+
+**The mechanism:** replica wormholes in the gravitational path integral.
+
+**The interpretation:** after the Page time, the black hole interior is encoded in the Hawking radiation. You can "reconstruct" interior degrees of freedom from the radiation.
+
+### What the Islands Tell Us
+
+Several deep things:
+
+**1. Holography is local-enough.** The island formula is semi-local; islands are localized regions in the bulk. The radiation encodes specific localized pieces of the interior.
+
+**2. The black hole interior isn't a fundamentally separate region.** It's encoded in external degrees of freedom (the radiation).
+
+**3. Entanglement structures reveal physics.** The specific pattern of entanglement between radiation and interior determines the geometry and dynamics.
+
+**4. Wormholes matter.** Non-trivial spacetime topologies (replica wormholes) are essential for the correct answer.
+
+### The Reconstruction Problem
+
+If info is in the radiation, in principle you can reconstruct the interior from the radiation.
+
+**In practice:** reconstruction is exponentially complex. You need to perform specific quantum operations on $e^{S_{BH}/2}$ qubits to reconstruct a single bit of interior information.
+
+**Pragmatically:** the information is preserved, but operationally very hard to access.
+
+### What the Evaporation Looks Like
+
+The full picture of black hole evaporation:
+
+1. **Star collapses, forms black hole.** Quantum state of collapsing matter is complex.
+2. **Hawking radiation begins.** Early radiation is thermal.
+3. **Before Page time:** radiation entanglement with BH interior grows.
+4. **Page time:** transition. Subtle correlations start becoming dominant.
+5. **After Page time:** radiation entanglement with interior decreases as info comes out.
+6. **Black hole shrinks.** Temperature rises, radiation becomes more intense.
+7. **Planckian regime:** semi-classical gravity breaks down. But by this point, nearly all info is out.
+8. **Complete evaporation:** all info encoded in correlations of radiation.
+
+This picture is still being refined, but the basic structure is now clear.
+
+---
+
+## 12. What Is a Black Hole Microstate?
+
+### The Question
+
+If a black hole has entropy $S = A/(4G)$, there should be $e^{S}$ microstates. What are they?
+
+This question has many answers depending on the approach:
+
+### From String Theory
+
+Strominger and Vafa (1996) counted D-brane configurations producing specific extremal black holes. The count matched $A/(4G)$ exactly. The microstates are specific D-brane arrangements; configurations in string theory.
+
+### From Holography
+
+In AdS/CFT, a black hole is a thermal state of the boundary CFT. The microstates are individual energy eigenstates of the CFT at specific energy. Typical states (random) are indistinguishable from the thermal average, but they're individual pure states.
+
+Different black hole microstates correspond to different CFT pure states with the same energy and other macroscopic properties.
+
+### From Eigenstate Thermalization
+
+The **Eigenstate Thermalization Hypothesis (ETH)** says: for a chaotic system, individual energy eigenstates look thermal when you measure local observables. A black hole is a maximally chaotic system.
+
+This means: individual black hole microstates *look like* the thermal state when you perform local measurements. You can't tell them apart from outside (locally).
+
+### Local Differences
+
+But microstates *can* be distinguished by non-local or long-time measurements:
+- Out-of-time-order correlators (OTOCs)
+- Very late-time behavior (deviates from exponential decay)
+- Full scrambling time evolution
+
+For a black hole, the scrambling time is $t_* \sim \beta\ln S$; very fast for large black holes, but finite.
+
+### What's Special About Black Holes
+
+Black holes are special in that they're **maximally chaotic**: they saturate the bound on chaos (Lyapunov exponent = $2\pi T$, Maldacena-Shenker-Stanford).
+
+This chaos is what makes information "hidden"; it's fully encoded but scrambled, requiring a long time to extract. After the Page time, the information is in the radiation, but it's in a strongly mixed form.
+
+### The Hierarchy
+
+From large to small:
+- **Classical black hole:** deterministic behavior, no microstructure
+- **Semi-classical corrections:** Hawking radiation, small deviations
+- **Quantum gravity corrections:** exponentially small effects, islands, etc.
+- **Microstate specifics:** precise identity of the pure state
+
+Each level reveals more about the black hole's true quantum nature.
+
+---
+
+## 13. Open Problems and the Big Picture
+
+### What's Resolved
+
+The information paradox is essentially resolved **in holographic settings**:
+- Evaporation is unitary (via island formula)
+- Page curve is computed correctly
+- Information is encoded in radiation (operationally complex but real)
+
+This is a major success. After 45 years, we have a first-principles computation showing unitary evaporation.
+
+### What's Not Yet Resolved
+
+**Non-holographic settings.** Does the island formula work for generic black holes (our universe), not just AdS? Early indications are yes, but not fully rigorous.
+
+**Mechanism details.** Why does the replica wormhole give exactly the right answer? What's the physical interpretation?
+
+**Experience of infalling observer.** What does an observer who falls through the horizon actually see? The resolution seems to involve subtle relationships between different observers' descriptions.
+
+**Interior reconstruction.** While information is in radiation, recovering it is extraordinarily complex. Practical reconstruction is beyond current abilities.
+
+**Dynamics of scrambling.** How does information get "mixed" into the radiation? Detailed models exist (SYK model, Sachdev-Ye-Kitaev) but the full picture is still being worked out.
+
+### What This Tells Us About Quantum Gravity
+
+Some lessons:
+
+**Quantum gravity is unitary.** At least for holographic settings, gravity is compatible with quantum mechanics. Information isn't lost.
+
+**Gravity is emergent.** Spacetime emerges from quantum information structure (entanglement). It's not fundamental but derived.
+
+**Wormholes are physical.** Non-trivial spacetime topologies in the path integral matter. They're not just mathematical curiosities.
+
+**Holography is real.** At least in AdS contexts, bulk gravity is equivalent to boundary quantum mechanics.
+
+### Beyond AdS
+
+The big challenge: extending these insights beyond AdS. In particular:
+
+**Flat-space holography** (celestial CFT): attempts to formulate holography for flat Minkowski space.
+
+**de Sitter holography:** our universe is approximately dS; holography here is harder and still developing.
+
+**Cosmological singularities:** how does the big bang fit in?
+
+### The Information Paradox in Historical Context
+
+The information paradox shaped theoretical physics for 45 years:
+- Led to holography and AdS/CFT
+- Motivated string theory as quantum gravity
+- Drove fuzzball and firewall programs
+- Inspired ER=EPR
+- Eventually led to islands and QES
+
+Now it's essentially resolved (in holographic settings), but the process was enormously productive. This is how physics often works; a puzzle drives progress even when the final resolution is different from the original proposals.
+
+### The Next Frontier
+
+With the information paradox mostly resolved, attention is shifting to:
+- **Emergence of space and time** from quantum information
+- **Cosmology** in holographic terms
+- **Observer-dependent descriptions** and complementarity
+- **Interior dynamics** of black holes
+- **Generic black holes** (not just holographic)
+
+Quantum gravity has made enormous progress. The next decades will see how far this progress extends.
+
+---
+
+## 14. Appendix: Black Hole Formulas Reference
+
+### Schwarzschild Black Hole
+
+$$r_H = 2GM, \quad A = 16\pi G^2 M^2$$
+$$T_H = \frac{1}{8\pi G M}, \quad S = \frac{A}{4G}$$
+
+### Hawking Temperature
+
+In general: $T_H = \kappa/(2\pi)$ where $\kappa$ is surface gravity.
+
+For Schwarzschild: $\kappa = 1/(4GM)$.
+
+### Bekenstein-Hawking Entropy
+
+$$S_{BH} = \frac{A}{4G\hbar}$$
+
+In natural units: $S = A/(4G)$.
+
+### Page Curve
+
+Entanglement entropy of radiation:
+$$S_{\rm rad}(t) = \min\left[S_{\rm Hawking}(t), S_{BH}(t)\right]$$
+
+where $S_{\rm Hawking}$ grows as radiation accumulates and $S_{BH}$ is the remaining BH entropy.
+
+### Island Formula
+
+$$S_{\rm rad} = \min_\mathcal{I}\left[\frac{A(\partial\mathcal{I})}{4G} + S_{\rm bulk}(\mathcal{I}\cup{\rm rad})\right]$$
+
+### Evaporation Time
+
+$$\tau \sim G^2 M^3 \sim 10^{67}\left(\frac{M}{M_\odot}\right)^3 \text{ years}$$
+
+### Page Time
+
+$$t_{\rm Page} \sim GM S_{BH} \sim G^2 M^3$$
+
+(Half the evaporation time.)
+
+### Key Numbers
+
+Solar mass BH: $T_H \sim 10^{-8}$ K, $\tau \sim 10^{67}$ years, $S_{BH} \sim 10^{77}$
+
+Supermassive BH ($10^9 M_\odot$): $T_H \sim 10^{-17}$ K, $\tau \sim 10^{94}$ years
+
+Planck mass BH: $T_H \sim T_{\rm Planck}$, nearly-instantaneous evaporation
+
+### Further Reading
+
+- **Hawking, *Particle Creation by Black Holes* (1975)**: the original paper
+- **Page, *Information in Black Hole Radiation* (1993)**: the Page curve
+- **Susskind, *The Black Hole War* (2008)**: popular-level account
+- **Maldacena & Susskind, *Cool horizons for entangled black holes* (2013)**: ER=EPR
+- **Almheiri, Engelhardt, Marolf, Maxfield, *The Entropy of bulk quantum fields and the entanglement wedge of an evaporating black hole* (2019)**: foundational islands paper
+- **Penington, *Entanglement Wedge Reconstruction and the Information Paradox* (2019)**: another foundational paper
+- **Almheiri, Hartman, Maldacena, Shaghoulian, Tajdini, *Replica Wormholes and the Entropy of Hawking Radiation* (2019)**: replica wormholes
+- **Harlow & Jafferis, *The factorization problem in Jackiw-Teitelboim gravity* (2018)**: related developments
+- **Harlow & Ooguri, *Symmetries in Quantum Field Theory and Quantum Gravity* (2021)**: modern synthesis
+- **Nomura, Sanches, *Black Hole Entropy is the Boltzmann Entropy*** (2020): recent perspectives
+
+### Problems
+
+1. Derive the Hawking temperature $T_H = 1/(8\pi G M)$ for a Schwarzschild black hole from the surface gravity $\kappa$.
+
+2. For a Schwarzschild black hole, show that the entropy $S = A/(4G)$ and the temperature $T_H$ satisfy the first law $dM = T_H dS$.
+
+3. Compute the Page time for a solar-mass black hole evaporating into empty space.
+
+4. For an eternal black hole in AdS dual to the thermofield double state, explain the relationship between the bulk geometry (wormhole) and the boundary entanglement.
+
+5. Using the island formula for a specific setup (e.g., Jackiw-Teitelboim gravity in 2D), derive the Page curve.
+
+6. Discuss how the black hole microstate interpretation differs between (a) string-theoretic D-brane counting (b) holographic CFT states (c) SYK model microstates.
+
+---
+
+## Closing Note
+
+Black holes are where quantum mechanics and gravity meet. Their thermodynamics, entropy, and Hawking radiation tell us deep things about the nature of gravity. The information paradox; once considered unresolved; has been essentially resolved in holographic settings via islands and quantum extremal surfaces. The evaporation is unitary; the Page curve is computed from first principles.
+
+### What You Now Know
+
+- Classical black hole thermodynamics and the four laws
+- Hawking radiation and its temperature
+- The Bekenstein-Hawking entropy and its universality
+- The information paradox in sharp form
+- The Page curve and what it demands
+- Traditional resolutions (complementarity, firewalls, fuzzballs)
+- Quantum extremal surfaces as a key tool
+- The island formula and how it gives the Page curve
+- Current understanding of unitary evaporation
+- What microstates are in different contexts
+
+### The Bigger Picture
+
+Black hole physics has taught us:
+- **Holography is real** (at least in AdS)
+- **Quantum gravity preserves unitarity** (at least for certain setups)
+- **Spacetime emerges** from information structure
+- **Entanglement is geometric**
+- **Wormholes contribute** to the gravitational path integral
+
+These are profound insights that emerged from 45 years of work on the information paradox.
+
+### What's Next
+
+Document 26; the final document in this sequence; provides a broader survey of quantum gravity approaches. String theory is one candidate; we've developed it extensively in documents 22-24. But other approaches exist: loop quantum gravity, asymptotic safety, causal dynamical triangulations, causal set theory, emergent gravity, and more. The next document surveys these, acknowledging that the field is pluralistic and the final answer isn't yet known.
+
+We're almost done with the BSM sequence. After doc 26, you'll have essentially the full scope of modern theoretical physics speculation.
+
+Let me know when to continue. One document remains.

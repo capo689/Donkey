@@ -9,6 +9,894 @@ extendsTo: [17]
 classReportTitle: "When particles start to interact."
 ---
 
-*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+*QFT document 4: from free fields to calculable amplitudes. The machinery that connects field operators to physical predictions.*
 
-{/* Content from qft_4_interactions_and_perturbation_theory.md */}
+Documents 1-3 quantized free fields. That's interesting mathematically but physically sterile; particles fly past each other without interacting. Real physics (scattering, decay, binding) requires interactions.
+
+The challenge: the Hamiltonian of an interacting QFT is typically *not* exactly solvable. No known theory of interacting quantum fields in 4D spacetime admits closed-form solutions for the full Hilbert space. What we can do is **perturbation theory**; treat the interaction as a small correction to the free theory, expand in powers of the coupling, and compute term by term.
+
+This document builds the three pillars of perturbative QFT:
+
+1. **The interaction picture** of quantum mechanics (where the simple dynamics comes from the free Hamiltonian)
+2. **Dyson's formula** for time evolution (a time-ordered exponential of the interaction)
+3. **Wick's theorem** for reducing operator products to propagators
+4. **The LSZ reduction formula** connecting correlation functions to scattering amplitudes
+
+Together, these convert the abstract "correlation functions of fields" into numbers you can compare to experiment.
+
+### Prerequisites and Conventions
+
+- QFT documents 1, 2, 3 (scalar, Dirac, photon quantization)
+- Familiarity with the interaction picture from QM
+- Conventions as before: $\hbar = c = 1$, $\eta_{\mu\nu} = \text{diag}(+,-,-,-)$, Einstein summation
+
+---
+
+## Table of Contents
+
+1. [The Central Problem](#1-the-central-problem)
+2. [The Interaction Picture](#2-the-interaction-picture)
+3. [The Time Evolution Operator](#3-the-time-evolution-operator)
+4. [Dyson's Formula](#4-dysons-formula)
+5. [The S-Matrix](#5-the-s-matrix)
+6. [Correlation Functions and the Gell-Mann–Low Theorem](#6-correlation-functions-and-the-gell-mann-low-theorem)
+7. [Wick's Theorem](#7-wicks-theorem)
+8. [The LSZ Reduction Formula](#8-the-lsz-reduction-formula)
+9. [Cross Sections and Decay Rates](#9-cross-sections-and-decay-rates)
+10. [Example: First-Order $\phi^4$ Theory](#10-example-first-order-phi4-theory)
+11. [Preview: Where Feynman Diagrams Come From](#11-preview-where-feynman-diagrams-come-from)
+12. [Appendix: Formulas and Identities](#appendix-formulas-and-identities)
+
+---
+
+## 1. The Central Problem
+
+### What We Want to Compute
+
+A typical experimental question: if I collide an electron and a positron at 500 GeV each, what's the probability of producing a $\mu^+\mu^-$ pair flying in specific directions?
+
+The answer involves computing an amplitude:
+
+$$\mathcal{M}(e^+ e^- \to \mu^+ \mu^-) = \langle \mu^+, \mu^- | \hat S | e^+, e^-\rangle$$
+
+where $\hat S$ is an operator (the **S-matrix**) that maps initial states to final states, and the in/out states are the multi-particle states we built in Fock space.
+
+**The problem:** $\hat S$ is defined by the full interacting time evolution, which we can't compute exactly. We need to expand it perturbatively.
+
+### The Setup
+
+Split the full Hamiltonian into a free part plus an interaction:
+
+$$H = H_0 + H_{\text{int}}$$
+
+- $H_0$: the free Hamiltonian (known from documents 1-3). Its eigenstates are the Fock states we've been working with.
+- $H_{\text{int}}$: the interaction term (e.g., $e\bar\psi\gamma^\mu\psi A_\mu$ for QED).
+
+In the **free** theory, Fock states are energy eigenstates and evolve via simple phases: $|\vec p\rangle \to e^{-iE_pt}|\vec p\rangle$. Multi-particle states are sums of such phases. Boring.
+
+In the **interacting** theory, Fock states are *not* eigenstates of the full $H$. They evolve into complicated superpositions involving arbitrary numbers of other particles. That's scattering.
+
+The question: how do we compute this evolution perturbatively?
+
+### Why the Schrödinger Picture Fails (for Us)
+
+In the Schrödinger picture, states evolve and operators are fixed:
+
+$$i\frac{\partial}{\partial t}|\psi\rangle = H|\psi\rangle$$
+
+For computations, this is awkward: the states we know how to write (multi-particle Fock states) are eigenstates of $H_0$, not $H$. In the Schrödinger picture, time evolution immediately mixes them into unknown superpositions.
+
+### The Heisenberg Picture Doesn't Help Either
+
+In the Heisenberg picture, operators evolve and states are fixed:
+
+$$\phi(\vec x, t) = e^{iHt}\phi(\vec x)e^{-iHt}$$
+
+This requires using the *full* Hamiltonian $H$ for time evolution; and we don't know how to evaluate $e^{-iHt}$ when $H$ is interacting.
+
+### The Fix: Interaction Picture
+
+Split the difference: evolve operators with $H_0$ (which we can do), and let the states carry whatever's left (which is where the interaction enters).
+
+The interaction picture is a computational choice, not a physical one. The physics; measurable quantities; is identical in any picture.
+
+---
+
+## 2. The Interaction Picture
+
+### Definition
+
+Split the Hamiltonian: $H = H_0 + H_{\text{int}}$. Define operators and states in the interaction picture by:
+
+$$\phi_I(t) = e^{iH_0 t}\phi_S e^{-iH_0 t}$$
+
+$$|\psi(t)\rangle_I = e^{iH_0 t}|\psi(t)\rangle_S$$
+
+where subscripts denote picture ($I$ = interaction, $S$ = Schrödinger). This is a "partial unitary transformation"; we've absorbed the trivial free evolution into the operators, leaving the states to carry the interaction-induced dynamics.
+
+### Equation of Motion for Operators
+
+Differentiate $\phi_I(t)$:
+
+$$i\frac{\partial \phi_I}{\partial t} = [\phi_I, H_0]$$
+
+**Operators in the interaction picture evolve with the free Hamiltonian $H_0$, not $H$.** This is crucial: $\phi_I(t)$ satisfies exactly the same equation of motion as the *free* field in the Heisenberg picture. So we already know how to work with it; it's the field operator from documents 1-3.
+
+### Equation of Motion for States
+
+Differentiate $|\psi(t)\rangle_I$:
+
+$$i\frac{\partial}{\partial t}|\psi(t)\rangle_I = -H_0 e^{iH_0 t}|\psi(t)\rangle_S + e^{iH_0 t}H|\psi(t)\rangle_S$$
+
+$$= e^{iH_0 t}(H - H_0)|\psi(t)\rangle_S = e^{iH_0 t}H_{\text{int}}e^{-iH_0 t}|\psi(t)\rangle_I$$
+
+Define the **interaction Hamiltonian in the interaction picture**:
+
+$$H_I(t) \equiv e^{iH_0 t}H_{\text{int}}e^{-iH_0 t}$$
+
+Then:
+
+$$\boxed{i\frac{\partial}{\partial t}|\psi(t)\rangle_I = H_I(t)|\psi(t)\rangle_I}$$
+
+**States in the interaction picture evolve with $H_I(t)$**; the interaction Hamiltonian in which the fundamental fields have been replaced by their free-theory (interaction picture) versions.
+
+### Summary
+
+| Picture | Operators evolve with | States evolve with |
+|---|---|---|
+| Schrödinger |; (fixed) | $H$ (full) |
+| Heisenberg | $H$ (full) |; (fixed) |
+| Interaction | $H_0$ (free) | $H_I(t)$ (interaction in IP) |
+
+The interaction picture separates the "boring" part (free evolution) from the "interesting" part (interaction-induced scattering). We've handed the easy bit to the operators and left the hard bit for the states.
+
+### Why This Helps
+
+In the interaction picture:
+
+1. Field operators $\phi_I(x)$, $\psi_I(x)$, $A_I^\mu(x)$ are *free-field operators*; exactly the ones from documents 1-3. We know their commutators, their vacuum expectation values, their propagators.
+
+2. The interaction Hamiltonian $H_I(t)$ is a product of these free-field operators (with a coupling constant). For example, QED:
+
+$$H_I(t) = e\int d^3x\, \bar\psi_I(x)\gamma^\mu\psi_I(x)A_{I\mu}(x)$$
+
+where every field is free.
+
+3. Time evolution of states is governed by a differential equation whose right side involves only free-field operators. We can hope to solve this order by order in the coupling $e$.
+
+The price: everything is now frame-dependent. But measurable quantities come out the same as Lorentz-covariant calculations would give.
+
+---
+
+## 3. The Time Evolution Operator
+
+### Defining $U$
+
+Define the interaction-picture time evolution operator $U(t, t_0)$ by:
+
+$$|\psi(t)\rangle_I = U(t, t_0)|\psi(t_0)\rangle_I$$
+
+From the state's equation of motion:
+
+$$i\frac{\partial U(t, t_0)}{\partial t} = H_I(t)U(t, t_0), \quad U(t_0, t_0) = 1$$
+
+### Why Not Just Exponentiate?
+
+In ordinary QM (time-independent Hamiltonian), we'd write $U(t, t_0) = e^{-iH(t - t_0)}$. Why not here?
+
+The problem: $H_I(t)$ depends on $t$, and operators at different times generally *don't commute*:
+
+$$[H_I(t_1), H_I(t_2)] \neq 0 \text{ in general}$$
+
+For an ordinary function $f(t)$, $\exp\int f(t)dt$ makes sense. For a non-commuting operator-valued function $H_I(t)$, the naive exponential doesn't solve the differential equation; $\frac{d}{dt}e^{-i\int_{t_0}^t H_I(t')dt'}$ is a mess.
+
+### The Dyson Series
+
+Formally integrate the differential equation:
+
+$$U(t, t_0) = 1 - i\int_{t_0}^t dt_1\, H_I(t_1) U(t_1, t_0)$$
+
+This is an implicit equation; $U$ appears on both sides. Iterate by substituting the right side into itself:
+
+$$U(t, t_0) = 1 - i\int_{t_0}^t dt_1 H_I(t_1) + (-i)^2\int_{t_0}^t dt_1\int_{t_0}^{t_1} dt_2\, H_I(t_1)H_I(t_2) + \cdots$$
+
+This is an expansion in powers of $H_I$. If the coupling is small, higher terms are suppressed. Each $H_I$ brings a factor of the coupling constant (e.g., $e$ in QED).
+
+### The Nested Integration Domain
+
+The $n$-th term has nested integrations:
+
+$$(-i)^n\int_{t_0}^t dt_1\int_{t_0}^{t_1}dt_2\cdots\int_{t_0}^{t_{n-1}}dt_n\, H_I(t_1)H_I(t_2)\cdots H_I(t_n)$$
+
+with $t_1 > t_2 > \cdots > t_n$ (later times on the left). This ordering matters because the operators don't commute.
+
+The nested-integral form is awkward. We'd prefer a symmetrical expression where every $t_i$ is integrated from $t_0$ to $t$. That's what Dyson's formula provides.
+
+---
+
+## 4. Dyson's Formula
+
+### The Time-Ordering Operator
+
+Define the **time-ordering operator** $T$ acting on a product of operators:
+
+$$T\{A(t_1)A(t_2)\cdots A(t_n)\} = A(t_{\sigma(1)})A(t_{\sigma(2)})\cdots A(t_{\sigma(n)})$$
+
+where $\sigma$ is the permutation that arranges the arguments in *decreasing* order: $t_{\sigma(1)} > t_{\sigma(2)} > \cdots$.
+
+For two operators:
+
+$$T\{A(t_1)A(t_2)\} = \theta(t_1 - t_2)A(t_1)A(t_2) + \theta(t_2 - t_1)A(t_2)A(t_1)$$
+
+For fermionic operators, we include a minus sign for each swap; but $H_I$ is bosonic (contains even products of fermions), so this subtlety doesn't affect Dyson's formula as stated below.
+
+### The Dyson Formula
+
+Using the time-ordering operator:
+
+$$\boxed{U(t, t_0) = T\exp\left[-i\int_{t_0}^t dt'\, H_I(t')\right]}$$
+
+Expanded:
+
+$$U(t, t_0) = \sum_{n=0}^\infty \frac{(-i)^n}{n!}\int_{t_0}^t dt_1\cdots\int_{t_0}^t dt_n\, T\{H_I(t_1)\cdots H_I(t_n)\}$$
+
+### Why the $1/n!$?
+
+Consider the $n$-th term. We want to integrate over the *unordered* region $t_1, t_2, \ldots, t_n \in [t_0, t]$. This region has $n!$ different orderings, but time ordering treats each by arranging into a specific ordering. By symmetry of the integrand under time ordering (which gives the same operator product regardless of which ordering of integration variables we start with), each of the $n!$ orderings contributes equally. So integrating over the full unordered region gives $n!$ times the original ordered result; we divide by $n!$ to compensate.
+
+Formally:
+
+$$\int_{t_0}^t dt_1\int_{t_0}^{t_1}dt_2\cdots H_I(t_1)H_I(t_2)\cdots = \frac{1}{n!}\int_{t_0}^t dt_1\cdots\int_{t_0}^t dt_n\, T\{H_I(t_1)\cdots H_I(t_n)\}$$
+
+### Verification
+
+Check that Dyson's formula satisfies the differential equation. Differentiate:
+
+$$i\frac{\partial}{\partial t}U(t, t_0) = i\frac{\partial}{\partial t}\sum_n \frac{(-i)^n}{n!}\int dt_1\cdots dt_n T\{H_I(t_1)\cdots H_I(t_n)\}$$
+
+The derivative hits the upper limit of integration. Each integral contributes a term where $t_i = t$ and we've lost one integration. After some algebra (cleaner in the nested-integral form), this gives $H_I(t) U(t, t_0)$. ✓
+
+### Why It's Beautiful
+
+Dyson's formula is remarkable: it rewrites time evolution in an interacting theory as a **time-ordered exponential** of free-theory operators. No nested integrals; just unordered integrations with the time-ordering handled by the $T$ symbol.
+
+Every perturbative QFT calculation starts with Dyson's formula. Feynman diagrams (next document) are a graphical representation of its expansion.
+
+---
+
+## 5. The S-Matrix
+
+### Definition
+
+The **S-matrix** (scattering matrix) is the interaction-picture time evolution from the far past to the far future:
+
+$$S = \lim_{t_\pm \to \pm\infty} U(t_+, t_-)$$
+
+Using Dyson's formula:
+
+$$S = T\exp\left[-i\int_{-\infty}^\infty dt\, H_I(t)\right] = T\exp\left[-i\int d^4x\, \mathcal{H}_I(x)\right]$$
+
+where $\mathcal{H}_I$ is the interaction Hamiltonian density.
+
+For QED in the interaction picture:
+
+$$\mathcal{H}_I(x) = e\bar\psi_I(x)\gamma^\mu\psi_I(x)A_{I\mu}(x)$$
+
+So:
+
+$$S = T\exp\left[-ie\int d^4x\, \bar\psi_I\gamma^\mu\psi_I A_{I\mu}\right]$$
+
+### S-Matrix Elements
+
+A scattering process $|i\rangle \to |f\rangle$ has amplitude:
+
+$$S_{fi} = \langle f | S | i\rangle$$
+
+where $|i\rangle$ and $|f\rangle$ are multi-particle states (wave packets, strictly; we'll use plane-wave idealization).
+
+The probability for the transition:
+
+$$P_{i \to f} = |S_{fi}|^2$$
+
+which, after factoring out momentum-conservation delta functions and proper normalization, becomes a cross section or decay rate.
+
+### The Trivial Part of $S$
+
+$S = 1 + \text{(interaction part)}$. The "1" represents non-interacting evolution (particles fly past without interacting). We extract the nontrivial part:
+
+$$S = 1 + iT$$
+
+where $T$ is the transition matrix. For scattering amplitudes, we often write:
+
+$$\langle f | S | i \rangle = \delta_{fi} + (2\pi)^4\delta^4(p_f - p_i)\, i\mathcal{M}(i \to f)$$
+
+The delta function enforces total 4-momentum conservation; $\mathcal{M}$ is the **invariant amplitude**, which is what perturbation theory actually computes.
+
+### Unitarity
+
+$S$ is a unitary operator: $S^\dagger S = S S^\dagger = 1$. This is required because time evolution must conserve probability. Unitarity constrains $\mathcal{M}$ through the **optical theorem**:
+
+$$2\,\text{Im}\,\mathcal{M}(p \to p) = \sum_f |\mathcal{M}(p \to f)|^2$$
+
+(for forward scattering $p \to p$, with the sum over all possible final states $f$). This is how bound-state poles and resonances show up in QFT calculations.
+
+---
+
+## 6. Correlation Functions and the Gell-Mann–Low Theorem
+
+### The Road to Amplitudes
+
+To actually compute $S$-matrix elements, we need to evaluate vacuum expectation values of time-ordered products of fields:
+
+$$\langle 0 | T\{\phi(x_1)\phi(x_2)\cdots\phi(x_n)\}|0\rangle$$
+
+These are called **n-point correlation functions** or **Green's functions**, and they're the central objects of QFT.
+
+Why correlation functions? Because the **LSZ reduction formula** (next section) extracts scattering amplitudes from them.
+
+### The Problem with the Vacuum
+
+A subtlety: the "$|0\rangle$" in the interacting theory is *not* the same as the free-theory vacuum. The free vacuum is annihilated by free-field annihilation operators; the interacting vacuum is annihilated by the full Hamiltonian.
+
+Let's use notation: $|\Omega\rangle$ for the interacting vacuum, $|0\rangle$ for the free vacuum. The correlation functions we want are:
+
+$$\langle\Omega|T\{\phi_H(x_1)\cdots\phi_H(x_n)\}|\Omega\rangle$$
+
+where $\phi_H$ is the Heisenberg-picture field (evolving with the full $H$). But we only know how to compute with interaction-picture fields and the free vacuum.
+
+### The Gell-Mann–Low Theorem
+
+The bridge:
+
+$$\boxed{\langle\Omega|T\{\phi_H(x_1)\cdots\phi_H(x_n)\}|\Omega\rangle = \frac{\langle 0|T\{\phi_I(x_1)\cdots\phi_I(x_n)S\}|0\rangle}{\langle 0|T\{S\}|0\rangle}}$$
+
+where $S$ is the S-matrix as an operator (Dyson-expanded).
+
+**Key features:**
+
+- Left side: what we want (physical correlation functions in the interacting theory)
+- Right side: computable, involving only the free vacuum and interaction-picture fields
+- The denominator $\langle 0|S|0\rangle$ accounts for the "vacuum bubbles"; disconnected diagrams; which factor out
+
+### Why This Works (Sketch)
+
+The interacting vacuum $|\Omega\rangle$ can be obtained from the free vacuum $|0\rangle$ by adiabatic switching: slowly turn on the interaction, and the free vacuum evolves into the true interacting vacuum. Mathematically:
+
+$$|\Omega\rangle \propto \lim_{T \to \infty(1-i\epsilon)}U(0, -T)|0\rangle$$
+
+Inserting this into the correlation function definition and manipulating (this is the proper statement of the Gell-Mann–Low theorem) gives the result above. The $i\epsilon$ prescription projects onto the actual ground state.
+
+### What This Means Practically
+
+We've reduced the problem:
+
+1. Expand $S$ using Dyson's formula in powers of the coupling
+2. Compute each term; a time-ordered product of free fields; using Wick's theorem (next section)
+3. Sum up the contributions (order by order)
+
+Every QFT calculation reduces to computing correlation functions of free fields. That's what we'll learn to do next.
+
+---
+
+## 7. Wick's Theorem
+
+### The Problem
+
+Dyson's formula expresses $S$ as a sum of terms like $T\{H_I(x_1)\cdots H_I(x_n)\}$, each a time-ordered product of free fields. To compute matrix elements, we need to evaluate these products.
+
+Direct evaluation (using commutation relations to reorder) is a combinatorial nightmare for more than a few fields. Wick's theorem automates the procedure.
+
+### Normal-Ordered Products
+
+Recall normal ordering ($:\!\cdots\!:$) puts creation operators to the left of annihilation operators:
+
+$$:\!a^\dagger a\!: = a^\dagger a, \qquad :\!a a^\dagger\!: = a^\dagger a$$
+
+(For fermions, include a sign for each anticommutation needed.)
+
+Key fact: $\langle 0|:\!\cdots\!:|0\rangle = 0$ unless the expression is itself the identity (all operators cancel).
+
+### Contractions
+
+For two fields, the **contraction** is defined as:
+
+$$\overbrace{A(x_1)A(x_2)}^{\text{contraction}} \equiv \langle 0|T\{A(x_1)A(x_2)\}|0\rangle$$
+
+For scalar fields: the Feynman propagator $D_F(x_1 - x_2)$.
+
+For Dirac fields: the fermion propagator $S_F(x_1 - x_2)$.
+
+For photons: the photon propagator $D_F^{\mu\nu}(x_1 - x_2)$.
+
+All of these are c-numbers (not operators); just functions of the coordinates.
+
+### Wick's Theorem: The Statement
+
+For any product of free fields:
+
+$$T\{A_1 A_2 \cdots A_n\} = :\!A_1 A_2 \cdots A_n\!: + \text{(all possible contractions)}$$
+
+where the sum includes:
+- All single contractions: pair up two fields, contract them, leave the rest in normal order
+- All double contractions: pair up four fields into two pairs, contract each pair, leave rest in normal order
+- ...
+- Full contractions: pair up all fields (only possible for even $n$)
+
+For a product of $2n$ scalar fields, the full contraction has $(2n-1)!!$ terms.
+
+### Simple Example: Two Fields
+
+$$T\{\phi(x)\phi(y)\} = :\!\phi(x)\phi(y)\!: + \overbrace{\phi(x)\phi(y)}^{\text{contraction}}$$
+
+$$= :\!\phi(x)\phi(y)\!: + D_F(x - y)$$
+
+Taking the vacuum expectation value (normal-ordered part vanishes):
+
+$$\langle 0|T\{\phi(x)\phi(y)\}|0\rangle = D_F(x - y)$$
+
+Which we already knew; but this is the simplest case of the theorem.
+
+### Four Fields
+
+$$T\{\phi(x_1)\phi(x_2)\phi(x_3)\phi(x_4)\}$$
+
+Single contractions (three choices of pair × three remaining pairs):
+
+- $\phi_1 \phi_2$, leaving $:\phi_3\phi_4:$, times $D_F(x_1 - x_2)$
+- $\phi_1 \phi_3$, leaving $:\phi_2\phi_4:$, times $D_F(x_1 - x_3)$
+- $\phi_1 \phi_4$, leaving $:\phi_2\phi_3:$, times $D_F(x_1 - x_4)$
+- $\phi_2 \phi_3$, leaving $:\phi_1\phi_4:$, times $D_F(x_2 - x_3)$
+- ...etc (6 single contractions total)
+
+Double contractions (3 pairings):
+
+- $D_F(x_1 - x_2)D_F(x_3 - x_4)$
+- $D_F(x_1 - x_3)D_F(x_2 - x_4)$
+- $D_F(x_1 - x_4)D_F(x_2 - x_3)$
+
+Vacuum expectation (only double contractions survive):
+
+$$\langle 0|T\{\phi_1\phi_2\phi_3\phi_4\}|0\rangle = D_F(x_1 - x_2)D_F(x_3 - x_4) + D_F(x_1 - x_3)D_F(x_2 - x_4) + D_F(x_1 - x_4)D_F(x_2 - x_3)$$
+
+**Three propagator products.** Each corresponds to a different way of pairing up the four points. These will become the three "topologies" of a tree-level 4-point Feynman diagram.
+
+### Fermions: Signs Matter
+
+For fermion fields, swapping two fields generates a minus sign. Wick's theorem statements must account for this:
+
+$$T\{\psi_a \psi_b \psi_c \psi_d\} = :\!\psi\psi\psi\psi\!: + S_F(a - b):\!\psi_c\psi_d\!: - S_F(a - c):\!\psi_b\psi_d\!: + \cdots$$
+
+The sign for each contraction is $(-1)^{\text{number of fermion anticommutations to bring contracted fields together}}$. Getting these signs right is tedious but mechanical.
+
+### Why Wick's Theorem Matters
+
+**It converts a scary operator product into a finite sum of c-number propagator products.** Each term can be evaluated as a simple integral.
+
+The theorem also directly motivates Feynman diagrams: each pairing of fields corresponds to a "line" connecting two spacetime points, and each line corresponds to a propagator.
+
+**For a general $n$-point function** of free scalars:
+
+- Odd $n$: vacuum expectation vanishes (no way to fully contract an odd number of fields)
+- Even $n$: the VEV is a sum over all ways of pairing the $n$ fields, with each pair contributing a propagator
+
+This is why Feynman diagrams for scalar field theories have only even-legged vertices; reflecting Wick's theorem applied to interaction terms.
+
+### Generalization: Wick for Interacting Fields
+
+When we're computing $\langle 0|T\{\phi(x_1)\cdots\phi(x_n)S\}|0\rangle$, the $S$-operator brings additional field products (from expanding the interaction Lagrangian). Wick's theorem applies to the whole expression, giving contractions between the "external" $\phi(x_i)$ fields and the "internal" fields from $S$.
+
+This is how interactions enter the calculation. Each interaction term in $S$ contributes fields that get contracted with external fields and with each other; producing Feynman diagrams with vertices.
+
+### Proof Idea
+
+Wick's theorem is proved by induction. The base case (two fields) is checked directly. The inductive step uses the fact that:
+
+$$T\{A\, B\} - :\!AB\!: = \text{c-number}$$
+
+for any two free fields $A$, $B$ (since moving all annihilation operators to the right produces only c-number contributions from the commutators). Extending to $n$ fields gives the combinatorial sum over pairings.
+
+### The Key Payoff
+
+With Dyson + Wick, we have an algorithm:
+
+1. Write $S$ as a time-ordered exponential of $H_I$
+2. Expand to desired order
+3. Each term is a time-ordered product of free fields
+4. Apply Wick's theorem to reduce to propagators
+5. Integrate
+
+This algorithm is exactly what Feynman diagrams encode graphically. Document 5 will show the translation.
+
+---
+
+## 8. The LSZ Reduction Formula
+
+### The Problem
+
+Correlation functions $\langle\Omega|T\{\phi(x_1)\cdots\phi(x_n)\}|\Omega\rangle$ are the natural objects of QFT; they're what Wick + Dyson compute. But they're not *directly* scattering amplitudes. Experimentally, we measure amplitudes like $\langle p_1', p_2'|S|p_1, p_2\rangle$; matrix elements between definite-momentum states.
+
+The LSZ reduction formula (Lehmann-Symanzik-Zimmermann, 1955) bridges the gap.
+
+### The Idea
+
+An amplitude for $n$ in-going particles to become $m$ out-going particles can be extracted from the $(n+m)$-point correlation function by:
+
+1. Fourier-transforming the correlation function to momentum space
+2. Amputating external propagators (dividing out the $1/(p^2 - m^2)$ factors)
+3. Going on-shell ($p^2 = m^2$ for each external particle)
+4. Multiplying by appropriate wave function factors
+
+The poles of the correlation function at $p_i^2 = m^2$ contain the physical amplitude information. LSZ systematically extracts them.
+
+### The Formula (Scalar Fields)
+
+For scattering $p_1 p_2 \to p_3 \cdots p_{n+2}$:
+
+$$\langle p_3, \ldots, p_{n+2}|S|p_1, p_2\rangle = \prod_i \int d^4x_i e^{\pm ip_i \cdot x_i}\left(i\sqrt{Z}(\partial^2 + m^2)_i\right)\langle\Omega|T\{\phi(x_1)\cdots\phi(x_{n+2})\}|\Omega\rangle$$
+
+Each incoming particle gets an $e^{-ip\cdot x}$ factor; outgoing gets $e^{+ip\cdot x}$. The $(\partial^2 + m^2)$ factor applies the Klein-Gordon operator to each external leg, which produces *i*nverse propagators in momentum space; i.e., cancels (amputates) the external propagator. The $\sqrt{Z}$ is the **field-strength renormalization**, which we'll discuss below.
+
+### The Ingredients
+
+**External Klein-Gordon operators:** For a free field, $(\Box + m^2)\phi = 0$. But in an interacting theory, $(\Box + m^2)\phi = \text{source}$ where the source involves the interaction. When Fourier-transformed, this gives $(-p^2 + m^2)\tilde\phi = $ something, meaning $\tilde\phi$ has poles at $p^2 = m^2$. LSZ says: extract the residue at that pole.
+
+**Amputation:** An $(n+m)$-point function has external propagators attached to each vertex. These external propagators are just "free legs" that don't contribute to the scattering itself; they just propagate in/out. Amputating them isolates the interaction kernel.
+
+**On-shell condition:** Physical particles have $p^2 = m^2$. External legs must be on-shell to represent real particles.
+
+**Field-strength renormalization $Z$:** In an interacting theory, $\langle\Omega|\phi(0)|p\rangle \neq 1$ as it would be in the free theory; instead, it equals $\sqrt{Z}$. This factor accounts for the fact that the physical "particle" associated with $\phi$ differs from the bare free-theory particle. $Z$ is generally computed perturbatively.
+
+### A Crucial Simplification
+
+At lowest order in perturbation theory, $Z = 1$ and the complications vanish. At higher orders, $Z$ receives corrections. But *at tree level*, the LSZ formula simplifies dramatically; you just compute the correlation function using Dyson + Wick, identify the appropriate $n$-point function, Fourier transform, and read off the amplitude.
+
+The story: in momentum space, the amputation and on-shell procedure amounts to *not* including external-leg propagators in Feynman diagrams. External lines are just wave function factors; only internal lines carry propagators.
+
+### LSZ for Fermions
+
+Similar structure, but with $(i\slashed\partial - m)$ instead of $(\Box + m^2)$, and external-line factors $u^s(p)$, $\bar u^s(p)$, $v^s(p)$, $\bar v^s(p)$ for incoming/outgoing particles/antiparticles.
+
+### LSZ for Photons
+
+$(-\Box \delta^{\mu\nu} + \partial^\mu\partial^\nu)/\xi$ type factors (depending on gauge), external factors $\epsilon^\mu(k)$ or $\epsilon^{\mu*}(k)$ for polarization.
+
+### Summary of the Full Recipe
+
+To compute $\langle f|S|i\rangle$:
+
+1. Determine the external particles (number, types, momenta) and Fock states $|i\rangle$, $|f\rangle$
+2. Identify the needed correlation function
+3. Use Dyson's formula: $S = T\exp(-i\int H_I)$
+4. Expand to desired order in the coupling
+5. Use Wick's theorem: convert the operator product to propagator products
+6. Fourier transform and amputate external legs (LSZ)
+7. Result: the amplitude $\mathcal{M}$
+
+This procedure will be automated in the next document via Feynman diagrams; but conceptually, this is what's happening.
+
+---
+
+## 9. Cross Sections and Decay Rates
+
+To connect amplitudes $\mathcal{M}$ to experimentally measurable quantities, we need formulas for cross sections and decay rates.
+
+### The Setup
+
+Transition probability per unit time per unit flux:
+
+$$d\sigma = \frac{|\mathcal{M}|^2}{\text{flux}}d\Pi$$
+
+where $d\Pi$ is the Lorentz-invariant phase space for the final state, and the flux involves the initial-state momenta.
+
+### Lorentz-Invariant Phase Space
+
+For $n$ final-state particles with momenta $p_i$:
+
+$$d\Pi = (2\pi)^4\delta^4\left(\sum p_i - P_i\right)\prod_{i=1}^n \frac{d^3 p_i}{(2\pi)^3 2E_i}$$
+
+The delta function enforces 4-momentum conservation. The $d^3p/(2E)$ factor is the Lorentz-invariant momentum-space measure.
+
+### Cross Section for 2 → $n$ Scattering
+
+For two incoming particles with momenta $p_1$, $p_2$ and masses $m_1$, $m_2$:
+
+$$d\sigma = \frac{1}{2E_1 \cdot 2E_2 \cdot |\vec v_1 - \vec v_2|}|\mathcal{M}|^2 \, d\Pi$$
+
+The factor $2E_1 \cdot 2E_2 \cdot |\vec v_1 - \vec v_2|$ is the *flux* (particle density times relative velocity).
+
+In terms of Mandelstam variable $s = (p_1 + p_2)^2$, this simplifies in the high-energy limit:
+
+$$d\sigma \approx \frac{|\mathcal{M}|^2}{2s}d\Pi$$
+
+### Decay Rate
+
+For a particle of mass $M$ decaying into $n$ final-state particles:
+
+$$d\Gamma = \frac{1}{2M}|\mathcal{M}|^2\, d\Pi$$
+
+The lifetime is $\tau = 1/\Gamma_{\text{total}}$ where $\Gamma_{\text{total}}$ is the total rate summed over all final states.
+
+### Averaging and Summing over Spins
+
+For unpolarized scattering, you average over initial spin configurations and sum over final ones:
+
+$$\overline{|\mathcal{M}|^2} = \frac{1}{2s_1 + 1}\cdot\frac{1}{2s_2 + 1}\sum_{\text{spins}}|\mathcal{M}|^2$$
+
+For fermion scattering (spin 1/2 each), this gives $\tfrac{1}{4}\sum_{\text{spins}}|\mathcal{M}|^2$.
+
+The spin-summed squared amplitude can be computed using the completeness relations $\sum_s u^s\bar u^s = \slashed p + m$ from the workbook. The calculation reduces to traces of gamma matrix products; which is why the trace identities (workbook II.3) are so important.
+
+### Example: 2 → 2 Scattering, Center-of-Mass Frame
+
+For 2 → 2 scattering in the CM frame, with all particles of the same mass for simplicity:
+
+$$\frac{d\sigma}{d\Omega} = \frac{|\mathcal{M}|^2}{64\pi^2 s}$$
+
+where $d\Omega$ is the solid angle of one outgoing particle. For specific processes like $e^+e^- \to \mu^+\mu^-$, computing $|\mathcal{M}|^2$ and doing the trace algebra gives the explicit differential cross section.
+
+We'll do this computation in document 5.
+
+---
+
+## 10. Example: First-Order $\phi^4$ Theory
+
+Let's concretize everything by computing at first order in a simple scalar theory.
+
+### The Setup
+
+$$\mathcal{L} = \tfrac{1}{2}(\partial\phi)^2 - \tfrac{1}{2}m^2\phi^2 - \frac{\lambda}{4!}\phi^4$$
+
+The interaction Hamiltonian density is $\mathcal{H}_I = \frac{\lambda}{4!}\phi^4$. (The $1/4!$ is conventional; it cancels symmetry factors in Feynman diagrams.)
+
+### Scattering: $\phi\phi \to \phi\phi$
+
+Consider two incoming scalars with momenta $p_1, p_2$ going to two outgoing scalars with $p_3, p_4$.
+
+### Zeroth Order
+
+$S = 1$. Contribution to the amplitude: $\delta^4(p_1 - p_3)\delta^4(p_2 - p_4) + \delta^4(p_1 - p_4)\delta^4(p_2 - p_3)$. These represent "no scattering"; particles fly past each other. Not what we want.
+
+### First Order
+
+$$S^{(1)} = -i\int d^4x\, \mathcal{H}_I(x) = -i\frac{\lambda}{4!}\int d^4x\, \phi^4(x)$$
+
+The first-order amplitude for $\phi\phi \to \phi\phi$:
+
+$$\langle p_3 p_4|S^{(1)}|p_1 p_2\rangle = -i\frac{\lambda}{4!}\int d^4x\, \langle p_3 p_4|\phi^4(x)|p_1 p_2\rangle$$
+
+### Applying Wick's Theorem
+
+We need $\langle p_3 p_4|\phi^4(x)|p_1 p_2\rangle$. The four fields at spacetime point $x$ need to be contracted with the external particle states. Each $|p_i\rangle$ requires a $a^\dagger$ operator (in the expansion $\phi = a + a^\dagger + \ldots$); similarly each $\langle p_j|$ requires an $a$.
+
+There are $4! = 24$ ways to match up the four external particles with the four $\phi$'s at the interaction vertex. Each gives a factor of $e^{\pm i p_i \cdot x}$ (from the mode expansion) times the appropriate $1/\sqrt{2E_i}$ normalization.
+
+But we should be careful: some of these 24 ways are equivalent; they differ only by a permutation of the outgoing or incoming particles. After accounting for symmetry, the distinct contributions are 3 (from matching $\{1,2\}$ with $\{3,4\}$, or $\{1,3\}$ with $\{2,4\}$, etc.) times $4! \cdot 2 / 3 = 8$ each.
+
+Actually, the standard way to count: there are exactly $4!$ matchings, and the $1/4!$ in the Lagrangian cancels this, leaving an overall factor of 1.
+
+### The Result
+
+Integrating over $x$ gives a delta function $(2\pi)^4\delta^4(p_1 + p_2 - p_3 - p_4)$ from momentum conservation.
+
+The amplitude is:
+
+$$i\mathcal{M} = -i\lambda$$
+
+Just a constant. Remarkable: at first order, the $\phi^4$ scattering amplitude is just the coupling constant.
+
+### The Feynman Diagram
+
+Graphically, this is represented by a single vertex where four lines meet:
+
+- Two incoming lines (particles $p_1, p_2$)
+- Two outgoing lines (particles $p_3, p_4$)
+- One vertex at position $x$ (integrated over)
+
+This is the simplest possible Feynman diagram. The "Feynman rule" extracted is: a $\phi^4$ interaction vertex contributes a factor of $-i\lambda$.
+
+### Cross Section
+
+For identical scalars scattering in the CM frame:
+
+$$\frac{d\sigma}{d\Omega} = \frac{|\mathcal{M}|^2}{64\pi^2 s} = \frac{\lambda^2}{64\pi^2 s}$$
+
+(Constant in angle; the $\phi^4$ theory scatters isotropically at tree level.)
+
+Total cross section (integrated over half the sphere, to account for identical final particles):
+
+$$\sigma = \frac{\lambda^2}{32\pi s}$$
+
+This is as simple as a scattering calculation gets. More complicated theories (QED, QCD) introduce propagators, vertices with tensor structure, and so on; but the conceptual structure is identical.
+
+---
+
+## 11. Preview: Where Feynman Diagrams Come From
+
+Everything we've done in this document can be organized graphically. Feynman diagrams are the graphical representation of the perturbative expansion.
+
+### The Translation
+
+- **External line:** Incoming or outgoing particle. Corresponds to a factor from the wave function (momentum eigenstate) in the external state.
+- **Internal line:** A propagator. Comes from contracting two field operators.
+- **Vertex:** An interaction term in $H_I$. Corresponds to a factor of $-i$ times the coupling and any tensor structure.
+
+### Rules for QED (from the Lagrangian)
+
+The Feynman rules I listed in document 3's appendix are derived from this machinery:
+
+1. Each photon propagator: $-i\eta^{\mu\nu}/(k^2 + i\epsilon)$
+2. Each fermion propagator: $i(\slashed{p} + m)/(p^2 - m^2 + i\epsilon)$
+3. Each vertex: $-ieQ\gamma^\mu$
+4. External photons: $\epsilon^\mu$ or $\epsilon^{\mu*}$
+5. External electrons/positrons: $u$, $\bar u$, $v$, $\bar v$
+6. Momentum conservation at every vertex
+7. Integrate over loop momenta
+8. Symmetry factors and fermion loop signs
+
+Each rule has a specific origin in Wick's theorem plus the QED Lagrangian.
+
+### The Big Picture
+
+The flow:
+
+```
+QED Lagrangian → H_I in interaction picture → Dyson's formula
+                                                  ↓
+                               n-th order term in S (Wick's theorem)
+                                                  ↓
+                               Feynman diagrams of order e^n
+                                                  ↓
+                               Integrals over propagators
+                                                  ↓
+                               Amplitudes M
+                                                  ↓
+                               Cross sections via LSZ + phase space
+```
+
+Document 5 will:
+
+1. Codify the Feynman rules explicitly
+2. Compute specific QED processes: $e^+e^- \to \mu^+\mu^-$, Compton scattering, electron-electron scattering
+3. Extract differential cross sections
+4. Compare to experimental data
+
+This is where QFT becomes calculational physics.
+
+---
+
+## 12. Appendix: Formulas and Identities
+
+### The Three Pictures of Quantum Mechanics
+
+| Picture | Operators | States |
+|---|---|---|
+| Schrödinger | Fixed | $|\psi(t)\rangle_S = e^{-iH(t-t_0)}|\psi(t_0)\rangle$ |
+| Heisenberg | $A_H(t) = e^{iHt}A e^{-iHt}$ | Fixed |
+| Interaction | $A_I(t) = e^{iH_0 t}A e^{-iH_0 t}$ | $|\psi(t)\rangle_I = U(t, t_0)|\psi(t_0)\rangle$ |
+
+### Key Formulas
+
+**Interaction-picture state evolution:**
+$$i\partial_t|\psi\rangle_I = H_I(t)|\psi\rangle_I$$
+
+**Dyson's formula:**
+$$U(t, t_0) = T\exp\left[-i\int_{t_0}^t dt'\, H_I(t')\right]$$
+
+**S-matrix:**
+$$S = T\exp\left[-i\int d^4x\, \mathcal{H}_I(x)\right]$$
+
+**Gell-Mann–Low theorem:**
+$$\langle\Omega|T\{\phi_H(x_1)\cdots\}|\Omega\rangle = \frac{\langle 0|T\{\phi_I(x_1)\cdots S\}|0\rangle}{\langle 0|T\{S\}|0\rangle}$$
+
+### Contractions (Propagators)
+
+- Scalar: $\overbrace{\phi(x)\phi(y)} = D_F(x - y) = \int\frac{d^4p}{(2\pi)^4}\frac{i}{p^2 - m^2 + i\epsilon}e^{-ip(x-y)}$
+
+- Dirac: $\overbrace{\psi(x)\bar\psi(y)} = S_F(x - y) = \int\frac{d^4p}{(2\pi)^4}\frac{i(\slashed{p} + m)}{p^2 - m^2 + i\epsilon}e^{-ip(x-y)}$
+
+- Photon (Feynman gauge): $\overbrace{A^\mu(x)A^\nu(y)} = D_F^{\mu\nu}(x - y) = \int\frac{d^4k}{(2\pi)^4}\frac{-i\eta^{\mu\nu}}{k^2 + i\epsilon}e^{-ik(x-y)}$
+
+### Wick's Theorem
+
+$$T\{A_1 A_2 \cdots A_n\} = \sum_{\text{all pairings}} (\text{contractions})\cdot\, :\!(\text{remaining normal-ordered fields})\!:$$
+
+For fermions, pairings pick up a sign $(-1)^P$ from the permutation required.
+
+### LSZ Reduction (Schematic)
+
+$$\langle f|S|i\rangle = \prod_{\text{external}}(\text{wave function factor}) \times (\text{amputated, on-shell, Fourier-transformed correlation function})$$
+
+### Cross Sections
+
+For 2 → $n$ scattering:
+
+$$d\sigma = \frac{|\mathcal{M}|^2}{4|\vec p_1|\sqrt{s}}\,d\Pi$$
+
+where:
+
+$$d\Pi = (2\pi)^4\delta^4\left(p_i - \sum p_f\right)\prod_f\frac{d^3 p_f}{(2\pi)^3 2E_f}$$
+
+### Decay Rate
+
+For 1 → $n$ decay of particle of mass $M$:
+
+$$d\Gamma = \frac{|\mathcal{M}|^2}{2M}\, d\Pi$$
+
+### Checklist
+
+By the end of this document, you should be able to:
+
+- Switch between Schrödinger, Heisenberg, and interaction pictures, and know when to use each
+- Derive Dyson's formula from the state evolution equation
+- Write the S-matrix as a time-ordered exponential
+- Apply Wick's theorem to a product of 4 or 6 free fields
+- Convert a correlation function into an S-matrix element via LSZ
+- Compute the tree-level amplitude for $\phi^4$ scattering
+- Write the formula for a 2 → 2 cross section
+- Recognize how each of these pieces will be encoded graphically in Feynman diagrams
+
+### Problems to Work
+
+1. Derive Dyson's formula by iterating the interaction-picture state equation three times.
+
+2. Using Wick's theorem, compute $\langle 0|T\{\phi(x_1)\phi(x_2)\phi(x_3)\phi(x_4)\phi(x_5)\phi(x_6)\}|0\rangle$ for a free real scalar field. How many terms does the answer have?
+
+3. For a Yukawa theory with interaction $\mathcal{L}_I = -g\bar\psi\phi\psi$, write the first-order contribution to the S-matrix. What kind of process does it describe?
+
+4. Show that for the photon propagator in Feynman gauge, $\overbrace{A^\mu(x)A^\nu(y)} = D_F^{\mu\nu}(x-y)$ follows from the photon field commutation relations.
+
+5. Verify by explicit calculation (for 4-point $\phi^4$ scattering) that $\mathcal{M} = -\lambda$ at tree level, including all symmetry factors.
+
+Problems 2 and 5 are especially good for building the algebraic fluency Wick's theorem demands.
+
+### Further Reading
+
+- **Peskin & Schroeder, Chapter 4:** the standard treatment; careful and complete
+- **Schwartz, Chapter 7:** cleaner modern presentation, especially good on LSZ
+- **Srednicki, Chapters 5-9:** very explicit, includes many worked examples
+- **Weinberg, Vol. 1, Chapters 6-7:** rigorous foundations, heavy reading
+
+---
+
+## Closing Note
+
+This document bridged the gap between "we can quantize free fields" and "we can calculate scattering amplitudes." The machinery is intricate but the logic is straightforward:
+
+1. **Interaction picture** lets us work with free-field operators while carrying the interaction in the states
+2. **Dyson's formula** expands time evolution in powers of the interaction
+3. **Wick's theorem** reduces products of free fields to propagator combinations
+4. **LSZ** connects correlation functions to physical scattering amplitudes
+5. **Cross section formulas** convert amplitudes to measurable quantities
+
+Every step is mechanical. Every step is reducible to integrals of propagators. That's why Feynman diagrams work; they encode this mechanical procedure graphically.
+
+### What We've Built
+
+The full procedure, end to end:
+
+1. Start with a Lagrangian (QED, $\phi^4$, Standard Model, whatever)
+2. Extract the free and interaction parts
+3. Quantize the free fields (documents 1-3)
+4. Write $S = T\exp[-i\int \mathcal{H}_I]$
+5. Compute correlation functions order by order using Wick
+6. Extract amplitudes via LSZ
+7. Square, integrate phase space, get cross sections
+
+The key insight: in perturbative QFT, **every physical prediction is a sum of Feynman diagrams**. Each diagram is a particular Wick contraction, represented graphically. Each diagram evaluates to an integral over propagators and coupling constants. Summing the diagrams (in a given order) gives the amplitude.
+
+### Where We Go Next
+
+Document 5 is where the abstract machinery meets specific calculations:
+
+- Explicit derivation of QED Feynman rules from the Lagrangian
+- Tree-level calculation of $e^+e^- \to \mu^+\mu^-$; the classic QED benchmark
+- Compton scattering: $e\gamma \to e\gamma$
+- Møller scattering: $e^-e^- \to e^-e^-$
+- Bhabha scattering: $e^+e^- \to e^+e^-$
+- Extracting differential and total cross sections
+
+After that, loops and renormalization (documents 6-7), path integrals (8-9), and Yang-Mills (10-11).
+
+You're halfway through the core QFT sequence. Take your time, work some problems from this document (especially 2 and 5), and when ready, we'll compute actual physics.
+
+Nice work getting here.
