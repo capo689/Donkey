@@ -99,7 +99,7 @@ const romanNumerals = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','
             <p class="map-legend-title">Lines of the Curriculum</p>
             <div class="map-legend-grid">
               {lines.map(l => (
-                <div class="map-legend-row">
+                <div class="map-legend-row" data-line-filter={l.cssKey} role="button" tabindex="0" aria-pressed="false">
                   <div class="map-legend-swatch">
                     <div class={`swatch-${l.cssKey}`} style="width:50px"></div>
                   </div>
@@ -109,6 +109,10 @@ const romanNumerals = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','
             </div>
           </div>
         </div>
+        <div class="map-tooltip" data-map-tooltip aria-hidden="true">
+          <span class="map-tooltip-num" data-map-tooltip-num></span>
+          <span data-map-tooltip-label></span>
+        </div>
       </figure>
 
       <section class="station-index" aria-labelledby="index-head">
@@ -117,7 +121,22 @@ const romanNumerals = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','
           <h2 class="index-head-title">All Thirty-Eight, by Line.</h2>
           <p class="index-head-sub">arranged in the order of the journey</p>
         </header>
-        <div class="index-grid">
+
+        <div class="station-search" role="search">
+          <label class="station-search-label" for="station-search-input">Search</label>
+          <input
+            id="station-search-input"
+            class="station-search-input"
+            type="search"
+            placeholder="Filter by station name, title, or line…"
+            autocomplete="off"
+            data-station-search
+          />
+          <span class="station-search-count" data-station-count>38 of 38</span>
+          <button type="button" data-line-clear>Clear line filter</button>
+        </div>
+
+        <div class="index-grid" data-station-grid>
           {lines.map(line => {
             const lineStations = stations.filter(s => s.data.line === line.key);
             return (
@@ -131,7 +150,7 @@ const romanNumerals = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','
                   {lineStations.map(s => {
                     const ordinal = romanNumerals[s.data.stationNumber - 1] || s.data.stationNumber;
                     return (
-                      <li>
+                      <li data-station-haystack={`${s.data.classReportTitle} ${s.data.title} ${line.name}`.toLowerCase()}>
                         <a href={`/curriculum/${s.id}`}>
                           <span class="ord">{ordinal}.</span>
                           <span class="name">{s.data.classReportTitle}</span>
@@ -150,4 +169,119 @@ const romanNumerals = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','
       <div class="end-ornament" aria-hidden="true">&#8258;</div>
     </article>
   </div>
+
+  <script is:inline define:vars={{ stationMap: Object.fromEntries(stations.map(s => [s.id, { num: s.data.stationNumber, label: s.data.classReportTitle }])) }}>
+    // ── Subway map: hover/focus tooltip ─────────────────────────────
+    (function () {
+      const tooltip = document.querySelector('[data-map-tooltip]');
+      const numEl = document.querySelector('[data-map-tooltip-num]');
+      const labelEl = document.querySelector('[data-map-tooltip-label]');
+      const wrap = document.querySelector('.map-scroll');
+      if (!tooltip || !wrap || !numEl || !labelEl) return;
+
+      function entryFromTarget(target) {
+        const anchor = target.closest('a[href^="/curriculum/"]');
+        if (!anchor) return null;
+        const slug = anchor.getAttribute('href').replace('/curriculum/', '').replace(/\/$/, '');
+        const entry = stationMap[slug];
+        if (!entry) return null;
+        return { anchor, entry };
+      }
+
+      function show(e) {
+        const hit = entryFromTarget(e.target);
+        if (!hit) return;
+        numEl.textContent = 'Station ' + String(hit.entry.num).padStart(2, '0');
+        labelEl.textContent = hit.entry.label;
+        const rect = hit.anchor.getBoundingClientRect();
+        const wrapRect = wrap.getBoundingClientRect();
+        tooltip.style.left = (rect.left - wrapRect.left + rect.width / 2) + 'px';
+        tooltip.style.top = (rect.top - wrapRect.top) + 'px';
+        tooltip.classList.add('is-visible');
+        tooltip.setAttribute('aria-hidden', 'false');
+      }
+      function hide() {
+        tooltip.classList.remove('is-visible');
+        tooltip.setAttribute('aria-hidden', 'true');
+      }
+
+      wrap.addEventListener('mouseover', show);
+      wrap.addEventListener('focusin', show);
+      wrap.addEventListener('mouseout', hide);
+      wrap.addEventListener('focusout', hide);
+
+      // Arrow-key navigation between stations (left/right traverses tab order)
+      wrap.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        const anchors = Array.from(wrap.querySelectorAll('a[href^="/curriculum/"]'));
+        const active = document.activeElement;
+        const idx = anchors.indexOf(active);
+        if (idx === -1) return;
+        e.preventDefault();
+        const next = e.key === 'ArrowRight' ? idx + 1 : idx - 1;
+        const target = anchors[(next + anchors.length) % anchors.length];
+        if (target) target.focus();
+      });
+    })();
+
+    // ── Station search + line filter ────────────────────────────────
+    (function () {
+      const input = document.querySelector('[data-station-search]');
+      const countEl = document.querySelector('[data-station-count]');
+      const grid = document.querySelector('[data-station-grid]');
+      const legendRows = document.querySelectorAll('[data-line-filter]');
+      const clearBtn = document.querySelector('[data-line-clear]');
+      const searchBar = document.querySelector('.station-search');
+      if (!input || !grid || !countEl || !searchBar) return;
+
+      let activeLine = null;
+
+      function applyFilters() {
+        const q = input.value.trim().toLowerCase();
+        let visible = 0, total = 0;
+        grid.querySelectorAll('.line-block').forEach((block) => {
+          const blockLine = block.getAttribute('data-line');
+          const lineHidden = activeLine && activeLine !== blockLine;
+          let blockVisible = 0;
+          block.querySelectorAll('li').forEach((li) => {
+            total++;
+            const hay = li.getAttribute('data-station-haystack') || '';
+            const matches = !q || hay.indexOf(q) !== -1;
+            const hidden = lineHidden || !matches;
+            li.classList.toggle('is-hidden', hidden);
+            if (!hidden) { blockVisible++; visible++; }
+          });
+          block.classList.toggle('is-hidden', lineHidden);
+          block.classList.toggle('is-empty', !lineHidden && blockVisible === 0);
+        });
+        countEl.textContent = visible + ' of ' + total;
+        searchBar.classList.toggle('is-filtered', !!activeLine);
+      }
+
+      input.addEventListener('input', applyFilters);
+
+      legendRows.forEach((row) => {
+        const toggle = () => {
+          const lineKey = row.getAttribute('data-line-filter');
+          activeLine = activeLine === lineKey ? null : lineKey;
+          legendRows.forEach((r) => {
+            r.setAttribute('aria-pressed', String(r.getAttribute('data-line-filter') === activeLine));
+          });
+          applyFilters();
+        };
+        row.addEventListener('click', toggle);
+        row.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        });
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          activeLine = null;
+          legendRows.forEach((r) => r.setAttribute('aria-pressed', 'false'));
+          applyFilters();
+        });
+      }
+    })();
+  </script>
 </Base>
