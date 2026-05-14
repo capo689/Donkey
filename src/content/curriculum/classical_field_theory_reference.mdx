@@ -13,13 +13,13 @@ classReportTitle: "When fields started doing the work."
 
 # Classical Field Theory: A Comprehensive Reference
 
-*Scalar fields, gauge theory, spinors, and the Standard Model Lagrangian — everything you need before QFT.*
+*Scalar fields, gauge theory, spinors, and the Standard Model Lagrangian; everything you need before QFT.*
 
 The Lagrangian mechanics document introduced the basic framework of classical field theory. The special relativity and tensors document built the mathematical language. This document combines them into the real subject: a complete classical treatment of the field theories that underlie modern physics.
 
 By the end, you should understand:
 - Why spontaneous symmetry breaking leads to Goldstone bosons (and to the Higgs mechanism)
-- Why the photon exists at all — not as a postulate but as a consequence of local $U(1)$ symmetry
+- Why the photon exists at all; not as a postulate but as a consequence of local $U(1)$ symmetry
 - How Yang-Mills theory generalizes QED to describe the strong and weak forces
 - Why the Dirac equation automatically predicts antimatter and spin
 - What the Standard Model Lagrangian actually says, term by term
@@ -48,16 +48,16 @@ That's the bridge into quantum field theory proper.
 
 ## 1. The Setup: What We're Building
 
-Every fundamental theory of physics is specified by a Lagrangian (density). From this single object — a Lorentz-invariant combination of fields and their derivatives — everything else follows: equations of motion (via Euler-Lagrange), conservation laws (via Noether), interactions, and ultimately (after quantization) scattering amplitudes and particle physics.
+Every fundamental theory of physics is specified by a Lagrangian (density). From this single object; a Lorentz-invariant combination of fields and their derivatives; everything else follows: equations of motion (via Euler-Lagrange), conservation laws (via Noether), interactions, and ultimately (after quantization) scattering amplitudes and particle physics.
 
 The rules for constructing fundamental Lagrangians are surprisingly constrained:
 
-1. **Lorentz invariance** — the Lagrangian must be a Lorentz scalar
-2. **Locality** — it's a function of fields and their derivatives at a single spacetime point (no action-at-a-distance)
-3. **Hermiticity / reality** — $\mathcal{L}$ is real (so the action is real)
-4. **Gauge symmetries** — if present, the Lagrangian respects them
-5. **Renormalizability** — for quantum field theory, typically only operators up to mass dimension 4 in 4D spacetime (this is a quantum criterion, but it massively constrains classical writing)
-6. **Discrete symmetries** — depending on the theory, may respect P, C, T, or specific combinations
+1. **Lorentz invariance**; the Lagrangian must be a Lorentz scalar
+2. **Locality**; it's a function of fields and their derivatives at a single spacetime point (no action-at-a-distance)
+3. **Hermiticity / reality**; $\mathcal{L}$ is real (so the action is real)
+4. **Gauge symmetries**; if present, the Lagrangian respects them
+5. **Renormalizability**; for quantum field theory, typically only operators up to mass dimension 4 in 4D spacetime (this is a quantum criterion, but it massively constrains classical writing)
+6. **Discrete symmetries**; depending on the theory, may respect P, C, T, or specific combinations
 
 These rules plus particle content typically narrow the Lagrangian to a handful of possibilities, often just one. The Standard Model Lagrangian is essentially *the* Lagrangian you get from requiring Lorentz invariance, gauge invariance under $SU(3) \times SU(2) \times U(1)$, and the observed particle content.
 
@@ -129,7 +129,7 @@ The $\phi^4$ term is the simplest Lorentz-invariant interaction for a real scala
 
 $$(\Box + m^2)\phi = -\frac{\lambda}{6}\phi^3$$
 
-Nonlinear. This theory — called "$\phi^4$ theory" — is the simplest interacting field theory and the standard pedagogical example in QFT. It's also a prototype for the Higgs sector (just with a different potential, as we'll see).
+Nonlinear. This theory; called "$\phi^4$ theory"; is the simplest interacting field theory and the standard pedagogical example in QFT. It's also a prototype for the Higgs sector (just with a different potential, as we'll see).
 
 ---
 
@@ -153,7 +153,7 @@ Varying with respect to $\phi^*$ (treating $\phi$ as independent):
 
 $$(\Box + m^2)\phi = 0$$
 
-and similarly for $\phi^*$. Two complex Klein-Gordon equations — or equivalently, two real ones for $\phi_1$ and $\phi_2$.
+and similarly for $\phi^*$. Two complex Klein-Gordon equations; or equivalently, two real ones for $\phi_1$ and $\phi_2$.
 
 ### The U(1) Symmetry
 
@@ -163,7 +163,7 @@ $$\phi \to e^{i\alpha} \phi, \qquad \phi^* \to e^{-i\alpha}\phi^*$$
 
 for any constant real $\alpha$. The two factors cancel in products like $\phi^*\phi$ and $(\partial \phi^*)(\partial \phi)$.
 
-This is a **global** symmetry — $\alpha$ is the same at every spacetime point. It's called $U(1)$ because the set of transformations $\{e^{i\alpha}\}$ forms the group $U(1)$ (unit circle in complex plane).
+This is a **global** symmetry; $\alpha$ is the same at every spacetime point. It's called $U(1)$ because the set of transformations $\{e^{i\alpha}\}$ forms the group $U(1)$ (unit circle in complex plane).
 
 ### Noether Current
 
@@ -179,11 +179,11 @@ $$j^\mu = i[\phi^*(\partial^\mu \phi) - \phi(\partial^\mu \phi^*)]$$
 
 You can verify directly: $\partial_\mu j^\mu = 0$ using the Klein-Gordon equation.
 
-The conserved charge $Q = \int d^3 x \, j^0$ is what we call **electric charge** (up to overall factor). So electric charge conservation ultimately comes from a $U(1)$ symmetry of the Lagrangian — a beautiful instance of Noether's theorem.
+The conserved charge $Q = \int d^3 x \, j^0$ is what we call **electric charge** (up to overall factor). So electric charge conservation ultimately comes from a $U(1)$ symmetry of the Lagrangian; a beautiful instance of Noether's theorem.
 
 ### Interpretation
 
-In quantum theory, the two complex components encode particles *and* antiparticles. A complex scalar describes a charged particle (like a $\pi^+$) together with its antiparticle ($\pi^-$). A real scalar (like a $\pi^0$, approximately) has no such internal structure — it's its own antiparticle.
+In quantum theory, the two complex components encode particles *and* antiparticles. A complex scalar describes a charged particle (like a $\pi^+$) together with its antiparticle ($\pi^-$). A real scalar (like a $\pi^0$, approximately) has no such internal structure; it's its own antiparticle.
 
 ---
 
@@ -207,11 +207,11 @@ $$\frac{dV}{d(\phi^*\phi)} = -\mu^2 + 2\lambda \phi^*\phi = 0 \implies \phi^*\ph
 
 So the minimum is a *ring* in the complex $\phi$ plane, at $|\phi| = v/\sqrt{2}$ where $v = \mu/\sqrt{\lambda}$ is the **vacuum expectation value**.
 
-The potential is rotationally symmetric (invariant under $U(1)$), but the *minimum* is not a single point — it's a circle, and the system has to pick one point on that circle.
+The potential is rotationally symmetric (invariant under $U(1)$), but the *minimum* is not a single point; it's a circle, and the system has to pick one point on that circle.
 
 ### Spontaneous Symmetry Breaking
 
-The $U(1)$ symmetry of the Lagrangian is still exact. But the *ground state* (vacuum) is not symmetric — once the field picks a direction on the circle, you can't transform to another without doing work.
+The $U(1)$ symmetry of the Lagrangian is still exact. But the *ground state* (vacuum) is not symmetric; once the field picks a direction on the circle, you can't transform to another without doing work.
 
 This is **spontaneous symmetry breaking**: the laws are symmetric, the vacuum is not.
 
@@ -229,14 +229,14 @@ $$\mathcal{L} = \tfrac{1}{2}(\partial \eta)^2 + \tfrac{1}{2}(\partial \xi)^2 - \
 
 **The key observations:**
 
-- The field $\eta$ (fluctuation along the radial direction — up the side of the hat) has a mass term: $m_\eta^2 = 2\mu^2$
-- The field $\xi$ (fluctuation along the tangential direction — around the rim) has **no mass term at all**
+- The field $\eta$ (fluctuation along the radial direction; up the side of the hat) has a mass term: $m_\eta^2 = 2\mu^2$
+- The field $\xi$ (fluctuation along the tangential direction; around the rim) has **no mass term at all**
 
 ### Goldstone's Theorem
 
 The massless field $\xi$ is a **Goldstone boson**. Goldstone's theorem says: for every spontaneously broken continuous symmetry, there is a massless scalar particle in the spectrum.
 
-Why? Because fluctuations along the broken-symmetry direction cost no energy — you're moving along the valley, where the potential is flat. "No energy cost" translates to "no mass term."
+Why? Because fluctuations along the broken-symmetry direction cost no energy; you're moving along the valley, where the potential is flat. "No energy cost" translates to "no mass term."
 
 More formally: broken symmetry generators produce massless particles. The number of Goldstone bosons equals the number of broken generators.
 
@@ -266,7 +266,7 @@ A **global** symmetry transforms the field the same way everywhere: $\phi \to e^
 
 A **local** (or **gauge**) symmetry allows $\alpha$ to depend on spacetime: $\phi(x) \to e^{i\alpha(x)}\phi(x)$.
 
-Global symmetries are relatively tame — they yield conservation laws via Noether. Local symmetries are much stronger: they *constrain the form of the Lagrangian itself*, forcing new fields into existence.
+Global symmetries are relatively tame; they yield conservation laws via Noether. Local symmetries are much stronger: they *constrain the form of the Lagrangian itself*, forcing new fields into existence.
 
 ### The Problem
 
@@ -292,7 +292,7 @@ $$D_\mu \phi \to (\partial_\mu + ieA_\mu + i\partial_\mu \alpha)(e^{i\alpha}\phi
 
 $$= e^{i\alpha}\partial_\mu \phi + i(\partial_\mu \alpha)e^{i\alpha}\phi + ieA_\mu e^{i\alpha}\phi + i(\partial_\mu\alpha)e^{i\alpha}\phi \cdot (-1)$$
 
-Wait — let me redo this carefully. Under $\phi \to \phi' = e^{i\alpha}\phi$ and $A_\mu \to A'_\mu = A_\mu + (1/e)\partial_\mu \alpha$:
+Wait; let me redo this carefully. Under $\phi \to \phi' = e^{i\alpha}\phi$ and $A_\mu \to A'_\mu = A_\mu + (1/e)\partial_\mu \alpha$:
 
 $$D'_\mu \phi' = (\partial_\mu + ieA'_\mu)(e^{i\alpha}\phi)$$
 
@@ -310,7 +310,7 @@ $$D'_\mu \phi' = e^{i\alpha}\partial_\mu \phi + i(\partial_\mu \alpha)e^{i\alpha
 
 $$= e^{i\alpha}[\partial_\mu \phi + ieA_\mu \phi] = e^{i\alpha} D_\mu \phi$$
 
-The covariant derivative transforms *covariantly* — just like $\phi$ itself, with the same phase. This is the whole point.
+The covariant derivative transforms *covariantly*; just like $\phi$ itself, with the same phase. This is the whole point.
 
 ### Summary: the Gauge Structure
 
@@ -344,7 +344,7 @@ A mass term for $A_\mu$ would be $\tfrac{1}{2} m_A^2 A_\mu A^\mu$. But under the
 
 So **gauge symmetry forces gauge bosons to be massless**. The photon is massless because electromagnetism has gauge symmetry.
 
-(Exception: if the gauge symmetry is spontaneously broken — the Higgs mechanism — mass can sneak in without explicitly breaking the symmetry. Section 11.)
+(Exception: if the gauge symmetry is spontaneously broken; the Higgs mechanism; mass can sneak in without explicitly breaking the symmetry. Section 11.)
 
 ### The Full Classical Theory
 
@@ -356,7 +356,7 @@ This is a complete, gauge-invariant, Lorentz-invariant, renormalizable theory de
 
 ### The Moral
 
-Gauge symmetry isn't a convenience or a mathematical trick. It's a principle that *demands* the existence of gauge fields. Start with a free complex scalar and insist on local $U(1)$ invariance; a new field $A_\mu$ must exist, with specific transformation law and specific coupling. The photon is not postulated — it is the unique consequence of demanding local $U(1)$.
+Gauge symmetry isn't a convenience or a mathematical trick. It's a principle that *demands* the existence of gauge fields. Start with a free complex scalar and insist on local $U(1)$ invariance; a new field $A_\mu$ must exist, with specific transformation law and specific coupling. The photon is not postulated; it is the unique consequence of demanding local $U(1)$.
 
 This generalizes. Every force in the Standard Model comes from gauging a symmetry:
 
@@ -385,7 +385,7 @@ $$= (\partial_\mu \phi^*)(\partial^\mu \phi) + ieA^\mu[\phi^*(\partial_\mu \phi)
 Three terms:
 - Free scalar kinetic term
 - Current-gauge field coupling: $A^\mu \cdot j_\mu$ where $j_\mu = ie[\phi^*(\partial_\mu\phi) - \phi(\partial_\mu\phi^*)]$
-- "Seagull" interaction $e^2 A^2 \phi^2$ — unique to scalar QED (fermion QED has no such direct term)
+- "Seagull" interaction $e^2 A^2 \phi^2$; unique to scalar QED (fermion QED has no such direct term)
 
 ### Minimal Coupling
 
@@ -397,7 +397,7 @@ Varying with respect to $A^\mu$:
 
 $$\partial_\mu F^{\mu\nu} = J^\nu$$
 
-where $J^\nu$ is the matter current — now including pieces from both the scalar field and its interaction with $A^\mu$. Maxwell's equations, with a specific source.
+where $J^\nu$ is the matter current; now including pieces from both the scalar field and its interaction with $A^\mu$. Maxwell's equations, with a specific source.
 
 Varying with respect to $\phi^*$:
 
@@ -407,13 +407,13 @@ This is Klein-Gordon with covariant derivatives. In the presence of an electroma
 
 ### Charge Quantization
 
-In classical scalar QED, the charge $e$ is just a parameter — any value is allowed. Quantum mechanics, through Dirac's argument about magnetic monopoles, suggests that charges *would* be quantized in units of $e$ if monopoles existed. This argument remains theoretical, since monopoles haven't been observed — but in the Standard Model, charge quantization is built in via the gauge structure (hypercharge assignments).
+In classical scalar QED, the charge $e$ is just a parameter; any value is allowed. Quantum mechanics, through Dirac's argument about magnetic monopoles, suggests that charges *would* be quantized in units of $e$ if monopoles existed. This argument remains theoretical, since monopoles haven't been observed; but in the Standard Model, charge quantization is built in via the gauge structure (hypercharge assignments).
 
 ---
 
 ## 7. Non-Abelian Gauge Theory (Yang-Mills)
 
-Everything we just did for $U(1)$ generalizes to larger symmetry groups — but with crucial new features. This is where the strong and weak forces come from.
+Everything we just did for $U(1)$ generalizes to larger symmetry groups; but with crucial new features. This is where the strong and weak forces come from.
 
 ### Non-Abelian Groups
 
@@ -426,7 +426,7 @@ These groups are **non-abelian**: matrix multiplication doesn't commute.
 
 ### Matter Fields in Non-Abelian Gauge Theory
 
-The matter field is now a *multiplet* — not a single complex scalar, but a vector of complex scalars transforming as a representation of the group. For $SU(N)$, the simplest is the **fundamental representation**: an $N$-component complex vector.
+The matter field is now a *multiplet*; not a single complex scalar, but a vector of complex scalars transforming as a representation of the group. For $SU(N)$, the simplest is the **fundamental representation**: an $N$-component complex vector.
 
 $$\phi = \begin{pmatrix} \phi_1 \\ \vdots \\ \phi_N \end{pmatrix}$$
 
@@ -482,7 +482,7 @@ For an infinitesimal transformation $U = 1 + ig\alpha^a T^a$:
 
 $$\delta A_\mu^a = \partial_\mu \alpha^a + g f^{abc}\alpha^b A_\mu^c$$
 
-The second term — involving structure constants — has no $U(1)$ analog. It says the gauge field itself transforms non-trivially under the symmetry. This will have dramatic consequences.
+The second term; involving structure constants; has no $U(1)$ analog. It says the gauge field itself transforms non-trivially under the symmetry. This will have dramatic consequences.
 
 ### The Field Strength
 
@@ -507,7 +507,7 @@ The first term gives kinetic terms for $A^a$. **But the other two terms describe
 - Three-gluon vertex (schematically $g \partial A \cdot A^2$)
 - Four-gluon vertex ($g^2 A^4$)
 
-Gluons — unlike photons — carry color charge, and hence interact with each other directly. This is the mathematical root of asymptotic freedom and confinement in QCD. It is also why non-abelian gauge theories are so much richer than QED.
+Gluons; unlike photons; carry color charge, and hence interact with each other directly. This is the mathematical root of asymptotic freedom and confinement in QCD. It is also why non-abelian gauge theories are so much richer than QED.
 
 ### The Yang-Mills Lagrangian
 
@@ -527,7 +527,7 @@ The Standard Model uses Yang-Mills with gauge groups $SU(3)_C \times SU(2)_L \ti
 
 ## 8. Spinor Representations of the Lorentz Group
 
-This is the hardest section. Up to this point we've worked with scalar fields (Lorentz invariant) and vector fields (transforming with the matrix $\Lambda^\mu{}_\nu$). Fermions transform in a third way — as **spinors** — that has no analog in pre-relativistic physics.
+This is the hardest section. Up to this point we've worked with scalar fields (Lorentz invariant) and vector fields (transforming with the matrix $\Lambda^\mu{}_\nu$). Fermions transform in a third way; as **spinors**; that has no analog in pre-relativistic physics.
 
 Take this section slowly. The machinery here is genuinely new.
 
@@ -541,7 +541,7 @@ $$[J^i, K^j] = i\epsilon^{ijk} K^k$$
 
 $$[K^i, K^j] = -i\epsilon^{ijk} J^k$$
 
-The minus sign in the last one — boosts don't close under commutation; their product is a rotation — is what makes the Lorentz group non-compact and distinguishes it from the rotation group.
+The minus sign in the last one; boosts don't close under commutation; their product is a rotation; is what makes the Lorentz group non-compact and distinguishes it from the rotation group.
 
 ### The Trick: Complex Combinations
 
@@ -573,7 +573,7 @@ A left-handed Weyl spinor $\psi_L$ is a two-component complex object. Under a Lo
 
 $$\psi_L \to e^{-i\vec\sigma \cdot \vec\theta/2 + \vec\sigma \cdot \vec\eta/2}\psi_L$$
 
-where $\vec\sigma = (\sigma^1, \sigma^2, \sigma^3)$ are the Pauli matrices. Note: the boost generator has no $i$ — boosts act differently from rotations.
+where $\vec\sigma = (\sigma^1, \sigma^2, \sigma^3)$ are the Pauli matrices. Note: the boost generator has no $i$; boosts act differently from rotations.
 
 A right-handed Weyl spinor transforms with the opposite sign on the boost:
 
@@ -583,7 +583,7 @@ Under rotations, both $\psi_L$ and $\psi_R$ transform the same way. Under boosts
 
 ### The Double Cover
 
-A $2\pi$ rotation, which you'd think returns you to the same state, sends $\psi \to -\psi$ for a spinor. You need a $4\pi$ rotation to truly come back. This is because spinors are representations not of the Lorentz group itself, but of its double cover — which for the Lorentz group is $SL(2, \mathbb{C})$.
+A $2\pi$ rotation, which you'd think returns you to the same state, sends $\psi \to -\psi$ for a spinor. You need a $4\pi$ rotation to truly come back. This is because spinors are representations not of the Lorentz group itself, but of its double cover; which for the Lorentz group is $SL(2, \mathbb{C})$.
 
 This "$-$ sign under $2\pi$ rotation" is *the* experimental signature of spin-½ particles. It's why Fermi-Dirac statistics work the way they do, and why electrons can't all pile into the same ground state.
 
@@ -593,7 +593,7 @@ A **Dirac spinor** $\psi$ combines a left-handed and a right-handed Weyl spinor 
 
 $$\psi = \begin{pmatrix} \psi_L \\ \psi_R \end{pmatrix}$$
 
-This is the representation used in standard Dirac theory. It's reducible — it's the direct sum of two Weyl representations — but for a massive particle, the two halves are coupled by the mass term, making the Dirac description natural.
+This is the representation used in standard Dirac theory. It's reducible; it's the direct sum of two Weyl representations; but for a massive particle, the two halves are coupled by the mass term, making the Dirac description natural.
 
 ### Gamma Matrices
 
@@ -663,7 +663,7 @@ $$-\gamma^\nu \gamma^\mu \partial_\nu \partial_\mu \psi = -\eta^{\mu\nu}\partial
 
 So $(i\gamma^\nu\partial_\nu + m)(i\gamma^\mu \partial_\mu - m)\psi = -(\Box + m^2)\psi$.
 
-If $\psi$ satisfies the Dirac equation, it automatically satisfies Klein-Gordon. Good — the right relativistic dispersion $E^2 = p^2 + m^2$ is built in.
+If $\psi$ satisfies the Dirac equation, it automatically satisfies Klein-Gordon. Good; the right relativistic dispersion $E^2 = p^2 + m^2$ is built in.
 
 ### The Dirac Equation
 
@@ -683,13 +683,13 @@ $$i\partial_\mu \bar\psi \gamma^\mu + m\bar\psi = 0$$
 
 ### The Spin Comes for Free
 
-The Dirac equation doesn't postulate spin. It falls out automatically because $\psi$ has four components and the Lorentz transformation law for spinors includes the Pauli matrices. Solutions turn out to come in spin-up and spin-down varieties — two spin states per particle.
+The Dirac equation doesn't postulate spin. It falls out automatically because $\psi$ has four components and the Lorentz transformation law for spinors includes the Pauli matrices. Solutions turn out to come in spin-up and spin-down varieties; two spin states per particle.
 
 ### Antimatter Falls Out Too
 
 Plane-wave solutions to the Dirac equation come in two types, corresponding to positive and negative frequency. Dirac initially interpreted the negative-energy solutions as a "sea" of filled states, with antimatter being holes in the sea. The modern interpretation: negative-frequency solutions describe antiparticles.
 
-A free electron has two spin states. An antiparticle (positron) also has two spin states. Total: four states per momentum, matching the four components of the Dirac spinor. The mathematical structure of the Dirac equation — dictated by Lorentz invariance and first-order derivatives — *requires* antiparticles. Dirac's prediction of the positron is one of the most beautiful examples of mathematics anticipating experiment.
+A free electron has two spin states. An antiparticle (positron) also has two spin states. Total: four states per momentum, matching the four components of the Dirac spinor. The mathematical structure of the Dirac equation; dictated by Lorentz invariance and first-order derivatives; *requires* antiparticles. Dirac's prediction of the positron is one of the most beautiful examples of mathematics anticipating experiment.
 
 ### Plane-Wave Solutions
 
@@ -748,7 +748,7 @@ Three terms:
 - Interaction: $-eQA_\mu \bar\psi \gamma^\mu \psi$. The quantity $j^\mu = \bar\psi\gamma^\mu \psi$ is the electromagnetic current; the electron couples to the photon through this current.
 - Free Maxwell Lagrangian
 
-That's QED at the classical level. Every precision prediction of QED — anomalous magnetic moments, Lamb shift, pair production — is derived by quantizing this Lagrangian.
+That's QED at the classical level. Every precision prediction of QED; anomalous magnetic moments, Lamb shift, pair production; is derived by quantizing this Lagrangian.
 
 ### The QED Vertex
 
@@ -768,11 +768,11 @@ $\bar\psi \gamma^\mu \psi$ is a Noether current; it's automatically conserved ($
 
 ### Current Structure
 
-The form $\bar\psi \gamma^\mu \psi$ is a **vector current** — it transforms as a Lorentz four-vector. Its time component is the charge density $\bar\psi\gamma^0\psi = \psi^\dagger \psi$.
+The form $\bar\psi \gamma^\mu \psi$ is a **vector current**; it transforms as a Lorentz four-vector. Its time component is the charge density $\bar\psi\gamma^0\psi = \psi^\dagger \psi$.
 
-QED's interaction is purely vectorial — the same coupling for left- and right-handed electrons. Parity is conserved in QED.
+QED's interaction is purely vectorial; the same coupling for left- and right-handed electrons. Parity is conserved in QED.
 
-Compare: the weak interaction uses $\bar\psi \gamma^\mu(1 - \gamma^5)\psi$ — a **V-A current** (vector minus axial vector) — which couples only to left-handed fermions. This is why the weak interaction violates parity.
+Compare: the weak interaction uses $\bar\psi \gamma^\mu(1 - \gamma^5)\psi$; a **V-A current** (vector minus axial vector); which couples only to left-handed fermions. This is why the weak interaction violates parity.
 
 ---
 
@@ -814,7 +814,7 @@ $$A_\mu \to A_\mu + \frac{1}{ev}\partial_\mu \theta$$
 
 So $\theta$ reappears, absorbed into $A_\mu$.
 
-This gauge choice — where we "eat" the Goldstone — is called **unitary gauge**.
+This gauge choice; where we "eat" the Goldstone; is called **unitary gauge**.
 
 ### What Happens to the Lagrangian
 
@@ -830,7 +830,7 @@ $$\tfrac{1}{2} e^2(v + h)^2 A_\mu A^\mu = \tfrac{1}{2}e^2 v^2 A_\mu A^\mu + e^2 
 
 $$m_A^2 = e^2 v^2$$
 
-The gauge boson has acquired a mass — despite the fact that explicit mass terms for $A_\mu$ are forbidden by gauge invariance. The mass came from the gauge boson's coupling to the Higgs VEV.
+The gauge boson has acquired a mass; despite the fact that explicit mass terms for $A_\mu$ are forbidden by gauge invariance. The mass came from the gauge boson's coupling to the Higgs VEV.
 
 ### Counting Degrees of Freedom
 
@@ -848,7 +848,7 @@ The would-be Goldstone boson became the longitudinal polarization of the massive
 
 ### Physical Consequences
 
-**The photon remains massless** because the electromagnetic $U(1)$ is *not* broken — only a different $U(1)$ is, which isn't electromagnetism.
+**The photon remains massless** because the electromagnetic $U(1)$ is *not* broken; only a different $U(1)$ is, which isn't electromagnetism.
 
 **The W and Z get their masses** from the Higgs VEV via the analogous mechanism in $SU(2)_L \times U(1)_Y$.
 
@@ -864,7 +864,7 @@ Measured at the LHC: $m_h \approx 125$ GeV, with $v \approx 246$ GeV.
 
 $$\mathcal{L}_{\text{Yukawa}} = -y_f \bar\psi \phi \psi$$
 
-When $\phi$ gets its VEV, this becomes $-y_f v/\sqrt{2} \cdot \bar\psi \psi$ — a mass term $m_f = y_f v/\sqrt{2}$. Every fermion's mass comes from its coupling to the Higgs field.
+When $\phi$ gets its VEV, this becomes $-y_f v/\sqrt{2} \cdot \bar\psi \psi$; a mass term $m_f = y_f v/\sqrt{2}$. Every fermion's mass comes from its coupling to the Higgs field.
 
 ### The Bigger Picture
 
@@ -960,7 +960,7 @@ Mexican hat.
 
 $$\mathcal{L}_{\text{Yukawa}} = -y_e \bar{L}_L \phi e_R - y_d \bar{Q}_L \phi d_R - y_u \bar{Q}_L \tilde\phi u_R + \text{h.c.}$$
 
-(with $\tilde\phi = i\sigma^2 \phi^*$ for giving mass to up-type quarks) — one Yukawa coupling per fermion, per generation. The $y$'s are matrices when you include generation mixing, giving rise to CKM.
+(with $\tilde\phi = i\sigma^2 \phi^*$ for giving mass to up-type quarks); one Yukawa coupling per fermion, per generation. The $y$'s are matrices when you include generation mixing, giving rise to CKM.
 
 ### Parameter Count
 
@@ -977,13 +977,13 @@ Extensions with neutrino masses add more parameters (Majorana or Dirac masses + 
 
 ### What's Not Here
 
-**Gravity** — cannot be added to this Lagrangian in a renormalizable way. Requires a separate theoretical framework (general relativity classically; quantum gravity remains unsolved).
+**Gravity**; cannot be added to this Lagrangian in a renormalizable way. Requires a separate theoretical framework (general relativity classically; quantum gravity remains unsolved).
 
-**Dark matter** — no Standard Model candidate.
+**Dark matter**; no Standard Model candidate.
 
-**Neutrino masses** — require extension.
+**Neutrino masses**; require extension.
 
-**Baryon asymmetry** — SM CP violation is insufficient to explain it.
+**Baryon asymmetry**; SM CP violation is insufficient to explain it.
 
 ### Understanding the Structure
 
@@ -995,7 +995,7 @@ Everything you know about particle physics is in this Lagrangian:
 - Quark-gluon interaction? Comes from $\bar Q_L i\slashed{D} Q_L$ with the gluon piece of $D$.
 - Higgs to bottom-quark decay? Comes from $y_b \bar Q_L \phi b_R$ expanded around the Higgs VEV.
 
-Every vertex in every Feynman diagram is in this Lagrangian. This one expression — maybe a single page of equations — encodes the deepest current understanding of matter.
+Every vertex in every Feynman diagram is in this Lagrangian. This one expression; maybe a single page of equations; encodes the deepest current understanding of matter.
 
 ---
 
@@ -1122,7 +1122,7 @@ What you have now is the complete classical foundation of modern particle physic
 - Read a Standard Model Lagrangian and understand each term
 - See why the photon is massless, why gauge bosons exist, why the Higgs field must be there
 - Understand that spin, antimatter, and parity violation are built into the mathematics
-- Recognize that what looks like "just a Lagrangian" is the result of three deep principles — Lorentz invariance, gauge symmetry, and renormalizability — working together to produce an almost unique theory
+- Recognize that what looks like "just a Lagrangian" is the result of three deep principles; Lorentz invariance, gauge symmetry, and renormalizability; working together to produce an almost unique theory
 
 The next step is quantum field theory proper. That means:
 
@@ -1136,7 +1136,7 @@ The next step is quantum field theory proper. That means:
 
 5. **Specific computations.** Cross sections, decay rates, running couplings, the full machinery of QED/QCD/electroweak predictions.
 
-Peskin & Schroeder is the standard textbook; Srednicki and Schwartz are alternatives with different emphases. A rigorous QFT course is typically a full academic year. You now have the prerequisites to start it seriously — not skimming, but actually working through problems and following the derivations.
+Peskin & Schroeder is the standard textbook; Srednicki and Schwartz are alternatives with different emphases. A rigorous QFT course is typically a full academic year. You now have the prerequisites to start it seriously; not skimming, but actually working through problems and following the derivations.
 
 Whenever you're ready, we can either:
 
