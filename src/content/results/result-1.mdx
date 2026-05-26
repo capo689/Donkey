@@ -1,13 +1,13 @@
 ---
 title: "The structural identity"
 resultNumber: 1
-scaling: "\\mathbb{E}|S_A - S_B| = \\mathcal{F}(d_A, d_B, d_\\text{eff}, \\rho_\\text{class})"
+scaling: "\\mathbb{E}_V[\\rho_{R_A}] = \\mathrm{diag}(\\rho_A^{\\mathrm{bulk}}) + O(1/d^2)"
 status: "clean"
-summary: "For any non-isometric holographic code, the expected entropy disagreement between two observers decomposes as a product of a state-class prefactor and a universal scaling function of the dimensions."
+summary: "For any bulk state and any non-isometric code drawn Haar-randomly, the Haar-averaged observer-A reduced state equals the diagonal of the bulk A-marginal in the cloning basis, up to corrections of order 1/d². Bulk-marginal coherences across distinct pointer values are projected out."
 ---
 
-For any non-isometric holographic code with bulk dimension $d_\text{eff}$, encoding two boundary observers $A$ and $B$, the expected absolute difference in entropy reconstructions satisfies a structural identity:
+For any bulk state $|\psi\rangle \in \mathcal{H}_A \otimes \mathcal{H}_B \otimes \mathcal{H}_C$ and a Haar-random non-isometric code $V$, the Haar-averaged observer-$A$ reduced state satisfies the structural identity (Theorem 3.2):
 
-$$\mathbb{E}|S_A - S_B| = \mathcal{F}(d_A, d_B, d_\text{eff}, \rho_\text{class})$$
+$$\mathbb{E}_V[\rho_{R_A}] = \mathrm{diag}(\rho_A^{\mathrm{bulk}}) + O(1/d^2)$$
 
-The function $\mathcal{F}$ decomposes as a product of a state-class-dependent prefactor and a universal scaling function of the dimensions. Established via AEHPV encoding and Haar-measure integration.
+where $\rho_A^{\mathrm{bulk}} = \mathrm{Tr}_{BC}(|\psi\rangle\langle\psi|)$ is the bulk $A$-marginal and $\mathrm{diag}(\cdot)$ denotes the diagonal operator in the HUZ cloning basis. The off-diagonal coherences of the bulk marginal are projected out by the $\delta_{aa'}$ structure of the first-moment Haar contraction. This identity reduces the two-observer disagreement problem to a moment calculation of the bulk-marginal diagonal, whose scaling depends on the bulk state class.

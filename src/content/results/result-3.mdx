@@ -3,11 +3,11 @@ title: "Haar class scaling"
 resultNumber: 3
 scaling: "d_B^{-3/2}"
 status: "clean"
-summary: "For bulk states drawn from the Haar class (uniformly random pure states), entropy disagreement scales as 0.608 times d_B to the negative three-halves power. The prefactor is analytic. This is the regime relevant to black hole interiors."
+summary: "For bulk states drawn Haar-randomly from the full effective Hilbert space, entropy disagreement scales as (0.798/d_M) times d_B to the negative three-halves power. The prefactor is analytic: sqrt(2/pi)/d_M. This is the regime relevant to black hole interiors."
 ---
 
-For bulk states drawn from the Haar class (uniformly random pure states), the entropy disagreement scales as:
+For bulk states drawn Haar-randomly from $\mathcal{H}_A \otimes \mathcal{H}_B \otimes \mathcal{H}_C$ (Theorem 5.2):
 
-$$\mathbb{E}|S_A - S_B| \approx 0.608 \cdot d_B^{-3/2} + \mathcal{O}(d_B^{-2})$$
+$$\mathbb{E}|S_A - S_B| = \sqrt{\frac{2}{\pi}} \cdot \frac{1}{d_M\, d_B^{3/2}}\,(1 + o(1)) \approx \frac{0.798}{d_M} \cdot d_B^{-3/2}$$
 
-The prefactor 0.608 is analytic. No fitting. Simulations match. This is the regime relevant to black hole interiors and holographic codes for chaotic quantum dynamics.
+The prefactor $\sqrt{2/\pi}/d_M \approx 0.798/d_M$ is exact. No fitting. It arises from the Gaussian-limit identity $\mathbb{E}|X| = \sqrt{2/\pi}\,\sigma_X$ applied to the entropy difference, whose variance scales as $1/(d_B^3 d_M^2)$ (§5.3). Out-of-sample tests at $d_B = 18$ and $d_B = 128$ both pass at sub-$\sigma$ precision. This is the regime relevant to black hole interiors and holographic codes for chaotic quantum dynamics.
