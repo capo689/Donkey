@@ -12,3 +12,849 @@ classReportTitle: "Physics organized by scale."
 *Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
 
 {/* Content from qft_8_renormalization_group.md */}
+
+# The Renormalization Group
+
+*QFT document 8: where renormalization transforms from a calculational necessity into a deep theory of how physics changes with scale. Kenneth Wilson's Nobel-winning idea.*
+
+Document 7 showed how to absorb infinities into redefinitions of parameters. That's renormalization as a *procedure*. This document is about renormalization as a *flow* — how the parameters of a theory change as you look at it at different energy scales, and what that flow reveals about the structure of QFT.
+
+The core insight: **physics at different scales is connected by a mathematical flow**. As you change the energy/length scale at which you observe a system, the effective theory describing it changes in a calculable way. The collection of possible flows forms a geometry on the space of quantum field theories, and features of this geometry (fixed points, attractor directions, universal exponents) encode deep physical content.
+
+This idea — developed by Kadanoff, Wilson, Fisher, and others in the 1960s-70s — revolutionized our understanding of phase transitions, quantum field theory, and the relationship between them. Kenneth Wilson received the 1982 Nobel Prize for the renormalization group theory of critical phenomena, though the applications to QFT are arguably even more profound.
+
+This document is the conceptual payoff of everything we've built so far.
+
+### Prerequisites and Conventions
+
+- QFT documents 1-7
+- Statistical mechanics document (especially sections on phase transitions and critical exponents)
+- Same conventions: $\hbar = c = 1$, mostly-minus metric
+
+---
+
+## Table of Contents
+
+1. [Running Couplings: The Simplest Version](#1-running-couplings-the-simplest-version)
+2. [The Callan-Symanzik Equation](#2-the-callan-symanzik-equation)
+3. [Beta Functions](#3-beta-functions)
+4. [Anomalous Dimensions](#4-anomalous-dimensions)
+5. [QED: The Simplest Example](#5-qed-the-simplest-example)
+6. [QCD and Asymptotic Freedom](#6-qcd-and-asymptotic-freedom)
+7. [Fixed Points and Phases](#7-fixed-points-and-phases)
+8. [Wilson's Picture: RG as Coarse-Graining](#8-wilsons-picture-rg-as-coarse-graining)
+9. [Relevant, Marginal, and Irrelevant Operators](#9-relevant-marginal-and-irrelevant-operators)
+10. [Universality and Critical Phenomena](#10-universality-and-critical-phenomena)
+11. [Effective Field Theories](#11-effective-field-theories)
+12. [Why the RG Is Profound](#12-why-the-rg-is-profound)
+13. [Appendix: Key RG Formulas](#appendix-key-rg-formulas)
+
+---
+
+## 1. Running Couplings: The Simplest Version
+
+Let's start with the physical phenomenon before the mathematical framework.
+
+### An Experimental Observation
+
+The fine-structure constant $\alpha$ is "constant" — it has a numerical value we've all memorized, $\alpha \approx 1/137$. But measurements at different energies give different values:
+
+- At low energy ($q^2 \to 0$): $\alpha(0) = 1/137.036$
+- At $q^2 = M_Z^2$ (91 GeV): $\alpha(M_Z) \approx 1/128$
+- At higher energies: $\alpha$ continues to grow
+
+This isn't experimental error. It's a real effect: the electromagnetic coupling **runs** with energy. The deeper question: why?
+
+### The Answer: Vacuum Polarization
+
+Recall the photon propagator with one-loop vacuum polarization (document 6):
+
+$$D(q^2) \to \frac{1}{q^2}\cdot\frac{1}{1 - \Pi(q^2)}$$
+
+The vacuum polarization $\Pi(q^2)$ depends logarithmically on $q^2$:
+
+$$\Pi(q^2) \sim \frac{e^2}{12\pi^2}\ln(q^2/m^2) + \text{constant}$$
+
+The *effective* electromagnetic coupling — the one you'd infer from scattering experiments at momentum transfer $q^2$ — is therefore:
+
+$$\alpha_{\rm eff}(q^2) = \frac{\alpha}{1 - \Pi(q^2)}$$
+
+As $q^2$ grows, $\Pi$ grows, and $\alpha_{\rm eff}$ grows.
+
+### Physical Interpretation
+
+The bare electron is surrounded by a cloud of virtual electron-positron pairs — vacuum fluctuations. At low energies (long wavelength), you see the electron through all these screens. At high energies (short wavelength), you penetrate the screening and see a larger effective charge.
+
+This is **charge screening by the vacuum**. Analogous to how an ion in a conductor is screened by surrounding charges, the electron in QED is screened by the vacuum fluctuations.
+
+### Why This Matters
+
+The running of $\alpha$ is measured and confirmed. It's a direct experimental validation of the loop corrections and renormalization. Rather than being a theoretical abstraction, the RG flow is directly observable.
+
+Beyond QED, the running of couplings leads to qualitatively different physics:
+
+- In QED, the coupling *grows* with energy → becomes strong at some scale (the Landau pole)
+- In QCD, the coupling *shrinks* with energy → asymptotic freedom, quarks become free at short distances
+- In the Standard Model, the three gauge couplings *appear to converge* around $10^{15}$ GeV → hint of Grand Unification
+
+All of this is visible in beta functions.
+
+---
+
+## 2. The Callan-Symanzik Equation
+
+### The Setup
+
+Physical observables (cross sections, decay rates, whatever you can measure) don't know about the renormalization scheme you used to compute them. So they must be independent of the renormalization scale $\mu$:
+
+$$\mu\frac{d}{d\mu}[\text{physical observable}] = 0$$
+
+But the individual pieces (coupling constant, masses, field strengths) *do* depend on $\mu$. The Callan-Symanzik equation encodes how this dependence conspires to keep observables $\mu$-independent.
+
+### The Derivation (Sketch)
+
+Consider an $n$-point Green's function $G_n(x_1, \ldots, x_n)$ in a theory with renormalized coupling $g(\mu)$, mass $m(\mu)$, and fields with wave function normalization $Z_\phi(\mu)$.
+
+If we change the scale from $\mu$ to $\mu'$, the bare quantities are fixed, so the renormalized ones must change. The total derivative of the Green's function with respect to $\mu$ vanishes:
+
+$$\mu\frac{d G_n}{d\mu} = 0 = \mu\frac{\partial G_n}{\partial\mu} + \mu\frac{\partial g}{\partial\mu}\frac{\partial G_n}{\partial g} + \mu\frac{\partial m}{\partial\mu}\frac{\partial G_n}{\partial m} - n\gamma G_n$$
+
+Where the last term (field-strength change) picks up a factor of $n$ because there are $n$ fields in the Green's function.
+
+Define:
+
+$$\beta(g) \equiv \mu\frac{\partial g}{\partial\mu}$$
+
+$$\gamma_m(g) \equiv -\frac{\mu}{m}\frac{\partial m}{\partial\mu}$$ 
+
+$$\gamma_\phi(g) \equiv \frac{\mu}{2}\frac{\partial\ln Z_\phi}{\partial\mu}$$
+
+Then:
+
+$$\boxed{\left[\mu\frac{\partial}{\partial\mu} + \beta(g)\frac{\partial}{\partial g} - \gamma_m(g)m\frac{\partial}{\partial m} + n\gamma_\phi(g)\right]G_n = 0}$$
+
+This is the **Callan-Symanzik equation**. It tells you how Green's functions transform under changes of scale.
+
+### What It's For
+
+Solving the Callan-Symanzik equation tells you how the coupling, masses, and fields run with scale. The central objects are:
+
+- **Beta function** $\beta(g)$: how the coupling runs
+- **Mass anomalous dimension** $\gamma_m(g)$: how the mass runs
+- **Field anomalous dimension** $\gamma_\phi(g)$: how the field strength renormalizes
+
+In perturbation theory, each of these is a power series in the coupling:
+
+$$\beta(g) = b_0 g^3 + b_1 g^5 + \cdots$$
+
+$$\gamma_\phi(g) = a_1 g^2 + a_2 g^4 + \cdots$$
+
+The coefficients are computable from loop diagrams.
+
+---
+
+## 3. Beta Functions
+
+The beta function is the central object of the renormalization group.
+
+### Definition
+
+$$\beta(g) \equiv \mu\frac{\partial g}{\partial\mu}$$
+
+It's the rate of change of the coupling with respect to the logarithmic scale $\ln\mu$. The sign of $\beta$ determines whether the coupling grows or shrinks with energy.
+
+### General Structure
+
+At lowest order in perturbation theory, $\beta$ starts at $g^3$ (in theories like QED where the coupling is the electric charge; for theories with $\phi^4$ interaction, $\beta$ starts at $g^2$).
+
+For QED:
+
+$$\beta(e) = \frac{e^3}{12\pi^2} + O(e^5)$$
+
+For QCD (below we'll derive this properly):
+
+$$\beta(g) = -\frac{g^3}{16\pi^2}\left[11 - \frac{2}{3}n_f\right] + O(g^5)$$
+
+Where $n_f$ is the number of quark flavors that are active at the relevant energy scale.
+
+### Solving the Beta Function
+
+The equation $\mu d g/d\mu = \beta(g)$ can be integrated:
+
+$$\int_{g(\mu_0)}^{g(\mu)}\frac{dg}{\beta(g)} = \int_{\mu_0}^\mu\frac{d\mu'}{\mu'} = \ln(\mu/\mu_0)$$
+
+For QED at leading order, $\beta = e^3/(12\pi^2)$ gives:
+
+$$\frac{1}{e^2(\mu)} - \frac{1}{e^2(\mu_0)} = -\frac{1}{6\pi^2}\ln(\mu/\mu_0)$$
+
+Or, using $\alpha = e^2/(4\pi)$:
+
+$$\frac{1}{\alpha(\mu)} = \frac{1}{\alpha(\mu_0)} - \frac{1}{3\pi}\ln(\mu^2/\mu_0^2)$$
+
+### QED Running: Charge Growth
+
+At $\mu_0 = m_e$: $\alpha \approx 1/137$.
+At $\mu = M_Z \approx 91$ GeV: $\ln(M_Z^2/m_e^2) \approx 25$.
+
+Plugging in:
+
+$$\frac{1}{\alpha(M_Z)} \approx 137 - \frac{25}{3\pi} \approx 134.4$$
+
+So $\alpha(M_Z) \approx 1/134$. (Corrections from other charged particles above the electron mass make the actual number closer to 1/128.)
+
+### The Landau Pole
+
+Extrapolating the QED running to higher energies, we eventually reach a scale where $\alpha \to \infty$. Setting $1/\alpha(\Lambda_L) = 0$:
+
+$$\ln(\Lambda_L^2/m_e^2) = 3\pi/\alpha(m_e) = 137\cdot 3\pi \approx 1291$$
+
+$$\Lambda_L \approx m_e \cdot e^{646} \sim 10^{280}\text{ GeV}$$
+
+Astronomically far above the Planck mass. The QED Landau pole is above any scale where QED could be the valid theory.
+
+But the existence of the Landau pole is still philosophically uncomfortable — it suggests QED is mathematically inconsistent as a complete theory. Most physicists interpret this as: QED is an effective field theory, valid below some true UV completion (probably the full Standard Model up to the Planck scale).
+
+---
+
+## 4. Anomalous Dimensions
+
+### The Concept
+
+Classically, a field $\phi(x)$ has a specific scaling dimension set by the Lagrangian. For a free scalar in 4D, $[\phi] = 1$. Under a scale transformation $x \to \lambda x$, the field transforms as $\phi(x) \to \lambda^{-1}\phi(\lambda x)$.
+
+In the quantum theory, this classical scaling is modified by loop effects. The scaling dimension becomes $\Delta = 1 + \gamma_\phi$ where $\gamma_\phi$ is the **anomalous dimension**.
+
+### Operators Have Anomalous Dimensions Too
+
+Any operator $\mathcal{O}$ in the theory (composite operators, currents, mass terms) has its own anomalous dimension $\gamma_\mathcal{O}$. The operator's scaling behavior is modified by quantum effects.
+
+Under a scale transformation, a correlator of operators behaves as:
+
+$$\langle\mathcal{O}_1(x)\mathcal{O}_2(y)\rangle \propto \frac{1}{|x - y|^{\Delta_1 + \Delta_2}}$$
+
+where $\Delta_i$ are the full quantum scaling dimensions (classical dimension + anomalous piece).
+
+### Measuring Anomalous Dimensions
+
+Near a phase transition, correlation functions display power-law behavior with specific exponents. Those exponents are directly determined by anomalous dimensions of the relevant operators.
+
+Classical examples from stat mech:
+- 3D Ising critical exponent $\eta \approx 0.036$ is an anomalous dimension of the spin operator
+- Correlation length exponent $\nu \approx 0.630$ comes from the mass operator
+- Susceptibility exponent $\gamma \approx 1.24$ comes from combinations
+
+All measurable, all calculable from the RG flow of the corresponding field theory.
+
+### Universal Predictions
+
+Anomalous dimensions are **universal** — they don't depend on microscopic details, only on the symmetries and dimensionality of the problem. The 3D Ising exponents are the same for:
+
+- Uniaxial magnets
+- Liquid-gas transition
+- Binary alloys
+- $\phi^4$ scalar field theory in 3D
+
+This universality is one of the most striking predictions of the RG, and it's been verified experimentally across dozens of different systems.
+
+### Wilson-Fisher Fixed Point
+
+The calculation of critical exponents near 4 spatial dimensions (Wilson-Fisher 1972) was the breakthrough that demonstrated the RG's predictive power. Using $\epsilon = 4 - d$ as a small parameter, Wilson-Fisher found a non-trivial fixed point of the RG flow at coupling $g^* \sim \epsilon$, and computed critical exponents order-by-order in $\epsilon$. Extrapolated to $d = 3$ ($\epsilon = 1$), the predictions matched experiment beautifully.
+
+The Wilson-Fisher calculation was the proof of concept — RG flow in QFT actually predicts critical behavior in real systems.
+
+---
+
+## 5. QED: The Simplest Example
+
+### One-Loop Calculation
+
+From the vacuum polarization (document 6):
+
+$$\Pi(q^2) = \frac{e^2}{12\pi^2}\left[\frac{1}{\epsilon} + \ln(-q^2/\mu^2)\right] + \text{finite}$$
+
+After $\overline{MS}$ renormalization, the $1/\epsilon$ is absorbed. What remains is a $\mu$-dependence:
+
+$$\Pi_{\rm ren}(q^2; \mu) = \frac{e^2(\mu)}{12\pi^2}\ln(-q^2/\mu^2) + \text{finite}$$
+
+For the renormalized amplitude to be $\mu$-independent, $e(\mu)$ must run.
+
+### The QED Beta Function
+
+$$\beta(e) = \frac{e^3}{12\pi^2} + \frac{e^5}{(16\pi^2)^2}\cdot\text{(number)} + \cdots$$
+
+At leading order, $\beta > 0$: QED is **infrared-free** (coupling decreases as $\mu \to 0$) and UV-divergent (coupling grows as $\mu \to \infty$).
+
+### Solution: Running Alpha
+
+From $\mu d\alpha/d\mu = \alpha^2/(3\pi)$:
+
+$$\alpha(\mu) = \frac{\alpha(\mu_0)}{1 - \frac{\alpha(\mu_0)}{3\pi}\ln(\mu^2/\mu_0^2)}$$
+
+This is the **one-loop running of $\alpha$**.
+
+### More Flavors
+
+In reality, QED has many charged particles (electrons, muons, taus, quarks, W bosons, etc.). Each contributes to the running:
+
+$$\beta(e) = \frac{e^3}{12\pi^2}\sum_i Q_i^2\, n_i$$
+
+where $Q_i$ is the charge and $n_i$ the number of degrees of freedom for each particle active at the scale $\mu$.
+
+Above each particle's mass threshold, that particle starts contributing. Below, it "decouples" — doesn't contribute to the running because its loops are suppressed.
+
+### Threshold Matching
+
+In practice, when running through a particle mass threshold, you switch effective theories: above the threshold include the particle; below, integrate it out. The couplings match at the threshold scale (up to small finite matching corrections).
+
+This is why the running $\alpha(\mu)$ has a slightly different slope above and below each particle threshold. All calculable.
+
+### High-Energy Predictions
+
+At $\mu = M_Z$, including all Standard Model charged particles:
+
+$$\alpha(M_Z) \approx 1/128$$
+
+Measured at LEP and SLC. Agreement is good.
+
+At $\mu = M_{\rm GUT} \sim 10^{15}$ GeV (hypothetical grand unification scale):
+
+$$\alpha(M_{\rm GUT}) \approx 1/42$$
+
+If the Standard Model couplings really unify at some scale, $\alpha$, $\alpha_w$ (weak), and $\alpha_s$ (strong) should all equal one universal value there. In the minimal Standard Model, they almost-but-not-quite unify. In supersymmetric extensions, they unify very precisely at $\sim 10^{16}$ GeV — historically one of the strongest theoretical motivations for supersymmetry.
+
+---
+
+## 6. QCD and Asymptotic Freedom
+
+### The Discovery
+
+In 1973, David Gross, Frank Wilczek (and independently David Politzer) computed the QCD beta function. The result:
+
+$$\beta(g) = -\frac{g^3}{16\pi^2}\left(11 - \frac{2}{3}n_f\right) + O(g^5)$$
+
+For $n_f = 6$ (the number of quarks):
+
+$$11 - 4 = 7 > 0$$
+
+So $\beta(g) < 0$. **The coupling decreases as energy increases.**
+
+This is **asymptotic freedom** — quarks become weakly interacting at short distances. Won the 2004 Nobel Prize for Gross, Wilczek, and Politzer.
+
+### Running of the QCD Coupling
+
+Solving the beta function:
+
+$$\alpha_s(\mu) = \frac{\alpha_s(\mu_0)}{1 + \frac{\alpha_s(\mu_0)}{4\pi}(11 - \frac{2}{3}n_f)\ln(\mu^2/\mu_0^2)}$$
+
+At large $\mu$, the denominator grows, and $\alpha_s$ shrinks. Explicitly:
+
+- $\alpha_s(M_Z) \approx 0.12$ (measured at LEP)
+- $\alpha_s(M_{\rm top}) \approx 0.11$
+- $\alpha_s(1 \text{ TeV}) \approx 0.09$
+- Extrapolating: $\alpha_s \to 0$ as $\mu \to \infty$
+
+### Why This Matters
+
+**Perturbation theory works at high energies.** Because $\alpha_s$ is small at high energies, perturbative QCD calculations are accurate for processes with high momentum transfer (LHC physics, deep inelastic scattering, etc.). This is why we can predict LHC cross sections reliably.
+
+**Confinement at low energies.** As $\mu$ decreases, $\alpha_s$ grows. At some scale $\Lambda_{\rm QCD} \approx 200$ MeV, $\alpha_s$ becomes $O(1)$ and perturbation theory breaks down. This is where confinement sets in — quarks and gluons are confined into hadrons. Non-perturbative techniques (lattice QCD) are needed here.
+
+**The running is measured.** The scale-dependence of $\alpha_s$ has been confirmed at many experiments and different energies. Measurements at different scales, when extrapolated using QCD running, all converge on the same $\Lambda_{\rm QCD}$.
+
+### The Calculation Structure
+
+The QCD beta function comes from three contributions:
+1. **Gluon self-interactions** (non-abelian gauge bosons interact with each other): give a contribution $-\frac{22}{3}\cdot\frac{g^3}{16\pi^2}$
+2. **Ghost contributions** (from gauge fixing, Faddeev-Popov): give a contribution $+\frac{2}{3}\cdot\frac{g^3}{16\pi^2}$
+3. **Quark loops**: give a contribution $+\frac{2n_f}{3}\cdot\frac{g^3}{16\pi^2}$
+
+Sum: $-\frac{22}{3} + \frac{2}{3} + \frac{2n_f}{3} = -\frac{20}{3} + \frac{2n_f}{3} = -\frac{1}{3}(20 - 2n_f)$.
+
+Hmm, that's not matching what I wrote. Let me recheck.
+
+The standard form is $-\frac{g^3}{16\pi^2}\beta_0$ where $\beta_0 = \frac{11}{3}C_A - \frac{4}{3}T_R n_f$. For $SU(3)$ with fundamental quarks: $C_A = 3$, $T_R = 1/2$. So $\beta_0 = 11 - \frac{2}{3}n_f$. ✓
+
+The breakdown:
+- Gluon self-coupling: $\frac{11}{3}C_A = 11$ (for $SU(3)$)
+- Quark loops: $-\frac{4}{3}T_R n_f = -\frac{2}{3}n_f$
+
+The gluon self-coupling contribution is negative for the beta function (i.e., contributes to asymptotic freedom). The quark contribution is positive (like QED — quarks screen like electrons). The sign of the total depends on the competition.
+
+For $SU(N)$ theory with $n_f$ fundamental quarks:
+
+$$\beta_0 = \frac{11}{3}N - \frac{2}{3}n_f$$
+
+QCD has $N = 3$ and 6 quark flavors, giving $\beta_0 = 11 - 4 = 7 > 0$. Asymptotic freedom.
+
+If you had 17 quark flavors or more, QCD would stop being asymptotically free. Nature chose just 6.
+
+---
+
+## 7. Fixed Points and Phases
+
+### Fixed Points of RG Flow
+
+A **fixed point** $g^*$ is a value of the coupling where $\beta(g^*) = 0$. At a fixed point, the coupling doesn't flow — the theory is scale-invariant.
+
+### Types of Fixed Points
+
+**Gaussian fixed point** ($g = 0$): the free theory. Always a fixed point (trivially, since interactions vanish).
+
+**Non-trivial fixed points** ($g^* \neq 0$): interacting theories with no scale. Special.
+
+### UV vs. IR Behavior Near Fixed Points
+
+Near a fixed point, linearize: $\beta(g) \approx \beta'(g^*)(g - g^*)$. If $\beta' > 0$, perturbations grow as $\mu$ increases — the fixed point is **IR-attractive** (theory flows to it at low energies).
+
+If $\beta' < 0$, perturbations shrink as $\mu$ increases — **UV-attractive** (theory flows to it at high energies).
+
+### QED Near $g = 0$
+
+$\beta(g) = g^3/(12\pi^2)$ starts positive. Near $g = 0$: $\beta'(0) = 0$, so the behavior is more subtle. But for any small perturbation $g > 0$, $\beta > 0$, so the coupling flows *away* from zero at high energy. The Gaussian fixed point is IR-attractive.
+
+**Physical interpretation:** QED becomes free at low energies.
+
+### QCD Near $g = 0$
+
+$\beta(g) = -b_0 g^3/(16\pi^2)$ starts negative. Near $g = 0$: for small $g$, $\beta < 0$, so $g$ shrinks as $\mu$ grows. The Gaussian fixed point is UV-attractive.
+
+**Physical interpretation:** QCD becomes free at high energies — asymptotic freedom.
+
+### Non-Trivial Fixed Points
+
+Some theories have interacting fixed points where the theory is genuinely non-trivial:
+
+- **Wilson-Fisher fixed point**: in $\phi^4$ theory in $d = 4 - \epsilon$ dimensions, there's a fixed point at $g^* \sim \epsilon$. Controls 3D critical phenomena.
+- **Banks-Zaks fixed point**: in QCD-like theories with enough flavors, a UV-attractive interacting fixed point can exist.
+- **Conformal field theories**: theories *at* fixed points are scale-invariant, and in many cases enhance to full conformal symmetry.
+
+These represent entirely different kinds of theories — genuinely interacting, but scale-invariant.
+
+### Phase Diagram of a Theory
+
+The full RG flow gives a "phase diagram" on the space of couplings:
+
+- **Starting couplings** at some UV scale
+- **Flow** to some attractor (free theory, confined theory, CFT, etc.) at low energies
+- **Phase transitions** between regions of coupling space
+
+For a theory like QCD, the RG flow is from weak coupling at high energies to strong coupling at low energies, with confinement at the endpoint.
+
+For $\phi^4$ theory, there's a line of flows from the Gaussian fixed point (free theory) to the Wilson-Fisher fixed point (critical theory) or away from both (massive theories).
+
+---
+
+## 8. Wilson's Picture: RG as Coarse-Graining
+
+This is the conceptual breakthrough that made RG meaningful beyond a calculational trick.
+
+### The Block-Spin Picture
+
+Consider a lattice theory (Ising model, say). Spins on a fine lattice with some Hamiltonian. Wilson's question: what if we **coarse-grain** — group 2×2×2 blocks of spins into super-spins — and derive the effective Hamiltonian for the super-spins?
+
+The effective Hamiltonian generally has more operators (not just nearest-neighbor) and different coefficients than the original. But it describes the *same* physics at longer distances.
+
+Repeating the coarse-graining multiple times, you get a flow in the space of Hamiltonians. The flow is the RG.
+
+### The Continuum Generalization
+
+For a quantum field theory, coarse-graining means integrating out high-momentum modes. Start with modes up to some UV cutoff $\Lambda$. Integrate out modes with $\Lambda' < |k| < \Lambda$. The result is an effective theory with cutoff $\Lambda'$.
+
+Mathematically, this is done via path integral (document 9):
+
+$$e^{-S_{\rm eff}[\phi_<]} = \int\mathcal{D}\phi_>\, e^{-S[\phi_< + \phi_>]}$$
+
+where $\phi_<$ contains modes below $\Lambda'$ and $\phi_>$ contains modes between $\Lambda'$ and $\Lambda$.
+
+### The Infinite-Dimensional Space of Theories
+
+The space of all possible QFTs is infinite-dimensional — spanned by all possible operators. At any given scale, a theory is a point in this space (a specific Lagrangian).
+
+Coarse-graining (integrating out high modes) moves this point. The trajectory it traces is the **RG flow**.
+
+### Fixed Points Have a New Meaning
+
+A fixed point is where coarse-graining doesn't change anything — the theory is scale-invariant. At the continuum level, this is a conformal field theory (in favorable cases).
+
+IR-attractive fixed points are "sinks" that attract nearby theories as you coarse-grain. Physical systems at criticality flow to such sinks.
+
+### The Space of Theories Is Organized
+
+Most operators you could add to a Lagrangian become irrelevant under coarse-graining — their coefficients shrink. Only a few operators are relevant or marginal.
+
+**This is why QFT is predictive.** Even though the UV Lagrangian could have any number of complicated operators, at low energies only the relevant/marginal ones matter. We don't need to know the full UV theory to make predictions at low energies — we just need to know the relevant operators.
+
+This is Wilson's insight: **renormalization works because irrelevant operators decouple**.
+
+### Connection to EFT
+
+This is exactly the effective field theory philosophy (document 7 briefly, and developed further below). An effective theory at scale $\mu$ contains:
+
+- Relevant and marginal operators: fully renormalizable, give leading-order predictions
+- Irrelevant operators: suppressed by $(E/\Lambda)^n$, corrections to leading order
+
+Coarse-graining removes high-scale physics and encodes its effects in the coefficients of the leading operators.
+
+---
+
+## 9. Relevant, Marginal, and Irrelevant Operators
+
+### The Classification
+
+An operator $\mathcal{O}$ of dimension $d_\mathcal{O}$ (classical mass dimension in the Lagrangian) has the following behavior under RG flow:
+
+- **Relevant** ($d_\mathcal{O} < 4$): coefficient grows as you go to lower energies
+- **Marginal** ($d_\mathcal{O} = 4$): coefficient changes only logarithmically
+- **Irrelevant** ($d_\mathcal{O} > 4$): coefficient shrinks as you go to lower energies
+
+This is just the classical dimensional analysis from document 7, but the RG flow adds corrections from anomalous dimensions.
+
+### Why "Relevant" Means Relevant
+
+If an operator is relevant, its coefficient grows as you go to lower energies. So at low energies, relevant operators dominate — they control the physics.
+
+Mass terms are relevant ($[\phi^2] = 2$ in 4D, less than 4). That's why mass scales are physically important at low energies.
+
+Marginal operators — like $\phi^4$ or $F^2$ — are neither suppressed nor enhanced in the deep IR. They control the physics at all scales.
+
+Irrelevant operators — like $\phi^6$ or higher-derivative terms — become negligible at low energies. They're only important near the UV cutoff.
+
+### Marginal Operators and "Almost Marginal"
+
+A marginal operator's behavior under RG is determined by its anomalous dimension. If $\gamma_\mathcal{O} > 0$ at some scale, it becomes marginally relevant (coefficient grows slowly). If $\gamma_\mathcal{O} < 0$, marginally irrelevant (coefficient shrinks slowly).
+
+The electromagnetic interaction $\bar\psi\gamma^\mu\psi A_\mu$ is classically marginal. Its anomalous dimension gives the running of $\alpha$. For QED, $\gamma > 0$, so the coupling becomes marginally relevant — grows with energy.
+
+### Critical Phenomena
+
+At a phase transition, a marginal-relevant operator (like the mass term) is tuned to zero. The system flows to an IR fixed point where only marginal operators survive. The critical exponents at this fixed point are universal — determined only by the fixed-point theory.
+
+This is why completely different physical systems (magnets, liquids, alloys) with the same symmetries and dimensionality have the same critical exponents. They all flow to the same IR fixed point.
+
+### In QED
+
+| Operator | Dimension | Status |
+|---|---|---|
+| $\bar\psi\psi$ | 3 | Relevant |
+| $F_{\mu\nu}F^{\mu\nu}$ | 4 | Marginal |
+| $\bar\psi\gamma^\mu\psi A_\mu$ | 4 | Marginal |
+| $(F_{\mu\nu}F^{\mu\nu})^2$ | 8 | Irrelevant |
+
+Higher-dimension operators (like $(F^{\mu\nu})^2 F^{\rho\sigma} F_{\rho\sigma}/\Lambda^4$) are irrelevant below any cutoff $\Lambda$ — their effects are suppressed by $(E/\Lambda)^4$.
+
+### The Predictive Power of Low Energies
+
+If you measure QED at low energies, you can't distinguish between QED with a given coupling and QED with the same coupling plus tiny $(F^2)^2/\Lambda^4$ corrections (for $\Lambda$ large). The irrelevant operator is invisible to low-energy observations.
+
+This is why experimentalists can confidently write down Lagrangians with just relevant and marginal operators: irrelevant corrections are suppressed to arbitrary orders. The theory is predictive, even if the "true" UV theory has lots of extra structure.
+
+---
+
+## 10. Universality and Critical Phenomena
+
+### The Experimental Fact
+
+Near a second-order phase transition, physical systems display critical behavior: correlation length diverges, specific heat diverges, magnetization (or order parameter) vanishes with specific power laws.
+
+Different systems with the same symmetries and dimensionality show the *same* critical exponents:
+
+- 3D Ising magnet: $\beta \approx 0.326$ (order parameter exponent)
+- Liquid-gas transition in $\text{CO}_2$: $\beta \approx 0.322$
+- Binary alloy transitions: $\beta \approx 0.325$
+- Heavy fermion critical points: similar
+
+All are "Ising-universality-class" in 3D.
+
+### Why This Is Remarkable
+
+A magnet and a fluid seem to have nothing in common. Yet at their critical points, they behave identically. Why?
+
+The answer: near a phase transition, all systems with the same symmetry class flow to the same IR fixed point (the Wilson-Fisher fixed point for the Ising class). Details of the microscopic Hamiltonian don't matter — only the symmetries and dimensionality.
+
+This is **universality**, and it's the most dramatic prediction of the RG.
+
+### RG Derivation
+
+Near a phase transition, the correlation length diverges: $\xi \to \infty$. This is the scale where relevant operators (like the mass term) vanish.
+
+The effective theory at scales near $\xi$ is controlled by the IR fixed point. Starting from any microscopic Hamiltonian with the right symmetries, RG flow takes you to this fixed point.
+
+The critical exponents are determined by the anomalous dimensions at the fixed point. Since the fixed point is a specific QFT, its critical exponents are unique. All systems in the universality class inherit them.
+
+### Universality Classes
+
+Common ones:
+
+- **Ising**: $\mathbb{Z}_2$ symmetry. Examples: uniaxial magnets, liquid-gas, alloys.
+- **XY**: $O(2)$ symmetry. Examples: superfluid helium, 2D magnets with planar spins.
+- **Heisenberg**: $O(3)$ symmetry. Examples: isotropic 3D magnets.
+- **Mean-field**: infinite dimensions or long-range interactions.
+- **Percolation**: bond/site percolation systems.
+- **Directed percolation**: certain non-equilibrium systems.
+
+Each class has its own universal exponents, computable from the corresponding fixed-point QFT.
+
+### The Lesson
+
+The RG shows that microscopic details matter for *qualitative* behavior (what phase the system is in), not for *quantitative* behavior near criticality (the specific exponents and universal amplitudes). This is a profound statement about what's fundamental in physics.
+
+For decades, physicists had measured critical exponents and noticed they clustered into universality classes. But before Wilson, there was no principled explanation. RG provided it: systems with the same symmetries flow to the same fixed point.
+
+---
+
+## 11. Effective Field Theories
+
+The RG makes effective field theory precise.
+
+### The EFT Framework
+
+An EFT at scale $\mu$ contains all operators compatible with the symmetries. The Lagrangian is:
+
+$$\mathcal{L}_{\rm EFT}(\mu) = \sum_i c_i(\mu)\mathcal{O}_i$$
+
+Relevant and marginal operators have coefficients that are dimensionless (or have mass dimensions). Irrelevant operators have coefficients with dimensions like $1/\Lambda^n$, where $\Lambda$ is some cutoff.
+
+### Matching to a UV Theory
+
+If you know the full UV theory (call it $\mathcal{L}_{\rm UV}$), you can *match* — compute the low-energy effective theory by:
+
+1. Starting with $\mathcal{L}_{\rm UV}$
+2. Integrating out heavy modes (particles with $M > \mu$)
+3. Expanding the result in powers of $E/\Lambda$
+4. Reading off the coefficients $c_i(\mu)$ of the EFT operators
+
+The effects of the heavy physics are all encoded in these coefficients. No loss of predictive power at scales $\ll \Lambda$.
+
+### Evolving the EFT
+
+Given the EFT at scale $\mu$, you can evolve to scale $\mu'$ using RG equations. The coefficients $c_i$ run:
+
+$$\mu\frac{\partial c_i}{\partial\mu} = \text{anomalous dimensions}(c_j)$$
+
+### Example: Fermi Theory
+
+Below the $W$ boson mass, electroweak physics is described by Fermi's four-fermion theory:
+
+$$\mathcal{L}_{\rm Fermi} = -\frac{G_F}{\sqrt{2}}(\bar\psi_1\gamma^\mu(1 - \gamma_5)\psi_2)(\bar\psi_3\gamma_\mu(1 - \gamma_5)\psi_4) + \cdots$$
+
+The coefficient $G_F = g^2/(8M_W^2)$ comes from integrating out the $W$ boson. At energies $\ll M_W$, this EFT is an accurate description of weak interactions.
+
+At energies approaching $M_W$, the EFT breaks down — you need the full Standard Model. The "breaking down" shows up as corrections $E^2/M_W^2$ that become $O(1)$.
+
+### Example: Chiral Perturbation Theory
+
+Below the QCD confinement scale ($\sim 1$ GeV), QCD is non-perturbative. But the low-energy physics is described by an EFT of pions (the pseudo-Goldstone bosons of broken chiral symmetry):
+
+$$\mathcal{L}_{\chi PT} = \frac{F_\pi^2}{4}\text{tr}(\partial_\mu U^\dagger \partial^\mu U) + \cdots$$
+
+Where $U = \exp(i\pi^a\tau^a/F_\pi)$ contains the pion fields. This EFT makes predictions for low-energy pion scattering, meson decays, etc., all in terms of a few parameters fit to experiment (Like $F_\pi \approx 93$ MeV).
+
+### Example: General Relativity
+
+General relativity is a non-renormalizable QFT. But as an EFT valid below the Planck mass:
+
+$$\mathcal{L}_{\rm EFT} = \frac{M_P^2 R}{2} + c_1 R^2 + c_2 R_{\mu\nu}R^{\mu\nu} + \cdots$$
+
+Quantum corrections are calculable order-by-order in $E/M_P$. At energies we can access, the corrections are $(E/M_P)^2 \sim 10^{-32}$ or smaller — completely negligible.
+
+This is why GR works so well as a classical theory even though it's not UV-complete. The non-renormalizability only matters at the Planck scale, far beyond any experiment.
+
+### The Universal Structure
+
+Every EFT has this structure:
+- A cutoff $\Lambda$ (physical or calculational)
+- Relevant/marginal operators at leading order
+- Irrelevant operators at subleading orders, suppressed by $(E/\Lambda)^n$
+- An RG flow that evolves the theory between scales
+
+This framework encompasses essentially all of modern theoretical physics below the Planck scale.
+
+---
+
+## 12. Why the RG Is Profound
+
+### The Shift in Perspective
+
+Before the RG, renormalization seemed like a mathematical trick — a way to sweep infinities under the rug. The fact that it worked seemed lucky, a coincidence.
+
+The RG changes this completely. Renormalization isn't a trick; it's a systematic procedure for going from physics at one scale to physics at another. The infinities arise because we're asking about infinite-energy modes that couldn't be probed by any experiment. When we integrate them out properly, we get a well-defined effective theory at any accessible scale.
+
+### The Connection to Stat Mech
+
+The RG unites two seemingly different subjects:
+
+- **Quantum field theory** (Hamiltonians of quantum systems with infinitely many degrees of freedom)
+- **Statistical mechanics of critical systems** (Hamiltonians of classical systems near phase transitions)
+
+Both involve flow equations in the space of theories. Both have fixed points, critical exponents, universality classes. The same mathematical structure describes both.
+
+This connection isn't accidental. Wick rotation turns a quantum field theory in $d$ spacetime dimensions into a classical statistical mechanics problem in $d+0$ dimensions (or $d+1$ if you think of imaginary time as another spatial dimension). The RG flow of one is the RG flow of the other.
+
+### Universality: Emergent Simplicity
+
+Perhaps the most profound prediction of the RG is universality — that microscopic details don't matter at long scales. This is a statement about emergence: complex microscopic systems give rise to simple macroscopic behavior, and the RG explains why.
+
+This has implications beyond physics. Similar ideas appear in:
+
+- Economics (scaling laws in financial markets)
+- Biology (universal behaviors in population dynamics)
+- Neural networks (RG-like structure in deep learning)
+
+The mathematical framework is general.
+
+### Renormalization and the Structure of Knowledge
+
+Consider this: to understand the behavior of a macroscopic system, you don't need to solve every equation of motion for every particle. You just need to identify the relevant operators at your scale.
+
+This is the deepest lesson. Physics is *organized by scale*. At different scales, different degrees of freedom are important, and the effective theories describing them are different. But they're all related by RG flow.
+
+The universe we observe is the RG-flowed low-energy endpoint of some UV theory. What we see — atoms, molecules, materials, life — are all emergent from this flow. The RG is the mathematical structure that makes this hierarchy coherent.
+
+### A Conceptual Summary
+
+The key ideas:
+
+1. **Every QFT is an EFT** — valid below some UV cutoff
+2. **The RG flow** describes how the effective theory changes with scale
+3. **Fixed points** are scale-invariant theories; RG flows converge to them
+4. **Relevant operators** dominate at low energies; irrelevant ones are suppressed
+5. **Universality classes** are defined by the IR fixed point and its relevant operators
+6. **Renormalization** is the procedure for computing the RG flow
+7. **Divergences** are artifacts of sending the cutoff to infinity — not physical
+
+These principles organize all of modern theoretical physics.
+
+---
+
+## 13. Appendix: Key RG Formulas
+
+### Callan-Symanzik Equation
+
+For an $n$-point Green's function:
+
+$$\left[\mu\frac{\partial}{\partial\mu} + \beta(g)\frac{\partial}{\partial g} - \gamma_m(g)m\frac{\partial}{\partial m} + n\gamma_\phi(g)\right]G_n = 0$$
+
+### Beta Functions
+
+**QED** (one-loop):
+$$\beta_{\rm QED}(e) = \frac{e^3}{12\pi^2}$$
+
+**QCD** (one-loop):
+$$\beta_{\rm QCD}(g) = -\frac{g^3}{16\pi^2}\left(11 - \frac{2}{3}n_f\right)$$
+
+**SU(N)** (one-loop):
+$$\beta_{SU(N)}(g) = -\frac{g^3}{16\pi^2}\left(\frac{11N}{3} - \frac{2}{3}n_f\right)$$
+
+**$\phi^4$** in 4D (one-loop):
+$$\beta_{\phi^4}(\lambda) = \frac{3\lambda^2}{16\pi^2}$$
+
+### Running Coupling Solutions
+
+**QED** (one-loop):
+$$\alpha(\mu) = \frac{\alpha(\mu_0)}{1 - (\alpha(\mu_0)/3\pi)\ln(\mu^2/\mu_0^2)}$$
+
+**QCD** (one-loop):
+$$\alpha_s(\mu) = \frac{1}{(\beta_0/4\pi)\ln(\mu^2/\Lambda^2_{\rm QCD})}$$
+
+Where $\beta_0 = 11 - (2/3)n_f$.
+
+### Dimensions of Operators in 4D
+
+| Operator | Dim | Type |
+|---|---|---|
+| $\phi$ | 1 | field |
+| $\psi$ | 3/2 | field |
+| $A^\mu$ | 1 | field |
+| $\phi^2$ | 2 | relevant |
+| $\bar\psi\psi$ | 3 | relevant |
+| $(\partial\phi)^2$ | 4 | marginal |
+| $\phi^4$ | 4 | marginal |
+| $F_{\mu\nu}F^{\mu\nu}$ | 4 | marginal |
+| $\bar\psi\gamma^\mu\psi A_\mu$ | 4 | marginal |
+| $\phi^6$ | 6 | irrelevant |
+| $(F_{\mu\nu}F^{\mu\nu})^2$ | 8 | irrelevant |
+
+### Anomalous Dimensions (One-Loop, QED)
+
+- $\gamma_\phi = -\frac{e^2}{16\pi^2}$ (electron wave function)
+- $\gamma_m = \frac{3e^2}{8\pi^2}$ (electron mass)
+- $\gamma_A = -\frac{e^2}{12\pi^2}$ (photon field)
+
+### Wilson-Fisher Fixed Point
+
+In $d = 4 - \epsilon$ dimensions, $\phi^4$ theory has a non-trivial fixed point at:
+
+$$\lambda^* = \frac{16\pi^2}{3}\epsilon + O(\epsilon^2)$$
+
+### Critical Exponents at Wilson-Fisher Fixed Point
+
+In 3D Ising ($d = 3$, i.e., $\epsilon = 1$):
+
+- $\nu = 1/2 + \epsilon/12 + O(\epsilon^2) \approx 0.63$ (measured: 0.630)
+- $\eta = \epsilon^2/54 + O(\epsilon^3) \approx 0.04$ (measured: 0.036)
+- $\beta = 1/2 - \epsilon/6 + O(\epsilon^2) \approx 0.33$ (measured: 0.326)
+
+Agreement with experiment is good even at lowest order in $\epsilon$.
+
+### Further Reading
+
+- **Peskin & Schroeder, Chapters 12-13:** standard presentation of the RG
+- **Schwartz, Chapters 23-27:** modern and pedagogical
+- **Srednicki, Chapters 27-29:** clean treatment
+- **Wilson & Kogut, "The Renormalization Group and the $\epsilon$-Expansion":** classic review
+- **Cardy, *Scaling and Renormalization in Statistical Physics*:** stat mech side of the story
+- **Polchinski, "Renormalization and Effective Lagrangians":** conceptually clarifying
+- **Weinberg, Vol. 1 Chapter 12:** his perspective on the RG
+
+### Problems to Work
+
+1. Derive the one-loop QED beta function from the vacuum polarization calculation in document 6.
+
+2. For QCD with $n_f$ flavors, derive the critical value of $n_f$ below which the theory is asymptotically free. Compare to the actual value for QCD ($n_f = 6$).
+
+3. Starting from $\beta_\text{QED}(e) = e^3/(12\pi^2)$, solve for the running coupling and estimate the Landau pole scale.
+
+4. For a free scalar field in $d$ dimensions, compute the classical dimension and identify which operators ($\phi^n$, $(\partial\phi)^2$) are relevant, marginal, or irrelevant. Note the special role of $d = 2, 4, 6, \ldots$
+
+5. Using the Wilson-Fisher fixed point, compute $\nu$ to order $\epsilon$ for the $O(N)$ generalization of $\phi^4$ theory.
+
+6. Show that the $\phi^4$ beta function at one loop follows from the 4-point 1-loop diagrams. (Peskin 10.3 does this.)
+
+---
+
+## Closing Note
+
+The renormalization group is the conceptual zenith of QFT. It transforms renormalization from a calculational workaround into a theory about the structure of physics at different scales.
+
+### The Three Payoffs
+
+**Running couplings** — measurable, computable, tied directly to experiment. Tests of QED running, QCD running, electroweak running all confirm the RG picture.
+
+**Universality and critical phenomena** — makes the RG framework predictive for statistical mechanics. Every second-order phase transition is controlled by some fixed point of the RG, and the critical exponents are universal across systems in the same class.
+
+**Effective field theory** — reconciles non-renormalizable theories (like GR) with the QFT framework. Every physical theory is an EFT at some scale, valid up to its UV cutoff.
+
+### The Philosophical Shift
+
+Before RG: QFT was uneasy, with ad-hoc subtractions to remove divergences. After RG: divergences are understood, effective theories are well-defined, and the structure of physics across scales is coherent.
+
+The RG doesn't just solve the problem of infinities in QFT. It explains why the problem existed in the first place (trying to extrapolate a theory beyond its domain of validity), and it reveals the deep connection between QFT and critical phenomena.
+
+### What's Next
+
+We've completed the "canonical quantization" approach to QFT — starting from classical Lagrangians, imposing commutation relations, developing perturbation theory, handling infinities, and understanding the flow of couplings with scale.
+
+The next documents take a different approach. **Path integrals** reformulate QFT entirely — instead of operators and states, we have integrals over field configurations weighted by $e^{iS}$. This formulation:
+
+- Makes the connection to statistical mechanics manifest (Wick rotation → Euclidean path integral)
+- Handles gauge theories more cleanly (Faddeev-Popov)
+- Is the natural setting for non-perturbative methods
+- Is the framework in which almost all modern QFT research is done
+
+**Document 9**: path integrals for bosonic fields.
+
+**Document 10**: path integrals for fermions (Grassmann variables).
+
+Then we tackle Yang-Mills (document 11) and the full Standard Model (document 12).
+
+You've now worked through the deepest single idea in 20th-century theoretical physics. The rest of QFT builds on this foundation.

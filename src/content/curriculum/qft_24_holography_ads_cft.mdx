@@ -12,3 +12,913 @@ classReportTitle: "The universe might be a hologram."
 *Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
 
 {/* Content from qft_24_holography_ads_cft.md */}
+
+# Holography and AdS/CFT
+
+*QFT document 24: quantum gravity in the bulk equals gauge theory on the boundary. The most impactful theoretical development of the past 30 years. The AdS/CFT dictionary, the large-$N$ limit, applications to the QGP and condensed matter, entanglement and geometry, and what holography tells us about quantum gravity.*
+
+In 1997, Maldacena proposed that **Type IIB string theory on $AdS_5 \times S^5$** is equivalent to **$\mathcal{N}=4$ super-Yang-Mills theory on 4D Minkowski space**. This is the **AdS/CFT correspondence**, or more broadly, the **holographic principle**: a $(d+1)$-dimensional gravitational theory is equivalent to a $d$-dimensional non-gravitational quantum field theory living on its boundary.
+
+This is genuinely strange. The two sides look completely different:
+- One is 10D string theory (with gravity!)
+- The other is 4D gauge theory (no gravity at all)
+- One is often strongly coupled, the other weakly coupled
+
+Yet they're the same theory, just described differently. Every observable in one has a counterpart in the other. What's a strongly-coupled gauge theory calculation on one side becomes a classical Einstein-equation calculation on the other.
+
+### Why This Is Important
+
+AdS/CFT has become one of the most useful tools in theoretical physics:
+
+- **Strongly-coupled gauge theory** becomes **weakly-coupled gravity**, making non-perturbative calculations tractable
+- **The quark-gluon plasma** shear viscosity was predicted, matching RHIC/LHC experiments
+- **Condensed matter systems** (high-T$_c$ superconductors, strange metals) have been approached holographically
+- **Black holes** in AdS give a concrete, unitary framework for quantum gravity
+- **Entanglement entropy** becomes **geometry** via the Ryu-Takayanagi formula
+- **The black hole information paradox** has become tractable in holographic settings
+
+The correspondence is:
+- **Exact** for specific theories (like $\mathcal{N}=4$ SYM and Type IIB on $AdS_5 \times S^5$)
+- **Conjectural** for others
+- **A research tool** regardless — it provides insights into strongly-coupled physics that we'd otherwise be unable to probe
+
+### Prerequisites
+
+- Documents 20-23 (SUSY, string theory, dualities)
+- Document 18 (large-$N$ expansion)
+- General relativity, at least the basics
+- Conformal field theory — we'll introduce what's needed
+
+### Conventions
+
+- Mostly-minus for boundary CFT, but AdS requires switching to mostly-plus for bulk
+- $\hbar = c = 1$
+- AdS radius $L$
+- Gauge theory coupling $g$, 't Hooft coupling $\lambda = g^2 N$
+- Bulk string coupling $g_s$
+
+---
+
+## Table of Contents
+
+1. [The Holographic Principle](#1-the-holographic-principle)
+2. [Anti-de Sitter Space](#2-anti-de-sitter-space)
+3. [The Maldacena Conjecture](#3-the-maldacena-conjecture)
+4. [The AdS/CFT Dictionary](#4-the-adscft-dictionary)
+5. [Bulk Fields ↔ Boundary Operators](#5-bulk-fields--boundary-operators)
+6. [Computing Correlators](#6-computing-correlators)
+7. [The Classical Gravity Limit](#7-the-classical-gravity-limit)
+8. [Thermal AdS/CFT](#8-thermal-adscft)
+9. [The Quark-Gluon Plasma Application](#9-the-quark-gluon-plasma-application)
+10. [Holographic Condensed Matter](#10-holographic-condensed-matter)
+11. [Entanglement and Geometry](#11-entanglement-and-geometry)
+12. [Beyond the Original Correspondence](#12-beyond-the-original-correspondence)
+13. [What Holography Teaches Us](#13-what-holography-teaches-us)
+14. [Appendix: AdS/CFT Reference](#14-appendix-adscft-reference)
+
+---
+
+## 1. The Holographic Principle
+
+### The Bekenstein Bound
+
+Black hole thermodynamics tells us that the entropy of a black hole is proportional to the **area** of its horizon, not the **volume** inside:
+
+$$S_{\rm BH} = \frac{A}{4G\hbar}$$
+
+This is Bekenstein-Hawking entropy. It's surprising — in ordinary thermodynamics, entropy is extensive (scales with volume). Gravitational entropy scales with area.
+
+Why? Bekenstein argued: for any bounded region, the entropy of any object that fits inside is bounded by the entropy of the black hole that would fit in the same region. So the maximum entropy in a region is proportional to its area.
+
+### 't Hooft and Susskind
+
+'t Hooft (1993) and Susskind (1994) turned this into a **principle**: the degrees of freedom of a gravitational theory in a region are encoded on the boundary of that region.
+
+**The holographic principle:** A $(d+1)$-dimensional gravitational theory is equivalent to a $d$-dimensional non-gravitational theory on its boundary.
+
+At first this sounds crazy. How can all the physics of a 4D spacetime be encoded in a 3D region? But black hole thermodynamics already hinted at it — the information in a region is limited by the area, not volume.
+
+### Maldacena's Realization
+
+Maldacena (1997) found a concrete example of the holographic principle: AdS/CFT. 
+
+**Bulk:** Type IIB string theory on $AdS_5 \times S^5$.
+
+**Boundary:** $\mathcal{N}=4$ SYM on 4D Minkowski.
+
+The 5D (from AdS$_5$) plus 5D (from $S^5$) = 10D string theory is equivalent to 4D gauge theory. The 5 extra AdS dimensions are "emergent" — generated by the 5 dimensions of the internal sphere in the string theory, which show up as part of the boundary CFT's internal symmetry.
+
+This wasn't just conjectural. Maldacena provided a specific derivation via D-branes (next section), and subsequent checks have verified the correspondence in countless ways.
+
+### The Power of Holography
+
+If a gauge theory is really equivalent to a gravitational theory, then:
+
+**Strongly-coupled gauge theory** can be studied via **weakly-coupled gravity**. The limit where gauge theory is hard (large $\lambda$) becomes the limit where gravity is classical.
+
+**Non-perturbative gauge physics** becomes **classical Einstein equations**. Suddenly, strongly-coupled physics is computable.
+
+**Emergent spacetime**: the bulk AdS spacetime emerges from the boundary theory. Spacetime geometry is not fundamental but derived from quantum fields on its boundary.
+
+These insights have been transformative. Even fields like condensed matter (strongly correlated electrons) and nuclear physics (QGP) use holographic techniques now, even though these are far from the original context.
+
+---
+
+## 2. Anti-de Sitter Space
+
+### The Metric
+
+**Anti-de Sitter space** $AdS_{d+1}$ is a maximally symmetric spacetime with constant negative curvature:
+
+$$ds^2 = L^2\left(\frac{-dt^2 + d\vec x^2 + dz^2}{z^2}\right)$$
+
+where $L$ is the AdS radius and $z$ is the "radial coordinate" ranging from 0 (boundary) to $\infty$ (Poincaré horizon, or "interior").
+
+This is the **Poincaré patch** of AdS — a specific coordinate system covering part of the full space.
+
+### Properties
+
+- **Negative curvature:** the Ricci scalar is $R = -d(d+1)/L^2$
+- **Homogeneity:** all points are equivalent
+- **Isotropy:** no preferred direction
+- **Conformal boundary at $z = 0$:** the metric blows up there
+- **$SO(d,2)$ isometry group:** the $(d+1)$-dimensional anti-de Sitter conformal group, which happens to match the conformal group of $d$-dimensional spacetime
+
+### The Conformal Boundary
+
+As $z \to 0$: the metric diverges, but conformally the boundary is $d$-dimensional Minkowski space. Specifically, rescaling $ds^2 \to z^2 ds^2$ gives:
+
+$$d\tilde s^2 = \frac{L^2}{z^2}(-dt^2 + d\vec x^2 + dz^2)$$
+
+At $z = 0$: this is $d$-dimensional Minkowski (with some conformal factor).
+
+The **conformal boundary** of AdS$_{d+1}$ is $d$-dimensional Minkowski space (or more generally, the conformal compactification).
+
+### The Radial Direction as "Renormalization Group Scale"
+
+A key intuition: the radial coordinate $z$ in the bulk corresponds to the **energy scale** in the boundary theory.
+
+- **$z \to 0$ (near boundary)**: UV, high energies
+- **$z \to \infty$ (deep interior)**: IR, low energies
+
+This is the **holographic RG flow**. Moving toward the interior of AdS = running to lower energies in the boundary CFT.
+
+### AdS vs. Minkowski
+
+Compare:
+- **Minkowski space:** flat, $R = 0$
+- **AdS space:** negatively curved, $R < 0$
+- **de Sitter (dS) space:** positively curved, $R > 0$, describes our universe's acceleration
+
+Why AdS? Because the boundary structure is perfect for holography. A $(d+1)$-dimensional AdS has a $d$-dimensional conformal boundary, and the isometry group of AdS$_{d+1}$ is exactly the conformal group of the boundary. This matches beautifully.
+
+The fact that our universe is (approximately) dS, not AdS, is part of the challenge in applying holography to cosmology.
+
+### Why Negative Curvature Helps
+
+Negative curvature is "confining" — geodesics return rather than escape. The conformal boundary is at finite conformal distance. This provides a well-defined "outer" region where boundary conditions can be imposed.
+
+In Minkowski: no natural boundary at finite distance.
+In dS: observer-dependent cosmological horizons; not as clean.
+In AdS: clean conformal boundary at "infinity" (really, finite conformal distance).
+
+This is why AdS is the natural backdrop for holographic correspondence.
+
+---
+
+## 3. The Maldacena Conjecture
+
+### The Setup
+
+Stack $N$ coincident D3-branes in Type IIB string theory. The worldvolume theory is $\mathcal{N}=4$ $U(N)$ super-Yang-Mills (we discussed this in doc 22, sec 10).
+
+Close to the D-branes, the geometry is warped. Maldacena considered two descriptions of the same physical system:
+
+**Description A (gauge theory):** $\mathcal{N}=4$ SYM on flat 4D Minkowski, with gauge group $U(N)$.
+
+**Description B (gravitational):** The near-horizon geometry of the D3-brane stack is $AdS_5 \times S^5$:
+
+$$ds^2 = L^2\left(\frac{-dt^2 + d\vec x^2 + dz^2}{z^2}\right) + L^2 d\Omega_5^2$$
+
+with $L^4 = 4\pi g_s N \alpha'^2$.
+
+### The Conjecture
+
+**These two descriptions are equivalent.** Type IIB string theory on $AdS_5 \times S^5$ is the same physical theory as $\mathcal{N}=4$ SYM on 4D Minkowski.
+
+Specifically, the dictionary relates:
+- Gauge theory coupling: $g^2 N = \lambda$ (the 't Hooft coupling)
+- Bulk parameters: $L^4/\alpha'^2 = 4\pi g_s N = \lambda$ and $L^4/\ell_P^4 = N^2$
+
+So:
+- $\lambda \gg 1$: large AdS radius in string units, classical gravity is good
+- $N \gg 1$: large AdS radius in Planck units, quantum gravity corrections suppressed
+
+### Three Forms of the Conjecture
+
+**Strong form:** Exact equivalence at all values of $N$ and $\lambda$.
+
+**Strong'-form:** Equivalence at all $N$ for $\lambda$ at any value.
+
+**Weak form:** Equivalence in the **planar limit** ($N \to \infty$, $\lambda$ fixed, so $g_s \to 0$).
+
+The weak form is what's been most tested and used. It says: planar $\mathcal{N}=4$ SYM at fixed $\lambda$ is exactly dual to classical Type IIB string theory on $AdS_5 \times S^5$.
+
+In the further **classical gravity limit** ($\lambda \gg 1$ in addition): you can use 10D supergravity, not full string theory. This is the limit where AdS/CFT is maximally calculational.
+
+### Why It Works
+
+The derivation exploits that near the D3-branes, there are two ways to describe the low-energy physics:
+
+**Open-string description:** D-brane worldvolume has a gauge theory ($\mathcal{N}=4$ SYM).
+
+**Closed-string description:** Near the D-branes, the spacetime geometry curves into AdS$_5 \times S^5$.
+
+These are two different ways of describing the same physics, and since both are low-energy limits of the same Type IIB theory, they must be equivalent. This is Maldacena's derivation.
+
+### Evidence
+
+The conjecture has been extensively tested:
+
+**Symmetry matching:** Both sides have $SO(4,2) \times SO(6)$ global symmetry. Isometries of $AdS_5 \times S^5$ match conformal + R-symmetry of $\mathcal{N}=4$ SYM.
+
+**Spectrum matching:** BPS operators in the CFT correspond to specific bulk modes. Masses match.
+
+**Correlation function matching:** Both sides give the same correlators for protected operators.
+
+**Strongly-coupled calculations:** AdS predictions (like quark-antiquark potential, viscosity) match SUSY-protected quantities.
+
+**Non-perturbative checks:** Instanton sums, integrability structures, exact results in specific limits — all consistent.
+
+The conjecture is essentially verified, though it's not proven in the strict mathematical sense (we don't have a first-principles definition of either side at all scales).
+
+---
+
+## 4. The AdS/CFT Dictionary
+
+### The Basic Dictionary
+
+The equivalence is concrete: every object in one theory has a counterpart in the other. The key entries:
+
+**Global symmetries ↔ gauge symmetries:**
+Gauge-theory R-symmetry $SU(4)_R \sim SO(6)$ ↔ isometries of $S^5$ (which is $SO(6)$)
+
+Conformal symmetry $SO(4,2)$ of CFT ↔ isometries of $AdS_5$ (which is $SO(4,2)$)
+
+**Boundary values of bulk fields ↔ CFT sources:**
+For each bulk field $\phi_{\rm bulk}$ with behavior near the boundary $\phi \sim z^{d-\Delta}$, there's a source $J_\Delta$ for a boundary operator of dimension $\Delta$.
+
+**Bulk equations of motion ↔ RG flow equations:**
+Solving classical gravity = running the CFT from UV to IR.
+
+### Operator-Field Correspondence
+
+Every **bulk field** corresponds to a **boundary operator**:
+
+| Bulk field | Boundary operator | Comments |
+|---|---|---|
+| Graviton $h_{\mu\nu}$ | Energy-momentum tensor $T_{\mu\nu}$ | Dimension $\Delta = d$ |
+| Gauge field $A_\mu$ | Conserved current $J_\mu$ | Dimension $\Delta = d - 1$ |
+| Massive scalar | Scalar operator | Dimension from mass |
+| Dilaton | $\text{Tr}(F^2)$ | In pure gauge sector |
+| RR 4-form | Higher-spin operator | Various |
+
+The bulk field content determines the operator content of the boundary CFT. For Type IIB on $AdS_5 \times S^5$, the relevant bulk fields give exactly the operator spectrum of $\mathcal{N}=4$ SYM.
+
+### The Mass-Dimension Relation
+
+A crucial formula: for a bulk scalar of mass $m$, the corresponding boundary operator has dimension:
+
+$$\Delta = \frac{d}{2} + \sqrt{\frac{d^2}{4} + m^2 L^2}$$
+
+Massless bulk fields give $\Delta = d$ (like graviton → $T_{\mu\nu}$).
+Tachyonic but "well-behaved" bulk fields (satisfying Breitenlohner-Freedman bound) still give real $\Delta$.
+Unstable bulk fields give complex $\Delta$ (not physical).
+
+This formula determines the operator spectrum of the boundary theory in terms of the mass spectrum of bulk fluctuations.
+
+### Sources and VEVs
+
+For a bulk field $\phi(z, x)$ approaching the boundary:
+
+$$\phi(z, x) \sim J(x) z^{d-\Delta} + \langle O(x)\rangle z^\Delta + \ldots$$
+
+The leading coefficient $J(x)$ is interpreted as a **source** for the boundary operator $O(x)$. The subleading coefficient is the **VEV** $\langle O(x)\rangle$.
+
+**Sources turn on:** the action of the CFT gets a term $\int d^d x\, J(x) O(x)$.
+
+**VEVs are observed:** they're the expectation values in the state of interest.
+
+This connects boundary behavior to physical observables.
+
+---
+
+## 5. Bulk Fields ↔ Boundary Operators
+
+### The Full Dictionary in $\mathcal{N}=4$ / $AdS_5 \times S^5$
+
+For Type IIB supergravity on $AdS_5 \times S^5$, every supergravity mode corresponds to a $\mathcal{N}=4$ operator. Let me give some examples:
+
+**Graviton modes** in $S^5$ direction:
+- Symmetric traceless modes → "single-trace primaries" in the 1/2-BPS spectrum
+- These are operators like $\text{Tr}(\phi^{I_1}\cdots\phi^{I_k})$ (traceless in $I$'s)
+- The dimension is $\Delta = k$ for the $k$-th mode
+
+**Gauge field modes**: give conserved currents on the boundary.
+
+**Fermion modes**: give fermionic operators.
+
+**RR 4-form modes**: give higher-spin protected operators.
+
+All of these map into the explicit list of "superconformal primary operators" of $\mathcal{N}=4$ SYM.
+
+### The Operator Spectrum
+
+In $\mathcal{N}=4$ SYM, the gauge-invariant local operators fall into multiplets of the superconformal group. The "single-trace" primaries are:
+
+- **1/2-BPS:** $\text{Tr}(\phi^{I_1}\cdots\phi^{I_k})$ with $k \geq 2$, dimension $\Delta = k$
+- **Non-BPS:** Yang-Mills coupling loops, anomalous dimensions that depend on $\lambda$
+
+The 1/2-BPS operators have **protected dimensions** — they don't depend on $\lambda$. Their gravity duals are specific KK modes on $S^5$. Both sides give the same spectrum.
+
+For non-BPS operators, dimensions run with $\lambda$. At weak coupling: perturbative calculations. At strong coupling: gravity calculations. The two must match in overlapping regimes, and they do.
+
+### Integrability
+
+$\mathcal{N}=4$ SYM in the planar limit is **integrable**. The anomalous dimensions of operators can be computed exactly using Bethe ansatz-like techniques.
+
+The integrability structure on the gauge-theory side has a direct correspondence on the string-theory side: the spectrum of strings on $AdS_5 \times S^5$ is also integrable, given by related Bethe-like equations.
+
+This remarkable agreement has allowed all-loop calculations of anomalous dimensions, tests of AdS/CFT, and deep insights into both sides.
+
+---
+
+## 6. Computing Correlators
+
+### The GKP-Witten Formula
+
+The foundational computation of AdS/CFT:
+
+$$\left\langle e^{\int d^4x\, J(x) O(x)}\right\rangle_{\rm CFT} = Z_{\rm bulk}[\phi|_{\partial} = J]$$
+
+**Left side:** generating functional of the boundary CFT with sources $J$.
+
+**Right side:** partition function of the bulk theory with boundary condition $\phi|_{\partial} = J$ on the corresponding bulk field.
+
+In the classical gravity limit:
+
+$$\ln Z_{\rm bulk}[J] = -S_{\rm on-shell}[\phi_{\rm classical}(z; J)]$$
+
+where $\phi_{\rm classical}$ is the classical solution satisfying the boundary condition $\phi|_{\partial} = J$, and $S$ is the bulk action evaluated on this solution.
+
+### Two-Point Function Example
+
+For a bulk scalar $\phi$ with mass $m$, the boundary two-point function of the dual operator $O_\Delta$:
+
+$$\langle O_\Delta(x) O_\Delta(y)\rangle_{\rm CFT} = \frac{C_\Delta}{|x - y|^{2\Delta}}$$
+
+This is the standard CFT two-point function (dictated by conformal invariance).
+
+Computing it via AdS:
+
+1. Solve the bulk equations for $\phi$ with source $J(x)$ on the boundary
+2. Extract the piece $\sim z^{d-\Delta}$ (source) and $z^\Delta$ (response)
+3. The response gives $\langle O_\Delta\rangle_{J} = \delta\ln Z/\delta J$
+4. Differentiating twice gives the two-point function
+
+The result: $\langle O_\Delta(x) O_\Delta(y)\rangle = C_\Delta/|x-y|^{2\Delta}$ with $C_\Delta$ computable exactly.
+
+### Higher-Point Functions
+
+Higher-point correlators come from bulk interaction diagrams:
+
+**$n$-point function** = sum over bulk Feynman diagrams with $n$ "external legs" going to the boundary.
+
+For example, a three-point function $\langle O_1 O_2 O_3\rangle$ comes from a cubic vertex in the bulk. The form of the three-point function is completely determined by conformal invariance; only the OPE coefficient $C_{123}$ is scheme-dependent. AdS/CFT predicts $C_{123}$ via the bulk cubic coupling.
+
+### Bulk Action Evaluation
+
+The key calculation: evaluate the on-shell bulk action.
+
+For a free scalar in AdS$_5$:
+
+$$S_{\rm bulk} = \tfrac{1}{2}\int d^5x\sqrt{g}\left[(\partial\phi)^2 + m^2\phi^2\right]$$
+
+Solving the equations of motion with appropriate boundary conditions and substituting gives:
+
+$$S_{\rm on-shell} \sim \int d^4x d^4 y\, \frac{J(x) J(y)}{|x-y|^{2\Delta}}$$
+
+(Plus divergent boundary terms that need "holographic renormalization.")
+
+The non-local kernel $1/|x-y|^{2\Delta}$ is exactly the CFT two-point function. AdS computations recover standard CFT structure.
+
+### Holographic Renormalization
+
+Bulk calculations produce divergences near the boundary ($z \to 0$). These correspond to UV divergences in the boundary theory.
+
+**Holographic renormalization**: systematically subtract boundary counterterms to get finite results. This is the AdS/CFT version of standard QFT renormalization.
+
+The procedure:
+1. Regularize by working at $z = \epsilon$ (near-boundary cutoff)
+2. Add counterterms on the boundary
+3. Renormalized action is finite as $\epsilon \to 0$
+4. Counterterms have specific physical meanings (mass, gauge coupling, etc.)
+
+This makes AdS/CFT computations completely well-defined and finite.
+
+---
+
+## 7. The Classical Gravity Limit
+
+### When Gravity Is Classical
+
+AdS/CFT provides the most useful tool in a specific regime:
+
+**Large $N$:** Suppresses quantum gravity corrections. Bulk is classical geometry.
+
+**Large $\lambda$ (strong 't Hooft coupling):** String theory corrections small. Can use 10D supergravity.
+
+Combined: $\lambda, N \gg 1$ gives classical supergravity on AdS$_5 \times S^5$.
+
+In this regime:
+- Bulk calculations are classical GR + matter fields
+- Boundary CFT at strong coupling is hard (no perturbation theory)
+- But the boundary physics IS the bulk calculation
+
+### What Maps to What
+
+At strong coupling:
+- **Gauge theory correlators** = **classical gravity solutions**
+- **Energy-momentum tensor of CFT** = **bulk metric perturbations**
+- **Trace of the stress tensor** = **dilaton response**
+- **Thermal partition function** = **Euclidean bulk action**
+- **Transport coefficients** = **linear response in the bulk**
+
+This "strongly-coupled gauge theory = classical gravity" is the practical content of AdS/CFT that's been exploited most.
+
+### What You Can Compute
+
+Things that become calculable:
+- **Free energy** of strongly-coupled gauge theory at finite temperature
+- **Quark-antiquark potential** (Wilson loops)
+- **Transport coefficients** (viscosity, conductivity)
+- **Entanglement entropy** (via Ryu-Takayanagi formula)
+- **Spectra of single-trace operators**
+- **Thermalization dynamics** (via gravitational collapse in bulk)
+
+### What You Can't Do
+
+Some limitations:
+- **Finite $N$ corrections:** require loop quantum gravity in the bulk, hard
+- **Finite $\lambda$:** requires string theory corrections, hard
+- **Specific 4D physics:** AdS/CFT in its canonical form is $\mathcal{N}=4$ SYM, not QCD. For QCD, you need modified "holographic QCD" models
+- **Early/late time behavior** near singularities
+
+### Duality Cascades
+
+An interesting phenomenon: certain flows in AdS/CFT correspond to **duality cascades** — the gauge theory undergoes Seiberg duality transitions as you flow to lower energies. This is a holographic manifestation of Seiberg duality.
+
+These cascades were important in showing that dualities discovered in pure field theory settings (Seiberg) have natural gravitational interpretations. AdS/CFT unified many previously disparate results.
+
+---
+
+## 8. Thermal AdS/CFT
+
+### Black Holes in AdS
+
+A key ingredient: **black holes in AdS**. The Schwarzschild-AdS solution:
+
+$$ds^2 = -f(r)dt^2 + \frac{dr^2}{f(r)} + r^2 d\Omega^2$$
+
+with $f(r) = 1 + r^2/L^2 - r_0^{d-2}/r^{d-2}$.
+
+The black hole has horizon at $r_0$, with temperature:
+
+$$T = \frac{f'(r_0)}{4\pi} = \frac{(d-2)r_0^{d-2}/r_0^{d-1} + 2r_0/L^2}{4\pi}$$
+
+For large $r_0$ (large mass): $T \sim r_0/(\pi L^2)$.
+
+### Thermal CFT
+
+The dual boundary interpretation: **thermal CFT at temperature $T$**. The black hole in the bulk corresponds to thermal state on the boundary.
+
+Specifically:
+
+$$\text{CFT at temperature } T = \text{String theory on Schwarzschild-AdS with horizon temperature } T$$
+
+### Black Hole Entropy
+
+The horizon area of the black hole is finite. The Bekenstein-Hawking entropy:
+
+$$S_{\rm BH} = \frac{A}{4G}$$
+
+This equals the **entropy of the thermal CFT** at the same temperature!
+
+This was a major test of AdS/CFT and a statement about black hole microstates: they correspond to states of the boundary CFT.
+
+### Free Energy Matching
+
+The bulk free energy of Schwarzschild-AdS (from classical gravity calculation) matches the thermal free energy of the boundary $\mathcal{N}=4$ SYM (in the large-$\lambda$ limit):
+
+$$F_{\rm bulk} = -T S_{\rm BH} + \text{thermal contributions}$$
+
+The specific coefficient:
+
+$$F = -\frac{\pi^2}{8}N^2 T^4\cdot(\text{volume})\quad(\text{at large }\lambda)$$
+
+Compared to free-field result:
+
+$$F_{\rm free} = -\frac{\pi^2}{6}N^2 T^4\cdot(\text{volume})\quad(\text{at zero coupling})$$
+
+Ratio: $3/4$. This is the famous **3/4 factor** — strong coupling gives free energy 3/4 of free-field value. Striking agreement has been found in QCD-like theories at strong coupling too.
+
+### Transport Coefficients
+
+Via Kubo formulas (linear response): compute transport coefficients.
+
+**Shear viscosity** $\eta$: how a fluid responds to shear stress. For holographic gauge theories:
+
+$$\frac{\eta}{s} = \frac{1}{4\pi}$$
+
+This is the "universal" lower bound for strongly-coupled field theories (Kovtun-Son-Starinets conjecture). Any fluid with gravity dual has this ratio.
+
+### Experimental Impact
+
+The shear viscosity result connects to the quark-gluon plasma. QGP at RHIC and LHC shows $\eta/s \sim 1/(4\pi)$ — nearly perfect fluid behavior, matching the holographic prediction.
+
+This is one of the most direct experimental validations of AdS/CFT. We don't have an exact holographic dual of QCD, but QCD-like theories are "close enough" that the prediction is quantitatively useful.
+
+---
+
+## 9. The Quark-Gluon Plasma Application
+
+### The QGP Problem
+
+The quark-gluon plasma (document 13) formed at RHIC and LHC:
+- Strongly coupled (perturbation theory fails)
+- Nearly perfect fluid (very low viscosity)
+- Thermalizes very fast
+- Difficult to calculate from first principles
+
+### What AdS/CFT Provides
+
+Even though QCD isn't exactly dual to any gravity theory, holographic approximations work:
+
+**AdS/QCD models:** Construct gravity duals that approximate QCD physics. Modify $AdS_5\times S^5$ to break conformal invariance and introduce confinement.
+
+**Soft wall, hard wall models:** Simple modifications of AdS that give approximate QCD spectra.
+
+**Top-down models:** Derive holographic QCD from specific string constructions (Sakai-Sugimoto, etc.).
+
+### Quantitative Predictions
+
+From holographic calculations:
+
+**Viscosity:** $\eta/s \approx 1/(4\pi)$ at strong coupling. Measured: $\eta/s = 0.05-0.2$, consistent.
+
+**Equation of state:** Energy density vs. pressure at high temperature. AdS/QCD gives qualitatively right behavior.
+
+**Jet quenching:** Energy loss of hard partons in the QGP. Holographic calculations give reasonable $\hat q$ values.
+
+**Thermalization rates:** How fast the QGP thermalizes after collision. Holography gives timescales matching observations (~1 fm/c).
+
+**Quark-antiquark potential:** At finite $T$, screening length. Results broadly consistent with lattice.
+
+Holography isn't a perfect model of QCD, but it provides quantitative predictions that match data at the $20-50\%$ level — enormously valuable given the difficulty of strongly-coupled calculations.
+
+### Why This Is Surprising
+
+QCD isn't $\mathcal{N}=4$ SYM. They're different theories. But:
+- Both are strongly coupled
+- Both have gauge structure
+- The infrared/thermal physics is similar in broad terms
+
+The **universality** of holographic predictions (like $\eta/s = 1/(4\pi)$) suggests that some features of strongly-coupled gauge theory are common to many theories. AdS/CFT captures these features.
+
+This is one reason why holography has become widely adopted even beyond string theorists. It's a practical tool.
+
+---
+
+## 10. Holographic Condensed Matter
+
+### The Generalization
+
+AdS/CFT wasn't limited to $\mathcal{N}=4$ SYM. Similar constructions apply to:
+
+- 4D conformal gauge theories
+- 3D CFTs (dual to AdS$_4$)
+- 2D CFTs (dual to AdS$_3$)
+- Higher-dim CFTs (dual to AdS$_{d+1}$)
+
+The basic principle: any CFT (under appropriate conditions) has a holographic description in one higher dimension.
+
+### Applications to Strongly-Correlated Electrons
+
+Condensed matter physics is full of strongly-correlated systems that traditional methods struggle with:
+- **High-$T_c$ cuprate superconductors** ("strange metals")
+- **Quantum critical points**
+- **Topological phases**
+- **Non-Fermi liquids**
+
+Holography provides a new tool. Specific models:
+
+**Holographic superconductors** (Gubser 2008, Hartnoll-Herzog-Horowitz 2008): adds a charged scalar to AdS-Reissner-Nordström, which condenses at low temperature, giving a holographic realization of superconductivity.
+
+**Holographic Fermi surfaces:** probe fermions in bulk give fermionic spectral functions matching strange-metal phenomenology (Liu-McGreevy-Vegh, Iqbal-Liu).
+
+**Quantum critical points:** AdS provides concrete realizations of quantum criticality, with calculable exponents.
+
+### The Key Insight
+
+Strongly-correlated electron systems have:
+- No good quasiparticle description
+- No small parameter for perturbation theory
+- Specific scaling behaviors (non-Fermi liquid)
+
+Holography provides a "picture" of these systems: they're dual to black holes with appropriate matter content. Compute the gravity side, get predictions for the condensed matter system.
+
+### Quantitative Successes
+
+Some quantitative successes:
+
+**Linear resistivity in strange metals:** Holographic models predict $\rho(T) \propto T$, matching cuprate phenomenology.
+
+**Hall angle scaling:** $\cot\theta_H \propto T^2$, also observed.
+
+**Quantum critical scaling:** Conductivity and susceptibility exhibit $T$-scaling consistent with measurements in specific critical points.
+
+**Minimal viscosity:** Many strongly-correlated fluids approach the $\eta/s = 1/(4\pi)$ bound.
+
+### Limitations
+
+Holographic condensed matter has limitations:
+
+**No exact duals for specific materials.** We don't have the exact gravity dual of $YBa_2Cu_3O_7$. Holography gives "universality class" predictions.
+
+**Lattice structure** and other specifically condensed-matter features are hard to incorporate.
+
+**Microscopic details** are lost in the holographic description.
+
+Still, holography has provided a genuine new angle on strongly-correlated systems that wasn't available before.
+
+---
+
+## 11. Entanglement and Geometry
+
+### The Ryu-Takayanagi Formula
+
+Ryu and Takayanagi (2006) proposed a striking connection between entanglement in the boundary CFT and geometry in the AdS bulk:
+
+$$S_A = \frac{A(\gamma_A)}{4G}$$
+
+where:
+- $S_A$ is the von Neumann entropy of region $A$ in the boundary CFT
+- $\gamma_A$ is a minimal-area codimension-2 surface in the bulk anchored to $\partial A$ on the boundary
+- $A(\gamma_A)$ is the area of this surface
+
+**Entanglement entropy = minimal area.**
+
+### The Remarkable Implications
+
+This is bizarre but powerful:
+
+**Entanglement is geometric.** The amount of entanglement between a region and its complement equals the geometric area of a minimal surface in the bulk.
+
+**Spacetime emerges from entanglement.** If you change the entanglement structure, the geometry changes. Bulk geometry encodes boundary entanglement.
+
+**Holographic tensor networks:** Various attempts to formalize how the entanglement structure of a CFT builds up the bulk spacetime. MERA networks are closely related.
+
+### Applications of RT Formula
+
+**Reconstruction of bulk from boundary:** You can reconstruct regions of the bulk from boundary entanglement patterns.
+
+**Black hole entropy:** The entropy of a black hole (= area over 4G) is naturally interpreted as entanglement entropy of the corresponding boundary state.
+
+**Information paradox:** Recent progress uses extensions of RT (quantum extremal surfaces) to track entanglement during black hole evaporation, showing it can be unitary.
+
+**ER = EPR conjecture** (Maldacena-Susskind): entangled pairs of particles are connected by (quantum) wormholes. If two regions are entangled, they're geometrically connected in the bulk.
+
+### The HRT/QES Extensions
+
+**HRT** (Hubeny-Rangamani-Takayanagi): extends RT to time-dependent situations. Use an extremal surface, not just minimal.
+
+**Quantum extremal surfaces (QES)**: extend HRT by including quantum corrections:
+
+$$S_A = \frac{A(\gamma_{\rm QES})}{4G} + S_{\rm bulk}(\text{inside }\gamma)$$
+
+The second term is the entanglement entropy of bulk fields inside the region bounded by the QES.
+
+QES have been central to recent progress on the black hole information paradox. They provide the "islands" that carry information out of black holes during evaporation (document 25).
+
+---
+
+## 12. Beyond the Original Correspondence
+
+### Holographic Models
+
+$\mathcal{N}=4$ SYM / $AdS_5 \times S^5$ is the canonical example. But many other holographic dualities exist:
+
+**$\mathcal{N}=6$ ABJM theory** (3D) / Type IIA on $AdS_4 \times \mathbb{CP}^3$
+
+**$(2,0)$ theory** (6D) / M-theory on $AdS_7 \times S^4$
+
+**$(2,0)$ theory** compactified / various string theories
+
+**Various 3D CFTs** / AdS$_4$ gravity
+
+**Asymptotically AdS black hole solutions** / thermal CFTs of various types
+
+**AdS$_3$/CFT$_2$** dualities → boundary Virasoro symmetry of AdS$_3$, connection to black hole entropy
+
+### Beyond SUSY
+
+Most well-established AdS/CFT dualities involve SUSY. But extensions include:
+
+**Non-SUSY CFTs** (conjecturally) with gravity duals. Less rigorous but often applicable.
+
+**AdS/QCD-like models:** Bottom-up constructions to approximate QCD.
+
+**Holographic renormalization group:** Understanding RG flows in CFTs via bulk flows.
+
+### Higher Dimensions
+
+The correspondence extends to various dimensions:
+
+**$d = 2$ CFT / AdS$_3$:** Closest to 2D world-sheet string theory. Rich structure with infinite-dimensional Virasoro.
+
+**$d = 3, 4, 5, 6$ CFT / AdS$_{d+1}$:** Various SUSY and non-SUSY models.
+
+**$d = 6$ $(2,0)$ theory / M-theory on $AdS_7 \times S^4$:** Duality with 11D M-theory.
+
+Each dimension gives different physics and different mathematical structures.
+
+### Flat-Space Holography
+
+A major research area: does holography extend to non-AdS spacetimes? In particular:
+
+**Flat space (Minkowski):** Would require "celestial CFT" on a 2-sphere. Active research.
+
+**de Sitter space (cosmological):** Important because our universe is dS. But very hard technically.
+
+**Time-dependent spacetimes:** Cosmological settings, evolving spacetimes.
+
+These generalizations are incomplete but pushing forward.
+
+---
+
+## 13. What Holography Teaches Us
+
+### Insights About Quantum Gravity
+
+AdS/CFT has taught us:
+
+**Quantum gravity has a boundary formulation.** At least in AdS, gravity is fully described by a non-gravitational theory on the boundary. This provides a concrete "UV completion" of gravity in AdS.
+
+**Unitarity is preserved.** The boundary CFT evolves unitarily. So the bulk must too — information is not lost.
+
+**Spacetime emerges from entanglement.** The Ryu-Takayanagi formula and its extensions show how geometry reflects entanglement structure.
+
+**Black holes are ordinary thermal systems.** In AdS, a black hole is just a thermal state of the boundary CFT. Normal thermodynamics, with microstates being CFT states.
+
+### Insights About Gauge Theory
+
+Flipping: AdS/CFT has taught us about gauge theory:
+
+**Large-$N$ gauge theory ≈ classical gravity.** The limit where perturbation theory fails (strong coupling) is where classical gravity is good.
+
+**Strongly-coupled observables calculable.** Transport coefficients, thermodynamic quantities, spectra — all calculable via gravity.
+
+**Deep relations between theories:** $\mathcal{N}=4$ SYM has connections to 2D CFTs, integrable systems, topological field theory via holography.
+
+**Field-theoretic constraints from gravity:** Consistency of gravity imposes constraints on CFTs (superconformal bootstrap, unitarity bounds).
+
+### Insights About Holography
+
+The holographic principle is broader than AdS/CFT:
+- It's a statement about how quantum gravity works
+- It might apply beyond AdS
+- It constrains what quantum gravity theories are consistent
+- It has deep connections to information theory and quantum information
+
+### What We Don't Understand
+
+Open problems:
+
+- **Precise formulation of AdS/CFT away from SUSY limits.** Non-SUSY cases are less rigorous.
+
+- **Vacuum selection.** AdS/CFT works in AdS. Our universe isn't AdS. How does holography apply?
+
+- **Emergence of space.** We know entanglement is geometric. But what's the exact mechanism by which space "emerges" from entanglement?
+
+- **Beyond large-$N$:** How to systematically include finite-$N$ corrections.
+
+- **Non-equilibrium dynamics:** Thermalization, out-of-equilibrium phenomena in detail.
+
+Despite these open questions, holography is firmly established as a major framework. Research continues across many directions.
+
+---
+
+## 14. Appendix: AdS/CFT Reference
+
+### Key Formulas
+
+**AdS metric (Poincaré patch):**
+$$ds^2 = L^2\frac{-dt^2 + d\vec x^2 + dz^2}{z^2}$$
+
+**AdS radius vs. coupling:**
+$$\frac{L^4}{\alpha'^2} = \lambda = g^2 N$$
+$$\frac{L^4}{\ell_P^4} = N^2$$
+
+**Mass-dimension relation:**
+$$\Delta_\pm = \frac{d}{2}\pm\sqrt{\frac{d^2}{4} + m^2 L^2}$$
+
+**Conformal boundary:** $AdS_{d+1}$ has conformal boundary $\mathbb{R}^{1,d-1}$ (Minkowski in $d$ dimensions).
+
+### GKP-Witten Formula
+
+$$Z_{\rm CFT}[J] = Z_{\rm bulk}[\phi_{\rm bdy} = J]$$
+
+In classical gravity limit:
+$$\ln Z_{\rm CFT}[J] = -S_{\rm on-shell}[\phi(z; J)]$$
+
+### Key Applications
+
+**Shear viscosity bound:** $\eta/s = 1/(4\pi)$ for holographic gauge theories at strong coupling
+
+**3/4 factor:** Strong-coupling free energy = $3/4$ weak-coupling free energy for $\mathcal{N}=4$ SYM
+
+**Black hole entropy:** $S_{\rm BH} = A/(4G)$ = entropy of thermal CFT
+
+**Ryu-Takayanagi:** $S_{\rm entangl}(A) = A(\gamma_A)/(4G)$
+
+### Black Hole in AdS
+
+Schwarzschild-AdS temperature:
+$$T = \frac{(d-2)r_0}{4\pi L^2}(\text{ for large }r_0)$$
+
+Entropy:
+$$S = \frac{\Omega_{d-1} r_0^{d-1}}{4G}$$
+
+### Common Correspondences
+
+| Boundary | Bulk |
+|---|---|
+| $\mathcal{N}=4$ SYM (4D) | Type IIB on $AdS_5 \times S^5$ |
+| ABJM (3D) | Type IIA on $AdS_4 \times \mathbb{CP}^3$ |
+| $(2,0)$ theory (6D) | M-theory on $AdS_7 \times S^4$ |
+| 2D CFT | AdS$_3$ gravity |
+
+### Further Reading
+
+- **Maldacena, *The Large N Limit of Superconformal Field Theories and Supergravity* (1997)**: the foundational paper
+- **Gubser, Klebanov, Polyakov; Witten separate 1998 papers**: GKP-Witten formula
+- **Aharony, Gubser, Maldacena, Ooguri, Oz, *Large N Field Theories, String Theory and Gravity* (1999)**: classic review
+- **Nastase, *Introduction to AdS/CFT Correspondence* (2015)**: modern textbook
+- **Ammon & Erdmenger, *Gauge/Gravity Duality***: comprehensive
+- **McGreevy, *Holographic Duality with a View Toward Many-Body Physics***: accessible intro
+- **Hartnoll, Lucas, Sachdev, *Holographic Quantum Matter***: condensed matter applications
+- **Van Raamsdonk lectures**: entanglement/geometry connection
+
+### Problems
+
+1. Derive the AdS$_5$ metric in Poincaré coordinates from the $D3$-brane supergravity solution.
+
+2. For a bulk scalar of mass $m$ in $AdS_{d+1}$, verify the mass-dimension relation $\Delta_\pm = d/2 \pm \sqrt{d^2/4 + m^2 L^2}$.
+
+3. Compute the shear viscosity in $\mathcal{N}=4$ SYM at strong coupling using the Kubo formula and holographic methods, verifying $\eta/s = 1/(4\pi)$.
+
+4. For Schwarzschild-AdS in 5D, derive the relationship between the horizon radius $r_0$ and the temperature $T$.
+
+5. Using the Ryu-Takayanagi formula, compute the entanglement entropy of an interval in a 2D CFT dual to AdS$_3$ and compare with the standard CFT result $S = (c/3)\ln(L/\epsilon)$.
+
+6. Verify that the bulk dimensional reduction of 10D Type IIB on $S^5$ gives the expected spectrum of $\mathcal{N}=4$ SYM operators.
+
+---
+
+## Closing Note
+
+AdS/CFT is the most impactful theoretical development in the past 30 years. It provides:
+- A concrete, calculable formulation of quantum gravity in AdS
+- A powerful tool for strongly-coupled gauge theory calculations
+- Deep connections between field theory, gravity, and entanglement
+- Practical applications to QGP physics and condensed matter
+
+### What You Now Have
+
+A working understanding of:
+- The holographic principle and its motivation
+- AdS space and its boundary structure
+- The Maldacena conjecture and its derivation
+- The dictionary between bulk fields and boundary operators
+- How to compute correlators via gravity
+- Applications to thermal physics, the QGP, and condensed matter
+- The Ryu-Takayanagi formula and entanglement-geometry connection
+- The various generalizations and extensions
+
+### What's Next
+
+Document 25 covers **black holes and the information paradox** — where quantum mechanics and general relativity genuinely collide. AdS/CFT has been central to recent progress on understanding black hole evaporation in a unitary framework. The "islands" story and quantum extremal surfaces will make the holographic machinery developed here very concrete.
+
+After that, document 26 will survey broader approaches to quantum gravity — string theory is one candidate; loop quantum gravity, asymptotic safety, causal dynamical triangulations, and others are alternatives.
+
+Two more documents in the BSM sequence. Both are concrete and genuinely deep. Let me know when to continue.

@@ -12,3 +12,888 @@ classReportTitle: "String theory, foundations."
 *Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
 
 {/* Content from qft_22_string_theory_foundations.md */}
+
+# String Theory — Foundations
+
+*QFT document 22: replacing point particles with one-dimensional objects. The bosonic string, why 26 dimensions, superstrings and 10 dimensions, the five consistent string theories, D-branes, and why string theory is a candidate for quantum gravity.*
+
+We've been doing **point particle** quantum field theory for 21 documents. Particles are 0-dimensional objects, tracing out 1-dimensional worldlines in spacetime. What if we replace them with **strings** — 1-dimensional objects tracing out 2-dimensional **worldsheets**?
+
+This reframing, which seems almost whimsical, has extraordinary consequences:
+
+- **Quantum gravity emerges automatically.** A massless spin-2 excitation is required by consistency. Gravitons appear in the string spectrum without being put in by hand.
+- **UV divergences may be absent.** Strings are extended objects; high-energy scattering behaves softer than point particles.
+- **Unification might be possible.** A single theory contains gauge bosons, gravitons, matter — all as different vibrational modes of the same string.
+- **Consistency fixes the number of dimensions.** Bosonic strings require 26; superstrings require 10.
+- **Dualities become manifest.** What look like different string theories are unified by dualities into a single structure (M-theory, next document).
+
+Whether string theory is "the" quantum theory of gravity or just "a" mathematical framework that teaches deep lessons is still open. The experimental situation is minimal — strings require $E \sim M_{\rm Pl} \sim 10^{19}$ GeV to probe directly, far beyond any foreseeable collider. But the theoretical impact of string theory on modern physics is enormous, and the mathematical structures are among the richest in theoretical physics.
+
+This document lays out the foundations: the basic string, why specific dimensions are required, the five consistent string theories, and D-branes. Document 23 covers dualities and M-theory.
+
+### Prerequisites
+
+- Documents 20-21 (SUSY, since string theory requires it)
+- Document 15 (ChPT, as warmup for worldsheet CFT intuition)
+- Classical field theory (QFT doc) for worldsheet action
+- Some familiarity with conformal field theory helps; not essential
+
+### Conventions
+
+- Mostly-minus metric for spacetime
+- Worldsheet signature: depending on context, either Minkowski or Euclidean (indicated explicitly)
+- $\hbar = c = 1$
+- Natural string length: $\ell_s = \sqrt{\alpha'}$, with $\alpha'$ the Regge slope (inverse string tension)
+
+---
+
+## Table of Contents
+
+1. [Why Strings?](#1-why-strings)
+2. [The Classical Bosonic String](#2-the-classical-bosonic-string)
+3. [Quantizing the Bosonic String](#3-quantizing-the-bosonic-string)
+4. [Why 26 Dimensions?](#4-why-26-dimensions)
+5. [The Bosonic String Spectrum](#5-the-bosonic-string-spectrum)
+6. [Why Superstrings?](#6-why-superstrings)
+7. [The Five Consistent String Theories](#7-the-five-consistent-string-theories)
+8. [Type I, Type IIA, Type IIB](#8-type-i-type-iia-type-iib)
+9. [Heterotic Strings](#9-heterotic-strings)
+10. [D-Branes](#10-d-branes)
+11. [Compactification and the Landscape](#11-compactification-and-the-landscape)
+12. [String Theory as Quantum Gravity](#12-string-theory-as-quantum-gravity)
+13. [Appendix: String Theory Reference](#13-appendix-string-theory-reference)
+
+---
+
+## 1. Why Strings?
+
+### The Quantum Gravity Problem
+
+General relativity describes gravity classically. Quantum field theory describes the other three forces quantum-mechanically. Attempts to quantize gravity as a QFT face severe problems:
+
+**Non-renormalizability.** The graviton coupling has dimension $[\kappa] = -1$ (in mass units). Loop corrections generate operators of ever-higher dimension, requiring infinite counterterms. Gravity as a QFT is non-renormalizable — predictive at low energies, but breaks down near the Planck scale.
+
+**UV divergences.** Graviton loops produce divergences that can't be absorbed into a finite number of couplings. Unlike Yang-Mills, we can't renormalize gravity as a 4D QFT.
+
+**Singularities.** Classical GR has singularities (black holes, Big Bang). Quantum effects should resolve them, but standard QFT doesn't tell us how.
+
+### The String Proposal
+
+Replace point particles with 1-dimensional strings. A string has a natural size $\ell_s = \sqrt{\alpha'}$ (string length). At energies $E \ll 1/\ell_s$, strings look like point particles. At energies $E \sim 1/\ell_s$, the extended nature matters.
+
+For consistency, $\ell_s$ should be close to the Planck scale, $\ell_s \sim \ell_P = \sqrt{G\hbar/c^3} \sim 10^{-35}$ m.
+
+### Why This Helps
+
+**UV softening.** High-energy scattering of extended strings is exponentially softer than point particles. The usual UV divergences are absent.
+
+**Graviton emerges automatically.** A closed string has a massless spin-2 mode. It *must* have the graviton's properties. Quantum gravity comes for free.
+
+**Unification.** All particles (gauge bosons, matter fermions, gravitons, Higgs-like scalars) are different vibrational modes of strings. One theory, many particles.
+
+**Consistency requires specific dimensions.** Bosonic strings: 26 spacetime dimensions. Superstrings: 10. These aren't assumptions — they're derived from consistency.
+
+**Dualities.** Different-looking string theories turn out to be connected by dualities. The five string theories are one theory in disguise.
+
+### What String Theory Claims
+
+String theory is (or claims to be):
+- **A consistent quantum theory of gravity**
+- **A unification of all forces and matter**
+- **A framework with finite number of free parameters** (just $\alpha'$ and the string coupling $g_s$)
+
+If correct, it describes all physics in terms of a single theory.
+
+### What's Uncertain
+
+- **Whether nature uses strings.** No direct experimental evidence. Strings live at the Planck scale, inaccessible to current/foreseeable experiments.
+- **How to select our vacuum from the landscape.** String theory allows ~$10^{500}$ possible vacua (section 11). Which one describes our universe?
+- **The non-perturbative formulation.** String perturbation theory is well-defined; a full non-perturbative formulation (M-theory?) is still being developed.
+- **Predictions for low-energy physics.** Getting specific predictions from string theory requires choosing a compactification, which is not unique.
+
+Despite these uncertainties, string theory has had enormous mathematical and physical impact. Even skeptics use its tools.
+
+---
+
+## 2. The Classical Bosonic String
+
+### The Setup
+
+A string is a 1-dimensional object. As it moves through $D$-dimensional spacetime, it traces out a 2D **worldsheet** $\Sigma$.
+
+Parameterize the worldsheet by:
+- $\sigma$: a coordinate along the string (think "string length parameter")
+- $\tau$: a time coordinate on the worldsheet
+
+These are related to spacetime by $X^\mu(\sigma, \tau)$: a set of functions giving the embedding.
+
+### Two Types of Strings
+
+**Open strings:** Have two endpoints. Parameterize $\sigma \in [0, \pi]$ (or $[0, 2\pi]$, conventions vary). Endpoints satisfy boundary conditions.
+
+**Closed strings:** No endpoints; form a loop. Parameterize $\sigma \in [0, 2\pi]$ with $X^\mu(\sigma) = X^\mu(\sigma + 2\pi)$ (periodic).
+
+Closed strings describe gravitons; open strings describe gauge bosons. The presence of both gives a unified theory of gauge fields and gravity.
+
+### The Nambu-Goto Action
+
+The natural classical action is proportional to the worldsheet area:
+
+$$S_{\rm NG} = -T\int d^2\sigma\,\sqrt{-\det h_{ab}}$$
+
+where $T = 1/(2\pi\alpha')$ is the string tension, and $h_{ab}$ is the induced metric on the worldsheet:
+
+$$h_{ab} = \partial_a X^\mu\partial_b X_\mu$$
+
+(With $a, b$ indexing $\sigma, \tau$.)
+
+The action is manifestly reparametrization invariant.
+
+### The Polyakov Action
+
+The Nambu-Goto action has a square root, making it hard to quantize. The **Polyakov action** introduces an auxiliary worldsheet metric $g_{ab}$:
+
+$$S_P = -\frac{T}{2}\int d^2\sigma\,\sqrt{-g}\,g^{ab}\partial_a X^\mu\partial_b X_\mu$$
+
+Equations of motion for $g_{ab}$ give $g_{ab} \propto h_{ab}$, recovering the Nambu-Goto action. So they're classically equivalent.
+
+The Polyakov form is easier to quantize because it's quadratic in $X$.
+
+### Symmetries
+
+The Polyakov action has:
+
+1. **Poincaré invariance** in spacetime: $X^\mu \to \Lambda^\mu_\nu X^\nu + a^\mu$
+2. **Worldsheet reparametrization invariance:** $\sigma^a \to \tilde\sigma^a(\sigma)$
+3. **Weyl invariance:** $g_{ab} \to e^{2\omega}g_{ab}$, keeping $X$ fixed
+
+Weyl invariance is crucial — it allows us to gauge-fix the worldsheet metric to a simple form (conformal gauge), and it's the symmetry whose quantum anomaly will determine the critical dimension.
+
+### Conformal Gauge
+
+Gauge-fix using reparametrization and Weyl invariance to set:
+
+$$g_{ab} = \eta_{ab} \text{ (flat worldsheet)}$$
+
+After gauge-fixing, the action becomes:
+
+$$S = -\frac{T}{2}\int d^2\sigma\,\partial^a X^\mu\partial_a X_\mu$$
+
+This is just **$D$ free scalar fields** in 2D — very simple!
+
+But the constraint equations (equations of motion for $g_{ab}$ before gauge fixing) must still be imposed:
+
+$$T_{ab} = \partial_a X^\mu\partial_b X_\mu - \tfrac{1}{2}\eta_{ab}\partial^c X^\mu\partial_c X_\mu = 0$$
+
+This is the **Virasoro constraint** — requiring the energy-momentum tensor to vanish.
+
+### Mode Expansion
+
+For a closed string, solutions are:
+
+$$X^\mu(\sigma, \tau) = x^\mu + p^\mu\tau + i\sqrt{\frac{\alpha'}{2}}\sum_{n\neq 0}\frac{1}{n}\left[\alpha^\mu_n e^{-in(\tau - \sigma)} + \tilde\alpha^\mu_n e^{-in(\tau + \sigma)}\right]$$
+
+Two sets of oscillators: $\alpha^\mu_n$ (left-moving) and $\tilde\alpha^\mu_n$ (right-moving).
+
+For an open string: only one set of oscillators, with boundary conditions relating left and right movers.
+
+---
+
+## 3. Quantizing the Bosonic String
+
+### Canonical Quantization
+
+Promote oscillators to operators. The commutation relations:
+
+$$[\alpha^\mu_m, \alpha^\nu_n] = m\eta^{\mu\nu}\delta_{m+n, 0}$$
+
+For each $m \neq 0$: a standard oscillator algebra. $\alpha^\mu_{-m}$ (with $m > 0$) is a creation operator, $\alpha^\mu_m$ an annihilation operator.
+
+The ground state $|0, p\rangle$: $\alpha^\mu_n|0, p\rangle = 0$ for $n > 0$, with momentum $p^\mu$.
+
+### The Problem: Negative Norm States
+
+Naively, $\alpha^0_{-1}|0, p\rangle$ has norm:
+
+$$\langle 0|\alpha^0_1\alpha^0_{-1}|0\rangle = \langle 0|[\alpha^0_1, \alpha^0_{-1}]|0\rangle + \ldots = \eta^{00} = -1$$
+
+**Negative!** This is a ghost state — the time components of $X^\mu$ give negative-norm oscillators.
+
+For a consistent quantum theory, such states must not propagate. Eliminating them requires the Virasoro constraint and specific dimensional restrictions.
+
+### The Virasoro Algebra
+
+The Fourier modes of the energy-momentum tensor are **Virasoro generators** $L_n$ (and $\tilde L_n$ for right-movers):
+
+$$L_n = \tfrac{1}{2}\sum_m\alpha^\mu_{n-m}\alpha_{\mu m}$$
+
+(Normal-ordered for $n = 0$.)
+
+They satisfy the **Virasoro algebra**:
+
+$$[L_m, L_n] = (m - n)L_{m+n} + \frac{c}{12}m(m^2 - 1)\delta_{m+n, 0}$$
+
+where $c$ is the **central charge**. For bosonic strings in $D$ dimensions: $c = D$.
+
+### Physical States
+
+Physical states must be annihilated by $L_n$ for $n > 0$:
+
+$$L_n|\text{phys}\rangle = 0, \quad n > 0$$
+
+$$(L_0 - a)|\text{phys}\rangle = 0$$
+
+where $a$ is a normal-ordering constant (to be determined).
+
+### The Mass Formula
+
+$L_0 = $ (number operator) gives the mass-squared. For closed strings:
+
+$$M^2 = \frac{2}{\alpha'}(N + \tilde N - a - \tilde a)$$
+
+where $N, \tilde N$ are the total oscillator numbers for left- and right-movers.
+
+For open strings:
+
+$$M^2 = \frac{1}{\alpha'}(N - a)$$
+
+The normal-ordering constants $a$, $\tilde a$ are to be determined.
+
+### Level Matching
+
+For closed strings, another condition:
+
+$$N - \tilde N = 0$$
+
+(Level matching.) This comes from $L_0 = \tilde L_0$ constraint, reflecting the invariance of closed strings under rigid rotations $\sigma \to \sigma + \text{const}$.
+
+---
+
+## 4. Why 26 Dimensions?
+
+### The Constraint
+
+For the bosonic string to be consistent (no ghosts), the spacetime dimension $D$ and the normal-ordering constant $a$ must take specific values.
+
+### The Computation
+
+Using $\zeta$-function regularization:
+
+$$\sum_{n=1}^\infty n = -\frac{1}{12}$$
+
+(Formally! Via analytic continuation of the Riemann $\zeta$-function.)
+
+The normal-ordering constant is:
+
+$$a = \frac{D-2}{2}\sum_{n=1}^\infty n = -\frac{D-2}{24}$$
+
+### The Photon-like State
+
+At level $N = 1$ in the open string, we have states $\alpha^\mu_{-1}|0, p\rangle$. For these to be consistent massless states (analogous to the photon), we need:
+
+$$M^2 = (1 - a)/\alpha' = 0$$
+
+So $a = 1$.
+
+Combined with the $\zeta$-function result:
+
+$$1 = \frac{D-2}{24} \implies D - 2 = 24 \implies D = 26$$
+
+**Bosonic string theory requires 26 spacetime dimensions.**
+
+### The Physical Argument
+
+The reasoning can be made rigorous through various approaches:
+
+**Conformal anomaly:** The worldsheet theory has conformal symmetry. Anomalies vanish only in the critical dimension. Bosonic: $c = D = 26$ cancels the $c = -26$ from ghosts.
+
+**Light-cone quantization:** Manifestly negative-norm states are absent only in $D = 26$.
+
+**No-ghost theorem:** A rigorous proof that physical states have positive norm requires $D = 26$.
+
+All approaches converge on the same answer.
+
+### The Meaning
+
+The critical dimension isn't something we choose — it's dictated by consistency. You cannot have bosonic string theory in any dimension other than 26 (classically; there are modified constructions but they're different theories).
+
+Similarly for superstrings: the critical dimension is 10 (not 26, because the fermions contribute to the anomaly cancellation).
+
+For bosonic strings in $D < 26$: the theory has tachyons and anomalies; inconsistent.
+
+For bosonic strings in $D > 26$: also inconsistent.
+
+---
+
+## 5. The Bosonic String Spectrum
+
+### The Lowest States
+
+With $a = 1$ and $D = 26$, the mass levels are:
+
+**$N = 0$:** One state, $|0, p\rangle$. $M^2 = -1/\alpha'$. **Tachyon!** Negative mass-squared.
+
+**$N = 1$:** $\alpha^\mu_{-1}|0, p\rangle$ (24 physical states after Virasoro). Massless, spin-1.
+
+**$N = 2$:** Various states. Massive.
+
+### The Tachyon Problem
+
+The bosonic string has a tachyon at $N = 0$. Tachyons mean the vacuum is unstable — the theory rolls to some other configuration.
+
+This is a fatal problem for the bosonic string. Realistic physics doesn't have stable tachyons.
+
+### Massless States (Closed Strings)
+
+At $N = \tilde N = 1$: states of the form $\alpha^\mu_{-1}\tilde\alpha^\nu_{-1}|0, p\rangle$. These decompose into:
+
+- **Symmetric traceless (spin-2):** graviton $G_{\mu\nu}$
+- **Antisymmetric:** Kalb-Ramond 2-form $B_{\mu\nu}$
+- **Trace:** dilaton $\Phi$
+
+The graviton is the big discovery — a massless spin-2 in the spectrum means this theory has gravity automatically!
+
+The Kalb-Ramond 2-form and dilaton are specific predictions of string theory that don't exist in the SM.
+
+### Massive Excited States
+
+At $N = 2$: more states, including spin-2 massive states, spin-4, etc. Masses $M^2 = 4/\alpha'$, $6/\alpha'$, ...
+
+For $\alpha' \sim 1/M_{\rm Pl}^2$, these are Planck-scale massive particles.
+
+### Why the Bosonic String Fails
+
+The bosonic string:
+- Has tachyons (unstable vacuum)
+- Predicts 26 dimensions (problematic for us in 4)
+- Contains only bosons (no matter fermions!)
+
+These problems are fixed by the **superstring**, which includes SUSY on the worldsheet.
+
+---
+
+## 6. Why Superstrings?
+
+### Adding Worldsheet Fermions
+
+To fix the bosonic string's problems, add fermionic fields on the worldsheet:
+
+$$\psi^\mu(\sigma, \tau)$$
+
+(A worldsheet spinor carrying a spacetime vector index $\mu$.) These are Majorana-Weyl fermions — in 2D they have 2 components but simplify.
+
+### The Action
+
+The worldsheet action becomes:
+
+$$S = -\frac{1}{4\pi\alpha'}\int d^2\sigma\,\left[\partial^a X^\mu\partial_a X_\mu - i\bar\psi^\mu\gamma^a\partial_a\psi_\mu\right]$$
+
+Plus worldsheet supersymmetry transformations:
+
+$$\delta X^\mu = \bar\epsilon\psi^\mu, \quad \delta\psi^\mu = -i\gamma^a\partial_a X^\mu\epsilon$$
+
+This is **worldsheet SUSY** — the theory is SUSY on the 2D worldsheet. Not to be confused with spacetime SUSY (which may or may not be present; it depends on the specific superstring theory).
+
+### Critical Dimension Becomes 10
+
+With worldsheet SUSY, the conformal anomaly calculation changes. The critical dimension becomes:
+
+$$D = 10$$
+
+Superstrings require 10 spacetime dimensions, not 26.
+
+### Eliminating the Tachyon
+
+Worldsheet SUSY eliminates the tachyon. The ground state in the "NS-R formalism" (Neveu-Schwarz / Ramond) is projected:
+
+- **NS sector** (with certain boundary conditions): ground state would be a tachyon, but **GSO projection** removes it
+- **R sector** (different boundary conditions): spacetime fermions appear
+
+GSO projection: truncate the spectrum to keep only states with specific worldsheet parity. This is consistent (via modular invariance) and removes the tachyon.
+
+### The Payoff
+
+Superstrings have:
+
+- **No tachyon** (after GSO)
+- **Spacetime fermions** (matter!)
+- **10 spacetime dimensions**
+- **Spacetime SUSY** (at least in some cases)
+- **Consistent quantization** (no ghosts)
+
+This is a proper physical theory.
+
+---
+
+## 7. The Five Consistent String Theories
+
+### The Zoo
+
+There are five consistent superstring theories in 10 dimensions:
+
+1. **Type I**: open and closed strings, gauge group $SO(32)$
+2. **Type IIA**: only closed strings, non-chiral
+3. **Type IIB**: only closed strings, chiral
+4. **Heterotic $E_8 \times E_8$**: closed strings, gauge group $E_8 \times E_8$
+5. **Heterotic $SO(32)$**: closed strings, gauge group $SO(32)$ (different from Type I's)
+
+Each has 10-dimensional SUSY. Each is a full quantum theory of gravity + gauge fields + matter.
+
+### Why So Many?
+
+Each string theory is distinguished by:
+- **Type of strings**: open, closed, or both
+- **Boundary conditions on fermions**: various choices lead to different spectra
+- **Gauge group**: determined by consistency (anomaly cancellation, modular invariance)
+- **Spacetime SUSY**: how much SUSY the theory has in 10D
+
+Initially (1980s) these looked like 5 different theories — an embarrassment of riches. We expected one theory of quantum gravity, not five.
+
+### Duality Web
+
+The revolutionary realization of the 1990s: **the five theories are connected by dualities**. They're different "corners" of a single underlying theory — M-theory (document 23).
+
+Dualities include:
+- **T-duality:** Type IIA ↔ Type IIB on circles
+- **S-duality:** Type I ↔ Heterotic $SO(32)$
+- **S-duality for IIB:** $g \leftrightarrow 1/g$
+- **Heterotic-Type I:** related to S-duality
+
+No string theory is "more fundamental" than the others; they're unified.
+
+### 11-Dimensional M-Theory
+
+There's also 11-dimensional M-theory, which at low energies is 11D supergravity. Compactifying to 10D gives Type IIA or Heterotic $E_8 \times E_8$, depending on how you compactify.
+
+So really, the underlying theory is 11D M-theory, and the five 10D string theories are specific compactifications/limits of it.
+
+### Phenomenology Connection
+
+For phenomenology (4D physics):
+- Compactify 10D superstrings on a 6-manifold (usually Calabi-Yau)
+- Or compactify 11D M-theory on a 7-manifold (usually $G_2$ holonomy)
+- The 4D theory depends strongly on the compactification choice
+
+**Heterotic $E_8\times E_8$** is particularly popular for phenomenology — one $E_8$ becomes the visible sector (SM + extensions); the other can be a hidden sector.
+
+---
+
+## 8. Type I, Type IIA, Type IIB
+
+### Type I
+
+**Strings:** Open and closed strings both present. Open strings have gauge degrees of freedom at their endpoints.
+
+**Spacetime SUSY:** Half of the maximal ($\mathcal{N}=1$ in 10D).
+
+**Gauge group:** $SO(32)$ is required by anomaly cancellation (Green-Schwarz mechanism). Any other choice leads to inconsistencies.
+
+**Particle content in 10D:** Graviton, dilaton, Kalb-Ramond $B$-field, plus $SO(32)$ gauge fields, plus corresponding fermionic partners.
+
+**D-branes:** Even-dimensional D-branes ($D0, D1, D2, \ldots$ odd: 1, 5, 9; even: 0, 4, 8 — actually, conventions vary; let me double-check). Type I has D1 and D5 branes.
+
+### Type IIA
+
+**Strings:** Only closed strings.
+
+**Spacetime SUSY:** $\mathcal{N}=2$ in 10D, but with **opposite chirality** supercharges.
+
+This is why it's "IIA": two supercharges with opposite chirality, making the theory **non-chiral**. It has parity symmetry.
+
+**Gauge fields:** No non-abelian gauge fields in 10D (besides metric components). The "gauge" structure comes from the RR (Ramond-Ramond) fields.
+
+**RR fields:** In Type IIA, the RR fields are $C_1$ (1-form) and $C_3$ (3-form). These are abelian gauge fields of various degrees.
+
+**D-branes:** Even-dimensional: $D0, D2, D4, D6, D8$.
+
+### Type IIB
+
+**Strings:** Only closed strings.
+
+**Spacetime SUSY:** $\mathcal{N}=2$ in 10D, but with **same chirality** supercharges.
+
+This makes Type IIB **chiral**. It has no parity symmetry in 10D — a parity-violating theory.
+
+**RR fields:** $C_0$ (0-form/axion), $C_2$ (2-form), $C_4$ (4-form, self-dual).
+
+**D-branes:** Odd-dimensional: $D(-1)$ (instantons), $D1, D3, D5, D7$.
+
+**Special feature:** $SL(2, \mathbb{Z})$ S-duality symmetry — the axion-dilaton complex $\tau = C_0 + i/g_s$ transforms. This is Montonen-Olive-like duality elevated to the full string theory.
+
+### Common Features
+
+All three theories have:
+- Graviton
+- Dilaton
+- Kalb-Ramond $B$-field (in NS-NS sector)
+- Various RR fields
+
+The differences are in the spectrum of spacetime fermions and the types of D-branes.
+
+### Low-Energy Effective Theories
+
+At low energies ($E \ll 1/\ell_s$), each superstring theory reduces to a supergravity theory in 10D:
+
+- **Type I:** $\mathcal{N}=1$ 10D supergravity + SYM with gauge group $SO(32)$
+- **Type IIA:** $\mathcal{N}=2$ non-chiral 10D supergravity
+- **Type IIB:** $\mathcal{N}=2$ chiral 10D supergravity
+
+These supergravity theories are rigorous (as effective field theories), and most low-energy string theory calculations use them.
+
+---
+
+## 9. Heterotic Strings
+
+### The Setup
+
+Heterotic string theory is based on an unusual observation: left-moving and right-moving modes on a closed string are independent. Why not use different theories for each?
+
+**Left-movers:** Use the bosonic string in 26 dimensions.
+**Right-movers:** Use the superstring in 10 dimensions.
+
+This sounds absurd. But in fact, only 10 dimensions are *physical* — the extra 16 dimensions from the left-movers are compactified on a specific even self-dual lattice. The internal 16-dimensional compactification gives the gauge group.
+
+### The Gauge Group
+
+For the 16-dimensional lattice to be consistent (even, self-dual), there are **only two choices**:
+
+1. **$E_8 \times E_8$** lattice → Heterotic $E_8\times E_8$ string theory
+2. **$\text{Spin}(32)/\mathbb{Z}_2$** lattice → Heterotic $SO(32)$ string theory
+
+These exhaust the consistent even self-dual 16-dimensional lattices.
+
+### Heterotic $E_8 \times E_8$
+
+Particle content in 10D:
+- Graviton
+- Dilaton
+- Kalb-Ramond $B$-field
+- **Gauge fields in $E_8 \times E_8$** (two copies of $E_8$)
+- Superpartners
+
+This is particularly appealing for phenomenology. One $E_8$ can be the "visible" sector containing the Standard Model (and extensions), while the other is "hidden."
+
+$E_8$ is the largest exceptional Lie group, with dimension 248. It's remarkably "large" — can contain $SU(3) \times SU(2) \times U(1)$ with room for GUT extensions, extra families, and more.
+
+### Heterotic $SO(32)$
+
+Similar, but with gauge group $SO(32)$.
+
+This is the same gauge group as Type I (but the theories are different — different massless content, different interactions).
+
+### Why Heterotic?
+
+Heterotic strings combine:
+- Consistent quantum gravity (from superstring right-movers)
+- Large gauge group (from bosonic left-movers)
+- SUSY
+- Potentially realistic phenomenology
+
+$E_8 \times E_8$ heterotic was the leading candidate for "the" string theory in the 1980s-90s, before dualities and branes shifted the picture.
+
+### Compactification
+
+Heterotic strings in 10D need to be compactified to 4D. The standard approach:
+
+- Compactify 6 dimensions on a **Calabi-Yau threefold** $X$
+- This breaks SUSY from $\mathcal{N}=4$ in 4D (from 10D $\mathcal{N}=1$) to $\mathcal{N}=1$ in 4D (phenomenologically preferred)
+- The topology of $X$ determines the particle content
+
+For a Calabi-Yau with Hodge numbers $(h^{1,1}, h^{2,1})$: the number of chiral fermion families is related to $|h^{2,1} - h^{1,1}|$ (after appropriate choices of bundles).
+
+To get 3 families of quarks and leptons: need specific Calabi-Yau geometry.
+
+### The String Landscape
+
+Compactifying strings (especially heterotic) on different Calabi-Yau manifolds gives different 4D physics. Estimates for the number of consistent vacua reach $10^{500}$ or more.
+
+This **landscape problem** — how to pick our vacuum from so many — is central to modern string phenomenology.
+
+---
+
+## 10. D-Branes
+
+### What Is a D-Brane?
+
+A **D-brane** (Dirichlet brane) is a hypersurface in spacetime where open strings can end. Polchinski (1995) realized that D-branes are dynamical objects — they carry energy, charge, and are full-fledged non-perturbative states of string theory.
+
+### The D-Brane Mass
+
+Polchinski showed that D-brane tension:
+
+$$T_{Dp} = \frac{1}{g_s(2\pi)^p\alpha'^{(p+1)/2}}$$
+
+Notice: **D-brane tension goes as $1/g_s$**. At weak coupling ($g_s \ll 1$), D-branes are very heavy. At strong coupling ($g_s \sim 1$), they become light and dynamical.
+
+This is non-perturbative: a state whose mass scales as $1/g$ isn't visible in perturbation theory but becomes important at strong coupling.
+
+### What D-Branes Carry
+
+D-branes carry charges under the RR fields. Specifically:
+
+- $Dp$-brane in Type IIA (with $p$ even): couples to $C_{p+1}$
+- $Dp$-brane in Type IIB (with $p$ odd): couples to $C_{p+1}$
+
+The coupling is: $\int_{Dp}C_{p+1}$ (a Chern-Simons-like action on the brane worldvolume).
+
+### Gauge Theory on D-Branes
+
+Multiple coincident $D$-branes support a **non-abelian gauge theory**. For $N$ coincident $Dp$-branes: the gauge group on the worldvolume is $U(N)$ (or $SU(N)$, depending on conventions).
+
+This is profound. A stack of $N$ coincident D-branes is literally a gauge theory in $p+1$ dimensions.
+
+**Example:** $N$ coincident $D3$-branes in Type IIB support $\mathcal{N}=4$ super-Yang-Mills theory with gauge group $U(N)$. This is the starting point of AdS/CFT.
+
+### D-Branes and Gauge/Gravity Duality
+
+D-branes are simultaneously:
+- **Gauge theories** (on their worldvolume)
+- **Gravitational objects** (they source gravity in bulk)
+
+This dual role suggests a deep duality: gauge theory ↔ gravity. This is the origin of the AdS/CFT correspondence (document 24).
+
+### BPS States
+
+D-branes in SUSY string theories are **BPS states**. Their masses are exactly calculable (using BPS bounds analogous to those in $\mathcal{N}=4$ SUSY). This makes many D-brane calculations tractable.
+
+### Higher-Dimensional Branes
+
+Beyond D-branes, string theory has:
+- **NS5-branes**: 5+1-dimensional objects carrying NS-NS $B$-field magnetic charge
+- **M2-branes and M5-branes** (in 11D M-theory): fundamental objects in M-theory
+- **Various other brane constructions**
+
+In M-theory and string theory, the "particles" at low energies are often specific branes wrapped on specific cycles in compactification manifolds.
+
+### Effective Field Theory on Branes
+
+The low-energy effective theory on a D-brane includes:
+- Gauge fields (from string endpoints)
+- Scalars parametrizing transverse positions (moduli)
+- Fermions (superpartners)
+
+This is a standard gauge theory, but with specific structure fixed by the underlying string theory. Gauge couplings, Yukawas, etc., are all computable (in principle) from the string compactification.
+
+### Intersecting Brane Models
+
+For phenomenology: stacks of branes at angles in compactification manifold can produce realistic gauge groups, chiral fermions, and Yukawa couplings.
+
+**"Intersecting brane models"** and similar constructions (e.g., F-theory compactifications) are a major phenomenological approach within string theory.
+
+---
+
+## 11. Compactification and the Landscape
+
+### From 10 or 11 Dimensions to 4
+
+Our world is 4-dimensional (3 space + 1 time). But superstrings need 10D, M-theory 11D. The extra dimensions must be **compactified**:
+
+$$\text{10D} = \text{4D Minkowski} \times M_6$$
+
+where $M_6$ is a compact 6-dimensional manifold. The size of $M_6$ is typically at the string/Planck scale, so it's effectively invisible at low energies.
+
+### Calabi-Yau Manifolds
+
+For preserving some SUSY in 4D (useful for phenomenology), the internal manifold must be a **Calabi-Yau manifold** — a complex Kähler manifold with vanishing first Chern class.
+
+Yau proved the existence of such manifolds (Calabi-Yau theorem, 1978), satisfying the Einstein-Monge-Ampère equation.
+
+### The Physics
+
+A Calabi-Yau threefold (complex dim 3 = real dim 6) has:
+- **Hodge numbers** $h^{1,1}$ and $h^{2,1}$ characterizing its topology
+- A moduli space parameterizing its metric
+- Specific SUSY preserved (1/4 of 10D SUSY = $\mathcal{N}=2$ in 4D for Type II; $\mathcal{N}=1$ for Heterotic)
+
+The particle content of the 4D theory depends on the topology and moduli.
+
+### Moduli Problem
+
+The moduli of the compactification manifold (its size, shape) are **massless scalar fields** in 4D. Nature hasn't found any. So the moduli must be stabilized by some mechanism.
+
+**Flux compactifications** (Kachru-Kallosh-Linde-Trivedi, 2003 and others): turn on nonzero RR and NS-NS fluxes through cycles of the manifold. These fluxes generate potentials for moduli, stabilizing them.
+
+**The cost:** many fluxes are possible, each giving a different vacuum. This is the origin of the landscape.
+
+### The Landscape
+
+Counting stable flux vacua: estimates range from $10^{500}$ to much higher. Each gives a different 4D universe with different particle content and coupling values.
+
+**The challenge:** find a vacuum matching our universe. Various attempts:
+- Search specific Calabi-Yau manifolds and flux choices
+- Use machine learning to explore the landscape
+- Apply anthropic reasoning (pick vacua consistent with life)
+- Combine with other constraints (swampland conjectures, etc.)
+
+No definitive answer yet. This is the **cosmological constant problem** in string theory: we need a vacuum with $\Lambda \approx (\text{observed value})$, which is very small.
+
+### Swampland Conjectures
+
+Recent development: not all 4D effective theories can be derived from a consistent string/quantum gravity theory. Those that can are in the **landscape**; those that can't are in the **swampland**.
+
+**Swampland conjectures** (various authors, 2000s-2010s):
+- **Weak gravity conjecture:** every gauge force must have particles satisfying $m/q < M_{\rm Pl}\cdot(\text{gauge coupling})$
+- **Distance conjecture:** infinite distance in moduli space requires infinite tower of light states
+- **de Sitter conjecture:** no stable de Sitter vacua in string theory (controversial)
+
+If correct, these constrain which low-energy theories are viable. Many popular BSM models would be excluded.
+
+### Why This Matters
+
+The landscape problem is central to string theory's predictive power:
+- If string theory only allows specific vacua (small landscape), it could be highly predictive
+- If it allows many vacua (large landscape), it might be consistent with anything
+- The answer depends on the full string theory structure, much of which isn't understood non-perturbatively
+
+Current view: the landscape is large but constrained. Finding our vacuum is hard but perhaps not impossible.
+
+---
+
+## 12. String Theory as Quantum Gravity
+
+### The Argument
+
+String theory is a candidate quantum theory of gravity because:
+
+1. **Graviton is automatic.** The closed string has a massless spin-2 excitation. It must have graviton properties.
+
+2. **UV softening.** String scattering amplitudes are UV-softer than point-particle gravity. No uncontrolled divergences.
+
+3. **Consistent with black hole thermodynamics.** String theory can count black hole microstates in some cases (Strominger-Vafa 1996, document 25), matching the Bekenstein-Hawking entropy.
+
+4. **Holography works.** AdS/CFT in string theory gives quantum gravity in AdS = CFT on boundary. This is a concrete realization of the holographic principle (document 24).
+
+5. **Dualities.** Strong-weak dualities tie the five string theories into M-theory, suggesting a unified non-perturbative structure.
+
+### What String Theory Has Achieved
+
+- **Finite perturbative gravity.** Scattering amplitudes at tree and loop level are computed and finite.
+- **Black hole entropy calculations.** Microstate counting for specific extremal black holes.
+- **Gauge/gravity duality.** AdS/CFT — quantum gravity in AdS expressed in terms of CFTs.
+- **Geometric engineering.** Gauge theories from branes wrapped on cycles.
+- **Resolution of singularities in specific cases.** Small black holes, conifold, flop transitions.
+
+### What Remains Unclear
+
+- **Non-perturbative formulation.** We have perturbative strings and low-energy supergravity. A complete non-perturbative definition (M-theory) is incomplete.
+- **Vacuum selection.** How to pick our universe from $10^{500}$ vacua.
+- **Black hole information paradox.** Resolved in AdS/CFT in principle (holography is unitary), but the detailed mechanism in specific black holes is still developing.
+- **De Sitter vacua.** Our universe appears to have positive cosmological constant. Constructing stable dS vacua in string theory is controversial.
+- **Experimental tests.** Strings at $M_{\rm Pl}$ are far from experimental reach. Indirect tests (SUSY, extra dimensions, modified gravity) have so far yielded nothing.
+
+### The Philosophical Position
+
+String theory is the best-developed candidate quantum theory of gravity but is not uniquely selected by theoretical arguments. Other approaches exist (loop quantum gravity, asymptotic safety, causal set theory, etc.).
+
+String theory has impacted physics enormously — as a framework for quantum gravity thinking, as a mathematical tool, as the inspiration for AdS/CFT. Whether it's "the truth" or "a framework" is open.
+
+### Why Study It
+
+Even for skeptics:
+- The mathematics is beautiful and has produced deep results (Calabi-Yau, mirror symmetry, etc.)
+- The tools are applicable beyond pure string theory (AdS/CFT, holography)
+- It forces us to think about quantum gravity rigorously
+- It might be right
+
+For believers: string theory is the deepest unified description of nature we have.
+
+Either way, document 22 through 26 of this sequence give you the framework for engaging with modern theoretical physics at the research level.
+
+---
+
+## 13. Appendix: String Theory Reference
+
+### Key Formulas
+
+**Nambu-Goto action:** $S = -T\int d^2\sigma\sqrt{-\det h_{ab}}$
+
+**Polyakov action:** $S = -T/2\int d^2\sigma\sqrt{-g}g^{ab}\partial_a X^\mu\partial_b X_\mu$
+
+**String tension:** $T = 1/(2\pi\alpha')$, string length $\ell_s = \sqrt{\alpha'}$
+
+**Virasoro algebra:** $[L_m, L_n] = (m-n)L_{m+n} + (c/12)m(m^2-1)\delta_{m+n}$, with $c = D$ for bosonic strings
+
+**Mass formula (open bosonic):** $M^2 = (N - a)/\alpha'$, $a = 1$
+
+**Mass formula (closed bosonic):** $M^2 = (2/\alpha')(N + \tilde N - 2)$
+
+**Critical dimensions:**
+- Bosonic string: $D = 26$
+- Superstring: $D = 10$
+- M-theory: $D = 11$
+
+### Superstring Theories Summary
+
+| Theory | Strings | Gauge Group | SUSY in 10D |
+|---|---|---|---|
+| Type I | open+closed | $SO(32)$ | $\mathcal{N}=1$ |
+| Type IIA | closed only | (RR fields) | $\mathcal{N}=2$ (non-chiral) |
+| Type IIB | closed only | (RR fields) | $\mathcal{N}=2$ (chiral) |
+| Heterotic $E_8\times E_8$ | closed | $E_8\times E_8$ | $\mathcal{N}=1$ |
+| Heterotic $SO(32)$ | closed | $SO(32)$ | $\mathcal{N}=1$ |
+
+### D-Branes
+
+**Tension:** $T_{Dp} = 1/[g_s(2\pi)^p\alpha'^{(p+1)/2}]$
+
+**Types in Type II:**
+- Type IIA: $D0, D2, D4, D6, D8$
+- Type IIB: $D(-1), D1, D3, D5, D7$
+
+**Gauge theory on $N$ coincident $Dp$-branes:** $U(N)$ gauge theory in $p+1$ dimensions
+
+### Compactification
+
+**Typical manifold:** Calabi-Yau threefold $X$ for Type II, or $G_2$ manifold for M-theory
+- **Preserves SUSY in 4D**
+- **Moduli:** $h^{1,1}(X)$ Kähler moduli + $h^{2,1}(X)$ complex structure moduli
+
+### Further Reading
+
+- **Green, Schwarz, Witten, *Superstring Theory* (1987)**: the classic two-volume textbook
+- **Polchinski, *String Theory* (1998)**: the standard modern reference (two volumes)
+- **Becker, Becker, Schwarz, *String Theory and M-Theory* (2007)**: modern textbook
+- **Zwiebach, *A First Course in String Theory***: accessible introduction
+- **Kiritsis, *String Theory in a Nutshell***: concise but comprehensive
+- **Tong, *String Theory* lecture notes**: available online, very clear
+- **Susskind & Lindesay, *Introduction to Black Holes, Information and the String Theory Revolution***: accessible
+
+### Problems
+
+1. Starting from the Polyakov action, derive the Virasoro constraints.
+
+2. Using $\zeta$-function regularization ($\sum_{n=1}^\infty n = -1/12$), show that the bosonic string's normal-ordering constant $a = 1$ requires $D = 26$.
+
+3. For the closed bosonic string, enumerate the massless states at level $N = \tilde N = 1$ and identify the graviton, $B$-field, and dilaton.
+
+4. Show that open strings on a stack of $N$ $Dp$-branes give rise to a $U(N)$ gauge theory in $p+1$ dimensions. What are the massless scalars?
+
+5. Verify anomaly cancellation (Green-Schwarz mechanism) for Type I string theory with gauge group $SO(32)$.
+
+6. For Heterotic $E_8\times E_8$ compactified on a Calabi-Yau with Euler number $\chi = -6$, count the number of chiral fermion generations in 4D.
+
+---
+
+## Closing Note
+
+String theory replaces point particles with 1-dimensional strings. The consequences ripple through theoretical physics: consistent quantum gravity, required specific dimensions, unification of forces, dualities, and a vast landscape of vacua.
+
+### What You Now Know
+
+- The classical and quantum structure of strings
+- Why 26 dimensions for bosonic strings, 10 for superstrings
+- The five consistent superstring theories and their properties
+- D-branes as dynamical non-perturbative objects
+- Compactification from 10D (or 11D M-theory) to 4D
+- The landscape of vacua and its challenges
+- Why string theory is a candidate quantum theory of gravity
+
+### What's Next
+
+Document 23 covers **dualities and M-theory** — the network of connections that unifies the five string theories into a single underlying structure. T-duality, S-duality, U-duality, and how 10D strings emerge as limits of 11D M-theory.
+
+After that: holography and AdS/CFT (doc 24), black holes and the information paradox (doc 25), and a survey of quantum gravity approaches (doc 26).
+
+The territory gets more speculative but also more conceptually profound. Quantum gravity is arguably the deepest open problem in physics; string theory is one proposed answer; various others compete.
+
+If you want a breather, this is a reasonable stopping point. The bosonic string, superstrings, D-branes, and compactification are established. The big-picture story of dualities and M-theory is the next chapter. Let me know when to continue.
