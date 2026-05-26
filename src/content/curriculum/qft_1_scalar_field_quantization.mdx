@@ -11,4 +11,653 @@ classReportTitle: "What it means to quantize a field."
 
 *Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
 
-{/* Content from qft_1_scalar_field_quantization.md */}
+# Canonical Quantization of the Scalar Field
+
+*The cleanest entry into quantum field theory — where fields become operators and particles emerge as their excitations.*
+
+This is the first of the QFT documents. The prerequisite is everything we've built: Lagrangian mechanics, special relativity and tensors, classical field theory (especially the Klein-Gordon theory), quantum mechanics, and a bit of statistical mechanics. If you're fluent with the harmonic oscillator in QM and can write down the Klein-Gordon Lagrangian, you're ready.
+
+The goal of this document is modest but profound: take the classical Klein-Gordon field and quantize it, using the same canonical procedure that turns classical mechanics into quantum mechanics. What comes out is not a theory of a single particle with a wave function — it's a theory of a *field operator* whose excitations are particles. This reframing is the conceptual foundation of all QFT.
+
+### Signature Convention
+
+Switching back to the **mostly-minus** convention $\eta_{\mu\nu} = \text{diag}(+,-,-,-)$ for the QFT series, consistent with particle physics practice and the classical field theory document. (Recall the GR document used mostly-plus.)
+
+We also set $\hbar = c = 1$. Factors restore if you need SI units.
+
+---
+
+## Table of Contents
+
+1. [The Setup: Why Quantize a Field?](#1-the-setup-why-quantize-a-field)
+2. [Canonical Quantization Recipe](#2-canonical-quantization-recipe)
+3. [The Classical Klein-Gordon Field in Review](#3-the-classical-klein-gordon-field-in-review)
+4. [Quantizing: Equal-Time Commutation Relations](#4-quantizing-equal-time-commutation-relations)
+5. [Fourier Decomposition and the Oscillator Picture](#5-fourier-decomposition-and-the-oscillator-picture)
+6. [Creation and Annihilation Operators](#6-creation-and-annihilation-operators)
+7. [The Hamiltonian and Vacuum Energy](#7-the-hamiltonian-and-vacuum-energy)
+8. [Fock Space and Particle States](#8-fock-space-and-particle-states)
+9. [Normalization and Lorentz Invariance](#9-normalization-and-lorentz-invariance)
+10. [Propagators](#10-propagators)
+11. [The Complex Scalar Field and Antiparticles](#11-the-complex-scalar-field-and-antiparticles)
+12. [Physical Content and the Casimir Effect](#12-physical-content-and-the-casimir-effect)
+13. [Appendix: Formulas and Identities](#appendix-formulas-and-identities)
+
+---
+
+## 1. The Setup: Why Quantize a Field?
+
+### A Persistent Problem with "Relativistic Quantum Mechanics"
+
+In ordinary quantum mechanics, a particle is described by a wave function $\psi(\vec x, t)$ obeying the Schrödinger equation. To make this relativistic, you might try to replace the Schrödinger equation with a relativistic wave equation — say, Klein-Gordon or Dirac.
+
+This doesn't work, for several related reasons:
+
+**Negative energies.** The Klein-Gordon equation $(\Box + m^2)\phi = 0$ has plane-wave solutions $e^{-iEt + i\vec p \cdot \vec x}$ with $E^2 = |\vec p|^2 + m^2$ — so $E = \pm\sqrt{|\vec p|^2 + m^2}$. Negative energy solutions seem unphysical.
+
+**Negative probabilities.** The natural "probability density" for Klein-Gordon, $\rho = i(\phi^* \partial_t\phi - \phi \partial_t\phi^*)$, isn't positive-definite. You can't interpret it as a probability.
+
+**Particle number isn't conserved.** At sufficient energies, particles can be created and destroyed. $e^+e^- \to \gamma\gamma$ annihilates two particles and creates two. No single-particle wave function can describe this — the very dimension of the Hilbert space changes.
+
+**Localization is problematic.** Trying to build a position-space wave function for a relativistic particle leads to pathologies: the "wave function" spreads superluminally, and attempts to confine a particle to a region smaller than its Compton wavelength produce enough energy to create new particles.
+
+The fundamental insight: relativistic quantum mechanics is not a theory of a fixed number of particles. It's a theory of *fields*, whose excitations happen to look like particles.
+
+### The Shift: Fields Are Primary
+
+In QFT, the fundamental object is not a particle but a **field** $\phi(\vec x, t)$ — a dynamical variable defined at every spacetime point. The field is quantized (promoted to an operator); particles emerge as discrete excitations.
+
+This resolves all the problems above:
+
+- Negative-energy classical solutions are reinterpreted as antiparticles
+- Probabilities are defined over states of the field, not positions of particles — always positive
+- Particle creation and annihilation are built in (creation/annihilation operators)
+- Localization limits are natural — the field is defined at points, but extracting a single localized particle is what's restricted
+
+### The Plan
+
+1. Start with the classical Klein-Gordon Lagrangian
+2. Identify the canonical variables (field and conjugate momentum)
+3. Impose canonical commutation relations — promote them to operators
+4. Decompose into Fourier modes — each mode becomes a quantum harmonic oscillator
+5. Creation/annihilation operators build up a Hilbert space ("Fock space") with states of any particle number
+6. The "particles" are what you see when you examine the states
+
+The procedure is mechanical. The *interpretation* is deep.
+
+---
+
+## 2. Canonical Quantization Recipe
+
+Remember the recipe for ordinary quantum mechanics:
+
+1. Start with a classical system with generalized coordinates $q_i$ and conjugate momenta $p_i = \partial L/\partial\dot q_i$
+2. Promote $q_i$ and $p_i$ to operators $\hat q_i$ and $\hat p_i$
+3. Replace Poisson brackets with commutators via Dirac's rule: $\{q_i, p_j\} = \delta_{ij} \to [\hat q_i, \hat p_j] = i\hbar\delta_{ij}$
+4. Hamiltonians, observables, time evolution all follow
+
+For a classical *field* theory, the canonical "coordinates" are the field values $\phi(\vec x)$ at each spatial point $\vec x$ — a continuous infinity of them. The conjugate momentum is:
+
+$$\pi(\vec x) = \frac{\partial \mathcal{L}}{\partial \dot\phi(\vec x)}$$
+
+The canonical commutation relation becomes:
+
+$$[\hat\phi(\vec x, t), \hat\pi(\vec y, t)] = i\delta^3(\vec x - \vec y)$$
+
+The Kronecker $\delta_{ij}$ becomes a Dirac $\delta^3(\vec x - \vec y)$ — the continuum analog.
+
+Note the **equal time** — both operators at the same time $t$. This is a constraint imposed at one moment; time evolution is separate (governed by the Heisenberg equations of motion).
+
+That's it. The rest of this document is working out what this recipe produces for the Klein-Gordon field.
+
+---
+
+## 3. The Classical Klein-Gordon Field in Review
+
+Quick review from the classical field theory document.
+
+### Lagrangian Density
+
+$$\mathcal{L} = \tfrac{1}{2}(\partial_\mu\phi)(\partial^\mu\phi) - \tfrac{1}{2}m^2\phi^2$$
+
+Expanding $\partial_\mu\phi \partial^\mu \phi = \dot\phi^2 - (\nabla\phi)^2$ (with mostly-minus metric):
+
+$$\mathcal{L} = \tfrac{1}{2}\dot\phi^2 - \tfrac{1}{2}(\nabla\phi)^2 - \tfrac{1}{2}m^2\phi^2$$
+
+### Equation of Motion (Klein-Gordon)
+
+$$(\Box + m^2)\phi = 0$$
+
+### Conjugate Momentum
+
+$$\pi(\vec x, t) = \frac{\partial\mathcal{L}}{\partial\dot\phi} = \dot\phi(\vec x, t)$$
+
+### Hamiltonian Density
+
+$$\mathcal{H} = \pi\dot\phi - \mathcal{L} = \tfrac{1}{2}\pi^2 + \tfrac{1}{2}(\nabla\phi)^2 + \tfrac{1}{2}m^2\phi^2$$
+
+### Hamiltonian
+
+$$H = \int d^3x\, \mathcal{H} = \int d^3x\left[\tfrac{1}{2}\pi^2 + \tfrac{1}{2}(\nabla\phi)^2 + \tfrac{1}{2}m^2\phi^2\right]$$
+
+Every term is positive — the classical field has positive energy density everywhere. Negative energies will reappear as a subtlety when we quantize, and their resolution is important.
+
+### Plane Wave Solutions
+
+Classical solutions of KG:
+
+$$\phi(x) = \int \frac{d^3p}{(2\pi)^3 \, 2\omega_p}\left[a(\vec p)e^{-ip\cdot x} + a^*(\vec p)e^{+ip\cdot x}\right]$$
+
+where $p\cdot x = \omega_p t - \vec p\cdot \vec x$ and $\omega_p = \sqrt{|\vec p|^2 + m^2} > 0$ is always positive.
+
+The two terms are positive-frequency ($e^{-i\omega_p t}$) and negative-frequency ($e^{+i\omega_p t}$) modes. The coefficient $a^*(\vec p)$ is the complex conjugate of $a(\vec p)$ — enforced by $\phi$ being real.
+
+**Keep this expression close** — after quantization, $a(\vec p)$ and $a^*(\vec p)$ become the annihilation and creation operators.
+
+---
+
+## 4. Quantizing: Equal-Time Commutation Relations
+
+### The Canonical Commutation Relations
+
+Promote $\phi$ and $\pi$ to operators, imposing:
+
+$$\boxed{[\hat\phi(\vec x, t), \hat\pi(\vec y, t)] = i\delta^3(\vec x - \vec y)}$$
+
+$$[\hat\phi(\vec x, t), \hat\phi(\vec y, t)] = 0$$
+
+$$[\hat\pi(\vec x, t), \hat\pi(\vec y, t)] = 0$$
+
+All at the same time $t$. Equivalently: the field values at different spatial points (at the same time) commute; it's only the conjugate pair $(\phi, \pi)$ at the *same* point that has a non-trivial commutator.
+
+From here on, I'll drop the hats — every $\phi$ is now an operator.
+
+### Why $\delta^3$ Instead of $\delta_{ij}$?
+
+In QM, $[\hat q_i, \hat p_j] = i\delta_{ij}$ with integer indices. Here, the "index" is a continuous position $\vec x$, and the Kronecker delta becomes a Dirac delta. Physically: the field values at distinct spatial points are independent degrees of freedom, so they commute; the "self-interaction" at each point is what has a non-trivial commutator.
+
+### Heisenberg Equations of Motion
+
+Under canonical quantization, time evolution of operators is governed by:
+
+$$i\frac{d\hat O}{dt} = [\hat O, H]$$
+
+Applied to $\phi$ and $\pi$ with our Hamiltonian, this reproduces the Klein-Gordon equation — but now as an operator equation:
+
+$$(\Box + m^2)\phi = 0$$
+
+(Check: $i\dot\phi = [\phi, H] = i\pi$ gives $\dot\phi = \pi$. Then $i\dot\pi = [\pi, H]$ works out to $\dot\pi = \nabla^2\phi - m^2\phi$. Combining: $\ddot\phi = \nabla^2\phi - m^2\phi$, which is KG.) The classical equation is preserved — we're quantizing, not changing the dynamics.
+
+### What Does a "Field Operator" Mean?
+
+A field operator $\phi(\vec x, t)$ is an operator that acts on states in the Hilbert space of the theory. It has different value-operators at every spacetime point. Specific matrix elements $\langle \alpha | \phi(\vec x, t) | \beta\rangle$ are ordinary complex numbers depending on $\vec x, t$.
+
+This is *not* a wave function. The wave function concept is gone. $\phi(\vec x, t)$ is an observable — a measurable field — now promoted to an operator.
+
+---
+
+## 5. Fourier Decomposition and the Oscillator Picture
+
+Commutation relations and equations of motion are all well and good, but to make progress we need to *solve* them. The trick: decompose $\phi$ into modes.
+
+### The Ansatz
+
+Substitute the classical plane-wave solution form, but with $a(\vec p), a^*(\vec p)$ now promoted to operators $a_{\vec p}, a^\dagger_{\vec p}$ (with $\dagger$ because we're in Hilbert space — complex conjugate becomes adjoint):
+
+$$\boxed{\phi(\vec x, t) = \int\frac{d^3p}{(2\pi)^3}\frac{1}{\sqrt{2\omega_p}}\left[a_{\vec p}e^{-ip\cdot x} + a^\dagger_{\vec p} e^{+ip\cdot x}\right]}$$
+
+with $\omega_p = \sqrt{|\vec p|^2 + m^2}$ and $p\cdot x = \omega_p t - \vec p\cdot \vec x$.
+
+The factor $1/\sqrt{2\omega_p}$ is a conventional normalization choice. Some texts use $1/(2\omega_p)$; the factor only affects what commutation relations the $a_{\vec p}$ satisfy. Our choice will give the cleanest answer.
+
+### The Conjugate Momentum
+
+$\pi = \dot\phi$, so differentiating the expansion:
+
+$$\pi(\vec x, t) = \int\frac{d^3p}{(2\pi)^3}(-i)\sqrt{\frac{\omega_p}{2}}\left[a_{\vec p} e^{-ip\cdot x} - a^\dagger_{\vec p} e^{+ip\cdot x}\right]$$
+
+### Commutation Relations on $a_{\vec p}$
+
+Now we translate the canonical commutation relation $[\phi(\vec x, t), \pi(\vec y, t)] = i\delta^3(\vec x - \vec y)$ into a relation on the $a_{\vec p}$.
+
+Compute the commutator using the expansions:
+
+$$[\phi(\vec x, t), \pi(\vec y, t)] = \int\frac{d^3p\, d^3q}{(2\pi)^6}\frac{-i\sqrt{\omega_q/\omega_p}}{2}\left\{[a_{\vec p}, a^\dagger_{\vec q}]e^{-i(p-q)\cdot(x-y)} - [a^\dagger_{\vec p}, a_{\vec q}]e^{+i(p-q)\cdot(x-y)}\right\}$$
+
+(with other terms; cross terms $[a,a]$ and $[a^\dagger, a^\dagger]$ set to zero by symmetry/hermiticity).
+
+Setting this equal to $i\delta^3(\vec x - \vec y)$ and working through requires:
+
+$$\boxed{[a_{\vec p}, a^\dagger_{\vec q}] = (2\pi)^3 \delta^3(\vec p - \vec q)}$$
+
+$$[a_{\vec p}, a_{\vec q}] = 0, \quad [a^\dagger_{\vec p}, a^\dagger_{\vec q}] = 0$$
+
+These are exactly the commutation relations of a continuum of independent harmonic oscillators, one for each $\vec p$. The Klein-Gordon field, after quantization, *is* infinitely many harmonic oscillators coupled only by their shared Hamiltonian.
+
+This is the key insight: **the quantum field is a continuum of harmonic oscillators labeled by momentum $\vec p$**.
+
+---
+
+## 6. Creation and Annihilation Operators
+
+### Physical Interpretation
+
+For each mode $\vec p$, we have an oscillator with:
+
+- Annihilation operator $a_{\vec p}$
+- Creation operator $a^\dagger_{\vec p}$
+- Number operator $N_{\vec p} = a^\dagger_{\vec p} a_{\vec p}$
+
+By analogy with the QM harmonic oscillator:
+
+- $a_{\vec p}$ destroys one "quantum" of momentum $\vec p$
+- $a^\dagger_{\vec p}$ creates one "quantum" of momentum $\vec p$
+- $N_{\vec p}$ counts how many quanta of momentum $\vec p$ are present
+
+These quanta are the particles. A "particle of momentum $\vec p$" is a single excitation of the $\vec p$-mode of the field.
+
+### The Vacuum
+
+The vacuum state $|0\rangle$ is the state with no particles — no excitations in any mode:
+
+$$a_{\vec p}|0\rangle = 0 \quad \text{for all } \vec p$$
+
+It's the ground state of all the oscillators simultaneously.
+
+### One-Particle States
+
+$$|\vec p\rangle = \sqrt{2\omega_p}\, a^\dagger_{\vec p}|0\rangle$$
+
+The factor $\sqrt{2\omega_p}$ is chosen so that this state has Lorentz-invariant normalization (see section 9).
+
+This represents one particle of momentum $\vec p$. We can verify:
+
+- $a_{\vec q}|\vec p\rangle \propto \delta^3(\vec p - \vec q)|0\rangle$: annihilating the same momentum returns vacuum; different momentum gives zero.
+
+### Multi-Particle States
+
+$$|\vec p_1, \vec p_2\rangle = \sqrt{2\omega_{p_1} \cdot 2\omega_{p_2}}\, a^\dagger_{\vec p_1} a^\dagger_{\vec p_2}|0\rangle$$
+
+Since $[a^\dagger_{\vec p_1}, a^\dagger_{\vec p_2}] = 0$:
+
+$$|\vec p_1, \vec p_2\rangle = |\vec p_2, \vec p_1\rangle$$
+
+The state is **symmetric** under exchange. Klein-Gordon field quanta are automatically bosons — this is the **spin-statistics theorem** in action for spin 0. (Fermionic fields, next document, will use anticommutators instead.)
+
+---
+
+## 7. The Hamiltonian and Vacuum Energy
+
+### Computing $H$
+
+Substitute the mode expansions into:
+
+$$H = \int d^3x\left[\tfrac{1}{2}\pi^2 + \tfrac{1}{2}(\nabla\phi)^2 + \tfrac{1}{2}m^2\phi^2\right]$$
+
+This is a long computation (products of two mode expansions, integrating over space gives $\delta^3$'s, etc.). The result:
+
+$$H = \int\frac{d^3p}{(2\pi)^3}\,\omega_p\left[a^\dagger_{\vec p}a_{\vec p} + \tfrac{1}{2}(2\pi)^3\delta^3(0)\right]$$
+
+### The Infinite Vacuum Energy
+
+The second term is a problem. $\delta^3(0)$ is infinite (formally; it represents the volume of space). So the vacuum energy $\langle 0 | H | 0\rangle = \tfrac{1}{2}\int d^3p\, \omega_p/(2\pi)^3 \cdot V$ — integral of $\omega_p$ over all momenta, times the volume of space.
+
+This is doubly infinite: infinite volume (IR divergence), and divergent integral over momentum ($\omega_p \to \infty$ as $|\vec p| \to \infty$; UV divergence).
+
+### Normal Ordering
+
+The standard resolution: redefine the Hamiltonian by **normal ordering** — put all annihilation operators to the right of all creation operators, dropping the zero-point energy:
+
+$$:H: \equiv \int\frac{d^3p}{(2\pi)^3}\, \omega_p\, a^\dagger_{\vec p} a_{\vec p}$$
+
+Justification: only energy *differences* are observable in a non-gravitational theory. Subtracting an infinite constant doesn't change anything physical.
+
+After normal ordering:
+
+$$:H:|0\rangle = 0$$
+
+$$:H:|\vec p\rangle = \omega_p |\vec p\rangle$$
+
+$$:H:|\vec p_1, \vec p_2\rangle = (\omega_{p_1} + \omega_{p_2})|\vec p_1, \vec p_2\rangle$$
+
+One-particle states have energy $\omega_p = \sqrt{|\vec p|^2 + m^2}$ — exactly the relativistic energy of a particle with mass $m$ and momentum $\vec p$. $\checkmark$
+
+Multi-particle states have the sum of single-particle energies — particles don't interact in this free theory. $\checkmark$
+
+### A Caveat
+
+The vacuum energy isn't *really* zero — gravitational physics cares about energy absolutely (all energy gravitates). The vacuum energy of quantum fields should contribute to the cosmological constant $\Lambda$ — and famously, a naive estimate gives a value off from the observed value by ~$10^{120}$. This is the **cosmological constant problem**, arguably the worst prediction in physics. Normal ordering sidesteps the issue in non-gravitational QFT, but it doesn't make the problem go away.
+
+---
+
+## 8. Fock Space and Particle States
+
+### The Structure of the Hilbert Space
+
+The Hilbert space of the free scalar field theory has a characteristic structure: **Fock space**.
+
+$$\mathcal{F} = \mathbb{C} \oplus \mathcal{H}_1 \oplus (\mathcal{H}_1 \otimes_S \mathcal{H}_1) \oplus (\mathcal{H}_1 \otimes_S \mathcal{H}_1 \otimes_S \mathcal{H}_1) \oplus \cdots$$
+
+Components:
+
+- $\mathbb{C}$: the 0-particle sector (vacuum only)
+- $\mathcal{H}_1$: the 1-particle sector (single-particle states of any momentum)
+- $\mathcal{H}_1 \otimes_S \mathcal{H}_1$: the 2-particle sector (symmetrized tensor product)
+- etc.
+
+Every state in the free theory is a superposition of multi-particle states of definite (though unrestricted) particle number.
+
+Notice: the dimension is infinite — not because the single-particle Hilbert space is infinite-dimensional (it is), but because you can have any number of particles. This *could not* be described by ordinary quantum mechanics, which fixes particle number.
+
+### General States
+
+A general state:
+
+$$|\Psi\rangle = c_0|0\rangle + \int\frac{d^3p}{(2\pi)^3}\,\psi_1(\vec p)|\vec p\rangle + \int\frac{d^3p_1 d^3p_2}{(2\pi)^6}\,\psi_2(\vec p_1, \vec p_2)|\vec p_1, \vec p_2\rangle + \cdots$$
+
+with coefficients that are wave functions in momentum space.
+
+### The Vacuum Is Not Empty
+
+Quantum mechanically, the vacuum state $|0\rangle$ is highly nontrivial. Consider:
+
+- Vacuum fluctuations: $\langle 0|\phi^2|0\rangle \neq 0$
+- Zero-point energy (before normal ordering): infinite
+- Virtual particle processes in interacting theories
+
+The vacuum is the ground state of a system of infinitely many oscillators, each of which has nonzero zero-point motion. It's "empty" in the sense of containing no excitations, but quantum fluctuations mean the field values are never exactly zero.
+
+This is observable: vacuum fluctuations produce the Casimir effect, contribute to the Lamb shift, create Hawking radiation near black holes, and many other things.
+
+---
+
+## 9. Normalization and Lorentz Invariance
+
+### The Problem
+
+In nonrelativistic QM, we normalize states with $\langle \vec p | \vec q\rangle = (2\pi)^3 \delta^3(\vec p - \vec q)$. In QFT we want Lorentz-invariant normalization — the inner product shouldn't depend on which frame you're in.
+
+But $\delta^3(\vec p)$ is not Lorentz-invariant (three-momentum transforms nontrivially).
+
+### The Solution
+
+With the normalization $|\vec p\rangle = \sqrt{2\omega_p}\, a^\dagger_{\vec p}|0\rangle$:
+
+$$\langle \vec p | \vec q\rangle = 2\omega_p (2\pi)^3 \delta^3(\vec p - \vec q)$$
+
+This factor $2\omega_p$ is chosen precisely so that under Lorentz transformations, the combination $d^3p/(2\omega_p)$ is invariant:
+
+$$\int\frac{d^3p}{(2\pi)^3 2\omega_p} = \int\frac{d^4p}{(2\pi)^4} 2\pi \delta(p^2 - m^2)\theta(p^0)$$
+
+(The right side is manifestly Lorentz-invariant if you restrict to positive energy on the mass shell.)
+
+### Lorentz-Invariant Measure
+
+$$\int\frac{d^3p}{(2\pi)^3 2\omega_p}$$
+
+This is the natural measure on single-particle momentum space in QFT. You'll see it constantly.
+
+### Final Forms
+
+For comparison, textbooks differ on conventions. Common variants:
+
+- Peskin & Schroeder: $|\vec p\rangle = \sqrt{2\omega_p} a^\dagger_{\vec p}|0\rangle$, $\langle \vec p|\vec q\rangle = 2\omega_p(2\pi)^3\delta^3(\vec p - \vec q)$ (our convention)
+- Srednicki: uses natural units but slightly different conventions
+- Weinberg: relativistic normalization, explicit $\sqrt{2\omega_p}$
+
+Stay consistent within one set; translate when needed.
+
+---
+
+## 10. Propagators
+
+The propagator is the two-point correlation function — a central object in QFT. It tells you the amplitude for a field disturbance to propagate from one spacetime point to another.
+
+### Feynman Propagator
+
+The most important propagator:
+
+$$D_F(x - y) = \langle 0 | T\{\phi(x)\phi(y)\}|0\rangle$$
+
+where $T$ is the **time-ordering** operator:
+
+$$T\{\phi(x)\phi(y)\} = \theta(x^0 - y^0)\phi(x)\phi(y) + \theta(y^0 - x^0)\phi(y)\phi(x)$$
+
+### Computing the Feynman Propagator
+
+Substitute the mode expansion, use the vacuum conditions ($a_{\vec p}|0\rangle = 0$, $\langle 0|a^\dagger_{\vec p} = 0$), and work through. The result can be written as an integral:
+
+$$\boxed{D_F(x - y) = \int\frac{d^4p}{(2\pi)^4}\,\frac{i}{p^2 - m^2 + i\epsilon}\,e^{-ip\cdot(x-y)}}$$
+
+The $+i\epsilon$ prescription (infinitesimal positive imaginary part) handles the poles at $p^0 = \pm\omega_p$ in a specific way — this is what gives time ordering.
+
+### Alternative Propagators
+
+Different contour prescriptions give different propagators:
+
+| Propagator | Contour | Use |
+|---|---|---|
+| Feynman $D_F$ | $+i\epsilon$ | Standard QFT perturbation theory |
+| Retarded $D_R$ | both poles below real axis | Classical signals propagating forward in time |
+| Advanced $D_A$ | both poles above real axis | Classical signals propagating backward |
+
+The Feynman propagator is what appears in Feynman diagrams. The retarded/advanced are used for classical-like calculations.
+
+### Meaning
+
+In position space, $D_F(x - y)$ gives the quantum amplitude for a disturbance at $y$ to be detected at $x$ (with time ordering). For spacelike separations (no causal contact classically), $D_F$ is still nonzero but small — leading to the "virtual particle" picture of off-shell propagation.
+
+### Why It Matters
+
+Every Feynman diagram has a propagator for each internal line. Computing scattering amplitudes, decay rates, cross-sections — all require propagators. Once we introduce interactions (next document), the propagator becomes the bread and butter of calculations.
+
+---
+
+## 11. The Complex Scalar Field and Antiparticles
+
+For a real scalar field, there's just one type of particle. But many physical fields are complex — leading to particles *and* antiparticles.
+
+### Complex Scalar Lagrangian
+
+$$\mathcal{L} = (\partial_\mu\phi^*)(\partial^\mu\phi) - m^2\phi^*\phi$$
+
+Treat $\phi$ and $\phi^*$ as independent fields. The Euler-Lagrange equations give Klein-Gordon for each.
+
+### Mode Expansion
+
+$$\phi(x) = \int\frac{d^3p}{(2\pi)^3}\frac{1}{\sqrt{2\omega_p}}\left[a_{\vec p}e^{-ip\cdot x} + b^\dagger_{\vec p}e^{+ip\cdot x}\right]$$
+
+$$\phi^\dagger(x) = \int\frac{d^3p}{(2\pi)^3}\frac{1}{\sqrt{2\omega_p}}\left[b_{\vec p}e^{-ip\cdot x} + a^\dagger_{\vec p}e^{+ip\cdot x}\right]$$
+
+Note: $\phi^\dagger$ has $b_{\vec p}$ where $\phi$ has $a_{\vec p}$. These are *different* particles.
+
+### Commutation Relations
+
+Two independent sets of oscillators:
+
+$$[a_{\vec p}, a^\dagger_{\vec q}] = (2\pi)^3\delta^3(\vec p - \vec q)$$
+
+$$[b_{\vec p}, b^\dagger_{\vec q}] = (2\pi)^3\delta^3(\vec p - \vec q)$$
+
+$$[a_{\vec p}, b_{\vec q}] = [a_{\vec p}, b^\dagger_{\vec q}] = 0$$
+
+### Particles and Antiparticles
+
+$a^\dagger_{\vec p}|0\rangle$ creates a **particle** of momentum $\vec p$.
+
+$b^\dagger_{\vec p}|0\rangle$ creates an **antiparticle** of momentum $\vec p$.
+
+They have the same mass (same $\omega_p = \sqrt{|\vec p|^2 + m^2}$) but opposite charge under the $U(1)$ symmetry.
+
+### The Conserved Charge
+
+The $U(1)$ symmetry $\phi \to e^{i\alpha}\phi$ gives (by Noether) a conserved current:
+
+$$j^\mu = i(\phi^\dagger \partial^\mu \phi - (\partial^\mu \phi^\dagger)\phi)$$
+
+The total charge $Q = \int d^3x\, j^0$ evaluates to:
+
+$$Q = \int\frac{d^3p}{(2\pi)^3}\left[a^\dagger_{\vec p}a_{\vec p} - b^\dagger_{\vec p} b_{\vec p}\right]$$
+
+Particles contribute +1 per particle; antiparticles contribute −1. If we identify $Q$ with electric charge (up to a factor $e$), we see that:
+
+- The complex scalar describes electrically charged bosons
+- Each particle type comes with a corresponding antiparticle of opposite charge
+
+This is how antimatter enters QFT: not as a postulate, but as the conjugate half of complex fields.
+
+### Example: Pions
+
+The $\pi^+$ and $\pi^-$ are (approximately) described by a complex scalar field: $\pi^+$ is the particle, $\pi^-$ the antiparticle. They have the same mass (139.6 MeV) but opposite charge. The $\pi^0$, by contrast, is described by a real scalar — it's its own antiparticle.
+
+---
+
+## 12. Physical Content and the Casimir Effect
+
+### What We've Achieved
+
+After all this machinery, what have we gotten?
+
+- A quantum theory of a relativistic scalar field
+- Particles emerge as excitations of the field
+- Multi-particle states exist naturally in Fock space
+- Particle creation/annihilation operators
+- Propagators encode virtual-particle physics
+- Antiparticles appear for complex fields
+
+The classical Klein-Gordon theory, quantized, *is* a quantum field theory — a theory of particles. The field operator $\phi(x)$ is the primary object; particles are what the theory describes.
+
+### The Casimir Effect: Real Consequences of "Empty" Vacuum
+
+One concrete physical prediction of QFT, even at the level we've developed: the **Casimir effect**.
+
+Consider two parallel conducting plates in vacuum, separated by distance $d$. QFT predicts an attractive force between them:
+
+$$\frac{F}{A} = -\frac{\pi^2 \hbar c}{240 d^4}$$
+
+Tiny — about $10^{-3}$ N/m² at 1 micron separation — but measurable.
+
+**Origin:** The vacuum of the electromagnetic field has zero-point fluctuations of all modes. Conducting plates constrain which modes are allowed (boundary conditions). The constrained modes have different zero-point energy than unconstrained modes, and the energy depends on $d$. Differentiating gives a force.
+
+Hendrik Casimir predicted this in 1948. It's been measured with high precision.
+
+The Casimir effect is the simplest experimental demonstration that vacuum fluctuations are real — not an artifact of our mathematical formalism, but a physical consequence.
+
+### A Glimpse Ahead
+
+This document covered the **free** Klein-Gordon field. No interactions. Scattering is trivial (particles fly by each other without interacting). Real physics requires interactions.
+
+The next steps:
+
+1. **Dirac field (next doc):** quantize a fermionic field. Same procedure, but anticommutators. Gives fermions, antifermions, and the spin-statistics theorem.
+2. **Electromagnetic field:** quantize the gauge field. Gauge redundancy complicates things.
+3. **Interactions:** add couplings like $\phi^4$ or $\bar\psi\gamma^\mu\psi A_\mu$. Perturbation theory. Feynman diagrams. Actual scattering calculations.
+
+Each of these builds on the machinery we've developed here. The pattern — classical Lagrangian → canonical commutators → mode expansion → creation/annihilation operators → Fock space — repeats.
+
+---
+
+## Appendix: Formulas and Identities
+
+### Conventions
+
+- Metric: $\eta_{\mu\nu} = \text{diag}(+,-,-,-)$
+- Natural units: $\hbar = c = 1$
+- $p \cdot x = p^\mu x_\mu = \omega_p t - \vec p \cdot \vec x$
+- $\omega_p = \sqrt{|\vec p|^2 + m^2}$
+
+### Key Expressions
+
+**Lagrangian:**
+$$\mathcal{L} = \tfrac{1}{2}(\partial_\mu\phi)(\partial^\mu\phi) - \tfrac{1}{2}m^2\phi^2$$
+
+**Conjugate momentum:** $\pi = \dot\phi$
+
+**Hamiltonian:**
+$$H = \int d^3x[\tfrac{1}{2}\pi^2 + \tfrac{1}{2}(\nabla\phi)^2 + \tfrac{1}{2}m^2\phi^2]$$
+
+**Equal-time commutation relations:**
+$$[\phi(\vec x), \pi(\vec y)] = i\delta^3(\vec x - \vec y)$$
+$$[\phi(\vec x), \phi(\vec y)] = [\pi(\vec x), \pi(\vec y)] = 0$$
+
+**Field expansion:**
+$$\phi(x) = \int\frac{d^3p}{(2\pi)^3\sqrt{2\omega_p}}[a_{\vec p}e^{-ip\cdot x} + a^\dagger_{\vec p}e^{+ip\cdot x}]$$
+
+**Creation/annihilation commutators:**
+$$[a_{\vec p}, a^\dagger_{\vec q}] = (2\pi)^3\delta^3(\vec p - \vec q)$$
+$$[a_{\vec p}, a_{\vec q}] = [a^\dagger_{\vec p}, a^\dagger_{\vec q}] = 0$$
+
+**Normal-ordered Hamiltonian:**
+$$:H: = \int\frac{d^3p}{(2\pi)^3}\omega_p a^\dagger_{\vec p}a_{\vec p}$$
+
+**Single-particle states:**
+$$|\vec p\rangle = \sqrt{2\omega_p}a^\dagger_{\vec p}|0\rangle$$
+
+**Inner product:**
+$$\langle\vec p|\vec q\rangle = 2\omega_p(2\pi)^3\delta^3(\vec p - \vec q)$$
+
+**Lorentz-invariant measure:**
+$$\int\frac{d^3p}{(2\pi)^3 2\omega_p}$$
+
+**Feynman propagator:**
+$$D_F(x - y) = \int\frac{d^4p}{(2\pi)^4}\frac{i}{p^2 - m^2 + i\epsilon}e^{-ip\cdot(x-y)}$$
+
+### Checklist: Have I Understood?
+
+By the end of this document, you should be able to:
+
+- Write down the Lagrangian, Hamiltonian, and canonical commutators for the free scalar field
+- Expand the field in terms of creation and annihilation operators
+- Show that $[a_{\vec p}, a^\dagger_{\vec q}] = (2\pi)^3 \delta^3(\vec p - \vec q)$ follows from the canonical commutation relations
+- Construct multi-particle states and explain why they're symmetric
+- Compute $H|\vec p\rangle = \omega_p|\vec p\rangle$
+- Explain what normal ordering does and why
+- Write down the Feynman propagator in momentum space
+- Describe antiparticles as quanta of the complex conjugate mode coefficients
+
+If any of these feel shaky, go back to that section before moving on.
+
+### Further Reading
+
+- **Peskin & Schroeder, *An Introduction to Quantum Field Theory*, Chapter 2:** the standard treatment. Does everything we've done with full rigor.
+- **Schwartz, *Quantum Field Theory and the Standard Model*, Chapter 2:** cleaner modern presentation.
+- **Srednicki, *Quantum Field Theory*, Chapters 1–3:** pedagogically clean.
+- **Weinberg, *The Quantum Theory of Fields, Vol. 1*, Chapter 4 onward:** rigorous, beautiful, hard.
+- **Coleman, *Lectures on Quantum Field Theory*:** Sidney Coleman's legendary course, written up by his students. Worth reading whenever you have time.
+
+### Problems to Work (Highly Recommended)
+
+1. Derive the expansion of $\pi(\vec x, t)$ from that of $\phi$, and verify that the coefficients come out as claimed.
+2. Compute $[\phi(\vec x, t), \pi(\vec y, t)]$ directly from the mode expansions, and verify that it gives $i\delta^3(\vec x - \vec y)$.
+3. Verify that $H|\vec p\rangle = \omega_p|\vec p\rangle$ using the normal-ordered Hamiltonian.
+4. Compute $\langle 0|\phi(x)\phi(y)|0\rangle$ directly from the mode expansion (without time ordering first). This gives the **Wightman function**; the Feynman propagator is a time-ordered average of Wightman functions.
+5. For the complex scalar, verify that $Q|\vec p\rangle_a = +|\vec p\rangle_a$ and $Q|\vec p\rangle_b = -|\vec p\rangle_b$ (particles and antiparticles carry opposite charge).
+
+These problems are *not optional* if you want to really internalize the material. Working through them converts "I read this" into "I understand this."
+
+---
+
+## Closing Note
+
+What we've just done is arguably the most important conceptual step in 20th-century physics. Classical field theory was a beautiful framework for electromagnetism and (less obviously) Newton's gravity. Quantum mechanics was a revolutionary theory of particles. Putting them together properly — quantizing a field — produces something neither was alone: a theory where particles are emergent, where their number isn't fixed, where creation and annihilation are natural, and where antimatter falls out of the math.
+
+This single idea — that nature is fundamentally described by quantum fields, with particles as their excitations — is the foundation of the Standard Model, of essentially all particle physics, of much of condensed matter theory, and of our best understanding of matter at its most fundamental.
+
+There are a few things to emphasize as we close:
+
+**The classical-quantum pairing is tight.** Everything in this document had a direct classical counterpart. Canonical commutation → Poisson brackets. Field expansion → classical plane waves. Hamiltonian → classical Hamiltonian. Mode energies → classical oscillator energies. QFT at this stage is not weird; it's quantum mechanics applied to a particular classical system.
+
+**The weirdness is the Fock space structure.** States with arbitrary particle numbers. Vacuum as nontrivial. Operators that change particle count. These are what's new about QFT — and they trace back to the fact that a field has infinitely many degrees of freedom.
+
+**Normal ordering is a stopgap.** We dropped an infinite zero-point energy with a wave of the hand. In gravitational contexts (cosmological constant), this is a disaster. It's a clue that something deeper is missing, possibly related to whatever quantum gravity is.
+
+**Everything we built here is just the free theory.** We haven't turned on any interactions. Free field theories are simple and solvable. Interacting theories are the real challenge, and they're where Feynman diagrams, perturbation theory, and renormalization enter.
+
+### What's Next
+
+The plan we laid out is on track. Next document: **quantizing the Dirac field**. Fermions. Anticommutators. The spin-statistics connection. Antiparticles from a slightly different angle. After that, the photon field, then interactions, then Feynman diagrams, then renormalization. The machine builds.
+
+But take your time here first. Work the problems. Make sure the Fock space structure is second nature. The whole rest of QFT builds on understanding what we've done today.
+
+You're officially doing quantum field theory. Well done.
+

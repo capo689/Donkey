@@ -11,4 +11,808 @@ classReportTitle: "The things perturbation theory cannot see."
 
 *Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
 
-{/* Content from qft_18_instantons_and_large_n.md */}
+# Instantons, the QCD Vacuum, and Large-N
+
+*QFT document 18: non-perturbative quantum field theory. Tunneling between vacua, the $\theta$-angle, the BPST instanton, resolution of the $U(1)_A$ problem via instantons, dilute instanton gas, and the large-N expansion as an alternative non-perturbative tool.*
+
+Every QFT calculation we've done has been perturbative: expand in a small coupling, compute Feynman diagrams, sum to some order. Beautiful when it works. But there are physical phenomena that **cannot be accessed this way at all**, because they're suppressed by $e^{-1/g^2}$ — zero to all orders in perturbation theory but present non-perturbatively.
+
+These include:
+- **Tunneling between vacua** (QCD has infinitely many vacua labeled by integers)
+- **The $\eta'$ mass** (explained by anomaly + instantons, not perturbation theory)
+- **Baryon number violation** (sphalerons in electroweak theory)
+- **Gluon condensates and chiral condensates** (non-perturbative order parameters)
+- **Confinement** (in full rigor, not accessible perturbatively)
+
+This document develops the main tools for non-perturbative QFT: **instantons** (localized Euclidean field configurations that give tunneling amplitudes) and the **large-$N$ expansion** (a systematic expansion in $1/N$ where $N$ is the rank of a gauge group, revealing structure invisible in perturbation theory).
+
+### Prerequisites
+
+- Documents 1-17, especially 11 (Yang-Mills), 15 (ChPT), 17 (anomalies)
+- Path integrals in Euclidean signature
+
+### Conventions
+
+- Euclidean signature throughout for instanton calculations (indicated explicitly when relevant)
+- Mostly-minus Minkowski metric otherwise
+- $\hbar = c = 1$
+- Gauge coupling $g$, fine structure $\alpha_s = g^2/(4\pi)$
+
+---
+
+## Table of Contents
+
+1. [Why Non-Perturbative?](#1-why-non-perturbative)
+2. [Tunneling in Quantum Mechanics: A Warmup](#2-tunneling-in-quantum-mechanics-a-warmup)
+3. [The Yang-Mills Vacuum](#3-the-yang-mills-vacuum)
+4. [The BPST Instanton](#4-the-bpst-instanton)
+5. [Topological Charge and the $\theta$-Vacuum](#5-topological-charge-and-the-theta-vacuum)
+6. [Instantons and the $U(1)_A$ Problem](#6-instantons-and-the-u1_a-problem)
+7. [The Dilute Instanton Gas](#7-the-dilute-instanton-gas)
+8. [Instantons in Other Theories](#8-instantons-in-other-theories)
+9. [Sphalerons and Baryon Number Violation](#9-sphalerons-and-baryon-number-violation)
+10. [The Large-$N$ Expansion](#10-the-large-n-expansion)
+11. [Large-$N$ QCD Predictions](#11-large-n-qcd-predictions)
+12. [Holographic Connection (Brief)](#12-holographic-connection-brief)
+13. [Appendix: Non-Perturbative Reference](#13-appendix-non-perturbative-reference)
+
+---
+
+## 1. Why Non-Perturbative?
+
+### The Perturbative Series Doesn't Converge
+
+Take any QFT. Expand an observable in powers of coupling: $\mathcal{A} = \sum_n a_n g^{2n}$. This series is typically **asymptotic**, not convergent. It's useful for $n \lesssim 1/g^2$, after which terms grow.
+
+The non-convergence isn't a mathematical accident — it reflects physics. Non-perturbative effects of order $e^{-c/g^2}$ lie beyond the asymptotic series. No amount of summing perturbative terms reveals them.
+
+### What's Invisible Perturbatively
+
+Perturbative QCD tells you nothing about:
+- Why quarks are confined (no analytic proof exists from first principles)
+- The value of $\Lambda_{\rm QCD}$ (comes from RG, technically perturbative, but the *physics* it represents is non-perturbative)
+- The chiral condensate $\langle\bar q q\rangle$
+- The QCD vacuum structure (including $\theta$)
+- The $\eta'$ mass
+- Baryon number violation at high temperature
+- Glueballs, exotic hadrons
+
+All of these require non-perturbative methods — either instantons, large-$N$, lattice QCD, or holography.
+
+### The Two Main Tools
+
+**Instantons:** Euclidean solutions to the classical equations of motion that give tunneling amplitudes. They're localized in spacetime and carry topological charge.
+
+**Large-$N$:** Replace $SU(3)$ with $SU(N)$ and take $N \to \infty$ (with $g^2 N$ fixed). The theory simplifies dramatically — only planar diagrams contribute at leading order. Provides a different non-perturbative handle.
+
+Lattice QCD is another major tool, but it's numerical rather than analytical. Instantons and large-$N$ are what this document covers.
+
+---
+
+## 2. Tunneling in Quantum Mechanics: A Warmup
+
+Before attacking field theory, let's understand tunneling in quantum mechanics. The key ideas transfer directly.
+
+### The Double-Well Potential
+
+Consider a particle in the potential:
+
+$$V(x) = \lambda(x^2 - a^2)^2$$
+
+Two degenerate minima at $x = \pm a$, barrier in between at height $V(0) = \lambda a^4$. Classically, a particle at $x = a$ stays there. Quantum mechanically, it can tunnel to $x = -a$.
+
+### The WKB Tunneling Amplitude
+
+The standard result from QM:
+
+$$\text{Amplitude}(+a \to -a) \propto e^{-S/\hbar}$$
+
+where $S$ is the "Euclidean action" of the tunneling path:
+
+$$S = \int_{-a}^{a}dx\,\sqrt{2mV(x)}$$
+
+For our double-well: $S = (4\sqrt{2m\lambda}/3)a^3$.
+
+The tunneling amplitude is exponentially suppressed in $\hbar$. It's pure non-perturbative.
+
+### The Euclidean Path Integral Picture
+
+The same result comes from the Euclidean path integral. The classical equation of motion in Euclidean time:
+
+$$m\ddot x_E = +V'(x)$$
+
+(Note the sign flip from Minkowski: $\ddot x = -V'$.) This is the equation of motion in the **inverted potential** $-V(x)$.
+
+The "bounce" or "instanton" solution: starts at $x = +a$ at $\tau = -\infty$, tunnels through to $x = -a$ at $\tau = +\infty$. Plugging into the Euclidean action gives exactly $S$ from WKB.
+
+**Key insight:** quantum tunneling in Minkowski time = classical motion in Euclidean time with inverted potential.
+
+### Why This Generalizes to Field Theory
+
+The same mathematical structure — Euclidean classical solutions giving tunneling amplitudes — works in field theory. The potential is replaced by the action functional, and the classical solution is a field configuration, not just a particle trajectory.
+
+The prefactor in front of $e^{-S}$ requires care (fluctuations around the instanton), but the leading exponential is the same.
+
+---
+
+## 3. The Yang-Mills Vacuum
+
+### Vacuum Redundancy
+
+In a Yang-Mills theory with gauge group $G$, the "vacuum" isn't unique. Gauge transformations $A_\mu \to U^{-1}A_\mu U + U^{-1}\partial_\mu U$ relate physically equivalent configurations. The true vacuum is the space of physically distinct configurations.
+
+### Topology of Gauge Configurations
+
+Consider the pure Yang-Mills vacuum with zero field strength: $F_{\mu\nu} = 0$, so $A_\mu = U^{-1}\partial_\mu U$ (pure gauge).
+
+At spatial infinity, to have finite action, $A_\mu \to 0$, which requires $U \to $ constant. But "constant" can be any element of $G$. The 3-sphere at spatial infinity maps into $G$:
+
+$$U: S^3 \to G$$
+
+### The Key Topology: $\pi_3(SU(N))$
+
+For $G = SU(N)$ (with $N \geq 2$), the third homotopy group is:
+
+$$\pi_3(SU(N)) = \mathbb{Z}$$
+
+This means: maps from $S^3$ to $SU(N)$ are classified by an integer $n \in \mathbb{Z}$. Two maps with different $n$ cannot be continuously deformed into each other.
+
+### Vacuum Sectors
+
+The integer $n$ labels **distinct vacuum sectors** $|n\rangle$. Gauge transformations labeled by $U$ map:
+
+$$|n\rangle \to |n + \text{winding}(U)\rangle$$
+
+where $\text{winding}(U) \in \mathbb{Z}$. Small gauge transformations (continuously connected to identity) have winding 0 and don't change $n$. "Large" gauge transformations shift $n$ by the winding number.
+
+### The $\theta$-Vacuum
+
+Physical states must be eigenstates of gauge transformations. A linear combination:
+
+$$|\theta\rangle = \sum_n e^{in\theta}|n\rangle$$
+
+is an eigenstate of large gauge transformations (shifts by 1):
+
+$$|\theta\rangle \to e^{-i\theta}|\theta\rangle$$
+
+Different $\theta$ labels physically different theories. $\theta$ is a parameter of QCD, like $\alpha_s$ or quark masses.
+
+### Instantons as Tunneling
+
+Tunneling between different vacuum sectors $|n\rangle$ and $|n+1\rangle$ is mediated by **instantons**: Euclidean field configurations with topological charge 1.
+
+$$\langle n + 1|e^{-HT}|n\rangle \propto e^{-S_{\rm inst}}$$
+
+$S_{\rm inst}$ is the instanton action, of order $1/g^2$. Tunneling amplitude $\sim e^{-8\pi^2/g^2}$ — exponentially small at weak coupling.
+
+This is why the $\theta$-vacuum is a non-perturbative phenomenon. Perturbatively, it's invisible. But tunneling (instantons) makes it real.
+
+---
+
+## 4. The BPST Instanton
+
+### The Equation to Solve
+
+The Euclidean Yang-Mills action:
+
+$$S_E = \frac{1}{4g^2}\int d^4x\, F^a_{\mu\nu}F^{a\mu\nu}$$
+
+(Using Lie-algebra indices, $F^a_{\mu\nu} = \partial_\mu A^a_\nu - \partial_\nu A^a_\mu + f^{abc}A^b_\mu A^c_\nu$.)
+
+We want localized solutions with finite action. The key identity:
+
+$$S_E = \frac{1}{4g^2}\int[F\pm\tilde F]^2 \mp \frac{1}{2g^2}\int F\tilde F$$
+
+where $\tilde F^a_{\mu\nu} = \tfrac{1}{2}\epsilon_{\mu\nu\rho\sigma}F^{a\rho\sigma}$. Since $[F\pm\tilde F]^2 \geq 0$, we have:
+
+$$S_E \geq \frac{1}{2g^2}\left|\int F\tilde F\right| = \frac{8\pi^2}{g^2}|Q|$$
+
+where $Q$ is the topological charge:
+
+$$Q = \frac{1}{16\pi^2 g^2}\int d^4x\, F^a_{\mu\nu}\tilde F^{a\mu\nu}$$
+
+Wait, let me reorganize. The topological charge is:
+
+$$Q = \frac{g^2}{32\pi^2}\int d^4x\,F^a_{\mu\nu}\tilde F^{a\mu\nu}$$
+
+And then the bound becomes:
+
+$$S_E \geq \frac{8\pi^2 |Q|}{g^2}$$
+
+The bound is saturated when $F = \pm\tilde F$: **self-dual** or **anti-self-dual** field strengths.
+
+### Self-Duality Condition
+
+For $Q = +1$, we need **self-dual** ($F = +\tilde F$) configurations. The equation:
+
+$$F_{\mu\nu} = \tilde F_{\mu\nu}$$
+
+is first-order (simpler than the full second-order Yang-Mills equations). Solutions to this automatically extremize the action.
+
+### The BPST Solution (Belavin-Polyakov-Schwarz-Tyupkin, 1975)
+
+The simplest self-dual solution, in $SU(2)$ gauge theory:
+
+$$A^a_\mu(x) = \frac{2\eta^a_{\mu\nu}(x-x_0)^\nu}{(x-x_0)^2 + \rho^2}$$
+
+where:
+- $x_0$ is the **position** of the instanton (a free parameter)
+- $\rho$ is the **size** of the instanton (a free parameter)
+- $\eta^a_{\mu\nu}$ is the 't Hooft symbol (a specific combination of Pauli matrices and Kronecker deltas)
+
+### The 't Hooft Symbol
+
+The 't Hooft symbol $\eta^a_{\mu\nu}$ is defined by:
+
+$$\eta^a_{ij} = \epsilon^a_{ij}, \quad \eta^a_{i4} = \delta^a_i, \quad \eta^a_{44} = 0, \quad \eta^a_{\mu\nu} = -\eta^a_{\nu\mu}$$
+
+It encodes the mapping from spacetime to gauge space. The anti-self-dual version is $\bar\eta^a_{\mu\nu}$ (differs in signs for the $\eta^a_{i4}$ components).
+
+### Computing the Field Strength
+
+Plugging the BPST $A$ into $F_{\mu\nu} = \partial A - \partial A + [A, A]$:
+
+$$F^a_{\mu\nu}(x) = -\frac{4\eta^a_{\mu\nu}\rho^2}{[(x-x_0)^2 + \rho^2]^2}$$
+
+This is manifestly self-dual (because $\eta^a_{\mu\nu}$ is self-dual by construction).
+
+The field strength is **localized**: it peaks at $x = x_0$ with size $\sim \rho$ and falls off as $1/x^4$ at large distance.
+
+### The Instanton Action
+
+Plugging into the action:
+
+$$S_{\rm inst} = \frac{1}{4g^2}\int d^4x\, F^a_{\mu\nu}F^{a\mu\nu}$$
+
+Computing the integral:
+
+$$F^a_{\mu\nu}F^{a\mu\nu} = \frac{48\rho^4}{[(x-x_0)^2 + \rho^2]^4}$$
+
+$$\int d^4x\,\frac{48\rho^4}{[(x-x_0)^2 + \rho^2]^4} = \frac{48\rho^4\cdot\pi^2}{6\rho^4} \cdot \ldots$$
+
+Let me just cite the result. The standard result is:
+
+$$\boxed{S_{\rm inst} = \frac{8\pi^2}{g^2}}$$
+
+Independent of the position $x_0$ and size $\rho$. The instanton has a universal action determined only by the topology.
+
+### Topological Charge $Q = 1$
+
+Computing $Q$ for BPST:
+
+$$Q = \frac{g^2}{32\pi^2}\int d^4x\, F^a\tilde F^a = 1$$
+
+exactly. This is the topological charge — the same integer that labels the $\pi_3$ class of the gauge transformation at infinity.
+
+### Instanton Zero Modes
+
+The BPST solution depends on parameters $(x_0, \rho)$ — 5 collective coordinates in $SU(2)$:
+- 4 from position $x_0^\mu$
+- 1 from size $\rho$
+
+Plus 3 from $SU(2)$ "orientation" (rotating the color direction of the instanton). Total: 8 zero modes for $SU(2)$ BPST instanton.
+
+More generally, for $SU(N)$ $k$-instanton configurations, the number of collective coordinates is $4Nk$.
+
+These zero modes must be handled as moduli in the path integral — you integrate over them rather than Gaussian-integrating around the instanton.
+
+### Multi-Instanton Solutions
+
+For topological charge $|Q| = k$, you can superpose $k$ instantons (if they're well-separated). The $k$-instanton moduli space has complicated structure, studied extensively (ADHM construction).
+
+---
+
+## 5. Topological Charge and the $\theta$-Vacuum
+
+### Physical Meaning of $\theta$
+
+The $\theta$-term in the Euclidean action:
+
+$$S_\theta = -i\theta Q = -\frac{i\theta g^2}{32\pi^2}\int d^4x\, F\tilde F$$
+
+Adding this to the Yang-Mills action:
+
+$$S_{\rm total} = \frac{1}{4g^2}\int F^2 - \frac{i\theta g^2}{32\pi^2}\int F\tilde F$$
+
+In Minkowski signature:
+
+$$\mathcal{L} = -\frac{1}{4}F^2 + \frac{\theta g^2}{32\pi^2}F\tilde F$$
+
+### Why $\theta$ Can Seem Trivial (But Isn't)
+
+Naively, $F\tilde F = \partial_\mu K^\mu$ is a total derivative. Plugging in, the $\theta$-term is:
+
+$$S_\theta = \frac{\theta g^2}{32\pi^2}\int d^4x\,\partial_\mu K^\mu = \theta\cdot(\text{boundary term})$$
+
+Looks like it shouldn't affect physics. But the boundary term picks up nontrivial values on topologically-nontrivial configurations (instantons), so $S_\theta$ contributes to those sectors.
+
+### Physical Consequences of $\theta$
+
+The $\theta$-term:
+- **Preserves** P, C, CP for $\theta = 0$ or $\pi$ (mod $2\pi$)
+- **Violates** CP for generic $\theta$
+- **Contributes to the neutron EDM**: $d_n \sim \theta\cdot 10^{-16}$ e·cm
+
+Experimentally: $|d_n| < 1.8\times 10^{-26}$ e·cm, implying $|\theta| < 10^{-10}$.
+
+This tiny value of $\theta$ is mysterious — why so small? This is the **strong CP problem**.
+
+### Proposed Solutions to Strong CP
+
+**Peccei-Quinn mechanism (axion):** Introduce a new $U(1)_{\rm PQ}$ symmetry, explicitly broken by instantons. The Goldstone of spontaneous breaking is the axion $a$, which dynamically drives $\theta_{\rm eff} = \theta + a/f_a \to 0$.
+
+**Nelson-Barr models:** CP is a symmetry of the high-energy theory, spontaneously broken by complex Higgs VEVs. The effective $\theta$ becomes calculable.
+
+**Massless up quark:** If $m_u = 0$, $\theta$ is physically unobservable (anomaly absorbs it into the quark phase). But measurements give $m_u \neq 0$, so this is disfavored.
+
+None is confirmed. Axion searches are the most active program.
+
+### $\theta = \pi$: Special Point
+
+At $\theta = \pi$, CP is preserved (spontaneously broken in some sectors). Strong-coupling physics at $\theta = \pi$ is subtle: in SUSY, there are "oblique confinement" phases; in QCD at $\theta = \pi$, lattice studies show unusual behavior.
+
+The exact value of $\theta$ matters for QCD dynamics, and $\theta = \pi$ is a distinguished point.
+
+---
+
+## 6. Instantons and the $U(1)_A$ Problem
+
+### Recap of the Problem
+
+From documents 15 and 17: the $U(1)_A$ symmetry of massless QCD is spontaneously broken but doesn't produce a light Goldstone (the $\eta'$ is 958 MeV, too heavy). The anomaly explains this quantum-mechanically.
+
+But we can be more specific: the anomaly is zero in perturbation theory. It comes from non-perturbative effects. Specifically, **instantons**.
+
+### The Mechanism
+
+The anomalous current divergence:
+
+$$\partial_\mu J^\mu_A = \frac{g^2 n_f}{16\pi^2}G\tilde G$$
+
+The integral $\int d^4x\, G\tilde G$ on an instanton background is $32\pi^2\cdot Q/g^2 = 32\pi^2/g^2$ for $Q = 1$.
+
+Integrating:
+
+$$\int d^4x\,\partial_\mu J^\mu_A = 2n_f\cdot Q = 2n_f$$
+
+So on a $Q = 1$ instanton, the axial charge **changes by $2n_f$** (with 2 coming from each of the 3 quark flavors contributing 2 units).
+
+Instantons transfer axial charge between left and right, breaking $U(1)_A$ invariance of correlators.
+
+### The 't Hooft Vertex
+
+Consider a correlator of $n_f$ right-handed quarks and $n_f$ left-handed antiquarks. 't Hooft showed this gets a **non-zero vacuum expectation value** from instantons:
+
+$$\langle\bar u_R u_L\bar d_R d_L\bar s_R s_L\rangle_{\rm 1-inst}\neq 0$$
+
+This is the famous **'t Hooft effective vertex** — a $2n_f$-fermion operator generated by instantons.
+
+Physically: instantons induce a multi-fermion interaction that explicitly breaks $U(1)_A$.
+
+### Impact on $\eta'$ Mass
+
+Through the 't Hooft vertex, the $\eta'$ meson (the $U(1)_A$ would-be Goldstone) gets a mass. The calculation is intricate, but the final result (Witten-Veneziano):
+
+$$m_{\eta'}^2 = \frac{2 n_f}{f_\pi^2}\chi_t$$
+
+where $\chi_t$ is the topological susceptibility — the vacuum fluctuation of topological charge, which is non-zero precisely because of instantons.
+
+Quantitatively: $\chi_t \approx (180\text{ MeV})^4$, giving $m_{\eta'} \approx 860$ MeV. Observed: 958 MeV. Close, with the difference attributed to higher-order corrections in $1/N_c$.
+
+### The Instanton-Anomaly Connection
+
+The $U(1)_A$ anomaly says the symmetry *could* be broken. Instantons are the mechanism that *actually* breaks it. The topological susceptibility $\chi_t$ measures how much instantons break it.
+
+Without instantons, the axial anomaly might still be there as a formal result, but the physical consequences (heavy $\eta'$) require explicit non-perturbative contributions.
+
+### Why Perturbation Theory Misses This
+
+In perturbation theory, $F\tilde F$ is a total derivative that integrates to zero (for topologically-trivial backgrounds). So $\chi_t = 0$ perturbatively, and $\eta'$ would be massless.
+
+Only with non-perturbative instanton contributions does $\chi_t$ become non-zero. The $\eta'$ mass is a direct measurement of non-perturbative QCD structure.
+
+---
+
+## 7. The Dilute Instanton Gas
+
+### The Approximation
+
+For small instantons (size $\rho \ll $ typical scale), instantons are localized and don't interact much. Multi-instanton configurations can be approximated as a **dilute gas** of independent instantons.
+
+The total partition function:
+
+$$Z = \sum_{n_+, n_-}\frac{1}{n_+! n_-!}\int\prod_i d^4x_{0,i}\,d\rho_i\,d\Omega_i\,[\text{measure}]\,e^{-\sum_i S_i}$$
+
+where $n_+$ counts instantons, $n_-$ anti-instantons, and we sum over all their positions, sizes, orientations.
+
+### The Single-Instanton Contribution
+
+For a single instanton:
+
+$$Z_1 = \int d^4x_0\,d\rho\,d\Omega\,[\text{fluctuation determinant}]\,e^{-S_{\rm inst}}$$
+
+The fluctuation determinant around the instanton gives a specific prefactor. 't Hooft computed it for $SU(2)$:
+
+$$Z_1 = V\int\frac{d\rho}{\rho^5}\left(\frac{2\pi^2}{g^2}\right)^{4}e^{-8\pi^2/g^2}\cdot[\text{color integration}]$$
+
+The $\rho^{-5}$ comes from dimensional analysis of the collective coordinate measure.
+
+### The IR Problem
+
+The integral over $\rho$ is **divergent at large $\rho$**. At size $\rho \sim \Lambda_{\rm QCD}^{-1}$, the coupling $g^2$ becomes large, and the instanton calculation breaks down. Large instantons probe strong coupling, where the dilute-gas approximation fails.
+
+### What Instantons Give Us
+
+Despite the IR issues, instantons provide:
+
+1. **$\eta'$ mass** (calculable in dilute-gas + ChPT matching)
+2. **Axial charge non-conservation** (multi-fermion operators)
+3. **Vacuum structure** (the $\theta$-vacuum physics)
+4. **Baryon number violation rate** (electroweak sphalerons at finite T)
+5. **Specific calculable effects in SUSY QCD**: exact results for certain correlators
+
+For observables **dominated by small instantons** (e.g., high-energy processes), the dilute-gas approximation works quantitatively. For observables **sensitive to strong coupling** (like confinement itself), it fails.
+
+### Instantons vs. Perturbation Theory
+
+Instantons contribute at order $e^{-8\pi^2/g^2}$, completely invisible to perturbation theory which expands in $g^2$. The "gap" between perturbative and non-perturbative effects is exponential.
+
+For $\alpha_s = 0.1$ (high-energy QCD): $e^{-8\pi^2/g^2} = e^{-2\pi/\alpha_s} \sim e^{-63} \sim 10^{-27}$. Utterly negligible.
+
+For $\alpha_s = 0.5$ (low-energy): $e^{-4\pi} \sim 10^{-5}$. Small but non-negligible.
+
+For $\alpha_s \sim 1$: $e^{-2\pi}\sim 0.002$. Starting to matter.
+
+Instantons become quantitatively important only at strong coupling.
+
+---
+
+## 8. Instantons in Other Theories
+
+### Abelian Instantons
+
+In 4D abelian gauge theory ($U(1)$), there are no instantons — the topology is trivial ($\pi_3(U(1)) = 0$).
+
+But in 2D: $\pi_1(U(1)) = \mathbb{Z}$, so there are 2D $U(1)$ vortices/instantons. Important for 2D gauge theory and superconductors.
+
+### Gravitational Instantons
+
+In Euclidean general relativity, **gravitational instantons** are finite-action Einstein space configurations. Examples:
+
+- **Eguchi-Hanson:** self-dual (or anti-self-dual) with specific boundary topology
+- **Taub-NUT:** different asymptotic structure
+- **Black hole instantons** (Euclidean Schwarzschild): describes black hole pair creation
+
+Gravitational instantons contribute to quantum gravity calculations (e.g., in path integral quantum gravity).
+
+### Supersymmetric Instantons
+
+In SUSY gauge theories, instantons have special properties:
+- Exact cancellations between bosonic and fermionic fluctuations
+- **Exact non-perturbative results** for certain correlators
+- Seiberg-Witten theory: instantons give exact low-energy dynamics of $\mathcal{N} = 2$ SUSY
+
+The Nekrasov partition function captures all-instanton contributions in 4D $\mathcal{N} = 2$ SUSY gauge theories.
+
+### Yang-Mills Instantons in Higher Dimensions
+
+In $4n$ dimensions, there are generalizations of instantons (solutions to generalized self-duality equations). These play roles in M-theory and supergravity compactifications.
+
+---
+
+## 9. Sphalerons and Baryon Number Violation
+
+### The Problem in the Standard Model
+
+In the Standard Model, baryon number $B$ and lepton number $L$ are classically conserved. But the $SU(2)_L$ gauge theory has instantons (and related "sphaleron" configurations), and these violate $B$ and $L$ quantum-mechanically:
+
+$$\partial_\mu J^\mu_B = \frac{n_g}{32\pi^2}W^a\tilde W^a$$
+
+(And similarly for $L$.) Here $n_g$ is the number of generations.
+
+For $n_g = 3$: instantons cause $\Delta B = 3$ and $\Delta L = 3$ simultaneously. So $B - L$ is conserved, but $B + L$ isn't.
+
+### Rate at Zero Temperature
+
+At $T = 0$, the rate of such processes is $\sim e^{-8\pi^2/g^2} \sim 10^{-170}$ per year for current values. Essentially zero — the proton is stable on cosmological timescales.
+
+### Rate at High Temperature (Sphalerons)
+
+At high $T$, tunneling gives way to **thermal excitation over the barrier**. The relevant configurations are **sphalerons** (saddle points of the classical action at finite temperature).
+
+The sphaleron rate:
+
+$$\Gamma_{\rm sph}/V \sim \alpha_W^5 T^4$$
+
+(up to logarithms), in the symmetric phase of electroweak theory. This is not exponentially suppressed — it's a polynomial function of $T$.
+
+### Implications for the Early Universe
+
+At $T \gg 100$ GeV (above the electroweak scale), sphalerons are **in equilibrium**. Any baryon number produced earlier gets washed out.
+
+At $T \sim 100$ GeV (electroweak scale), sphalerons freeze out as the Higgs acquires its VEV and generates gauge boson masses. If there's a first-order electroweak phase transition, this provides out-of-equilibrium conditions where CP violation can create a baryon asymmetry — **electroweak baryogenesis**.
+
+For SM: the transition is a crossover, not first-order, and CP violation is too small. So SM electroweak baryogenesis doesn't work. New physics is needed.
+
+### Sphalerons as Thermally Excited Instantons
+
+A sphaleron is a static classical configuration, not a tunneling solution. But physically, the sphaleron is what an instanton "becomes" at finite temperature — the saddle point that determines the barrier-crossing rate.
+
+At $T = 0$: pure instanton tunneling, rate $\sim e^{-S_{\rm inst}}$.
+
+At $T > 0$: combination of tunneling and thermal excitation, increasing rate.
+
+At $T \gg E_{\rm sphaleron}$: purely thermal barrier-crossing, rate $\sim T^4$.
+
+The interpolation is a rich topic in thermal field theory.
+
+---
+
+## 10. The Large-$N$ Expansion
+
+### The Idea
+
+Take $SU(N)$ gauge theory with $N$ colors. Expand in $1/N$ (rather than in $g^2$). At fixed 't Hooft coupling $\lambda = g^2 N$, take $N \to \infty$.
+
+Why does this help? Because:
+- Only **planar diagrams** contribute at leading order
+- The theory simplifies dramatically
+- Many qualitative features emerge cleanly
+
+For QCD, $N = 3$ isn't large. But surprisingly, many $1/N$ predictions work reasonably well — suggesting large-$N$ captures real physics.
+
+### Double-Line Notation
+
+Gluons have color indices: $A^a_\mu$ with $a = 1, \ldots, N^2 - 1$. In terms of fundamental indices: $A^{ij}_\mu$ with $i, j = 1, \ldots, N$.
+
+Think of a gluon as a "quark-antiquark pair in color space": one fundamental index and one anti-fundamental. Draw diagrams with **double lines**: gluon = two oriented lines, one for each color index.
+
+### Counting Diagrams
+
+For a diagram with $V$ vertices, $E$ edges (propagators), $F$ faces (closed color loops):
+
+- Each vertex: factor $g$
+- Each edge: factor $1/g^2 \cdot $ (propagator)
+- Each face: factor $N$ (trace over color indices going around)
+
+Total: $g^{V - 2E}\cdot N^F = g^{V-2E}\cdot N^F$.
+
+For planar diagrams (can be drawn on a sphere without crossings):
+Using Euler: $V - E + F = 2$.
+
+A diagram's contribution scales as:
+
+$$N^F\cdot g^{V-2E} = N^{F}\cdot (g^2N)^{(V-2E)/2}\cdot N^{-(V-2E)/2}$$
+
+For planar ($V - E + F = 2$): the net $N$-power is $N^{2 - 2g}$ where $g$ is the genus.
+
+**Planar diagrams (genus 0):** $\propto N^2$. Leading.
+
+**Non-planar diagrams (genus $\geq 1$):** $\propto N^{2-2g}$. Suppressed by $1/N^{2g}$.
+
+### The 't Hooft Limit
+
+In the **'t Hooft limit**: $N \to \infty$ with $\lambda = g^2 N$ fixed.
+
+At this limit:
+- Only planar diagrams survive
+- The theory has a (formal) string-like expansion in $1/N$
+- Large-$N$ QCD is a "master theory" governing the 't Hooft expansion
+
+### Large-$N$ Simplifications
+
+Many simplifications emerge at large $N$:
+
+**Meson masses are $O(N^0)$.** Mesons don't depend on $N$ (at leading order).
+
+**Meson decay constants are $O(\sqrt N)$.** Couplings $\propto 1/\sqrt N$, so decays $\propto 1/N$.
+
+**Baryon masses are $O(N)$.** Baryons contain $N$ quarks, so their mass scales.
+
+**Zweig rule violations $O(1/N^2)$.** Diagrams that require breaking a quark loop are suppressed.
+
+**$\eta'$ is a Goldstone.** In the large-$N$ limit, the $U(1)_A$ anomaly is suppressed by $1/N$, so $\eta'$ becomes massless. This is the Witten-Veneziano formula context.
+
+**Connected correlators factorize.** $\langle\mathcal{O}_1\mathcal{O}_2\rangle = \langle\mathcal{O}_1\rangle\langle\mathcal{O}_2\rangle + O(1/N^2)$.
+
+### The Planar Limit Is Solvable in Some Cases
+
+In 2D: $SU(N)$ Yang-Mills in 2D is exactly solvable in the planar limit (Gross-Witten transition, Douglas-Kazakov transition).
+
+In 4D: not exactly solvable, but many structural features can be computed.
+
+**AdS/CFT correspondence** (next section) relates the planar limit of certain gauge theories to string theory in AdS — making the large-$N$ limit tractable via holography.
+
+---
+
+## 11. Large-$N$ QCD Predictions
+
+### Meson Spectrum
+
+At large $N$:
+- Meson masses are $N$-independent (at leading order)
+- There are infinitely many mesons at each quantum number (pions, kaon-like states, etc., at higher masses)
+- Decay widths are $O(1/N)$, so mesons are narrow
+
+Finite-$N$ corrections: meson widths $\Gamma \sim m/N$, mass shifts $\sim 1/N^2$.
+
+### Zweig's Rule (OZI Rule)
+
+At large $N$, meson decays that require disconnected diagrams (breaking a quark loop) are suppressed by $1/N^2$.
+
+Example: $\phi \to \pi\pi$ decay. The $\phi$ is nearly pure $s\bar s$, so decay into $\pi\pi$ requires annihilation of the $s\bar s$ pair via gluons — a disconnected topology.
+
+Experimentally: $\text{BR}(\phi \to \rho\pi) = 15\%$, tiny compared to naive expectations. This is the OZI rule in action.
+
+Large-$N$ predicts: OZI violations $\sim 1/N^2 \sim 10\%$. Matches observation.
+
+### Baryon Properties
+
+Baryons at large $N$ contain $N$ quarks and have mass $O(N)$. Their interactions are $O(1)$. At $N = 3$, baryons have specific structure (protons, neutrons) whose properties scale predictably.
+
+**Nucleon-nucleon coupling** from one-pion exchange: consistent with large-$N$ scaling.
+
+**Baryon decuplet structure:** Skyrme's idea that baryons are solitons in a pion effective theory emerges naturally at large $N$. Predicts specific relations between baryon masses and their excitations (quantitatively successful).
+
+### Glueball Spectrum
+
+Glueballs (bound states of pure glue) exist in large-$N$ QCD, with definite quantum numbers. Large-$N$ predicts:
+- Mass hierarchy: $0^{++}$ lightest, $2^{++}$ next, etc.
+- Widths suppressed by $1/N$
+- Mixing with quark-mesons of similar quantum numbers suppressed at large $N$
+
+Lattice QCD confirms these predictions qualitatively. Glueball masses predicted near lattice measurements.
+
+### Confinement and Flux Tubes
+
+In large-$N$ QCD, quark confinement is rigorously obtained. The quark-antiquark potential grows linearly with separation, due to a flux tube of color field lines.
+
+The flux tube tension $\sigma \sim $ const at large $N$ (not scaling with $N$). Its thickness $\sim \Lambda_{\rm QCD}^{-1}$.
+
+At $N = 3$: lattice QCD confirms this, with $\sigma \approx (420 \text{ MeV})^2$, a phenomenologically important value.
+
+### Predictions at $N = 3$
+
+Remarkably, many large-$N$ predictions work quantitatively at $N = 3$, suggesting that $1/N^2 = 1/9 \sim 11\%$ corrections are "small enough" for most quantities.
+
+This is why large-$N$ is more than a theoretical curiosity — it captures real aspects of QCD.
+
+---
+
+## 12. Holographic Connection (Brief)
+
+### The AdS/CFT Correspondence
+
+Maldacena (1997) conjectured that 4D $\mathcal{N} = 4$ super Yang-Mills with gauge group $SU(N)$ is dual to Type IIB string theory on $AdS_5 \times S^5$.
+
+At large $N$ and large 't Hooft coupling $\lambda$: the gauge theory is dual to classical supergravity in AdS.
+
+### Why This Matters for Non-Perturbative QFT
+
+**Strong-coupling gauge theory** becomes **weak-coupling supergravity**. Calculations that are impossible in perturbative QFT become tractable via classical gravity.
+
+Computations have been done for:
+- **Transport coefficients** in QGP-like plasmas: $\eta/s = 1/(4\pi)$, matching QGP observations
+- **Mass spectra** of strongly-coupled theories
+- **Confinement-deconfinement transitions** in dual geometries
+- **Quark-antiquark potentials** in various theories
+- **Many-body dynamics** at finite temperature and density
+
+### Limitations
+
+AdS/CFT is exact for $\mathcal{N} = 4$ SYM, but only a conjecture for other theories. For real QCD, no exact dual is known. But **AdS/QCD** models provide quantitative phenomenology by building dual geometries that match experimental data.
+
+### Relation to Large-$N$
+
+AdS/CFT is most tractable in the large-$N$ limit. The planar diagram expansion of the gauge theory maps onto a string theory perturbation expansion in $1/N$.
+
+In this sense, AdS/CFT is a deep generalization of large-$N$ QCD — extending it from gauge theories to string theory, with stringy corrections computable as $1/N$ corrections.
+
+### Full Treatment Would Require Own Documents
+
+Holography is a vast topic. Full treatment requires:
+- String theory basics
+- Supergravity in AdS
+- The AdS/CFT dictionary (operators ↔ fields, boundary conditions ↔ sources)
+- Applications to condensed matter, nuclear physics
+
+These are Option E topics. For now, mentioning the connection is enough.
+
+---
+
+## 13. Appendix: Non-Perturbative Reference
+
+### Key Formulas
+
+**Yang-Mills instanton action:** $S_{\rm inst} = 8\pi^2/g^2$
+
+**Topological charge:** $Q = g^2/(32\pi^2)\int d^4x\, F\tilde F \in \mathbb{Z}$
+
+**Instanton rate (dilute gas):** $\Gamma \sim e^{-8\pi^2/g^2}$
+
+**$\theta$-term:** $\mathcal{L}_\theta = (\theta g^2/32\pi^2)F\tilde F$
+
+**Witten-Veneziano:** $m_{\eta'}^2 = 2n_f\chi_t/f_\pi^2$
+
+**Topological susceptibility:** $\chi_t \approx (180\text{ MeV})^4$
+
+### The BPST Instanton
+
+$$A^a_\mu(x) = \frac{2\eta^a_{\mu\nu}(x-x_0)^\nu}{(x-x_0)^2 + \rho^2}$$
+
+$$F^a_{\mu\nu}(x) = -\frac{4\eta^a_{\mu\nu}\rho^2}{[(x-x_0)^2+\rho^2]^2}$$
+
+$$\text{Action: } S = 8\pi^2/g^2, \quad \text{Charge: } Q = 1$$
+
+### Large-$N$ Scalings
+
+| Quantity | Scaling |
+|---|---|
+| Meson mass | $O(N^0)$ |
+| Meson decay constant | $O(\sqrt N)$ |
+| Meson-meson interaction | $O(1/N)$ |
+| Baryon mass | $O(N)$ |
+| OZI violation | $O(1/N^2)$ |
+| $U(1)_A$ anomaly | $O(1/N)$ |
+| Glueball mass | $O(N^0)$ |
+| Glueball width | $O(1/N^2)$ |
+
+### Further Reading
+
+- **Coleman, *Aspects of Symmetry* (1985)**: classic lectures including instantons
+- **Polyakov, *Gauge Fields and Strings* (1987)**: monographs on non-perturbative methods
+- **Shifman, *Advanced Topics in Quantum Field Theory***: comprehensive textbook
+- **'t Hooft, *Computation of the Quantum Effects Due to a Four-Dimensional Pseudoparticle* (1976)**: original ABJ-anomaly-to-instantons paper
+- **Witten, *Instantons, the Quark Model, and the 1/N Expansion* (1979)**: large-$N$ QCD foundation
+- **Rubakov, *Classical Theory of Gauge Fields***: non-perturbative gauge theory textbook
+- **Manton & Sutcliffe, *Topological Solitons***: covers instantons, monopoles, etc.
+
+### Problems
+
+1. Verify that the BPST instanton is self-dual by computing $F_{\mu\nu}$ and $\tilde F_{\mu\nu}$ explicitly.
+
+2. Compute the BPST instanton's topological charge $Q$ by direct integration.
+
+3. Derive the dilute instanton gas partition function, identifying the density expansion.
+
+4. Using the 't Hooft vertex, estimate the contribution to the $\eta'$ mass from a dilute instanton gas. Compare with Witten-Veneziano.
+
+5. For $SU(N)$ Yang-Mills, show that the planar expansion generates only diagrams that can be drawn on a sphere.
+
+6. Compute the meson decay constant in terms of $N$ and $g$ at large $N$. Show it scales as $\sqrt N$.
+
+7. At what value of $\alpha_s$ do instanton effects become "large" (say, 10% of perturbative) in QCD? What physical scale does this correspond to?
+
+---
+
+## Closing Note
+
+Non-perturbative QFT is where the deepest physics lives. Perturbation theory is the toolkit for weak coupling, but many physical phenomena — confinement, tunneling, vacuum structure, baryon number violation, $\eta'$ mass — are inherently non-perturbative.
+
+### What We Covered
+
+- **Instantons:** Euclidean tunneling solutions with topological charge. The BPST solution, its moduli, its physics.
+- **$\theta$-vacuum:** the parameter $\theta$ labeling distinct QCD theories. Strong CP problem and axion.
+- **Instanton effects:** $\eta'$ mass, 't Hooft vertex, anomaly realization. How perturbatively-invisible physics becomes dominant.
+- **Dilute instanton gas:** the approximation scheme that makes instanton calculations tractable.
+- **Sphalerons:** thermal analogs of instantons, giving electroweak baryogenesis possibilities.
+- **Large-$N$:** expansion in $1/N$, planar limit, qualitative predictions for QCD.
+- **Holography (brief):** how large-$N$ connects to string theory via AdS/CFT.
+
+### What's Next
+
+Document 19 covers **solitons, monopoles, and dualities** — classical field configurations that extend in space (not just spacetime events like instantons). Kinks, vortices, 't Hooft-Polyakov monopoles, BPS states, Dirac quantization, Montonen-Olive duality.
+
+Together with document 18, this covers the main non-perturbative structures in QFT: events in spacetime (instantons) and objects in space (solitons).
+
+After that, depending on interest:
+- **Option E:** Beyond Standard Model topics — SUSY, strings, holography in depth, quantum gravity
+
+Or sideways into:
+- Topological phases of matter in depth
+- Entanglement and quantum information in QFT
+- Integrability and exactly solvable models
+- Advanced mathematical aspects (index theorems, cohomology, etc.)
+
+You have extensive foundations now. Many research-level topics are accessible from here.
+
