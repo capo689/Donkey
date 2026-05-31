@@ -1,6 +1,6 @@
 ---
 title: "The Centered-Operator Trick"
-subtitle: "The route that worked. Closing the hardest bound with no numerical constant — by routing the diagonal-to-bulk error through the same base moment that already controlled the off-diagonal error."
+subtitle: "The route that worked. Closing the hardest bound with no numerical constant – by routing the diagonal-to-bulk error through the same base moment that already controlled the off-diagonal error."
 date: 2026-05-28
 backdated: false
 section: "field-notes"
@@ -11,7 +11,7 @@ series: "paper-2-3"
 ---
 
 The fix for the diagonal-to-bulk bound is short, which is how you know it is right. The
-failed route — splitting the matrix, trusting the script — was long and full of caveats.
+failed route – splitting the matrix, trusting the script – was long and full of caveats.
 The working route is one identity and a reuse.
 
 Here is the move. Instead of attacking the covariance matrix $M$ directly, you rewrite the
@@ -28,10 +28,10 @@ $\mathbb{E}_V[(L_A-L_B)^2 \mid \psi] \le C\,(d^2/D)\,\operatorname{Tr}[(G_A - G_
 
 Now the reuse. That object, $\mathbb{E}_\psi \operatorname{Tr}[(G_A - G_B)^2]$, is not new.
 It is the **same base moment** we had already proved, in closed form, to control the
-*off-diagonal* error $F_{\mathrm{off}}$ — bounded by $C_0/(d^4 d_M)$. So the
+*off-diagonal* error $F_{\mathrm{off}}$ – bounded by $C_0/(d^4 d_M)$. So the
 diagonal-to-bulk piece and the off-diagonal piece are now bounded by the *same quantity*
 through the *same* projector estimate. Put $D = d^2 d_M$ in and you get
-$\mathbb{E}[(L_A - L_B)^2] = O(d^{-4} d_M^{-2})$ — exactly the order required — with no
+$\mathbb{E}[(L_A - L_B)^2] = O(d^{-4} d_M^{-2})$ – exactly the order required – with no
 new constant, and nothing left to a script.
 
 That is the difference between the two routes, stated cleanly. The failed route needed a
@@ -40,8 +40,8 @@ with its own off-diagonal block to estimate. The working route shows it was neve
 separate problem: centred correctly, it is the off-diagonal error in different clothing,
 and the bound we already had covers both. One identity collapses two problems into one.
 
-We verified the representation before we trusted it — the correlation between the
-centered-operator form and the direct fluctuation is better than 0.999 in simulation — but
+We verified the representation before we trusted it – the correlation between the
+centered-operator form and the direct fluctuation is better than 0.999 in simulation – but
 the verification only *checks* the proof; it is not *part* of it. That is the line Scholar
 drew, and drawing it is what made the theorem unconditional.
 

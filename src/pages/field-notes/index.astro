@@ -105,12 +105,12 @@ const dateShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', da
       <section class="fn-section" aria-labelledby="evolution-head">
         <header class="fn-section-head">
           <p class="fn-section-eyebrow">V. The Evolution: Paper II &amp; Paper III</p>
-          <h2 class="fn-section-title" id="evolution-head">From Paper II to Paper III &mdash; In Plain Sight.</h2>
+          <h2 class="fn-section-title" id="evolution-head">From Paper II to Paper III &ndash; In Plain Sight.</h2>
           <p class="fn-section-deck">Twelve new entries on the road from Paper II to Paper III: the corrected foundation, the routes that did not work, the centered-operator identity that finally did, and the integer that survived all of it.</p>
         </header>
 
         <div class="fn-evolution-grouping">
-          <h3 class="fn-subhead">Decisions on the Record &mdash; Work Posts</h3>
+          <h3 class="fn-subhead">Decisions on the Record &ndash; Work Posts</h3>
           <p class="fn-subhead-deck">The pivots, the catches, and the routes that did not work, documented as they happened.</p>
           <ol class="fn-post-grid">
             {evolutionWorkPosts.map((e) => (
@@ -127,7 +127,7 @@ const dateShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', da
         </div>
 
         <div class="fn-evolution-grouping">
-          <h3 class="fn-subhead">Stepping Back &mdash; Essays</h3>
+          <h3 class="fn-subhead">Stepping Back &ndash; Essays</h3>
           <p class="fn-subhead-deck">Longer pieces on the meaning of what was found, on the reviewer who forced it, and on what we still cannot explain.</p>
           <ol class="fn-post-grid">
             {evolutionEssays.map((e) => (
@@ -156,7 +156,7 @@ const dateShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', da
           {phaseMemos.map((m) => (
             <li>
               <a href={`/field-notes/phase-memos#${m.id}`} class="fn-memo-card">
-                <span class="fn-memo-num">{m.data.title.match(/\d+/)?.[0] ?? '—'}</span>
+                <span class="fn-memo-num">{m.data.title.match(/\d+/)?.[0] ?? ' – '}</span>
                 <div class="fn-memo-body">
                   <h3 class="fn-memo-title">{m.data.title}</h3>
                   {m.data.subtitle && <p class="fn-memo-sub">{m.data.subtitle}</p>}
@@ -172,7 +172,7 @@ const dateShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', da
       {workPosts.length > 0 && (
         <section class="fn-section" aria-labelledby="work-posts-head">
           <header class="fn-section-head">
-            <p class="fn-section-eyebrow">II. Decisions on the Record &mdash; Paper I</p>
+            <p class="fn-section-eyebrow">II. Decisions on the Record &ndash; Paper I</p>
             <h2 class="fn-section-title" id="work-posts-head">Work Posts</h2>
             <p class="fn-section-deck">Specific moments in the work. The pivots, the wrong turns, the catches. Documented as they happened.</p>
           </header>
@@ -194,7 +194,7 @@ const dateShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', da
       {standalone.length > 0 && (
         <section class="fn-section" aria-labelledby="essays-head">
           <header class="fn-section-head">
-            <p class="fn-section-eyebrow">III. Stepping Back &mdash; Paper I</p>
+            <p class="fn-section-eyebrow">III. Stepping Back &ndash; Paper I</p>
             <h2 class="fn-section-title" id="essays-head">Standalone Essays</h2>
             <p class="fn-section-deck">Longer pieces on the texture of doing real research as a generalist. Not tied to a particular phase.</p>
           </header>
@@ -246,7 +246,7 @@ const dateShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', da
           <a href="/method" class="fn-related-card">
             <span class="fn-related-num">V.</span>
             <span class="fn-related-title">The Method</span>
-            <span class="fn-related-deck">The thesis, the protocol, and now the per-paper method &mdash; Scholar included.</span>
+            <span class="fn-related-deck">The thesis, the protocol, and now the per-paper method &ndash; Scholar included.</span>
           </a>
           <a href="/paper" class="fn-related-card">
             <span class="fn-related-num">I.</span>

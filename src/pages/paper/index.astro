@@ -55,13 +55,13 @@ const resultMeta: Record<number, ResultMeta> = {
 const middotSpan = '<span class="middot" style="margin:0 .8em;color:var(--rule-strong)">&middot;</span>';
 
 const bibtex = `@article{cagle2026entropy,
-  author  = {Cagle, Adam R.},
-  title   = {{Entropy Replacement and Complexity-Sensitive Observer
+  author = {Cagle, Adam R.},
+  title = {{Entropy Replacement and Complexity-Sensitive Observer
              Complementarity in Non-Isometric Holographic Codes}},
   journal = {arXiv preprint},
-  number  = {26XX.XXXXX},
-  year    = {2026},
-  note    = {With Claude (Anthropic) as computational collaborator;
+  number = {26XX.XXXXX},
+  year = {2026},
+  note = {With Claude (Anthropic) as computational collaborator;
              reviewed by Scholar (ChatGPT)}
 }`;
 ---
@@ -90,7 +90,7 @@ const bibtex = `@article{cagle2026entropy,
       <div class="masthead-eyebrow">PAPER III OF THE DONKEY-ON-THE-EDGE PROGRAMME</div>
       <div class="rule-double"></div>
       <h1 class="masthead-title">THE PAPER</h1>
-      <div class="masthead-subtitle">In which the quantum disagreement between two observers is shown to reduce, exactly and provably, to a disagreement between two ordinary histograms &mdash; and the random case is closed without a single number left to the machine.</div>
+      <div class="masthead-subtitle">In which the quantum disagreement between two observers is shown to reduce, exactly and provably, to a disagreement between two ordinary histograms &ndash; and the random case is closed without a single number left to the machine.</div>
       <div class="rule-double"></div>
     </header>
 
@@ -138,7 +138,7 @@ const bibtex = `@article{cagle2026entropy,
     <section class="summary">
       <h3 class="section-head">A PLAIN-LANGUAGE SUMMARY</h3>
       <div class="summary-body">
-        <p>Two observers look at the same quantum object through the same noisy, irreversible lens, and disagree about what they see. Earlier papers in this programme showed that the <em>amount</em> of disagreement has structure and depends on the complexity of the object. But they computed that structure in a simplified model &mdash; the "diagonal" model &mdash; and quietly assumed it carried over to the real, fully quantum observer entropy. Paper III removes the assumption. We prove that the complicated quantum disagreement can be <strong>replaced</strong> by a simple classical one: instead of comparing two full quantum states, you compare two bar charts &mdash; the diagonal shadows of what each observer can see &mdash; and the error you make in doing so is provably tiny. With that replacement proved, the random-state ("Haar") law becomes unconditional: it no longer rests on a numerical estimate, because the last loose constant was eliminated by an algebraic identity. The simple-state ("product") law remains conditional on the same replacement holding in a harder regime, and we say so plainly. The integer gap between the two laws &mdash; exactly one power of the observer's size &mdash; survived the entire rewrite intact, and we still cannot say why it is an integer.</p>
+        <p>Two observers look at the same quantum object through the same noisy, irreversible lens, and disagree about what they see. Earlier papers in this programme showed that the <em>amount</em> of disagreement has structure and depends on the complexity of the object. But they computed that structure in a simplified model &ndash; the "diagonal" model &ndash; and quietly assumed it carried over to the real, fully quantum observer entropy. Paper III removes the assumption. We prove that the complicated quantum disagreement can be <strong>replaced</strong> by a simple classical one: instead of comparing two full quantum states, you compare two bar charts &ndash; the diagonal shadows of what each observer can see &ndash; and the error you make in doing so is provably tiny. With that replacement proved, the random-state ("Haar") law becomes unconditional: it no longer rests on a numerical estimate, because the last loose constant was eliminated by an algebraic identity. The simple-state ("product") law remains conditional on the same replacement holding in a harder regime, and we say so plainly. The integer gap between the two laws &ndash; exactly one power of the observer's size &ndash; survived the entire rewrite intact, and we still cannot say why it is an integer.</p>
       </div>
     </section>
 
@@ -185,7 +185,7 @@ const bibtex = `@article{cagle2026entropy,
           </div>
           <div class="method-item">
             <h3>II &middot; THE REPLACEMENT</h3>
-            <p is:raw>The full observer entropy is expanded about the bulk-marginal diagonal. The error splits into an off-diagonal part $F_{\rm off}$ and a diagonal-to-bulk part $F_{\rm diag}$; both are shown to be $O(d^{-4}d_M^{-2})$ &mdash; one power of $d$ below the signal variance $\Theta(d^{-3}d_M^{-2})$ &mdash; via a resolvent representation, a fourth-moment estimate, and a centered-operator identity that routes $F_{\rm diag}$ through the same base moment as $F_{\rm off}$ (Appendix C).</p>
+            <p is:raw>The full observer entropy is expanded about the bulk-marginal diagonal. The error splits into an off-diagonal part $F_{\rm off}$ and a diagonal-to-bulk part $F_{\rm diag}$; both are shown to be $O(d^{-4}d_M^{-2})$ &ndash; one power of $d$ below the signal variance $\Theta(d^{-3}d_M^{-2})$ &ndash; via a resolvent representation, a fourth-moment estimate, and a centered-operator identity that routes $F_{\rm diag}$ through the same base moment as $F_{\rm off}$ (Appendix C).</p>
           </div>
           <div class="method-item">
             <h3>III &middot; THE SPECIALISATION</h3>
@@ -203,7 +203,7 @@ const bibtex = `@article{cagle2026entropy,
       <h3 class="section-head">CODE &amp; DATA</h3>
       <div class="section-body">
         <p style="text-align:center; font-style:italic; color:var(--ink-soft); margin-bottom:8px;">
-          The complete Paper III package &mdash; manuscript, appendices A/B/C, five figures, the reproducibility bundle (backend, figure generators, verification scripts, CSVs), and the reviewer's note &mdash; is browsable and downloadable.
+          The complete Paper III package &ndash; manuscript, appendices A/B/C, five figures, the reproducibility bundle (backend, figure generators, verification scripts, CSVs), and the reviewer's note &ndash; is browsable and downloadable.
         </p>
         <div class="code-grid">
           <div class="code-file"><span class="name">vnalgebra.py</span><span class="desc">VN-algebra machinery</span></div>

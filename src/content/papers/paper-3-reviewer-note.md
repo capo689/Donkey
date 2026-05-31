@@ -8,10 +8,10 @@ subtitle: "A summary of the six-round adversarial review by Scholar (ChatGPT), a
 
 
 This package incorporates every fix from the review rounds. The last substantive
-item — Appendix C.6 — is now proved theorem-grade by the centered-operator method,
+item – Appendix C.6 – is now proved theorem-grade by the centered-operator method,
 with no numerical constant inside the proof.
 
-## C.6 — diagonal-to-bulk bound, closed via reduction to the §C.3 base moment
+## C.6 – diagonal-to-bulk bound, closed via reduction to the §C.3 base moment
 The proof now reduces F_diag to the SAME base moment that controls F_off:
 
 1. Representation: eta_a^X = (1/rho) Tr[(P - rho I) Q_X^(a)] + normalization remainder,

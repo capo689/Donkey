@@ -46,9 +46,9 @@ precision.
 
 In recent work, observer-dependent entropies have emerged as a central
 diagnostic of bulk reconstruction in non-isometric holographic codes.
-The essential tension is that different observer-inclusion rules — each
+The essential tension is that different observer-inclusion rules – each
 motivated by different physical considerations and each a natural
-construction — give rise to different von Neumann entropies on the
+construction – give rise to different von Neumann entropies on the
 same bulk state. This disagreement is the quantitative content of
 *observer complementarity*: a bulk state has multiple coexisting
 entropic interpretations, and the gap between them is a feature, not a
@@ -96,8 +96,8 @@ entropies of [2412.15502, 2603.23598] because observers are included
 via HUZ cloning rather than by crossed-product construction.
 
 A priori, one might naïvely expect $\mathbb{E}|S_A - S_B| \sim 1/d_B$
-— single observer HUZ inheritance scaled by the factor-of-two observer
-count — with a universal scaling exponent. As we show, this is decisively
+– single observer HUZ inheritance scaled by the factor-of-two observer
+count – with a universal scaling exponent. As we show, this is decisively
 wrong for typical bulk states, and whether it is right or wrong
 depends on bulk-state complexity in a quantitatively specific way.
 
@@ -122,7 +122,7 @@ the observer-$A$ reduced state.
 
 This identity, proved in §3, reduces the two-observer disagreement problem
 to computing the variance of the Shannon entropy of the bulk-marginal
-diagonal — a random-matrix calculation that depends on the bulk state
+diagonal – a random-matrix calculation that depends on the bulk state
 class. Applied to two natural extreme classes, we obtain the following
 scaling theorems (proved in §§4–5, stated formally there):
 
@@ -145,7 +145,7 @@ bulk marginals. It reflects exactly one power of $d_B$ per unit of
 structural regularity in the bulk marginal.
 
 The structural identity and both scaling theorems are verified at multiple
-independent levels — the structural identity directly (across 18 diagonal
+independent levels – the structural identity directly (across 18 diagonal
 entries at $d_B \in \{4, 6, 8\}$), the Dirichlet-variance asymptote, the
 prefactor convergence, the Gaussian-limit ratio, and end-to-end comparison
 with full HUZ-plus-$V$ simulation data. Out-of-sample tests at $d_B$
@@ -157,7 +157,7 @@ The structural identity has a direct physical reading. Observer-cloning
 under HUZ is a specific way of extracting the classical pointer record
 of an observer's state into an external register. Haar-averaging over the
 non-isometric code $V$ erases the off-diagonal coherences of this record
-(in the cloning basis) and leaves only the diagonal — which is, up to
+(in the cloning basis) and leaves only the diagonal – which is, up to
 the stated subleading correction, exactly the bulk $A$-marginal's
 diagonal. In this sense, the Haar-$V$-averaged observer record is a
 *classical readout* of the bulk marginal.
@@ -292,7 +292,7 @@ defining an ensemble over $\mathcal{H}_{\rm eff}$:
   $A$-marginal $\rho_A^{\rm bulk}$ is a rank-1 pure state.
 - **Haar class (H).** Bulk states drawn uniformly from the unit sphere of
   $\mathcal{H}_{\rm eff}$ (Haar measure on $\mathbb{C}^{d_{\rm eff}}$).
-  Such states are generic — high-entanglement, maximally non-product in
+  Such states are generic – high-entanglement, maximally non-product in
   the sense of the Schmidt decomposition. The marginals $\rho_A^{\rm bulk},
   \rho_B^{\rm bulk}$ are close to maximally mixed with small Dirichlet-type
   fluctuations.
@@ -448,8 +448,8 @@ distinct $a$ values, because at first moment those coherences require
 correlating $V^\dagger V$ between *different* eigenvectors of the
 $a$-pointer projector, and (3.3) prohibits such correlation at order $\rho$.
 
-The bulk-marginal off-diagonals do not vanish — they remain present in the
-bulk state — but they are not transmitted to the observer's reference
+The bulk-marginal off-diagonals do not vanish – they remain present in the
+bulk state – but they are not transmitted to the observer's reference
 register when that register has been HUZ-cloned in the pointer basis and
 filtered through a Haar-random non-isometric code.
 
@@ -504,7 +504,7 @@ configuration:
 
 | Bulk class | $\|\rho_A^{\rm bulk}\|_{\rm off}$ | $\|\mathbb{E}_V[\rho_{R_A}]\|_{\rm off}$ | ratio | measured / SEM scale |
 |---|---:|---:|---:|---:|
-| Haar    | $5.95 \times 10^{-2}$ | $5.05 \times 10^{-4}$ | $8.5 \times 10^{-3}$ | 0.40 |
+| Haar | $5.95 \times 10^{-2}$ | $5.05 \times 10^{-4}$ | $8.5 \times 10^{-3}$ | 0.40 |
 | Product | $2.22 \times 10^{-1}$ | $5.82 \times 10^{-4}$ | $2.6 \times 10^{-3}$ | 0.46 |
 
 Across the full scan of six configurations ($d_B \in \{4, 6, 8\}$ for both
@@ -539,8 +539,8 @@ By Theorem 3.2,
 $$
 \mathbb{E}_V[\rho_{R_A}] \;=\; \mathrm{diag}\bigl(|\psi_A^a|^2\bigr) + O(1/d_B^2).
 $$
-Because $\rho_{R_A}$ concentrates around this diagonal — with the off-diagonal
-fluctuations suppressed as established in Figure 2 — the leading-order entropy
+Because $\rho_{R_A}$ concentrates around this diagonal – with the off-diagonal
+fluctuations suppressed as established in Figure 2 – the leading-order entropy
 is simply the Shannon entropy of the Haar amplitudes:
 $$
 S(\rho_{R_A}) \;\longrightarrow\; H\bigl(|\psi_A|^2\bigr) \;\equiv\; -\sum_{a=1}^{d_B} |\psi_A^a|^2\, \log |\psi_A^a|^2.
@@ -689,15 +689,15 @@ Figure 3 collects four independent tests of Theorem 4.2, all passing:
   data points $d_B \in \{4, 6, 8, 10, 12, 16\}$, agreement holds to
   $|z| \leq 1.30\sigma$.
 
-An out-of-sample test at $d_B = 20$ — a value not used in constructing
-the theorem or any intermediate calibration — gives measured
+An out-of-sample test at $d_B = 20$ – a value not used in constructing
+the theorem or any intermediate calibration – gives measured
 $\langle|\Delta S|\rangle = 0.119 \pm 0.018$ ($N = 40$ samples in the full
 setup) against theoretical prediction $0.125 \pm 0.0004$ ($N = 50{,}000$
 samples in the no-$V$ model), corresponding to $z = -0.35\sigma$.
 
-The combined weight of five independent verification levels — asymptote,
+The combined weight of five independent verification levels – asymptote,
 prefactor, Gaussian limit, structural identity, end-to-end in-sample, and
-out-of-sample — leaves no residual uncertainty in the leading-order
+out-of-sample – leaves no residual uncertainty in the leading-order
 asymptotic form (4.2). Subleading corrections in $1/d_B$ are not analytically
 derived here; empirically they cause measured values to lie slightly below
 asymptotic predictions at small $d_B$ but agree exactly with the full
@@ -820,7 +820,7 @@ In particular, $\alpha_H = -3/2$ exactly.
 *Proof.* Combine (5.2) with the Gaussian-limit identity
 $\mathbb{E}|X| = \sqrt{2/\pi}\, \sigma_X$ for $X \sim \mathcal{N}(0, \sigma_X^2)$.
 The Gaussian limit of $S_A - S_B$ follows from the CLT applied to the
-quadratic form (5.1) in the i.i.d. $\mathrm{Exp}(1)$ representation — a
+quadratic form (5.1) in the i.i.d. $\mathrm{Exp}(1)$ representation – a
 standard argument. Explicitly,
 $$
 \mathbb{E}|S_A - S_B| \;=\; \sqrt{2/\pi}\, \sigma_{S_A - S_B} \;=\; \sqrt{2/\pi} \cdot \frac{1}{d_M\, d^{3/2}}(1 + o(1)). \qquad\square
@@ -848,7 +848,7 @@ $$
 $$
 fit with $\chi^2 = 2.8/4$ dof. The floating-asymptote linear fit
 $A + B/d_B$ returns $A = 0.994 \pm 0.005$, consistent with the analytic
-asymptote $A = 1$ at $1.3\sigma$ — a direct statistical test of the prefactor
+asymptote $A = 1$ at $1.3\sigma$ – a direct statistical test of the prefactor
 $\sqrt{2/\pi}/d_M$.
 
 ### 5.6 Multi-level verification
@@ -858,7 +858,7 @@ Figure 4 collects four independent tests:
 - **Panel (a):** The ratio (measured) / (asymptotic prediction) at
   $d \in [16, 96]$ approaches $1.0$ with a clear $1/d$ scaling.
   The floating-asymptote fit gives $A = 0.994 \pm 0.005$, consistent
-  with $A = 1$ at $1.3\sigma$ — this is a direct statistical test of
+  with $A = 1$ at $1.3\sigma$ – this is a direct statistical test of
   Theorem 5.2's prefactor with no free parameters.
 - **Panel (b):** The empirical subleading structure (5.4) fits the
   same data with $\chi^2 = 2.8/4$ dof.
@@ -980,7 +980,7 @@ two extremes. The physical picture is the following:
   maximally mixed. The cloned reference $\rho_{R_A}$ is near
   $I/d_B$ with tiny Dirichlet-type fluctuations of scale $1/d_B^{3/2}$.
   Observer-$B$'s side is similarly near-uniform, and the entropies are
-  nearly equal — differing by $O(1/d_B^{3/2})$.
+  nearly equal – differing by $O(1/d_B^{3/2})$.
 
 ### 6.3 The Shannon bound saturation story
 
@@ -989,7 +989,7 @@ entropies, combined with the triangle inequality) always holds. This bound
 is inherited from the single-observer HUZ setting, where each
 $S(\rho_{R_A})$ is an entropy on a $d_B$-dimensional Hilbert space and
 thus $\leq \log d_B$. The bound is tight in the sense that it can be
-saturated — for instance by carefully chosen bulk states with $S_A \approx
+saturated – for instance by carefully chosen bulk states with $S_A \approx
 \log d_B$ and $S_B \approx 0$.
 
 The present work establishes that *typical* bulk states, drawn from either
@@ -1032,8 +1032,8 @@ complementarity is not a single-scale phenomenon: the inner-product scale is
 set by HUZ's $1/d_{\rm Ob}$, while the entropy scale is set by the bulk
 marginal's Dirichlet structure.
 
-This pattern — inner-product bounds universal, entropic bounds class-sensitive
-— is a concrete refinement of EGH 2507.06046's framing of observer
+This pattern – inner-product bounds universal, entropic bounds class-sensitive
+– is a concrete refinement of EGH 2507.06046's framing of observer
 complementarity. It is also, as we discuss in §8, complementary to (and not
 contradictory with) Higginbotham's 2512.17993 refinement of EGH's SWAP-test
 operators, which operates at the $\alpha/\beta$ coefficient level rather than
@@ -1048,7 +1048,7 @@ follow-up work. Two scenarios are possible:
 1. **Smooth interpolation.** $\alpha(r)$ is monotone-decreasing from $-1/2$
    to $-3/2$ as $r$ grows, with prefactor $c(r)$ smoothly interpolating
    between the two theorem prefactors. This is the "no surprises" outcome
-   — observer-cloning noise reduces smoothly as bulk-entanglement structure
+– observer-cloning noise reduces smoothly as bulk-entanglement structure
    grows.
 
 2. **Phase transition at some $r^*$.** If $\alpha(r)$ is flat on some interval
@@ -1103,14 +1103,14 @@ of $d_B$ for the two state classes, with $d_M = 4$ and $\rho = 1/2$ held fixed.
 | 8 | 300 | $0.00764 \pm 0.0004$ | $0.00810$ | $-1.27$ | $0.1930 \pm 0.012$ | $0.1769$ | $+1.30$ |
 | 10 | 300 | $0.00618 \pm 0.0003$ | $0.00571$ | $+1.78$ | $0.1535 \pm 0.011$ | $0.1628$ | $-0.81$ |
 | 12 | 300 | $0.00453 \pm 0.0002$ | $0.00426$ | $+1.30$ | $0.1662 \pm 0.011$ | $0.1542$ | $+1.13$ |
-| 14 | 200 | $0.00366 \pm 0.0002$ | $0.00336$ | $+1.34$ | — | — | — |
+| 14 | 200 | $0.00366 \pm 0.0002$ | $0.00336$ | $+1.34$ | – | – | – |
 | 16 | 240 | $0.00301 \pm 0.0002$ | $0.00269$ | $+1.90$ | $0.1390 \pm 0.009$ | $0.1362$ | $+0.32$ |
-| 18 | 60 | $0.00233 \pm 0.0003$ | $0.00249$ | $-0.54$ | — | — | — |
+| 18 | 60 | $0.00233 \pm 0.0003$ | $0.00249$ | $-0.54$ | – | – | – |
 | 20 | 190 | $0.00212 \pm 0.0001$ | $0.00211$ | $+0.09$ | $0.1190 \pm 0.018$ | $0.1250$ | $-0.35$ |
 | 24 | 60 | $0.00151 \pm 0.0002$ | $0.00177$ | $-1.50$ | $0.0932 \pm 0.018$ | $0.1140$ | $-1.19$ |
 
 *(The $d_B = 18$ and $d_B = 20$ points in the Haar column, and $d_B = 20, 24$
-in the Product column, are out-of-sample — not used in any prior
+in the Product column, are out-of-sample – not used in any prior
 calibration.)*
 
 The total $\chi^2$ is $\sum_i z_i^2 = 28.5$ over $n = 17$ points with
@@ -1153,7 +1153,7 @@ subleading-corrected $-3/2$ over a limited $d_B$ range. The effective
 exponent $d \log\langle\Delta S\rangle / d \log d_B$ of a function of
 form $c\, d_B^{-3/2}\bigl(1 + b/d_B\bigr)$ with $b \approx -1.13$ is
 $-3/2 - b/(d_B + b)$, which evaluates to $-1.32$ at $d_B = 8$ and
-$-1.43$ at $d_B = 16$ — precisely the range of values seen in the
+$-1.43$ at $d_B = 16$ – precisely the range of values seen in the
 7-point fit. The analytic derivation (Theorem 5.2) dissolves this issue
 directly: $\alpha_H = -3/2$ is exact, and the apparent drift is
 captured by the explicit subleading structure (5.4).
@@ -1187,7 +1187,7 @@ A note on regimes where one should be careful in interpreting Table 1:
 - **Small $d_B$ (4–6)** shows the largest percentage corrections to the
   asymptotic theorem. In particular the Haar-class asymptotic prediction
   at $d_B = 4$ is $6.23 \times 10^{-3}$, but the measurement is
-  $1.88 \times 10^{-2}$ — a 3× discrepancy. This is resolved by the
+  $1.88 \times 10^{-2}$ – a 3× discrepancy. This is resolved by the
   subleading corrections of §5.5: the corrected prediction (including
   $1/d$ and $1/d^2$ terms) gives $6.43 \times 10^{-3}$, still a factor
   of 3 off. The remaining discrepancy at $d_B = 4$ likely reflects the
@@ -1232,8 +1232,8 @@ accessible range of $d_B$.
 
 ## §8. Discussion
 
-This paper's result — complexity-sensitive two-observer disagreement with
-exactly-derived exponents $\alpha_P = -1/2$ and $\alpha_H = -3/2$ — sits at
+This paper's result – complexity-sensitive two-observer disagreement with
+exactly-derived exponents $\alpha_P = -1/2$ and $\alpha_H = -3/2$ – sits at
 the intersection of several active threads in the observer-complementarity,
 non-isometric-code, and holographic-complexity literatures. This section
 positions our contribution relative to adjacent work.
@@ -1261,8 +1261,8 @@ Our result is complementary to EGH's in a specific way:
 These are distinct physical observables. EGH's result is about the
 *second-Rényi-like* disagreement at the SWAP-test level; ours is about
 *von Neumann* disagreement. A priori, second-Rényi and von Neumann
-disagreements could scale the same way with $d_B$ — they both come from
-Haar-$V$-averaged joint moments of $\rho_{R_A}$ and $\rho_{R_B}$ — but
+disagreements could scale the same way with $d_B$ – they both come from
+Haar-$V$-averaged joint moments of $\rho_{R_A}$ and $\rho_{R_B}$ – but
 the coefficients could (and do) differ, and the state-class sensitivity
 could (and does) differ.
 
@@ -1314,7 +1314,7 @@ a precise analytic claim verified to $4\%$ by our Phase 2 numerical
 program (see reproducibility appendix).
 
 Our two-observer result could, a priori, have inherited HUZ's $1/d_{\rm Ob}$
-scaling directly — giving $\alpha = -1$ for both observers. This naive
+scaling directly – giving $\alpha = -1$ for both observers. This naive
 inheritance is rejected at $19\sigma$ in the Haar-bulk data (Phase 5).
 The actual scaling is a full power of $d_B$ below naive inheritance in
 the Haar class, and a full power of $d_B$ above it in the Product class.
@@ -1335,13 +1335,13 @@ We verified both HUZ and Colorado rules on a unified backend in the course
 of this program, establishing that they give distinct observer-dependent
 entropies on the same bulk state. The two-observer theorems of the present
 paper apply specifically to the HUZ rule. Deriving an analogous result for
-the Colorado rule would require a different starting identity — Colorado
+the Colorado rule would require a different starting identity – Colorado
 has no external reference register, so the machinery of Theorem 3.2 does
 not apply directly. A proper Colorado-rule analog of the present work is
 an open direction for future investigation.
 
-The mechanism uncovered in §3.3 — that HUZ cloning combined with Haar-$V$
-averaging acts as pointer-basis decoherence at leading order — is
+The mechanism uncovered in §3.3 – that HUZ cloning combined with Haar-$V$
+averaging acts as pointer-basis decoherence at leading order – is
 specific to HUZ. The diagonal projection in Theorem 3.2 arises from the
 $\delta_{aa'}$ structure of the first-moment Haar contraction (3.3a),
 which in turn reflects the way the cloning map correlates the observer
@@ -1471,8 +1471,8 @@ Several natural follow-ups suggest themselves. A systematic scan of
 Schmidt-rank-$r$ intermediate bulk states would establish whether the
 exponent $\alpha(r)$ interpolates smoothly between our two extreme cases.
 An analytic derivation of the subleading structure $1 - 1.13/d_B +
-4.65/d_B^2$ appearing in Theorem 2 — presumably via non-Gaussian
-corrections to the Isserlis identity — would close the one remaining
+4.65/d_B^2$ appearing in Theorem 2 – presumably via non-Gaussian
+corrections to the Isserlis identity – would close the one remaining
 empirical fit in our chain of derivations. Applying the same machinery
 to alternative observer-inclusion rules (Colorado, QRF crossed-product)
 would test the extent to which the pattern we identify is intrinsic to

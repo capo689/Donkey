@@ -15,7 +15,7 @@ quantify this disagreement in the AEHPV non-isometric framework with Harlow–Us
 observer inclusion, and show it is governed by an **entropy-replacement principle**.
 Our main result (Theorem 1) is that the von Neumann entropy of an observer's actual
 reduced state equals the Shannon entropy of its diagonal in the cloning basis, up to
-an error $F_{AB}$ with $\mathbb{E}[F_{AB}^2] = O(d_B^{-4} d_M^{-2})$ — a full power of
+an error $F_{AB}$ with $\mathbb{E}[F_{AB}^2] = O(d_B^{-4} d_M^{-2})$ – a full power of
 $d_B$ below the two-observer signal. For Haar-random bulk states this principle is
 established **unconditionally**, via an exact antisymmetric resolvent representation of
 $F_{AB}$ together with a fourth-moment bound on the random-projection–induced
@@ -46,8 +46,8 @@ encoded. The Harlow–Usatyuk–Zhao (HUZ) prescription makes this precise by *c
 the measured degree of freedom into an observer register before the non-isometric map
 is applied.
 
-When two such observers are included independently — each cloning the same bulk degree
-of freedom into its own register — the code now carries two records of the same
+When two such observers are included independently – each cloning the same bulk degree
+of freedom into its own register – the code now carries two records of the same
 information. Because the non-isometric map is not injective, the two observers'
 reduced states need not agree, and in particular their von Neumann entropies need not
 agree. The size of this disagreement is a sharp, computable diagnostic of how much
@@ -88,7 +88,7 @@ a linear piece (which reduces to the very bulk-marginal moment that controls the
 signal) and a nonlinear piece (controlled by a fourth moment of the
 random-projection–induced perturbation), and closes the fourth moment by a
 concentration estimate on the unitary group. The replacement error is suppressed
-relative to the signal by a full power of $d_B$ — which is exactly what is needed to
+relative to the signal by a full power of $d_B$ – which is exactly what is needed to
 make the entropy difference equal to the Shannon difference at leading order.
 
 Given Theorem 1, the disagreement reduces to the variance of the Shannon entropy of
@@ -101,18 +101,18 @@ two extreme bulk-state classes gives the second layer:
   product-class form of Theorem 1:
   $\mathbb{E}|S_A - S_B| \to \sqrt{4(\pi^2/3-3)/\pi}\,d_B^{-1/2} \approx 0.608\,d_B^{-1/2}$.
 
-| Bulk class | Replacement (Theorem 1) status     | Disagreement law                  |
+| Bulk class | Replacement (Theorem 1) status | Disagreement law |
 | ---------- | ---------------------------------- | --------------------------------- |
-| Haar       | proved (Appendix C)                | **unconditional**, $d_B^{-3/2}$   |
-| Product    | conjectural / numerically supported| conditional, $d_B^{-1/2}$         |
+| Haar | proved (Appendix C) | **unconditional**, $d_B^{-3/2}$ |
+| Product | conjectural / numerically supported| conditional, $d_B^{-1/2}$ |
 
 ### 1.4 Physical interpretation: complexity-sensitive complementarity
 
 The two exponents differ by exactly one power of $d_B$. We read this as
 *complexity-sensitive complementarity*: the degree to which two cloned observers can
 disagree about a bulk degree of freedom is controlled by the complexity class of the
-bulk state. Highly scrambled (Haar) bulk states leave little room for disagreement —
-the disagreement falls off as $d_B^{-3/2}$ — while simple (product) bulk states leave
+bulk state. Highly scrambled (Haar) bulk states leave little room for disagreement – 
+the disagreement falls off as $d_B^{-3/2}$ – while simple (product) bulk states leave
 an order-$\sqrt{d_B}$ more room, falling off only as $d_B^{-1/2}$. The non-isometry's
 tolerance for observer-dependent descriptions is thus not a fixed property of the code
 but a function of what is encoded in it. Section 6 develops this reading and connects
@@ -124,13 +124,13 @@ Section 2 fixes the AEHPV/HUZ setup, the two-observer scenario, and the two bulk
 classes. Section 3 is the technical heart: it states and proves (modulo Appendix C)
 the entropy-replacement theorem, building it from the structural identity (Lemma 1)
 and the off-diagonal collapse, and verifies it numerically (Figure 2). Sections 4 and
-5 derive the two scaling laws as consequences — the Haar law (Theorem 2,
+5 derive the two scaling laws as consequences – the Haar law (Theorem 2,
 unconditional) first, then the product law (Theorem 3, conditional). Section 6 develops
 the complexity-sensitive reading of the exponent gap. Section 7 presents the numerical
 landscape (Table 1, Figures 1 and 5). Section 8 situates the results against EGH, HUZ,
 the Colorado rule, and the quantum-reference-frame literature. Appendix A records
 generalized EGH formulas; Appendix B documents reproducibility; **Appendix C proves
-the entropy-replacement theorem for the Haar class** — the resolvent representation,
+the entropy-replacement theorem for the Haar class** – the resolvent representation,
 the linear and nonlinear bounds (Lemmas C.1–C.2), and the fourth-moment projector
 estimate (Lemmas C.3–C.5).
 
@@ -232,7 +232,7 @@ defining an ensemble over $\mathcal{H}_{\rm eff}$:
   $A$-marginal $\rho_A^{\rm bulk}$ is a rank-1 pure state.
 - **Haar class (H).** Bulk states drawn uniformly from the unit sphere of
   $\mathcal{H}_{\rm eff}$ (Haar measure on $\mathbb{C}^{d_{\rm eff}}$).
-  Such states are generic — high-entanglement, maximally non-product in
+  Such states are generic – high-entanglement, maximally non-product in
   the sense of the Schmidt decomposition. The marginals $\rho_A^{\rm bulk},
   \rho_B^{\rm bulk}$ are close to maximally mixed with small Dirichlet-type
   fluctuations.
@@ -419,7 +419,7 @@ them.
 
 With the structural identity in hand, both theorems of this paper reduce
 to computing $\mathbb{E}[H(\mathrm{diag}(\rho_A^{\rm bulk}))]$ under two
-different bulk state classes — *provided* the von Neumann entropy of the
+different bulk state classes – *provided* the von Neumann entropy of the
 actual reduced state may be replaced by the Shannon entropy of its diagonal.
 That replacement is the content of the next subsection.
 
@@ -428,8 +428,8 @@ That replacement is the content of the next subsection.
 Lemma 1 controls the Haar-$V$ *expectation* $\mathbb{E}_V[\rho_{R_A}]$.
 The scaling theorems of §§4–5, however, require more: that the von Neumann
 entropy of the *actual* (fluctuating) reduced state $\rho_{R_A}$ equal the
-Shannon entropy of the **bulk-marginal diagonal** — the object the scaling
-calculation actually uses — up to an error subleading to the two-observer
+Shannon entropy of the **bulk-marginal diagonal** – the object the scaling
+calculation actually uses – up to an error subleading to the two-observer
 signal. Two diagonals must be distinguished:
 $$
 D_X \;:=\; \mathrm{diag}(\rho_{R_X})\ \text{(the \emph{actual} reduced-state diagonal, $V$-dependent)},
@@ -437,7 +437,7 @@ D_X \;:=\; \mathrm{diag}(\rho_{R_X})\ \text{(the \emph{actual} reduced-state dia
 P_X \;:=\; \mathrm{diag}(\rho_X^{\rm bulk}),
 $$
 where $P_X$ has entries $p_A^a = \sum_{bc}|\psi_{abc}|^2$ and $p_B^b = \sum_{ac}|\psi_{abc}|^2$
-— the bulk-marginal probabilities, which depend only on $|\psi\rangle$, not on $V$.
+– the bulk-marginal probabilities, which depend only on $|\psi\rangle$, not on $V$.
 By Lemma 1, $\mathbb{E}_V[D_X] = P_X + O(d^{-2})$, but $D_X$ fluctuates around $P_X$.
 Define the **entropy-replacement error** against the bulk-marginal diagonal,
 $$
@@ -450,8 +450,8 @@ F_{AB} \;=\; \underbrace{\bigl[S_A - S_B\bigr] - \bigl[H(D_A) - H(D_B)\bigr]}_{F
 \;+\; \underbrace{\bigl[H(D_A) - H(D_B)\bigr] - \bigl[H(P_A) - H(P_B)\bigr]}_{F_{\rm diag}}.
 $$
 The two-observer signal has standard deviation $\Theta(d_B^{-3/2} d_M^{-1})$
-in the Haar class (Theorem 2). The following theorem states that $F_{AB}$ —
-both pieces — is smaller by a full power of $d_B$.
+in the Haar class (Theorem 2). The following theorem states that $F_{AB}$ – 
+both pieces – is smaller by a full power of $d_B$.
 
 > **Theorem 1 (entropy replacement).** *In the joint Haar measure on
 > bulk and $V$, with $d_A = d_B = d$, $\rho \in (0,1)$ and $d_M$ fixed,*
@@ -484,10 +484,10 @@ is unconditional.
 
 ---
 
-## §4. Consequence I — the Haar-class disagreement law (unconditional)
+## §4. Consequence I – the Haar-class disagreement law (unconditional)
 
 We first take $|\psi\rangle$ Haar-distributed on the *full* effective Hilbert
-space $\mathcal{H}_A \otimes \mathcal{H}_B \otimes \mathcal{H}_C$ — the
+space $\mathcal{H}_A \otimes \mathcal{H}_B \otimes \mathcal{H}_C$ – the
 maximal-complexity class, and the one for which the entropy-replacement theorem
 is unconditional (Appendix C), so that the disagreement law below is rigorous. The
 resulting bulk marginal $\rho_A^{\rm bulk}$ is close to maximally mixed, and
@@ -603,7 +603,7 @@ In particular, $\alpha_H = -3/2$ exactly.
 
 *Proof (unconditional).* By §4.2, $S_A - S_B = (H(p)-H(q)) + F_{AB}$ with
 $\mathbb{E}[F_{AB}^2] = O(d^{-4} d_M^{-2})$ by Theorem 1 (Haar class,
-Appendix C) — a full power of $d$ below the variance (4.2) of the Shannon
+Appendix C) – a full power of $d$ below the variance (4.2) of the Shannon
 term. The replacement error therefore contributes only at relative order
 $O(d^{-1/2})$ to $\mathbb{E}|S_A-S_B|$ and does not affect the leading
 asymptotic. Combine (4.2) with the Gaussian-limit identity
@@ -638,7 +638,7 @@ $$
 fit with $\chi^2 = 2.8/4$ dof. The floating-asymptote linear fit
 $A + B/d_B$ to the measured/analytic ratio (data in `fig4_haar_prefactor.csv`,
 $d_B \in [8,64]$) returns $A = 1.00 \pm 0.01$ (SEM-weighted), consistent with
-the analytic asymptote $A = 1$ well within $1\sigma$ — a direct statistical test
+the analytic asymptote $A = 1$ well within $1\sigma$ – a direct statistical test
 of the prefactor $\sqrt{2/\pi}/d_M$.
 
 ### 4.6 Multi-level verification
@@ -648,7 +648,7 @@ Figure 4 collects four independent tests:
 - **Panel (a):** The ratio (measured) / (asymptotic prediction) at
   $d \in [16, 96]$ approaches $1.0$ with a clear $1/d$ scaling.
   The floating-asymptote fit gives $A = 0.999 \pm 0.004$, consistent
-  with $A = 1$ — this is a direct statistical test of
+  with $A = 1$ – this is a direct statistical test of
   Theorem 2's prefactor with no free parameters.
 - **Panel (b):** The empirical subleading structure (4.4) fits the
   same data with $\chi^2 = 2.8/4$ dof.
@@ -697,7 +697,7 @@ physical interpretation in terms of bulk-state complexity.
 
 ---
 
-## §5. Consequence II — the product-class disagreement law (conditional)
+## §5. Consequence II – the product-class disagreement law (conditional)
 
 In this section we compute the two-observer disagreement when the bulk
 state factorizes as
@@ -875,15 +875,15 @@ Figure 3 collects four independent tests of Theorem 3, all passing:
   data points $d_B \in \{4, 6, 8, 10, 12, 16\}$, agreement holds to
   $|z| \leq 1.30\sigma$.
 
-An out-of-sample test at $d_B = 20$ — a value not used in constructing
-the theorem or any intermediate calibration — gives measured
+An out-of-sample test at $d_B = 20$ – a value not used in constructing
+the theorem or any intermediate calibration – gives measured
 $\langle|\Delta S|\rangle = 0.119 \pm 0.018$ ($N = 40$ samples in the full
 setup) against theoretical prediction $0.125 \pm 0.0004$ ($N = 50{,}000$
 samples in the no-$V$ model), corresponding to $z = -0.35\sigma$.
 
-The combined weight of five independent verification levels — asymptote,
+The combined weight of five independent verification levels – asymptote,
 prefactor, Gaussian limit, structural identity, end-to-end in-sample, and
-out-of-sample — strongly supports the leading-order
+out-of-sample – strongly supports the leading-order
 asymptotic form (5.2). Subleading corrections in $1/d_B$ are not analytically
 derived here; empirically they cause measured values to lie slightly below
 asymptotic predictions at small $d_B$ but agree exactly with the full
@@ -980,7 +980,7 @@ two extremes. The physical picture is the following:
   maximally mixed. The cloned reference $\rho_{R_A}$ is near
   $I/d_B$ with tiny Dirichlet-type fluctuations of scale $1/d_B^{3/2}$.
   Observer-$B$'s side is similarly near-uniform, and the entropies are
-  nearly equal — differing by $O(1/d_B^{3/2})$.
+  nearly equal – differing by $O(1/d_B^{3/2})$.
 
 ### 6.3 The Shannon bound saturation story
 
@@ -989,7 +989,7 @@ entropies, combined with the triangle inequality) always holds. This bound
 is inherited from the single-observer HUZ setting, where each
 $S(\rho_{R_A})$ is an entropy on a $d_B$-dimensional Hilbert space and
 thus $\leq \log d_B$. The bound is tight in the sense that it can be
-saturated — for instance by carefully chosen bulk states with $S_A \approx
+saturated – for instance by carefully chosen bulk states with $S_A \approx
 \log d_B$ and $S_B \approx 0$.
 
 The present work establishes that *typical* bulk states, drawn from either
@@ -1032,8 +1032,8 @@ complementarity is not a single-scale phenomenon: the inner-product scale is
 set by HUZ's $1/d_{\rm Ob}$, while the entropy scale is set by the bulk
 marginal's Dirichlet structure.
 
-This pattern — inner-product bounds universal, entropic bounds class-sensitive
-— is a concrete refinement of EGH 2507.06046's framing of observer
+This pattern – inner-product bounds universal, entropic bounds class-sensitive
+– is a concrete refinement of EGH 2507.06046's framing of observer
 complementarity. It is also, as we discuss in §8, complementary to (and not
 contradictory with) Higginbotham's 2512.17993 refinement of EGH's SWAP-test
 operators, which operates at the $\alpha/\beta$ coefficient level rather than
@@ -1048,7 +1048,7 @@ follow-up work. Two scenarios are possible:
 1. **Smooth interpolation.** $\alpha(r)$ is monotone-decreasing from $-1/2$
    to $-3/2$ as $r$ grows, with prefactor $c(r)$ smoothly interpolating
    between the two theorem prefactors. This is the "no surprises" outcome
-   — observer-cloning noise reduces smoothly as bulk-entanglement structure
+– observer-cloning noise reduces smoothly as bulk-entanglement structure
    grows.
 
 2. **Phase transition at some $r^*$.** If $\alpha(r)$ is flat on some interval
@@ -1106,14 +1106,14 @@ of $d_B$ for the two state classes, with $d_M = 4$ and $\rho = 1/2$ held fixed.
 | 8 | 300 | $0.00764 \pm 0.0004$ | $0.00810$ | $-1.27$ | $0.1930 \pm 0.012$ | $0.1769$ | $+1.30$ |
 | 10 | 300 | $0.00618 \pm 0.0003$ | $0.00571$ | $+1.78$ | $0.1535 \pm 0.011$ | $0.1628$ | $-0.81$ |
 | 12 | 300 | $0.00453 \pm 0.0002$ | $0.00426$ | $+1.30$ | $0.1662 \pm 0.011$ | $0.1542$ | $+1.13$ |
-| 14 | 200 | $0.00366 \pm 0.0002$ | $0.00336$ | $+1.34$ | — | — | — |
+| 14 | 200 | $0.00366 \pm 0.0002$ | $0.00336$ | $+1.34$ | – | – | – |
 | 16 | 240 | $0.00301 \pm 0.0002$ | $0.00269$ | $+1.90$ | $0.1390 \pm 0.009$ | $0.1362$ | $+0.32$ |
-| 18 | 60 | $0.00233 \pm 0.0003$ | $0.00249$ | $-0.54$ | — | — | — |
+| 18 | 60 | $0.00233 \pm 0.0003$ | $0.00249$ | $-0.54$ | – | – | – |
 | 20 | 190 | $0.00212 \pm 0.0001$ | $0.00211$ | $+0.09$ | $0.1190 \pm 0.018$ | $0.1250$ | $-0.35$ |
 | 24 | 60 | $0.00151 \pm 0.0002$ | $0.00177$ | $-1.50$ | $0.0932 \pm 0.018$ | $0.1140$ | $-1.19$ |
 
 *(The $d_B = 18$ and $d_B = 20$ points in the Haar column, and $d_B = 20, 24$
-in the Product column, are out-of-sample — not used in any prior
+in the Product column, are out-of-sample – not used in any prior
 calibration.)*
 
 The total $\chi^2$ is $\sum_i z_i^2 = 28.5$ over $n = 17$ points with
@@ -1161,7 +1161,7 @@ subleading-corrected $-3/2$ over a limited $d_B$ range. The effective
 exponent $d \log\langle\Delta S\rangle / d \log d_B$ of a function of
 form $c\, d_B^{-3/2}\bigl(1 + b/d_B\bigr)$ with $b \approx -1.0$ is
 $-3/2 - b/(d_B + b)$, which evaluates to $-1.32$ at $d_B = 8$ and
-$-1.43$ at $d_B = 16$ — precisely the range of values seen in the
+$-1.43$ at $d_B = 16$ – precisely the range of values seen in the
 7-point fit. The analytic derivation (Theorem 2) dissolves this issue
 directly: $\alpha_H = -3/2$ is exact, and the apparent drift is
 captured by the explicit subleading structure (4.4).
@@ -1195,7 +1195,7 @@ A note on regimes where one should be careful in interpreting Table 1:
 - **Small $d_B$ (4–6)** shows the largest percentage corrections to the
   asymptotic theorem. In particular the Haar-class asymptotic prediction
   at $d_B = 4$ is $6.23 \times 10^{-3}$, but the measurement is
-  $1.88 \times 10^{-2}$ — a 3× discrepancy. This is resolved by the
+  $1.88 \times 10^{-2}$ – a 3× discrepancy. This is resolved by the
   subleading corrections of §5.5: the corrected prediction (including
   $1/d$ and $1/d^2$ terms) gives $6.43 \times 10^{-3}$, still a factor
   of 3 off. The remaining discrepancy at $d_B = 4$ likely reflects the
@@ -1248,8 +1248,8 @@ accessible range of $d_B$.
 
 ## §8. Discussion
 
-This paper's result — complexity-sensitive two-observer disagreement with
-exactly-derived exponents $\alpha_P = -1/2$ and $\alpha_H = -3/2$ — sits at
+This paper's result – complexity-sensitive two-observer disagreement with
+exactly-derived exponents $\alpha_P = -1/2$ and $\alpha_H = -3/2$ – sits at
 the intersection of several active threads in the observer-complementarity,
 non-isometric-code, and holographic-complexity literatures. This section
 positions our contribution relative to adjacent work.
@@ -1277,8 +1277,8 @@ Our result is complementary to EGH's in a specific way:
 These are distinct physical observables. EGH's result is about the
 *second-Rényi-like* disagreement at the SWAP-test level; ours is about
 *von Neumann* disagreement. A priori, second-Rényi and von Neumann
-disagreements could scale the same way with $d_B$ — they both come from
-Haar-$V$-averaged joint moments of $\rho_{R_A}$ and $\rho_{R_B}$ — but
+disagreements could scale the same way with $d_B$ – they both come from
+Haar-$V$-averaged joint moments of $\rho_{R_A}$ and $\rho_{R_B}$ – but
 the coefficients could (and do) differ, and the state-class sensitivity
 could (and does) differ.
 
@@ -1330,7 +1330,7 @@ a precise analytic claim verified to $4\%$ by our Phase 2 numerical
 program (see reproducibility appendix).
 
 Our two-observer result could, a priori, have inherited HUZ's $1/d_{\rm Ob}$
-scaling directly — giving $\alpha = -1$ for both observers. This naive
+scaling directly – giving $\alpha = -1$ for both observers. This naive
 inheritance is rejected at $19\sigma$ in the Haar-bulk data (Phase 5).
 The actual scaling is a full power of $d_B$ below naive inheritance in
 the Haar class, and a full power of $d_B$ above it in the Product class.
@@ -1351,7 +1351,7 @@ We verified both HUZ and Colorado rules on a unified backend in the course
 of this program, establishing that they give distinct observer-dependent
 entropies on the same bulk state. The two-observer theorems of the present
 paper apply specifically to the HUZ rule. Deriving an analogous result for
-the Colorado rule would require a different starting identity — Colorado
+the Colorado rule would require a different starting identity – Colorado
 has no external reference register, so the machinery of Lemma 1 does
 not apply directly. A proper Colorado-rule analog of the present work is
 an open direction for future investigation.
@@ -1450,8 +1450,8 @@ the Haar bulk class this is a theorem (Appendix C), proved through an exact
 antisymmetric resolvent representation of the entropy difference, a linear bound that
 reduces to the bulk-marginal moment, and a fourth-moment bound on the
 random-projection perturbation closed by concentration on the unitary group. This
-principle is the engine of the paper: it turns a genuine quantum-information quantity —
-the disagreement of two cloned observers — into a classical moment calculation.
+principle is the engine of the paper: it turns a genuine quantum-information quantity – 
+the disagreement of two cloned observers – into a classical moment calculation.
 
 Applying it to two extreme bulk-state classes yields the central physical result, a
 complexity-sensitive complementarity:
@@ -1466,9 +1466,9 @@ The exponents differ by exactly one power of $d_B$: the room a non-isometric cod
 leaves for observer-dependent descriptions is set by the complexity of the bulk state.
 
 Three directions stand out. First, **proving the product-class form of the
-entropy-replacement principle** — the one remaining conditional step, requiring control
+entropy-replacement principle** – the one remaining conditional step, requiring control
 of the small-mass régime of the rank-1 bulk marginal where the Haar resolvent argument
-does not directly transfer — would make Theorem 3 unconditional. Second, the
+does not directly transfer – would make Theorem 3 unconditional. Second, the
 intermediate régime between product and Haar (e.g. rank-$r$ bulk states) should
 interpolate between the two exponents; characterizing that interpolation would test
 whether the complexity-sensitivity is sharp or smooth. Third, applying the same

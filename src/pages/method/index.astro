@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 const allEssays = await getCollection('essays');
 const methodEssays = allEssays.filter((e) => e.data.section === 'method');
 const findById = (id: string) => methodEssays.find((e) => e.id === id);
-const thesis   = findById('method-thesis');
+const thesis = findById('method-thesis');
 const protocol = findById('method-protocol');
 ---
 
@@ -33,7 +33,7 @@ const protocol = findById('method-protocol');
         <div class="article-section">The Method &nbsp;&middot;&nbsp; &sect; V</div>
         <h1 class="article-title">On the Doing of This Sort of Work.</h1>
         <p class="article-subtitle">
-          What we did, how we did it, where it worked, and where it did not. The thesis, the protocol, the calibration log &mdash; and now a method section for each of the three papers, because the method itself evolved. Paper I and Paper II were done one way; Paper III added something new.
+          What we did, how we did it, where it worked, and where it did not. The thesis, the protocol, the calibration log &ndash; and now a method section for each of the three papers, because the method itself evolved. Paper I and Paper II were done one way; Paper III added something new.
         </p>
       </header>
 
@@ -74,7 +74,7 @@ const protocol = findById('method-protocol');
           <div class="method-body">
             <h3 class="method-title">Method by Paper</h3>
             <p class="method-sub">How the method changed across Papers I, II, and III. <strong>NEW</strong> in Vol. II.</p>
-            <p class="method-deck">Paper I: one human, one model, first principles. Paper II: the same pair, reading themselves harder. Paper III: opening the loop &mdash; enter Scholar.</p>
+            <p class="method-deck">Paper I: one human, one model, first principles. Paper II: the same pair, reading themselves harder. Paper III: opening the loop &ndash; enter Scholar.</p>
           </div>
           <span class="method-arrow">&rsaquo;</span>
         </a>

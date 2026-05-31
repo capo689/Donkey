@@ -1,5 +1,5 @@
 ---
-title: "Appendix C — The Entropy-Replacement Proof (Haar)"
+title: "Appendix C – The Entropy-Replacement Proof (Haar)"
 kind: "appendix"
 paperNumber: 3
 order: 4
@@ -79,7 +79,7 @@ difference $F_{\rm off}$. After the substitution $t = s/d$ (Jacobian $ds/d$),
 > R_t^{AB} = \mathrm{Tr}\!\bigl[(D_A+t)^{-1} E_A (\rho_{R_A}+t)^{-1}\bigr] - (A\!\to\!B).
 > $$
 
-This is exact — all orders in the perturbation $E_X$ — and is the antisymmetric
+This is exact – all orders in the perturbation $E_X$ – and is the antisymmetric
 analogue of the single-observer resolvent identity of Engelhardt–Gesteau–Harlow.
 The integrand is concentrated near the eigenvalue scale $t \sim 1/d$
 (equivalently $s \sim \rho^{-1}$); integrability at both ends follows from
@@ -380,7 +380,7 @@ Theorem 1 for the Haar class, and makes Theorem 2 unconditional. $\blacksquare$
 
 *End-to-end numerical check.* Directly, $\mathbb{E}[F_{AB}^2]/\text{signal} =
 0.146, 0.094, 0.067$ and $\mathbb{E}|F_{AB}|/(d^{-3/2}d_M^{-1}) = 0.280, 0.233,
-0.196$ at $d=4,5,6$ — both decreasing, consistent with the proved $O(1/d)$ and
+0.196$ at $d=4,5,6$ – both decreasing, consistent with the proved $O(1/d)$ and
 $O(1/\sqrt d)$ suppression.
 
 *Remark (product class).* The representation of §C.1 and the nonlinear bound of

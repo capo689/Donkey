@@ -1,5 +1,5 @@
 ---
-title: "Appendix A — Generalized EGH Formulas"
+title: "Appendix A – Generalized EGH Formulas"
 kind: "appendix"
 paperNumber: 3
 order: 2
@@ -24,7 +24,7 @@ recapped here. The bulk Hilbert space factorizes as
 $\mathcal{H}_{\rm bulk} = \mathcal{H}_{M_a} \otimes \mathcal{H}_{M_b}
 \otimes \mathcal{H}_\alpha \otimes \mathcal{H}_\beta$, where
 $(M_a, M_b)$ are matter factors and $(\alpha, \beta)$ are two auxiliary
-pointer systems — $\alpha$ the AdS-boundary observer and $\beta$ the
+pointer systems – $\alpha$ the AdS-boundary observer and $\beta$ the
 closed-universe observer. The EGH encoding map is
 $$
 V \;=\; \sqrt{d_b}\; V_{\rm HKLL} \otimes \langle 0 |_b\, O,
@@ -89,8 +89,8 @@ numerical verification reveals that:
 
 For complex $c$, or for general $|\psi_\beta\rangle$ in (A.18), the
 measured purity disagrees with (A.6) and (A.18) by terms of order unity.
-This is not a bug in EGH's derivation — their physics setup implicitly
-assumed these restrictions — but it does mean that applying their
+This is not a bug in EGH's derivation – their physics setup implicitly
+assumed these restrictions – but it does mean that applying their
 formulas to a generic complex bulk state produces wrong answers.
 
 In this appendix we derive corrected formulas (A.6$'$) and (A.18$'$) that
@@ -109,7 +109,7 @@ $$
 $$
 where $M_4$ is the set of pair matchings on $\{1,2,3,4\}$ and
 $\mathrm{Wg}_O$ is the O($n$) Weingarten function. For our purposes, the
-key feature of O($n$) Weingarten — in contrast to U($n$) Weingarten — is
+key feature of O($n$) Weingarten – in contrast to U($n$) Weingarten – is
 that the sum runs over *pair matchings* of the full set of $2k$ indices
 rather than pairs of permutations of $k$ indices.
 
@@ -261,8 +261,8 @@ Reproducibility is bit-identical across runs under the same seed.
 The generalizations (A.6$'$) and (A.18$'$) are minor but genuine
 extensions of EGH 2507.06046's published formulas, correcting for the
 implicit real-$c$ assumption in the original derivations. They are not
-required for the main body of this paper — our two scaling theorems
-(Theorems 2 and 3) involve entirely different quantities — but they
+required for the main body of this paper – our two scaling theorems
+(Theorems 2 and 3) involve entirely different quantities – but they
 are included here because:
 
 1. They were derived in the course of verifying EGH's result numerically

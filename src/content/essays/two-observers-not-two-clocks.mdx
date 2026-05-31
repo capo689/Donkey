@@ -16,19 +16,19 @@ right up until you realise you have been simulating a different problem.
 
 The whole programme is about *two observers* of one bulk state. In the HUZ construction,
 including an observer means cloning it, in a chosen pointer basis, onto an external
-reference register. Two observers means doing this twice — two separate observer factors,
+reference register. Two observers means doing this twice – two separate observer factors,
 each cloned independently onto its own reference. The disagreement $|S_A - S_B|$ is
 between these two independently-cloned observers.
 
 The trap is that there is a different, similar-looking object: a *single* observer factor
-carrying two pointer states — two "clock readings," if you like — inside one register.
+carrying two pointer states – two "clock readings," if you like – inside one register.
 This also gives you two indices and two reduced descriptions, and if you are moving fast
 it is dangerously easy to set up your simulation as two clock-states in one observer when
 what you mean is two observers with independent clones. The index bookkeeping looks almost
 identical. The physics is not: two clock-states in one factor share a cloning channel and
 are correlated through it; two observers with independent clones do not and are not. The
-cross-observer covariance — the very quantity from the previous post,
-$\mathrm{Cov}(p_a, q_b)$ — comes out *different* depending on which object you built. Get
+cross-observer covariance – the very quantity from the previous post,
+$\mathrm{Cov}(p_a, q_b)$ – comes out *different* depending on which object you built. Get
 the object wrong and you will compute a covariance that is real, internally consistent,
 and answering the wrong question.
 
@@ -36,12 +36,12 @@ We had conflated the two in an early implementation. The symptom was that the
 cross-observer covariance refused to behave the way the grouped-Dirichlet derivation said
 it should. For a while we suspected the derivation. The derivation was fine; the
 simulation was modelling two clocks. Once we rebuilt the observer inclusion as two
-genuinely independent clonings, the covariance fell into line — exactly zero across
+genuinely independent clonings, the covariance fell into line – exactly zero across
 observers, as the honest Dirichlet calculation demanded.
 
 The lesson is about the seam between a physical construction and its code. The most
 expensive bugs are not the ones that crash; they are the ones where a slightly wrong
 object produces a fully self-consistent wrong answer. When a clean analytic prediction and
 a careful simulation disagree, suspect the *definition* you encoded before you suspect the
-mathematics — especially when the definition has a near-twin that produces the same index
+mathematics – especially when the definition has a near-twin that produces the same index
 structure. Two observers are not two clocks, however much their bookkeeping rhymes.

@@ -16,7 +16,7 @@ revision. In one line:
 $$\big[S(\rho_{R_A}) - S(\rho_{R_B})\big] - \big[H(P_A) - H(P_B)\big] = O_{L^2}\!\big(d^{-2}d_M^{-1}\big).$$
 
 The hard quantum disagreement, minus the easy classical disagreement, is small in mean
-square — and, crucially, *one power of $d$ below the signal* we are trying to measure,
+square – and, crucially, *one power of $d$ below the signal* we are trying to measure,
 which scales as $\Theta(d^{-3}d_M^{-2})$. That margin is the whole point. It is not enough
 for the error to be small; it has to be small *compared to the thing the paper claims to
 compute*, or the claim drowns in its own correction. It is.
@@ -25,22 +25,22 @@ The shape of the proof is worth keeping on the page, because it is where the dif
 actually lives. You expand the true entropy around the bulk-marginal diagonal. The error
 $\Delta$ then splits into two pieces:
 
-- $F_{\mathrm{off}}$ — the **off-diagonal** part, coming from the coherences the diagonal
+- $F_{\mathrm{off}}$ – the **off-diagonal** part, coming from the coherences the diagonal
   model throws away.
-- $F_{\mathrm{diag}}$ — the **diagonal-to-bulk** part, coming from the difference between
+- $F_{\mathrm{diag}}$ – the **diagonal-to-bulk** part, coming from the difference between
   the *actual* reduced diagonal and the *bulk-marginal* diagonal we replace it with.
 
-Both have to be shown to be $O(d^{-4}d_M^{-2})$ — one power of $d$ below the signal
+Both have to be shown to be $O(d^{-4}d_M^{-2})$ – one power of $d$ below the signal
 variance. $F_{\mathrm{off}}$ yields to a resolvent representation, a linear bound, and a
 fourth-moment estimate (the machinery of Appendix C.1–C.5). $F_{\mathrm{diag}}$ was the
 holdout. For a long time we could bound it only by splitting a covariance matrix into
-diagonal and off-diagonal blocks and arguing about the blocks — and the off-diagonal
+diagonal and off-diagonal blocks and arguing about the blocks – and the off-diagonal
 block is exactly where a numerical constant tried to sneak into the proof. That fight is
 the next two posts: the route that failed, and the route that worked.
 
 What I want to flag here is conceptual, not technical. Before this theorem, the programme
 had a beautiful structure resting on an assumption. After it, the structure rests on a
 bound with a proof. The difference is the difference between "we believe" and "we have
-shown," and earning that difference — for the Haar class, completely; for the product
-class, conditionally — is the entire content of Paper III. Everything else is bookkeeping
+shown," and earning that difference – for the Haar class, completely; for the product
+class, conditionally – is the entire content of Paper III. Everything else is bookkeeping
 around this inequality.

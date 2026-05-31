@@ -13,15 +13,15 @@ series: "paper-2-3"
 The first thing that went wrong after Paper I was a sentence we had been proud of.
 
 Paper I's foundation was a structural identity: average over the random code, and what
-an observer's reduced state collapses to is the bulk marginal — the reduced description
+an observer's reduced state collapses to is the bulk marginal – the reduced description
 of the bulk state on the observer's slice. We wrote $\mathbb{E}_V[\rho_{R_A}] =
 \rho_A^{\mathrm{bulk}} + O(1/d^2)$ and built two scaling laws on top of it.
 
-When we sat down to re-derive that identity from scratch — not to defend it, but to try
-to break it — it broke in a specific and instructive way. The first-moment Haar integral
+When we sat down to re-derive that identity from scratch – not to defend it, but to try
+to break it – it broke in a specific and instructive way. The first-moment Haar integral
 over the code does not return the full marginal. It returns the **diagonal** of the
-marginal, in the observer's cloning basis. Every off-diagonal entry — every coherence
-between two distinct pointer values — gets multiplied by a Kronecker delta that is zero
+marginal, in the observer's cloning basis. Every off-diagonal entry – every coherence
+between two distinct pointer values – gets multiplied by a Kronecker delta that is zero
 unless the two indices agree. They vanish. Not approximately; at first moment, exactly.
 
 $$\mathbb{E}_V[\rho_{R_A}] = \operatorname{diag}\!\big(\rho_A^{\mathrm{bulk}}\big) + O(1/d^2).$$
@@ -32,14 +32,14 @@ scrambles the phases of anything off-diagonal in it, and scrambled phases averag
 zero. The cloning picks the basis; the randomness erases everything that is not aligned
 with it. The diagonal is what is left.
 
-Is this a disaster? No — it is a gift, once you stop being embarrassed by it. The
+Is this a disaster? No – it is a gift, once you stop being embarrassed by it. The
 diagonal of a density matrix is an ordinary probability distribution. By proving the
 average observer state is exactly that diagonal, we turned the reduction to a moment
 calculation from an approximation into an identity. The scaling laws now had a precise
 object to be laws *of*: the bulk-marginal diagonal $P_X$.
 
 But it sharpened a question we had been able to ignore while the foundation was vague.
-If the *average* observer state is the diagonal, fine — but the actual observer entropy
+If the *average* observer state is the diagonal, fine – but the actual observer entropy
 is computed from the actual state, not its average, and the actual state has off-diagonal
 structure and normalization wobble that the diagonal throws away. Does the disagreement
 between two *diagonals* actually equal the disagreement between two *true observer

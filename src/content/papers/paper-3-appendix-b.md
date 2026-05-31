@@ -1,5 +1,5 @@
 ---
-title: "Appendix B — Reproducibility"
+title: "Appendix B – Reproducibility"
 kind: "appendix"
 paperNumber: 3
 order: 3
@@ -61,13 +61,13 @@ by its nominal coordinates:
 
 | Phase | `BASE_SEED` | Per-point seed formula |
 |---|---:|---|
-| Phase 1 (HUZ/Colorado tables)    | `424242` | `BASE + d_Ob*10000 + d_M*100 + d_fund` |
-| Phase 2 (HUZ error scaling)      | `313131` | `BASE + d_Ob*131 + d_M*11 + d_fund` |
-| Phase 3 (EGH reproduction)       | `202020` | `BASE + D_L*10000 + D_R*100 + D_C` |
-| Phase 4 (two-observer setup)     | `414141` | `BASE + d_OA*1000 + d_OB*100 + d_M*10 + d_fund` |
-| Phase 5 (money plot)             | `505050` | `BASE + d_B*10000 + batch_offset` |
-| Phase 6 (state-class scan)       | `606060` | `BASE + d_B*100 + class_code` |
-| Phase 7 (theorem verification)   | inline   | `77700 + d_B` or similar per-script |
+| Phase 1 (HUZ/Colorado tables) | `424242` | `BASE + d_Ob*10000 + d_M*100 + d_fund` |
+| Phase 2 (HUZ error scaling) | `313131` | `BASE + d_Ob*131 + d_M*11 + d_fund` |
+| Phase 3 (EGH reproduction) | `202020` | `BASE + D_L*10000 + D_R*100 + D_C` |
+| Phase 4 (two-observer setup) | `414141` | `BASE + d_OA*1000 + d_OB*100 + d_M*10 + d_fund` |
+| Phase 5 (money plot) | `505050` | `BASE + d_B*10000 + batch_offset` |
+| Phase 6 (state-class scan) | `606060` | `BASE + d_B*100 + class_code` |
+| Phase 7 (theorem verification) | inline | `77700 + d_B` or similar per-script |
 
 The seed-to-data correspondence is bit-identical across reruns under
 `numpy >= 2.0`: the same seed yields the same state vector, unitary, and
@@ -89,15 +89,15 @@ Nine points with cumulative sample counts from merged batches:
 
 | $d_B$ | $N$ | notes |
 |---:|---:|---|
-| 4  | 300 | single batch |
-| 6  | 300 | single batch |
-| 8  | 300 | single batch |
+| 4 | 300 | single batch |
+| 6 | 300 | single batch |
+| 8 | 300 | single batch |
 | 10 | 300 | single batch |
 | 12 | 300 | merged from 150 + 150 with `phase5_boost_point.py` |
 | 14 | 200 | merged from 100 + 100 |
 | 16 | 240 | merged from 120 + 120 |
 | 20 | 190 | merged from 100 + 90 |
-| 24 | 60  | single batch (compute-bound at $d_{\rm eff} = 2304$) |
+| 24 | 60 | single batch (compute-bound at $d_{\rm eff} = 2304$) |
 
 Batch-merge metadata preserved in `phase5_extended_scan.csv`. Batch offsets
 use independent seed streams (`BASE_SEED + d_B*10000 + batch_index`) to
@@ -109,14 +109,14 @@ Haar and Product classes, six primary points plus Product extension:
 
 | $d_B$ | Haar $N$ | Product $N$ |
 |---:|---:|---:|
-| 4  | 150 | 150 |
-| 6  | 150 | 150 |
-| 8  | 150 | 150 |
+| 4 | 150 | 150 |
+| 6 | 150 | 150 |
+| 8 | 150 | 150 |
 | 10 | 150 | 150 |
 | 12 | 150 | 150 |
 | 16 | 100 | 150 |
-| 20 | —   | 40  (out-of-sample extension) |
-| 24 | —   | 20  (out-of-sample extension) |
+| 20 | – | 40 (out-of-sample extension) |
+| 24 | – | 20 (out-of-sample extension) |
 
 ### Phase 7 theorem verification
 
@@ -172,44 +172,44 @@ It does **not** ship the full phase-by-phase development tree; the files below
 are exactly what is included.
 
 ### Backend
-- `bh_lab_backend.py` — `SeededRNG`, `aehpv_map`, and the two-observer HUZ
+- `bh_lab_backend.py` – `SeededRNG`, `aehpv_map`, and the two-observer HUZ
   reduced-state machinery used by all drivers.
 
 ### Figure generators (canonical seed 707070)
-- `make_fig2.py` — Figure 2 (structural identity, Lemma 1): diagonal agreement
+- `make_fig2.py` – Figure 2 (structural identity, Lemma 1): diagonal agreement
   and off-diagonal suppression.
-- `make_figs_1345.py` — Figures 3 and 5 (product Dirichlet model; the Table 1
+- `make_figs_1345.py` – Figures 3 and 5 (product Dirichlet model; the Table 1
   log-log landscape and exponent-gap ratio). Loads Table 1 from
   `table1_full_scan.csv`.
-- `make_figs_41.py` — Figures 1 and 4 (finite-$d_B$ vs asymptotic; the Haar
+- `make_figs_41.py` – Figures 1 and 4 (finite-$d_B$ vs asymptotic; the Haar
   prefactor test, subleading structure, HUZ+$V$ residuals, and out-of-sample
   $d=128$). Loads Table 1 from `table1_full_scan.csv` and the prefactor scan
   from `fig4_haar_prefactor.csv`.
 
 ### Proof-verification scripts
-- `scratch_fourth_moment.py` — the fourth-moment projector estimate (Lemma C.5)
+- `scratch_fourth_moment.py` – the fourth-moment projector estimate (Lemma C.5)
   and assembled off-diagonal bound.
-- `scratch_Fdiag.py` — direct Monte-Carlo verification of $F_{\rm diag}$ and of
+- `scratch_Fdiag.py` – direct Monte-Carlo verification of $F_{\rm diag}$ and of
   the diagonal-to-bulk error $F_{\rm diag}$ (Lemma C.6).
-- `scratch_grouped_dirichlet.py` — verification of the grouped-Dirichlet moments
+- `scratch_grouped_dirichlet.py` – verification of the grouped-Dirichlet moments
   of Lemma 3 (Var$(T_A)$, Cov$(T_A,T_B)$, Var$(T_A-T_B)$, and the negative
   off-diagonal / vanishing $p$–$q$ covariances).
-- `scratch_centered_C6.py` — confirms the centered-operator representation of
+- `scratch_centered_C6.py` – confirms the centered-operator representation of
   Lemma C.6 ($L_A-L_B = -(d/\rho)\mathrm{Tr}[(P-\rho I)(G_A-G_B)]$, correlation
   $>0.999$ with the direct linear error) and the resulting $O(d^{-4}d_M^{-2})$ scaling.
-- `scratch_Mdom.py` — *diagnostic only* (not used by any proof): inspects the
+- `scratch_Mdom.py` – *diagnostic only* (not used by any proof): inspects the
   conditional diagonal-covariance matrix; retained for completeness.
 
 ### Data (one row per figure/table point)
-- `table1_full_scan.csv` — the single source of truth for Table 1 (Haar +
+- `table1_full_scan.csv` – the single source of truth for Table 1 (Haar +
   product, measured / sem / theory / $z$); consumed by both figure generators.
-- `fig1_full_V.csv`, `fig1_no_V.csv` — Figure 1 curves.
-- `fig2_struct_identity.csv`, `fig2_offdiag.csv` — Figure 2 panels.
-- `fig3_dirichlet_var.csv`, `fig3_prefactor.csv`, `fig3_gaussian_ratio.csv`, `fig3_panel_d.csv` — Figure 3 panels.
-- `fig4_haar_prefactor.csv`, `fig4_full_V.csv`, `fig4_out_of_sample.csv` — Figure 4 panels.
-- `fig5_class_ratio.csv` — Figure 5 ratio panel.
-- `entropy_replacement.csv` — $F_{AB}$ end-to-end check (§C.7).
-- `phase2_dM_scan.csv`, `phase2_exponents.csv` — $d_M$-dependence and fitted exponents.
+- `fig1_full_V.csv`, `fig1_no_V.csv` – Figure 1 curves.
+- `fig2_struct_identity.csv`, `fig2_offdiag.csv` – Figure 2 panels.
+- `fig3_dirichlet_var.csv`, `fig3_prefactor.csv`, `fig3_gaussian_ratio.csv`, `fig3_panel_d.csv` – Figure 3 panels.
+- `fig4_haar_prefactor.csv`, `fig4_full_V.csv`, `fig4_out_of_sample.csv` – Figure 4 panels.
+- `fig5_class_ratio.csv` – Figure 5 ratio panel.
+- `entropy_replacement.csv` – $F_{AB}$ end-to-end check (§C.7).
+- `phase2_dM_scan.csv`, `phase2_exponents.csv` – $d_M$-dependence and fitted exponents.
 
 ## B.6 Reproducibility verification
 
@@ -223,7 +223,7 @@ representation and scaling, and `scratch_Fdiag.py` the $F_{\rm diag}$ ratios;
 
 The second class is a record of the broader **development program** (the historical
 phase scripts, which are *not* part of the shipped bundle): all non-trivial data
-points were spot-checked there for bit-identical reproducibility — integer rank
+points were spot-checked there for bit-identical reproducibility – integer rank
 predictions; error-scaling and EGH verifications to $\le 10^{-12}$; the extended
 Haar scan within a batch (merged-batch means reproducible to $\le 10^{-10}$); and
 the Dirichlet-variance check (Lemma 4) to $\le 10^{-13}$. The one caveat there:
