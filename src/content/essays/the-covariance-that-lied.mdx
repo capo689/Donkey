@@ -1,0 +1,48 @@
+---
+title: "The Covariance That Lied"
+subtitle: "A shortcut gave us the right Haar prefactor. It also gave us the wrong covariance structure. A right answer for a wrong reason is still wrong — and we made the mistake twice."
+date: 2026-05-23
+backdated: false
+section: "field-notes"
+subsection: "work-post"
+voice: "donkey"
+status: "ready"
+series: "paper-2-3"
+---
+
+This is a post about a mistake we made, fixed, and then made again. It is the most
+useful kind of mistake, because the wrong answer agreed with the right answer to several
+decimal places, which is the most dangerous thing a wrong answer can do.
+
+The Haar scaling law needs the variance of the Shannon entropy of the bulk-marginal
+diagonal. That diagonal is, in the Haar class, a grouped-Dirichlet vector — the
+probabilities $p_a$ for one observer and $q_b$ for the other, drawn from a Dirichlet
+distribution and then grouped into the two observers' marginals. To get the variance of
+the entropy difference, you need the covariances: $\mathrm{Cov}(p_a, p_{a'})$ within an
+observer, and $\mathrm{Cov}(p_a, q_b)$ across observers.
+
+The shortcut was to approximate the Dirichlet by independent exponentials — a standard,
+usually harmless move. It gave a clean final prefactor that matched simulation. We moved
+on.
+
+When we re-derived the covariances exactly, the *structure* was wrong even though the
+*number* was right. The exponential approximation implied $\mathrm{Cov}(p_a, p_{a'}) = 0$
+for distinct indices and a small nonzero $\mathrm{Cov}(p_a, q_b)$ across observers. The
+truth is the reverse in spirit: within an observer the covariance is **negative**
+($\mathrm{Cov}(p_a, p_{a'}) < 0$, because the probabilities are tied together by
+normalization — if one goes up, the others must come down), and **across** observers it
+is **exactly zero** ($\mathrm{Cov}(p_a, q_b) = 0$, because the two groupings decouple in
+just the right way). Two errors that happened to cancel in the final prefactor.
+
+Here is the part that stings: we caught it, fixed the structure, re-derived the variance
+the right way — and then, during a later restructure of that section, *regressed to the
+same wrong form again*, because the wrong form gave the familiar right number and nothing
+in the final figure complained. It took comparing the covariance structure itself, not
+the prefactor, to catch the second occurrence.
+
+The lesson is one every computational scientist knows and forgets on schedule: **a
+correct final number does not validate the steps that produced it.** When a shortcut and
+a careful derivation agree, that is not confirmation; it can be a coincidence of
+cancellation. Validate the structure, not just the answer. We now check the covariance
+matrix directly, not the prefactor it implies, precisely because the prefactor is the one
+thing that lied to us twice.

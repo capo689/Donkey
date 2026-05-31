@@ -1,0 +1,268 @@
+---
+import Base from '../layouts/Base.astro';
+
+type Row = { name: string; what: string; kind: 'backend' | 'fig' | 'proof' | 'data' | 'diag'; };
+
+const bundle: Row[] = [
+  { name: 'bh_lab_backend.py',           what: 'Self-contained backend (von Neumann algebra, crossed product, HUZ inclusion).', kind: 'backend' },
+  { name: 'make_fig2.py',                what: 'Figure 2 generator (first-moment off-diagonal collapse).',              kind: 'fig' },
+  { name: 'make_figs_1345.py',           what: 'Figure 1, 3, 4, 5 generators (structural identity, Haar law, landscape).', kind: 'fig' },
+  { name: 'make_figs_41.py',             what: 'Figure 4 panels (prefactor convergence, out-of-sample).',                kind: 'fig' },
+  { name: 'scratch_fourth_moment.py',    what: 'Lemma C.5 fourth-moment projector estimate.',                             kind: 'proof' },
+  { name: 'scratch_centered_C6.py',      what: 'Lemma C.6 centered-operator representation. Closes F_diag.',              kind: 'proof' },
+  { name: 'scratch_Fdiag.py',            what: 'Direct F_diag check (companion to Lemma C.6).',                            kind: 'proof' },
+  { name: 'scratch_grouped_dirichlet.py',what: 'Lemma 3 grouped-Dirichlet moments (the corrected covariance).',            kind: 'proof' },
+  { name: 'scratch_Mdom.py',             what: 'DIAGNOSTIC ONLY — supports no proof step. Marker of the route we did NOT take.', kind: 'diag' },
+  { name: 'table1_full_scan.csv',        what: 'Landscape data — single source of truth for Table 1, Fig. 4(c), Fig. 5.',  kind: 'data' },
+  { name: 'entropy_replacement.csv',     what: 'Direct replacement-error data, multiple state classes.',                   kind: 'data' },
+  { name: 'fig1_full_V.csv',             what: 'Figure 1, full-V observer-reduced state diagonal entries.',                kind: 'data' },
+  { name: 'fig1_no_V.csv',               what: 'Figure 1, no-V control.',                                                   kind: 'data' },
+  { name: 'fig2_offdiag.csv',            what: 'Figure 2, off-diagonal magnitudes.',                                        kind: 'data' },
+  { name: 'fig2_struct_identity.csv',    what: 'Figure 2, structural identity entry-by-entry.',                             kind: 'data' },
+  { name: 'fig3_dirichlet_var.csv',      what: 'Figure 3, Dirichlet variance asymptote.',                                   kind: 'data' },
+  { name: 'fig3_gaussian_ratio.csv',     what: 'Figure 3, Gaussian-limit ratio convergence.',                               kind: 'data' },
+  { name: 'fig3_panel_d.csv',            what: 'Figure 3, panel-d data.',                                                   kind: 'data' },
+  { name: 'fig3_prefactor.csv',          what: 'Figure 3, Haar prefactor.',                                                 kind: 'data' },
+  { name: 'fig4_full_V.csv',             what: 'Figure 4, full-V scaling.',                                                 kind: 'data' },
+  { name: 'fig4_haar_prefactor.csv',     what: 'Figure 4, Haar prefactor convergence.',                                     kind: 'data' },
+  { name: 'fig4_out_of_sample.csv',      what: 'Figure 4, out-of-sample tests.',                                            kind: 'data' },
+  { name: 'fig5_class_ratio.csv',        what: 'Figure 5, product/Haar class ratio.',                                       kind: 'data' },
+  { name: 'phase2_dM_scan.csv',          what: 'd_M scan, exponent stability.',                                              kind: 'data' },
+  { name: 'phase2_exponents.csv',        what: 'Phase 2 exponent fits across configurations.',                              kind: 'data' },
+];
+
+const figures = [
+  { n: 'I',   src: '/paper3/figure1.png', cap: 'The structural identity, verified. The Haar-$V$-averaged observer-reduced state against the diagonal of the bulk marginal across eighteen diagonal entries; off-diagonal coherences suppressed at the predicted order. Drawn from data, seed 707070.' },
+  { n: 'II',  src: '/paper3/figure2.png', cap: 'First-moment collapse. Off-diagonal magnitude in the cloning basis as a function of dimension, showing the $O(1/d^2)$ suppression that underwrites Lemma 1.' },
+  { n: 'III', src: '/paper3/figure3.png', cap: 'The Haar law. $\\mathbb{E}|S_A - S_B|$ against $d_B$ on log axes, with the analytic $\\sqrt{2/\\pi}/(d_M d_B^{3/2})$ line; out-of-sample points fall on the line at sub-$\\sigma$ precision.' },
+  { n: 'IV',  src: '/paper3/figure4.png', cap: 'Prefactor convergence. The ratio of measured disagreement to the analytic leading term approaching unity, $A = 1.00 \\pm 0.01$, with the $1 - 1.0/d_B$ subleading trend.' },
+  { n: 'V',   src: '/paper3/figure5.png', cap: 'The landscape. The two state classes side by side — the slow product decay and the fast Haar decay — with the integer gap between their slopes made visible.' },
+];
+---
+
+<Base
+  title="Code and Data"
+  description="The complete Paper III package: manuscript, appendices A/B/C, five figures, the reproducibility bundle, the reviewer's note. Browseable and downloadable."
+>
+  <div class="paper-bg">
+    <div class="noise"></div>
+    <div class="stain-a"></div>
+    <div class="stain-b"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <main>
+
+    <div class="running-head">
+      DONKEY ON THE EDGE<span class="middot">&middot;</span>CODE &amp; DATA<span class="middot">&middot;</span>VOL. II, NO. I
+    </div>
+
+    <header class="masthead">
+      <div class="masthead-eyebrow">THE APPARATUS, OPEN</div>
+      <div class="rule-double"></div>
+      <h1 class="masthead-title">CODE &amp; DATA</h1>
+      <div class="masthead-subtitle">Everything behind Paper III: the manuscript and its three appendices, the five plates, the computational backend, the verification scripts, the data, and the reviewer's note. Nothing is held back; the proofs that are conditional are marked conditional, and the one constant we refused to leave to the machine has its own page.</div>
+      <div class="rule-double"></div>
+    </header>
+
+    <section class="frontmatter">
+      <div class="downloads">
+        <a class="dl-btn" href="/paper3/donkey-paper3-package.zip" download><span class="glyph">&#x2913;</span> Download the full package (ZIP)</a>
+        <a class="dl-btn" href="/paper"><span class="glyph">&sect;</span> Back to the Paper</a>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-head">I &middot; MANUSCRIPT &amp; APPENDICES</h3>
+      <div class="section-body">
+        <p style="text-align:center;font-style:italic;color:var(--ink-soft);margin:0 0 18px;">Rendered in-site, with KaTeX math. Each is part of the complete package.</p>
+        <div class="ms-list">
+          <a class="ms-item" href="/paper/full">
+            <span class="ms-num">i.</span>
+            <div>
+              <div class="ms-title">The Manuscript</div>
+              <div class="ms-desc">paper_full_v3_FINAL.md &middot; full text, &sect;&sect;1–9, with Figures 1–5 inline.</div>
+            </div>
+            <span class="ms-arrow">&rsaquo;</span>
+          </a>
+          <a class="ms-item" href="/paper/appendix-a">
+            <span class="ms-num">ii.</span>
+            <div>
+              <div class="ms-title">Appendix A &middot; Generalized EGH Formulas</div>
+              <div class="ms-desc">Closed-form moment identities for the bulk-marginal diagonal.</div>
+            </div>
+            <span class="ms-arrow">&rsaquo;</span>
+          </a>
+          <a class="ms-item" href="/paper/appendix-b">
+            <span class="ms-num">iii.</span>
+            <div>
+              <div class="ms-title">Appendix B &middot; Reproducibility</div>
+              <div class="ms-desc">Manifest, seeds, environment. Master seed 707070. Every CSV reproduces bit-identically.</div>
+            </div>
+            <span class="ms-arrow">&rsaquo;</span>
+          </a>
+          <a class="ms-item" href="/paper/appendix-c">
+            <span class="ms-num">iv.</span>
+            <div>
+              <div class="ms-title">Appendix C &middot; The Entropy-Replacement Proof (Haar)</div>
+              <div class="ms-desc">C.1–C.5 off-diagonal F_off; C.6 diagonal-to-bulk F_diag by the centered-operator reduction; C.7 assembly.</div>
+            </div>
+            <span class="ms-arrow">&rsaquo;</span>
+          </a>
+          <a class="ms-item" href="/paper/reviewer-note">
+            <span class="ms-num">v.</span>
+            <div>
+              <div class="ms-title">The Reviewer's Note</div>
+              <div class="ms-desc">Six rounds of adversarial review by Scholar (ChatGPT). Final state of the manuscript.</div>
+            </div>
+            <span class="ms-arrow">&rsaquo;</span>
+          </a>
+          <a class="ms-item" href="/paper/full-v2">
+            <span class="ms-num">vi.</span>
+            <div>
+              <div class="ms-title">Paper II &middot; Manuscript (Historical)</div>
+              <div class="ms-desc">paper_full_draft_v2.md &middot; the intermediate draft, preserved as the corrected-foundation record.</div>
+            </div>
+            <span class="ms-arrow">&rsaquo;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="figures">
+      <h3 class="section-head">II &middot; THE FIVE PLATES</h3>
+      <div class="section-body">
+        <p style="text-align:center;font-style:italic;color:var(--ink-soft);margin:0 0 18px;">Figures rendered from the reproducibility CSVs (seed 707070).</p>
+        <div class="figures-grid">
+          {figures.map((f) => (
+            <figure class="figure-plate">
+              <div class="figure-frame">
+                <img src={f.src} alt={`Figure ${f.n}: ${f.cap}`} />
+              </div>
+              <figcaption><span class="figure-label">Fig. {f.n}.</span> <span set:html={f.cap.replace(/\$([^$]+)\$/g, '<span class="math-inline">$1</span>')} /></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-head">III &middot; THE REPRODUCIBILITY BUNDLE</h3>
+      <div class="section-body">
+        <p style="text-align:center;font-style:italic;color:var(--ink-soft);margin:0 0 18px;">File-listing table sourced from <code>MANIFEST.txt</code>. Every CSV reproduces bit-identically from master seed 707070.</p>
+        <div class="bundle-table">
+          <div class="bundle-row bundle-head">
+            <span class="bundle-name">File</span>
+            <span class="bundle-what">What it is</span>
+            <span class="bundle-action">Download</span>
+          </div>
+          {bundle.map((row) => (
+            <div class={`bundle-row${row.kind === 'diag' ? ' bundle-diag' : ''}`}>
+              <span class="bundle-name"><code>{row.name}</code>{row.kind === 'diag' && <span class="diag-tag">DIAGNOSTIC</span>}</span>
+              <span class="bundle-what">{row.what}</span>
+              <span class="bundle-action"><a href={`/paper3/reproducibility/${row.name}`} download>&#x2913; download</a></span>
+            </div>
+          ))}
+          <div class="bundle-row bundle-head">
+            <span class="bundle-name">Master Manifest</span>
+            <span class="bundle-what"></span>
+            <span class="bundle-action"></span>
+          </div>
+          <div class="bundle-row">
+            <span class="bundle-name"><code>MANIFEST.txt</code></span>
+            <span class="bundle-what">The package manifest. Lists the v4.0 (paper III final) submission layout, theorem hierarchy, reproducibility/ contents.</span>
+            <span class="bundle-action"><a href="/paper3/MANIFEST.txt" download>&#x2913; download</a></span>
+          </div>
+        </div>
+        <p style="text-align:center;font-style:italic;color:var(--ink-soft);margin-top:18px;font-size:14px;">
+          Note: <code>scratch_Mdom.py</code> is the diagnostic supporting <strong>no</strong> proof step &mdash; the route we did NOT take. Its story is told in <a href="/field-notes/the-constant-we-left-to-the-machine">The Constant We Left to the Machine</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-head">IV &middot; ENVIRONMENT</h3>
+      <div class="section-body">
+        <div class="env-grid">
+          <div class="env-item"><span class="env-key">Python</span><span class="env-val">3.11</span></div>
+          <div class="env-item"><span class="env-key">numpy</span><span class="env-val">&gt;= 1.26</span></div>
+          <div class="env-item"><span class="env-key">scipy</span><span class="env-val">&gt;= 1.11</span></div>
+          <div class="env-item"><span class="env-key">mpmath</span><span class="env-val">&gt;= 1.3</span></div>
+          <div class="env-item"><span class="env-key">sympy</span><span class="env-val">&gt;= 1.12</span></div>
+          <div class="env-item"><span class="env-key">master seed</span><span class="env-val">707070</span></div>
+        </div>
+        <p style="text-align:center;font-style:italic;color:var(--ink-soft);margin-top:18px;">
+          Anyone with the bundle can reproduce every numerical claim in the paper.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</Base>
+
+<style>
+  .ms-list { display: flex; flex-direction: column; gap: 10px; max-width: 880px; margin: 0 auto; }
+  .ms-item {
+    display: grid; grid-template-columns: 36px 1fr 28px; gap: 16px; align-items: center;
+    padding: 14px 18px; border: 1px solid var(--rule); background: rgba(33, 24, 16, 0.02);
+    text-decoration: none; color: var(--ink); transition: all 120ms ease;
+  }
+  .ms-item:hover { background: rgba(138, 24, 24, 0.04); border-color: var(--accent); }
+  .ms-num { font-family: 'IM Fell DW Pica', serif; font-size: 22px; color: var(--accent); }
+  .ms-title { font-family: 'IM Fell DW Pica', serif; font-size: 18px; }
+  .ms-desc { font-family: 'Old Standard TT', serif; font-size: 14px; color: var(--ink-soft); margin-top: 2px; }
+  .ms-arrow { font-size: 20px; color: var(--ink-soft); }
+
+  .figures-grid { display: flex; flex-direction: column; gap: 32px; max-width: 920px; margin: 0 auto; }
+  .figure-plate { margin: 0; padding: 0; }
+  .figure-frame {
+    border: 1px solid var(--ink); padding: 12px; background: var(--paper);
+    box-shadow: 0 2px 6px rgba(33, 24, 16, 0.1);
+  }
+  .figure-frame img { width: 100%; height: auto; display: block; }
+  .figure-plate figcaption {
+    text-align: center; font-family: 'Old Standard TT', serif; font-style: italic;
+    color: var(--ink-soft); font-size: 14px; margin-top: 10px; line-height: 1.5;
+  }
+  .figure-label { font-family: 'IM Fell DW Pica SC', serif; font-style: normal; color: var(--accent); letter-spacing: 0.05em; }
+  .math-inline { font-family: 'JetBrains Mono', monospace; font-style: normal; font-size: 13px; background: rgba(33,24,16,0.04); padding: 0 4px; }
+
+  .bundle-table { max-width: 980px; margin: 0 auto; border: 1px solid var(--rule); }
+  .bundle-row {
+    display: grid; grid-template-columns: 280px 1fr 140px; gap: 16px;
+    padding: 10px 14px; border-bottom: 1px solid var(--rule); align-items: center;
+    font-family: 'Old Standard TT', serif; font-size: 14px;
+  }
+  .bundle-row:last-child { border-bottom: none; }
+  .bundle-head {
+    background: rgba(138, 24, 24, 0.06); font-family: 'IM Fell DW Pica SC', serif;
+    font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent);
+  }
+  .bundle-name code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: transparent; }
+  .bundle-diag .bundle-name code { color: var(--ink-soft); text-decoration: line-through; text-decoration-color: rgba(138,24,24,0.3); }
+  .diag-tag {
+    display: inline-block; margin-left: 8px; padding: 2px 6px; border: 1px solid var(--accent);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .bundle-action a {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent);
+    text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .bundle-action a:hover { text-decoration: underline; }
+
+  .env-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; max-width: 720px; margin: 0 auto; }
+  .env-item {
+    border: 1px solid var(--rule); padding: 12px 16px; background: rgba(33,24,16,0.02);
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .env-key { color: var(--ink-soft); }
+  .env-val { color: var(--ink); font-weight: 500; }
+
+  @media (max-width: 720px) {
+    .bundle-row { grid-template-columns: 1fr; }
+    .ms-item { grid-template-columns: 32px 1fr; }
+    .ms-arrow { display: none; }
+  }
+</style>

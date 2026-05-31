@@ -1,0 +1,18 @@
+---
+import Manuscript from '../../layouts/Manuscript.astro';
+import { getEntry, render } from 'astro:content';
+
+const entry = await getEntry('papers', 'paper-3-full');
+if (!entry) throw new Error('paper-3-full not found');
+const { Content } = await render(entry);
+---
+
+<Manuscript
+  title={entry.data.title}
+  subtitle={entry.data.subtitle}
+  pageTitle="Paper III — Full Manuscript"
+  eyebrow="THE PAPER · MANUSCRIPT · v3 (final)"
+  breadcrumbLabel="Full Manuscript"
+>
+  <Content />
+</Manuscript>

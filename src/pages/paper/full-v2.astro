@@ -1,0 +1,22 @@
+---
+import Manuscript from '../../layouts/Manuscript.astro';
+import { getEntry, render } from 'astro:content';
+
+const entry = await getEntry('papers', 'paper-2-full');
+if (!entry) throw new Error('paper-2-full not found');
+const { Content } = await render(entry);
+---
+
+<Manuscript
+  title={entry.data.title}
+  subtitle={entry.data.subtitle}
+  pageTitle="Paper II — Full Manuscript"
+  eyebrow="THE EVOLUTION · PAPER II · MANUSCRIPT"
+  breadcrumbLabel="Paper II Manuscript"
+  showToc={false}
+>
+  <div style="max-width:780px;margin:0 auto 20px;padding:14px 22px;background:rgba(138,24,24,0.05);border:1px solid var(--accent);border-left:4px solid var(--accent);font-family:'Old Standard TT',serif;">
+    <p style="margin:0;font-size:15px;line-height:1.55;"><strong>This is Paper II, the intermediate draft.</strong> The structural identity is corrected here to the diagonal of the bulk marginal. For the current featured paper, see <a href="/paper" style="color:var(--accent);">Paper III</a>. For the evolution capsule, see <a href="/evolution/paper-two" style="color:var(--accent);">/evolution/paper-two</a>.</p>
+  </div>
+  <Content />
+</Manuscript>

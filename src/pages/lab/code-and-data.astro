@@ -1,61 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
-
-const pythonFiles = [
-  { name: 'vnalgebra.py', desc: 'Core von Neumann algebra toolkit' },
-  { name: 'crossed_product.py', desc: 'Crossed product constructions' },
-  { name: 'trace_on_crossed.py', desc: 'Trace computations on crossed products' },
-  { name: 'phase1_rules_canonical.py', desc: 'Phase 1 verification script' },
-  { name: 'phase2_huz_verification.py', desc: 'Phase 2 HUZ verification script' },
-];
-
-const csvFiles = [
-  { name: 'phase1_huz_table.csv', desc: 'Phase 1 HUZ canonical results' },
-  { name: 'phase1_colorado_table.csv', desc: 'Phase 1 Colorado observer-inclusion results' },
-  { name: 'phase2_exponents.csv', desc: 'Phase 2 scaling exponent fits' },
-  { name: 'phase2_config_A.csv', desc: 'Phase 2 configuration A' },
-  { name: 'phase2_config_B.csv', desc: 'Phase 2 configuration B' },
-  { name: 'phase2_config_C.csv', desc: 'Phase 2 configuration C' },
-  { name: 'phase2_dM_scan.csv', desc: 'Phase 2 d_M parameter scan' },
-];
 ---
-
-<Base
-  title="Code and Data"
-  description="Python library and numerical data from the research program. MIT license. CC-BY-4.0 data."
->
-  <main class="shell">
-    <header class="page-header">
-      <p class="header-eyebrow">The Lab</p>
-      <h1 class="header-title">Code and Data</h1>
-      <p class="header-meta">All code and data from the research program. Reproduced in full. No hidden steps.</p>
-    </header>
-
-    <section class="table-section">
-      <h2 class="table-section-head">Python Library</h2>
-      <p class="table-section-note">License: MIT. Requires NumPy, SciPy.</p>
-      <div class="code-grid">
-        {pythonFiles.map((f) => (
-          <div class="code-file">
-            <a href={`/code/${f.name}`} class="code-links" download>{f.name}</a>
-            <span>{f.desc}</span>
-          </div>
-        ))}
-      </div>
-      <p><a href="/code/README.md" download>README.md</a></p>
-    </section>
-
-    <section class="table-section">
-      <h2 class="table-section-head">Numerical Data</h2>
-      <p class="table-section-note">License: CC-BY-4.0.</p>
-      <div class="code-grid">
-        {csvFiles.map((f) => (
-          <div class="code-file">
-            <a href={`/data/${f.name}`} class="code-links" download>{f.name}</a>
-            <span>{f.desc}</span>
-          </div>
-        ))}
-      </div>
-    </section>
+<Base title="Code and Data" description="Code & Data has moved to /code-and-data, with the full Paper III package.">
+  <meta http-equiv="refresh" content="0; url=/code-and-data" slot="head" />
+  <main class="shell" style="padding:80px 20px;text-align:center;">
+    <p style="font-family:'Old Standard TT', serif;font-size:18px;line-height:1.6;">
+      Code &amp; Data has moved to <a href="/code-and-data">/code-and-data</a>, with the full Paper III package. Redirecting&hellip;
+    </p>
   </main>
 </Base>
+<script is:inline>window.location.replace('/code-and-data');</script>

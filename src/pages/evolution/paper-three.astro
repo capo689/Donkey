@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="Paper III" description="Paper III is the featured paper at /paper.">
+  <meta http-equiv="refresh" content="0; url=/paper" slot="head" />
+  <main class="shell" style="padding:80px 20px;text-align:center;">
+    <p style="font-family:'Old Standard TT', serif;font-size:18px;">
+      Paper III is the featured paper. Redirecting to <a href="/paper">/paper</a>&hellip;
+    </p>
+  </main>
+</Base>
+<script is:inline>window.location.replace('/paper');</script>

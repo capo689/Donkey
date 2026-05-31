@@ -6,27 +6,42 @@ const allEssays = await getCollection('essays');
 const phaseMemos = await getCollection('phase-memos');
 
 const fieldNoteEssays = allEssays.filter((e) => e.data.section === 'field-notes');
-const featured = fieldNoteEssays.find((e) => e.id === 'a-little-help-for-my-friends');
-const references = fieldNoteEssays
+
+const featuredA = fieldNoteEssays.find((e) => e.id === 'a-little-help-for-my-friends');
+const featuredB = fieldNoteEssays.find((e) => e.id === 'alice-and-bob');
+
+// Paper II / III series (new section)
+const evolutionEntries = fieldNoteEssays.filter((e) => e.data.series === 'paper-2-3');
+const evolutionWorkPosts = evolutionEntries.filter((e) => e.data.subsection === 'work-post').sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+const evolutionEssays = evolutionEntries.filter((e) => e.data.subsection === 'standalone').sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+// Existing Paper I sections (preserved)
+const paperOne = fieldNoteEssays.filter((e) => e.data.series === 'paper-1');
+const references = paperOne
   .filter((e) => e.data.subsection === 'reference' && e.id !== 'a-little-help-for-my-friends')
   .sort((a, b) => a.data.title.localeCompare(b.data.title));
-const standalone = fieldNoteEssays.filter((e) => e.data.subsection === 'standalone').sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const workPosts = fieldNoteEssays.filter((e) => e.data.subsection === 'work-post').sort((a, b) => (a.data.workPhase ?? 0) - (b.data.workPhase ?? 0));
+const standalone = paperOne
+  .filter((e) => e.data.subsection === 'standalone')
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const workPosts = paperOne
+  .filter((e) => e.data.subsection === 'work-post')
+  .sort((a, b) => (a.data.workPhase ?? 0) - (b.data.workPhase ?? 0));
 
 const totalCount = fieldNoteEssays.length + phaseMemos.length;
 const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const dateShort = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 ---
 
 <Base
   title="Field Notes"
-  description="The record of the work, written as it happened. Phase memos, work posts, and essays from the eighteen-day walk to the frontier."
+  description="The plain-English record of a walk from Physics 101 to the frontier, and of the three papers that walk produced. Twenty-one entries: phase memos, essays, work posts, and two plain-English explainers."
 >
   <div class="shell">
 
     <div class="running-head">
       <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
       <div class="rh-meta">
-        <span>Vol. I</span><span class="dot"></span><span>Field Notes</span><span class="dot"></span><span>&sect; III</span>
+        <span>Vol. II</span><span class="dot"></span><span>Field Notes</span><span class="dot"></span><span>&sect; IV</span>
       </div>
     </div>
 
@@ -38,36 +53,98 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
 
     <article>
       <header class="article-preamble">
-        <div class="article-section">Field Notes &nbsp;&middot;&nbsp; &sect; III</div>
+        <div class="article-section">Field Notes &nbsp;&middot;&nbsp; &sect; IV</div>
         <h1 class="article-title">The Notebook, Open.</h1>
         <p class="article-subtitle">
-          The plain-English record of an eighteen-day walk from <em>Physics&nbsp;101</em> to the frontier. {totalCount} entries; phase memos written during the work, essays written about it, and one symphony of an analogy that started the whole thing.
+          The plain-English record of a walk from <em>Physics&nbsp;101</em> to the frontier, and of the three papers that walk produced. {totalCount} entries: phase memos written during the work, essays written about it, the wrong turns kept on the page beside the right ones, and two plain-English explainers for anyone who wants the result without the appendices.
         </p>
       </header>
 
-      {featured && (
-        <section class="fn-featured" aria-label="Featured essay">
-          <div class="fn-featured-eyebrow">
-            <span>Featured</span>
-            <span class="dot"></span>
-            <span>The plain-English thesis</span>
-          </div>
-          <a href={`/field-notes/${featured.id}`} class="fn-featured-card">
-            <div class="fn-featured-side">
-              <span class="fn-featured-label">If you read one thing</span>
-              <span class="fn-featured-date">{dateStr(featured.data.date)}</span>
-            </div>
-            <div class="fn-featured-text">
-              <h2 class="fn-featured-headline">{featured.data.title}</h2>
-              {featured.data.subtitle && <p class="fn-featured-sub">{featured.data.subtitle}</p>}
-              <blockquote class="fn-featured-pull">
-                <p>&ldquo;It is not that the universe has one answer for how much two observers can disagree. It has a <em>hierarchy</em> of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy.&rdquo;</p>
-              </blockquote>
-              <span class="fn-featured-cta">Read the essay &rsaquo;</span>
-            </div>
-          </a>
-        </section>
-      )}
+      <section class="fn-featured-pair" aria-label="Featured essays">
+        <div class="fn-featured-eyebrow">
+          <span>Featured</span>
+          <span class="dot"></span>
+          <span>The plain-English thesis, in two parts</span>
+        </div>
+        <div class="fn-featured-pair-grid">
+          {featuredA && (
+            <a href={`/field-notes/${featuredA.id}`} class="fn-featured-card fn-featured-pair-card">
+              <div class="fn-featured-side">
+                <span class="fn-featured-label">If you read one thing</span>
+                <span class="fn-featured-date">{dateStr(featuredA.data.date)}</span>
+              </div>
+              <div class="fn-featured-text">
+                <h2 class="fn-featured-headline">{featuredA.data.title}</h2>
+                {featuredA.data.subtitle && <p class="fn-featured-sub">{featuredA.data.subtitle}</p>}
+                <blockquote class="fn-featured-pull">
+                  <p>&ldquo;It is not that the universe has one answer for how much two observers can disagree. It has a <em>hierarchy</em> of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy.&rdquo;</p>
+                </blockquote>
+                <span class="fn-featured-cta">Read the essay &rsaquo;</span>
+              </div>
+            </a>
+          )}
+          {featuredB && (
+            <a href={`/field-notes/${featuredB.id}`} class="fn-featured-card fn-featured-pair-card">
+              <div class="fn-featured-side">
+                <span class="fn-featured-label">If you read two</span>
+                <span class="fn-featured-date">{dateStr(featuredB.data.date)}</span>
+              </div>
+              <div class="fn-featured-text">
+                <h2 class="fn-featured-headline">{featuredB.data.title}</h2>
+                {featuredB.data.subtitle && <p class="fn-featured-sub">{featuredB.data.subtitle}</p>}
+                <blockquote class="fn-featured-pull">
+                  <p>&ldquo;The hard quantum disagreement reduces to an easy classical one, and the easy one obeys a law with an unexplained integer in it.&rdquo;</p>
+                </blockquote>
+                <span class="fn-featured-cta">Read the companion &rsaquo;</span>
+              </div>
+            </a>
+          )}
+        </div>
+      </section>
+
+      <section class="fn-section" aria-labelledby="evolution-head">
+        <header class="fn-section-head">
+          <p class="fn-section-eyebrow">V. The Evolution: Paper II &amp; Paper III</p>
+          <h2 class="fn-section-title" id="evolution-head">From Paper II to Paper III &mdash; In Plain Sight.</h2>
+          <p class="fn-section-deck">Twelve new entries on the road from Paper II to Paper III: the corrected foundation, the routes that did not work, the centered-operator identity that finally did, and the integer that survived all of it.</p>
+        </header>
+
+        <div class="fn-evolution-grouping">
+          <h3 class="fn-subhead">Decisions on the Record &mdash; Work Posts</h3>
+          <p class="fn-subhead-deck">The pivots, the catches, and the routes that did not work, documented as they happened.</p>
+          <ol class="fn-post-grid">
+            {evolutionWorkPosts.map((e) => (
+              <li>
+                <a href={`/field-notes/${e.id}`} class="fn-post-card">
+                  <span class="fn-post-tag">Work Post</span>
+                  <h3 class="fn-post-title">{e.data.title}</h3>
+                  {e.data.subtitle && <p class="fn-post-sub">{e.data.subtitle}</p>}
+                  <p class="fn-post-meta">{dateStr(e.data.date)} &middot; <em>Donkey voice</em></p>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div class="fn-evolution-grouping">
+          <h3 class="fn-subhead">Stepping Back &mdash; Essays</h3>
+          <p class="fn-subhead-deck">Longer pieces on the meaning of what was found, on the reviewer who forced it, and on what we still cannot explain.</p>
+          <ol class="fn-post-grid">
+            {evolutionEssays.map((e) => (
+              <li>
+                <a href={`/field-notes/${e.id}`} class={`fn-post-card${e.data.featured ? ' fn-post-featured' : ''}`}>
+                  <span class="fn-post-tag">{e.data.featured ? 'Essay · Featured above' : 'Essay'}</span>
+                  <h3 class="fn-post-title">{e.data.title}</h3>
+                  {e.data.subtitle && <p class="fn-post-sub">{e.data.subtitle}</p>}
+                  <p class="fn-post-meta">{dateStr(e.data.date)} &middot; <em>{e.data.featured ? 'Plain-English companion' : 'Donkey voice'}</em></p>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <hr class="fn-divider" />
 
       <section class="fn-section" aria-labelledby="phase-memos-head">
         <header class="fn-section-head">
@@ -78,7 +155,7 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
         <ol class="fn-memo-list">
           {phaseMemos.map((m) => (
             <li>
-              <a href={`/lab/phase-memos#${m.id}`} class="fn-memo-card">
+              <a href={`/field-notes/phase-memos#${m.id}`} class="fn-memo-card">
                 <span class="fn-memo-num">{m.data.title.match(/\d+/)?.[0] ?? '—'}</span>
                 <div class="fn-memo-body">
                   <h3 class="fn-memo-title">{m.data.title}</h3>
@@ -95,7 +172,7 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
       {workPosts.length > 0 && (
         <section class="fn-section" aria-labelledby="work-posts-head">
           <header class="fn-section-head">
-            <p class="fn-section-eyebrow">II. Decisions on the Record</p>
+            <p class="fn-section-eyebrow">II. Decisions on the Record &mdash; Paper I</p>
             <h2 class="fn-section-title" id="work-posts-head">Work Posts</h2>
             <p class="fn-section-deck">Specific moments in the work. The pivots, the wrong turns, the catches. Documented as they happened.</p>
           </header>
@@ -117,7 +194,7 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
       {standalone.length > 0 && (
         <section class="fn-section" aria-labelledby="essays-head">
           <header class="fn-section-head">
-            <p class="fn-section-eyebrow">III. Stepping Back</p>
+            <p class="fn-section-eyebrow">III. Stepping Back &mdash; Paper I</p>
             <h2 class="fn-section-title" id="essays-head">Standalone Essays</h2>
             <p class="fn-section-deck">Longer pieces on the texture of doing real research as a generalist. Not tied to a particular phase.</p>
           </header>
@@ -161,20 +238,20 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
       <aside class="fn-related">
         <p class="fn-related-eyebrow">Adjacent records</p>
         <div class="fn-related-grid">
-          <a href="/curriculum" class="fn-related-card">
+          <a href="/evolution" class="fn-related-card">
             <span class="fn-related-num">II.</span>
-            <span class="fn-related-title">The Curriculum</span>
-            <span class="fn-related-deck">Thirty-eight class reports from the walk in.</span>
+            <span class="fn-related-title">The Evolution</span>
+            <span class="fn-related-deck">Three papers walked upright, in five figures.</span>
           </a>
           <a href="/method" class="fn-related-card">
-            <span class="fn-related-num">IV.</span>
-            <span class="fn-related-title">The Method</span>
-            <span class="fn-related-deck">The thesis and the protocol behind the field notes.</span>
-          </a>
-          <a href="/lab" class="fn-related-card">
             <span class="fn-related-num">V.</span>
-            <span class="fn-related-title">The Laboratory</span>
-            <span class="fn-related-deck">What is happening, now. Paper II in progress.</span>
+            <span class="fn-related-title">The Method</span>
+            <span class="fn-related-deck">The thesis, the protocol, and now the per-paper method &mdash; Scholar included.</span>
+          </a>
+          <a href="/paper" class="fn-related-card">
+            <span class="fn-related-num">I.</span>
+            <span class="fn-related-title">The Paper</span>
+            <span class="fn-related-deck">Paper III, the featured work. The entropy-replacement theorem.</span>
           </a>
         </div>
       </aside>
@@ -182,3 +259,49 @@ const dateStr = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
     </article>
   </div>
 </Base>
+
+<style>
+  .fn-featured-pair { margin: 32px auto; max-width: 1100px; }
+  .fn-featured-pair-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 20px;
+    margin-top: 16px;
+  }
+  .fn-featured-pair-card { height: 100%; }
+  .fn-evolution-grouping { margin-bottom: 28px; }
+  .fn-subhead {
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 18px;
+    color: var(--accent);
+    margin: 24px 0 4px;
+    border-bottom: 1px dotted var(--rule);
+    padding-bottom: 6px;
+  }
+  .fn-subhead-deck {
+    font-family: 'Old Standard TT', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin: 0 0 14px;
+  }
+  .fn-divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 48px 0;
+    position: relative;
+  }
+  .fn-divider::after {
+    content: '❦';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--paper);
+    padding: 0 14px;
+    color: var(--accent);
+    font-size: 18px;
+  }
+  .fn-post-featured { border-color: var(--accent) !important; background: rgba(138, 24, 24, 0.04); }
+  .fn-post-featured .fn-post-tag { color: var(--accent); }
+</style>

@@ -1,0 +1,200 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base
+  title="Paper II — Rising by Degrees"
+  description="Paper II, the intermediate draft. The structural identity corrected to the diagonal of the bulk marginal."
+>
+  <div class="paper-bg">
+    <div class="noise"></div>
+    <div class="stain-a"></div>
+    <div class="stain-b"></div>
+    <div class="vignette"></div>
+  </div>
+
+  <main>
+
+    <div class="running-head">
+      DONKEY ON THE EDGE<span class="middot">&middot;</span>THE EVOLUTION<span class="middot">&middot;</span>FIGURE III &middot; PAPER II<span class="middot">&middot;</span>VOL. I
+    </div>
+
+    <div class="preservation-banner">
+      <p><strong>This is Paper II, the intermediate draft.</strong> It corrected the foundation of Paper I but had not yet proved the entropy-replacement theorem that makes the laws rigorous. For that, see <a href="/paper">Paper III</a>.</p>
+    </div>
+
+    <header class="masthead">
+      <div class="masthead-eyebrow">PAPER II OF THE DONKEY-ON-THE-EDGE PROGRAMME</div>
+      <div class="rule-double"></div>
+      <h1 class="masthead-title">PAPER II</h1>
+      <div class="masthead-subtitle">In which the foundation of Paper I is found to be stated too loosely, and corrected: the averaged observer state is not the bulk marginal but the diagonal of it.</div>
+      <div class="rule-double"></div>
+    </header>
+
+    <section class="frontmatter">
+
+      <div class="dateline">
+        REVISED CIRCA MAY XVIII &middot; MMXXVI<span class="arxiv-tag">RISING BY DEGREES</span>
+      </div>
+
+      <h2 class="paper-title">
+        Complexity-Sensitive<br />
+        Complementarity in<br />
+        Non-Isometric<br />
+        Holographic Codes<br />
+        <span style="font-size:0.5em;font-style:italic;color:var(--ink-soft);">(revised)</span>
+      </h2>
+
+      <div class="byline">
+        <span class="author">ADAM R. CAGLE</span>
+        <span class="with">with</span>
+        <span class="collab">CLAUDE (ANTHROPIC)</span>
+        <span class="role">computational collaborator</span>
+      </div>
+
+      <div class="downloads">
+        <a class="dl-btn" href="/paper/full-v2"><span class="glyph">&sect;</span> Read the Manuscript</a>
+        <a class="dl-btn" href="/code-and-data"><span class="glyph">&#8750;</span> Source &amp; Data</a>
+        <a class="dl-btn" href="/paper"><span class="glyph">&rArr;</span> Forward to Paper III</a>
+      </div>
+
+    </section>
+
+    <section class="abstract">
+      <h3 class="section-head">ABSTRACT</h3>
+      <div class="abstract-body">
+        <p is:raw>We investigate the two-observer disagreement $\mathbb{E}|S_A - S_B|$ in AEHPV non-isometric holographic codes with observers included via the HUZ cloning rule. The central result is a <em>structural identity</em>, here stated in its corrected form: at leading order in $1/d_{\rm eff}$, the Haar-$V$-averaged observer-reduced state equals the <strong>diagonal of the bulk $A$-marginal</strong> in the observer's cloning basis, $\mathbb{E}_V[\rho_{R_A}] = \operatorname{diag}(\rho_A^{\rm bulk}) + O(1/d^2)$. Bulk-marginal coherences across distinct pointer values are projected out by the combination of HUZ cloning and Haar-$V$ averaging. This reduces the disagreement problem to a moment calculation of the bulk-marginal diagonal, whose scaling with $d_B$ depends on the bulk state class. For random product states we obtain $\mathbb{E}|S_A - S_B| \to \sqrt{4(\pi^2/3-3)/\pi}\,d_B^{-1/2} \approx 0.608\,d_B^{-1/2}$; for Haar-random states, $\sqrt{2/\pi}\,/(d_M\, d_B^{3/2})$. The exponent gap is exactly $1$. We verify the identity and both scalings against full simulation, including out-of-sample tests at sub-$\sigma$ precision.</p>
+      </div>
+    </section>
+
+    <section class="summary">
+      <h3 class="section-head">A PLAIN-LANGUAGE SUMMARY</h3>
+      <div class="summary-body">
+        <p>Paper I had a small but real crack in its foundation. It said that, on average, what an observer sees equals the "marginal" of the bulk state &mdash; the full reduced description. Paper II shows that is not quite right: what the observer sees on average equals only the <strong>diagonal</strong> of that marginal &mdash; the bar chart of probabilities, with the off-diagonal "interference" entries erased. And the erasing is not an approximation we impose; it falls out of the physics, from the way the observer is cloned plus the randomness of the code. Fixing this made the rest of the machinery exact instead of approximate, and made plain exactly which object the scaling laws describe. What Paper II did not yet do was prove that this diagonal object actually controls the true quantum disagreement &mdash; that step is Paper III.</p>
+      </div>
+    </section>
+
+    <section class="results">
+      <h3 class="section-head">THE FOUR RESULTS</h3>
+      <p class="results-intro">Featured-mold cards. Equation, plain gloss, section pointer + evidence.</p>
+
+      <div class="results-grid">
+
+        <article class="result-card">
+          <div class="result-head">
+            <div class="result-numeral">I.</div>
+            <div class="result-title-group">
+              <div class="result-eyebrow">THE STRUCTURAL IDENTITY, CORRECTED &middot; THE FOUNDATION</div>
+              <h4 class="result-title">The averaged observer state is the diagonal of the bulk marginal.</h4>
+            </div>
+          </div>
+          <div class="result-equation">{`$$\\mathbb{E}_V[\\rho_{R_A}] = \\operatorname{diag}\\!\\big(\\rho_A^{\\mathrm{bulk}}\\big) + O(1/d^2)$$`}</div>
+          <p class="result-summary">The averaged observer state equals the diagonal of the bulk marginal, not the marginal. Off-diagonal coherences across pointer values collapse at first moment, by the combination of HUZ cloning and Haar averaging &mdash; not by hand.</p>
+          <div class="result-meta">
+            <span>&sect;3 &middot; CORRECTION OVER PAPER I &middot; 18 DIAGONAL ENTRIES VERIFIED</span>
+          </div>
+        </article>
+
+        <article class="result-card">
+          <div class="result-head">
+            <div class="result-numeral">II.</div>
+            <div class="result-title-group">
+              <div class="result-eyebrow">PRODUCT-CLASS SCALING</div>
+              <h4 class="result-title">Slow decay for low-entanglement states.</h4>
+            </div>
+          </div>
+          <div class="result-equation">{`$$\\mathbb{E}|S_A - S_B| \\to \\sqrt{\\tfrac{4(\\pi^2/3-3)}{\\pi}}\\,d_B^{-1/2} \\approx 0.608\\,d_B^{-1/2}$$`}</div>
+          <p class="result-summary">Slow decay for low-entanglement states. Analytic prefactor; matches simulation.</p>
+          <div class="result-meta">
+            <span>&sect;4 &middot; EXPONENT EXACT &middot; PREFACTOR EXACT</span>
+          </div>
+        </article>
+
+        <article class="result-card">
+          <div class="result-head">
+            <div class="result-numeral">III.</div>
+            <div class="result-title-group">
+              <div class="result-eyebrow">HAAR-CLASS SCALING</div>
+              <h4 class="result-title">Fast decay for maximally scrambled states.</h4>
+            </div>
+          </div>
+          <div class="result-equation">{`$$\\mathbb{E}|S_A - S_B| \\to \\sqrt{\\tfrac{2}{\\pi}}\\,\\frac{1}{d_M\\,d_B^{3/2}} \\approx \\tfrac{0.798}{d_M}\\,d_B^{-3/2}$$`}</div>
+          <p class="result-summary">Fast decay for maximally scrambled states. The black-hole-interior regime.</p>
+          <div class="result-meta">
+            <span>&sect;5 &middot; EXPONENT EXACT &middot; PREFACTOR EXACT</span>
+          </div>
+        </article>
+
+        <article class="result-card">
+          <div class="result-head">
+            <div class="result-numeral">IV.</div>
+            <div class="result-title-group">
+              <div class="result-eyebrow">THE INTEGER EXPONENT GAP</div>
+              <h4 class="result-title">One power of $d_B$ between the classes.</h4>
+            </div>
+          </div>
+          <div class="result-equation">{`$$\\alpha_P - \\alpha_H = \\big(-\\tfrac12\\big) - \\big(-\\tfrac32\\big) = 1 \\quad\\text{exactly.}$$`}</div>
+          <p class="result-summary">One whole power of $d_B$ between the classes. Stable across deformations.</p>
+          <div class="result-meta">
+            <span>&sect;6 &middot; OPEN PROBLEM</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-head">METHODS, IN BRIEF</h3>
+      <div class="section-body">
+        <div class="method-grid">
+          <div class="method-item">
+            <h3>I &middot; FRAMEWORK</h3>
+            <p>AEHPV code with Haar $V$; HUZ observer cloning.</p>
+          </div>
+          <div class="method-item">
+            <h3>II &middot; IDENTITY</h3>
+            <p>First-moment Haar integration shows the off-diagonal collapse and yields the corrected diagonal identity.</p>
+          </div>
+          <div class="method-item">
+            <h3>III &middot; SPECIALISATION</h3>
+            <p>Each class reduces to a moment of the bulk-marginal diagonal &mdash; Dirichlet for product, Gaussian-limit for Haar.</p>
+          </div>
+          <div class="method-item">
+            <h3>IV &middot; VERIFICATION</h3>
+            <p>Full-simulation checks at the diagonal-entry level, the variance asymptote, the prefactor convergence, and end-to-end, with out-of-sample tests.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h3 class="section-head">WHAT PAPER II HANDED TO PAPER III</h3>
+      <div class="section-body">
+        <p style="text-align:justify;hyphens:auto;">A correct foundation and a sharp, unanswered question: <em>does the diagonal model govern the true observer entropy?</em> Paper III answers it with the entropy-replacement theorem.</p>
+        <div class="downloads" style="margin-top:24px;">
+          <a class="dl-btn" href="/paper"><span class="glyph">&rarr;</span> Read Paper III</a>
+          <a class="dl-btn" href="/field-notes/the-marginal-was-not-the-diagonal"><span class="glyph">&para;</span> The correction, in plain English</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Base>
+
+<style>
+  .preservation-banner {
+    max-width: 880px;
+    margin: 20px auto 0;
+    padding: 14px 22px;
+    background: rgba(138, 24, 24, 0.05);
+    border: 1px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    font-family: 'Old Standard TT', serif;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .preservation-banner p { margin: 0; }
+  .preservation-banner a { color: var(--accent); text-decoration: underline; text-decoration-style: dotted; }
+  .preservation-banner a:hover { text-decoration-style: solid; }
+</style>

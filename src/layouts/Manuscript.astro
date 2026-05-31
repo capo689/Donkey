@@ -1,0 +1,122 @@
+---
+import Base from './Base.astro';
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  description?: string;
+  eyebrow: string;
+  pageTitle: string;
+  breadcrumbLabel: string;
+  showToc?: boolean;
+}
+
+const { title, subtitle, description, eyebrow, pageTitle, breadcrumbLabel, showToc = true } = Astro.props;
+---
+
+<Base title={pageTitle} description={description ?? subtitle ?? title}>
+  <div class="page">
+
+    <div class="running-head">
+      <span class="side">The Donkey on the Edge</span>
+      <span class="center">{eyebrow}</span>
+      <span class="side right">May MMXXVI</span>
+    </div>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Masthead</a>
+      <span class="sep">&rsaquo;</span>
+      <a href="/paper">The Paper</a>
+      <span class="sep">&rsaquo;</span>
+      <a href="/code-and-data">Code &amp; Data</a>
+      <span class="sep">&rsaquo;</span>
+      <span class="current">{breadcrumbLabel}</span>
+    </nav>
+
+    <header class="article-preamble">
+      <div class="article-section">{eyebrow}</div>
+      <h1 class="article-title">{title}</h1>
+      {subtitle && <p class="article-subtitle">{subtitle}</p>}
+    </header>
+
+    {showToc && (
+      <div class="manuscript-toc">
+        <p class="manuscript-toc-head">Companion Pages</p>
+        <ul>
+          <li><a href="/paper">&laquo; back to the featured page</a></li>
+          <li><a href="/paper/full">The Manuscript &rsaquo;</a></li>
+          <li><a href="/paper/appendix-a">Appendix A &middot; Generalized EGH formulas &rsaquo;</a></li>
+          <li><a href="/paper/appendix-b">Appendix B &middot; Reproducibility &rsaquo;</a></li>
+          <li><a href="/paper/appendix-c">Appendix C &middot; The entropy-replacement proof &rsaquo;</a></li>
+          <li><a href="/paper/reviewer-note">The Reviewer's Note &rsaquo;</a></li>
+          <li><a href="/code-and-data">Code &amp; Data Browser &rsaquo;</a></li>
+        </ul>
+      </div>
+    )}
+
+    <article class="manuscript-body">
+      <slot />
+    </article>
+
+  </div>
+</Base>
+
+<style>
+  .manuscript-toc {
+    max-width: 820px;
+    margin: 16px auto 24px;
+    padding: 14px 22px;
+    border: 1px solid var(--rule);
+    background: rgba(33, 24, 16, 0.02);
+    font-family: 'Old Standard TT', serif;
+  }
+  .manuscript-toc-head {
+    margin: 0 0 8px;
+    font-family: 'IM Fell DW Pica SC', serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+  .manuscript-toc ul { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 24px; }
+  .manuscript-toc li { margin: 4px 0; font-size: 14px; }
+  .manuscript-toc a { color: var(--ink); text-decoration: none; }
+  .manuscript-toc a:hover { color: var(--accent); text-decoration: underline; }
+  .manuscript-body {
+    max-width: 820px;
+    margin: 0 auto 64px;
+    padding: 32px var(--s4);
+    font-family: 'Old Standard TT', serif;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .manuscript-body :global(p) { margin: 0 0 1em; text-align: justify; hyphens: auto; }
+  .manuscript-body :global(h1),
+  .manuscript-body :global(h2),
+  .manuscript-body :global(h3),
+  .manuscript-body :global(h4) {
+    font-family: 'IM Fell DW Pica', serif;
+    color: var(--ink);
+    margin-top: 1.8em;
+    margin-bottom: 0.6em;
+    line-height: 1.25;
+  }
+  .manuscript-body :global(h2) { font-size: 1.4em; border-bottom: 1px solid var(--rule); padding-bottom: 0.3em; }
+  .manuscript-body :global(h3) { font-size: 1.2em; color: var(--accent); }
+  .manuscript-body :global(h4) { font-size: 1.05em; }
+  .manuscript-body :global(img) { max-width: 100%; height: auto; display: block; margin: 24px auto; border: 1px solid var(--rule); padding: 8px; background: var(--paper); }
+  .manuscript-body :global(blockquote) { border-left: 3px solid var(--accent); margin: 1em 0; padding: 0.4em 1em; color: var(--ink-soft); font-style: italic; background: rgba(138, 24, 24, 0.03); }
+  .manuscript-body :global(code) { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; background: rgba(33, 24, 16, 0.06); padding: 1px 4px; border-radius: 2px; }
+  .manuscript-body :global(pre) { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: rgba(33, 24, 16, 0.04); padding: 12px 16px; border: 1px solid var(--rule); overflow-x: auto; margin: 1em 0; }
+  .manuscript-body :global(pre code) { background: transparent; padding: 0; }
+  .manuscript-body :global(table) { border-collapse: collapse; width: 100%; margin: 1.5em 0; font-size: 14px; }
+  .manuscript-body :global(th),
+  .manuscript-body :global(td) { border: 1px solid var(--rule); padding: 6px 10px; text-align: left; }
+  .manuscript-body :global(th) { background: rgba(33, 24, 16, 0.04); font-family: 'IM Fell DW Pica SC', serif; }
+  .manuscript-body :global(ul),
+  .manuscript-body :global(ol) { padding-left: 1.5em; margin: 1em 0; }
+  .manuscript-body :global(li) { margin-bottom: 0.4em; }
+  .manuscript-body :global(.katex-display) { margin: 1.4em 0; overflow-x: auto; overflow-y: hidden; }
+  .manuscript-body :global(hr) { border: none; border-top: 1px solid var(--rule); margin: 2em 0; }
+</style>

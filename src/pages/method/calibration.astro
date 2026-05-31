@@ -41,7 +41,7 @@ const annotations: Record<string, { resolved: string; surprise?: boolean }> = {
     <div class="running-head">
       <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
       <div class="rh-meta">
-        <span>Vol. I</span>
+        <span>Vol. II</span>
         <span class="dot"></span>
         <span>The Method</span>
         <span class="dot"></span>
@@ -367,6 +367,52 @@ const annotations: Record<string, { resolved: string; surprise?: boolean }> = {
     </div>
 
     <!-- ================================================================
+         PAPER II/III LEDGER (appended in Vol. II)
+         ================================================================ -->
+    <section class="p23-ledger" aria-labelledby="p23-head">
+      <h2 class="p23-head" id="p23-head">Paper II &rarr; III, On the Record</h2>
+      <p class="p23-deck">Five predictions resolved between May 14 and May 30, MMXXVI. Appended in Vol. II, No. I &mdash; the Paper II/III ledger.</p>
+
+      <ol class="p23-list">
+        <li class="p23-item">
+          <span class="p23-tag p23-partial">PARTIALLY FALSIFIED</span>
+          <div class="p23-body">
+            <p class="p23-pred"><strong>Predicted (Paper I&rarr;II):</strong> the structural identity, if re-derived carefully, would hold exactly.</p>
+            <p class="p23-out"><strong>Outcome:</strong> it holds against the <em>diagonal</em> of the marginal, not the full marginal. Corrected in Paper II. <em>A prediction we are glad we checked.</em></p>
+          </div>
+        </li>
+        <li class="p23-item">
+          <span class="p23-tag p23-confirmed">CONFIRMED (Haar) &middot; CONDITIONAL (Product)</span>
+          <div class="p23-body">
+            <p class="p23-pred"><strong>Predicted (Paper II&rarr;III):</strong> the diagonal model governs the true observer entropy.</p>
+            <p class="p23-out"><strong>Outcome:</strong> CONFIRMED for the Haar class &mdash; proved as the entropy-replacement theorem, unconditional. CONDITIONAL for the product class &mdash; replacement holds in a regime not fully controlled; stated conditional in plain sight.</p>
+          </div>
+        </li>
+        <li class="p23-item">
+          <span class="p23-tag p23-confirmed">CONFIRMED (re-proved)</span>
+          <div class="p23-body">
+            <p class="p23-pred"><strong>Predicted:</strong> the off-diagonal contribution to the replacement error is the same order as the diagonal contribution.</p>
+            <p class="p23-out"><strong>Outcome:</strong> CONFIRMED, but the first <em>proof</em> of it was rejected (numerics-backed). Re-proved by the centered-operator identity with no constant left to numerics. <a href="/field-notes/the-centered-operator-trick">See: The Centered-Operator Trick.</a></p>
+          </div>
+        </li>
+        <li class="p23-item">
+          <span class="p23-tag p23-partial">PREFACTOR RIGHT, STRUCTURE WRONG</span>
+          <div class="p23-body">
+            <p class="p23-pred"><strong>Predicted:</strong> the grouped-Dirichlet covariance shortcut gives the right Haar prefactor.</p>
+            <p class="p23-out"><strong>Outcome:</strong> the prefactor was right; the covariance <em>structure</em> was wrong. A right answer for a wrong reason, caught and corrected &mdash; twice. Logged as a cautionary entry. <a href="/field-notes/the-covariance-that-lied">See: The Covariance That Lied.</a></p>
+          </div>
+        </li>
+        <li class="p23-item">
+          <span class="p23-tag p23-confirmed">CONFIRMED</span>
+          <div class="p23-body">
+            <p class="p23-pred"><strong>Predicted:</strong> the integer exponent gap survives the rewrite.</p>
+            <p class="p23-out"><strong>Outcome:</strong> CONFIRMED. Unchanged through a corrected foundation and two appendix rewrites. Still unexplained. <a href="/field-notes/one-power-of-d-still-unexplained">See: One Power of d, Still Unexplained.</a></p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ================================================================
          UPDATE CADENCE NOTE
          ================================================================ -->
     <div class="update-note">
@@ -380,3 +426,62 @@ const annotations: Record<string, { resolved: string; surprise?: boolean }> = {
          ================================================================ -->
   </div><!-- /.shell -->
 </Base>
+
+<style>
+  .p23-ledger {
+    max-width: 900px;
+    margin: 48px auto 32px;
+    padding: 28px 32px;
+    border: 1px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    background: rgba(138, 24, 24, 0.03);
+  }
+  .p23-head {
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 26px;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+  .p23-deck {
+    font-family: 'Old Standard TT', serif;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    font-size: 15px;
+  }
+  .p23-list { list-style: none; padding: 0; margin: 0; counter-reset: p23; }
+  .p23-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    counter-increment: p23;
+  }
+  .p23-item:first-child { border-top: none; padding-top: 0; }
+  .p23-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 1px solid;
+    padding: 4px 10px;
+    height: fit-content;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .p23-confirmed { color: #2e5e2e; border-color: #2e5e2e; background: rgba(46, 94, 46, 0.05); }
+  .p23-partial { color: var(--accent); border-color: var(--accent); background: rgba(138, 24, 24, 0.05); }
+  .p23-body {
+    font-family: 'Old Standard TT', serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .p23-body p { margin: 0 0 8px; }
+  .p23-pred { color: var(--ink); }
+  .p23-out { color: var(--ink); }
+  .p23-out a { color: var(--accent); }
+  @media (max-width: 700px) {
+    .p23-item { grid-template-columns: 1fr; }
+  }
+</style>

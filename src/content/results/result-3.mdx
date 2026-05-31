@@ -1,13 +1,33 @@
 ---
-title: "Haar class scaling"
+title: "The Product-Class Law, Conditional"
 resultNumber: 3
-scaling: "d_B^{-3/2}"
-status: "clean"
-summary: "For bulk states drawn from the Haar class (uniformly random pure states), entropy disagreement scales as 0.608 times d_B to the negative three-halves power. The prefactor is analytic. This is the regime relevant to black hole interiors."
+scaling: "\\mathbb{E}|S_A - S_B| \\to 0.608 \\cdot d_B^{-1/2}"
+status: "conditional"
+summary: "For random product (low-entanglement) bulk states, the disagreement falls off only as the negative one-half power — far slower than the Haar case. The exponent and prefactor are derived analytically. Stated conditional on the product-class replacement principle, because product states have tiny probability entries that make the entropy perturbation delicate."
 ---
 
-For bulk states drawn from the Haar class (uniformly random pure states), the entropy disagreement scales as:
+For random product (low-entanglement) bulk states, the disagreement falls off only as
+the negative one-half power — far slower than the Haar case.
 
-$$\mathbb{E}|S_A - S_B| \approx 0.608 \cdot d_B^{-3/2} + \mathcal{O}(d_B^{-2})$$
+$$
+\mathbb{E}|S_A - S_B| \;=\; \sqrt{\tfrac{4(\pi^2/3 - 3)}{\pi}}\, d_B^{-1/2}\,(1+o(1))
+\;\approx\; 0.608\, d_B^{-1/2}.
+$$
 
-The prefactor 0.608 is analytic. No fitting. Simulations match. This is the regime relevant to black hole interiors and holographic codes for chaotic quantum dynamics.
+**Why conditional, and on what.** This law is stated **conditional** on the
+product-class replacement principle. The Haar replacement (Result I) is proved
+unconditionally because Haar bulk states spread probability evenly; the entropy
+perturbation analysis behaves. Product states do the opposite: almost all probability
+lives on a few entries, almost none on the rest. The entropy function's derivative
+blows up as a probability goes to zero, so the clean bound that works for spread-out
+distributions does not obviously survive when they are concentrated.
+
+We could have papered over this. The product-class numerics match the prediction at
+the precision the rest of the paper holds itself to. But matching numerics is the
+standard we explicitly refused on Result II, and we will not apply it selectively. So
+Theorem 3 wears the word *conditional* — in the abstract, on this card, and in the
+discussion — until somebody (us or anyone else) supplies the small-mass control that
+turns it unconditional.
+
+The integer exponent gap (Result IV) between this law and Result II's Haar law is the
+same in either case. Its claim survives the conditional intact.

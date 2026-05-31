@@ -1,0 +1,18 @@
+---
+import Manuscript from '../../layouts/Manuscript.astro';
+import { getEntry, render } from 'astro:content';
+
+const entry = await getEntry('papers', 'paper-3-reviewer-note');
+if (!entry) throw new Error('paper-3-reviewer-note not found');
+const { Content } = await render(entry);
+---
+
+<Manuscript
+  title={entry.data.title}
+  subtitle={entry.data.subtitle}
+  pageTitle="The Reviewer's Note"
+  eyebrow="THE PAPER · REVIEWER'S NOTE · SCHOLAR (ChatGPT)"
+  breadcrumbLabel="Reviewer's Note"
+>
+  <Content />
+</Manuscript>

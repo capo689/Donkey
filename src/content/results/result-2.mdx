@@ -1,13 +1,32 @@
 ---
-title: "Product class scaling"
+title: "The Haar-Class Law, Unconditional"
 resultNumber: 2
-scaling: "d_B^{-1/2}"
-status: "clean"
-summary: "For bulk states drawn from the product class, entropy disagreement scales as 0.798 times d_B to the negative one-half power. The prefactor is analytic, not fit to data. Simulations match to under half a standard deviation at every test point."
+scaling: "\\mathbb{E}|S_A - S_B| \\to (0.798 / d_M) \\cdot d_B^{-3/2}"
+status: "headline"
+summary: "For Haar-random (maximally scrambled) bulk states, the disagreement falls off as the observer size to the negative three-halves power. The prefactor is analytic, not fit. Crucially, this is now unconditional: the diagonal-to-bulk piece is closed by the centered-operator reduction with no constant left to numerics."
 ---
 
-For bulk states drawn from the product class (rank-1 density matrices), the entropy disagreement scales as:
+For Haar-random (maximally scrambled) bulk states, the disagreement law is now
+**unconditional** — proved end-to-end with no numerical constant inside the proof.
 
-$$\mathbb{E}|S_A - S_B| \approx 0.798 \cdot d_B^{-1/2} + \mathcal{O}(d_B^{-1})$$
+$$
+\mathbb{E}|S_A - S_B| \;=\; \sqrt{\tfrac{2}{\pi}}\,\cdot\,\frac{1}{d_M\, d_B^{3/2}}\,(1+o(1))
+\;\approx\; \frac{0.798}{d_M}\, d_B^{-3/2}.
+$$
 
-The prefactor 0.798 is analytic. It is not fit to data. It comes out of the math. Simulations matched the prediction to under half of one standard deviation at every test point.
+This is the regime relevant to black-hole interiors: states with maximal global
+scrambling. The exponent $-3/2$ is exact; the prefactor $\sqrt{2/\pi}$ is exact and
+analytic, not fit. The grouped-Dirichlet covariance shortcut that gave the right
+prefactor for the wrong reason — twice — is corrected against the exact Dirichlet
+covariance (negative within an observer, exactly zero across observers).
+
+**What changed from Paper II.** Paper II proved this law in the diagonal model. It did
+not prove that the diagonal model governs the true von Neumann entropy. Paper III
+proves both: first the entropy-replacement theorem (Result I), then specialisation to
+Haar via a grouped-Dirichlet/Gaussian-limit moment calculation. The result is
+unconditional in the regime physicists most care about.
+
+**The closed appendix.** Appendix C.6 — the diagonal-to-bulk fluctuation — is closed
+by the centered-operator identity. There is no `scratch_Mdom.py`-style constant
+sitting inside the proof; that script is preserved in the reproducibility bundle as a
+labelled diagnostic only, marker of the route we did *not* take.

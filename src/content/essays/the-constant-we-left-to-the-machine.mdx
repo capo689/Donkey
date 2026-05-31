@@ -1,0 +1,49 @@
+---
+title: "The Constant We Left to the Machine"
+subtitle: "The route that did not work: closing the hardest bound by splitting a matrix and trusting a numerical script for the off-diagonal part. Scholar rejected it, and was right."
+date: 2026-05-26
+backdated: false
+section: "field-notes"
+subsection: "work-post"
+voice: "donkey"
+status: "ready"
+series: "paper-2-3"
+---
+
+This is the post about the proof we were proudest of and had to throw away.
+
+The holdout in the entropy-replacement theorem was the diagonal-to-bulk piece,
+$F_{\mathrm{diag}}$. Our first closure went like this. The quantity reduces to a quadratic
+form $\mathbb{E}_\psi[\delta^\top M(\psi)\,\delta]$ in the diagonal fluctuations $\delta$,
+with $M$ a covariance matrix. We split $M$ into its diagonal and off-diagonal parts. The
+diagonal part we bounded cleanly, in closed form. The off-diagonal part we did not bound
+in closed form — instead we wrote a script, `scratch_Mdom.py`, which inspected $M$
+numerically, observed that the off-diagonal contribution was the same order as the
+diagonal one, and we wrote into the proof that the off-diagonal part was therefore "the
+same order," citing the script.
+
+It looked fine. The script was honest, the numbers were real, the conclusion was true.
+
+Scholar rejected it in one move, and the move was correct: *a numerical observation can
+support a theorem, but it cannot be a step inside the proof of a theorem you are calling
+unconditional.* The sentence "the off-diagonal constant is the one quantity left to
+numerics rather than tracked in closed form" cannot live inside a proof. The moment it
+does, the theorem is not unconditional; it is a conjecture with strong numerical support
+wearing a theorem's hat. Either track the constant in the mathematics, or take the word
+"unconditional" off the result.
+
+This stung because the claim was *true* — the off-diagonal part really is the same order,
+the script really did show it, and for a physics paper that might have been the end of it.
+But the standard for an unconditional theorem is not "true and well-supported." It is
+"proved, with every constant accounted for in closed form." We had been grading ourselves
+against the first standard without noticing, because the script agreed with us and we
+agreed with the script.
+
+We kept `scratch_Mdom.py` in the repository, but relabelled it for what it actually is: a
+**diagnostic**, supporting no step of any proof. It is in the reproducibility bundle with
+that label on it, on purpose, as a marker of the route we did not take.
+
+The route we *did* take — the one that closes $F_{\mathrm{diag}}$ with no numerical
+constant at all, by an algebraic identity that routes it through a bound we had already
+proved — is the next post. It is shorter than this one, which is itself a lesson about
+which routes are worth the words.

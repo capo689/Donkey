@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+const memos = await getCollection('phase-memos');
+memos.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+---
+
+<Base
+  title="Phase Memos"
+  description="Research phase memos from the Paper I program. Full record of each gate condition and outcome."
+>
+  <div class="shell">
+
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. II</span><span class="dot"></span><span>Field Notes</span><span class="dot"></span><span>Phase Memos</span>
+      </div>
+    </div>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Masthead</a>
+      <span class="sep">&rsaquo;</span>
+      <a href="/field-notes">Field Notes</a>
+      <span class="sep">&rsaquo;</span>
+      <span>Phase Memos</span>
+    </nav>
+
+    <header class="article-preamble">
+      <div class="article-section">Field Notes &nbsp;&middot;&nbsp; Phase Memos</div>
+      <h1 class="article-title">Phase Memos.</h1>
+      <p class="article-subtitle">The full record of each research phase, written after the phase cleared. Working voice; the notebook as it was kept.</p>
+    </header>
+
+    {memos.length === 0 ? (
+      <p class="article-body">Phase memos will appear here as they are published.</p>
+    ) : (
+      <div class="memo-list">
+        {memos.map(async (memo) => {
+          const { Content } = await render(memo);
+          return (
+            <article class="memo-entry" id={memo.id}>
+              <header class="memo-header">
+                <h2 class="memo-title">{memo.data.title}</h2>
+                <p class="memo-meta">
+                  Phases {memo.data.phases}
+                  <span class={`status-badge ${memo.data.status}`}>{memo.data.status}</span>
+                </p>
+              </header>
+              <div class="article-body">
+                <Content />
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</Base>

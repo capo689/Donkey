@@ -39,18 +39,27 @@ const essays = defineCollection({
     voice: z.enum(['donkey', 'paper']).default('donkey'),
     status: z.enum(['ready', 'draft', 'placeholder', 'reference']).default('ready'),
     workPhase: z.number().optional(),
+    series: z.enum(['paper-1', 'paper-2-3']).default('paper-1'),
+    featured: z.boolean().default(false),
   }),
+});
+
+const resultsSchema = z.object({
+  title: z.string(),
+  resultNumber: z.number().min(1).max(5),
+  scaling: z.string().optional(),
+  status: z.enum(['clean', 'empirical', 'open', 'conditional', 'headline']).default('clean'),
+  summary: z.string(),
 });
 
 const results = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/results' }),
-  schema: z.object({
-    title: z.string(),
-    resultNumber: z.number().min(1).max(5),
-    scaling: z.string().optional(),
-    status: z.enum(['clean', 'empirical', 'open']).default('clean'),
-    summary: z.string(),
-  }),
+  schema: resultsSchema,
+});
+
+const resultsPaperOne = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/results-paper-one' }),
+  schema: resultsSchema,
 });
 
 const calibration = defineCollection({
@@ -77,10 +86,23 @@ const phaseMemos = defineCollection({
   }),
 });
 
+const papers = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/papers' }),
+  schema: z.object({
+    title: z.string(),
+    kind: z.enum(['manuscript', 'appendix', 'reviewer-note']),
+    paperNumber: z.number(),
+    order: z.number().default(0),
+    subtitle: z.string().optional(),
+  }),
+});
+
 export const collections = {
   curriculum,
   essays,
   results,
+  'results-paper-one': resultsPaperOne,
   calibration,
   'phase-memos': phaseMemos,
+  papers,
 };

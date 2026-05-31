@@ -29,20 +29,13 @@ const idx = sorted.findIndex((r) => r.data.resultNumber === resultNumber);
 const prev = idx > 0 ? sorted[idx - 1] : null;
 const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
-const isMoneyPlot = resultNumber === 4;
-
 type Tag = { label: string; cls?: string };
 const tagsByResult: Record<number, Tag[]> = {
-  1: [{ label: 'Master Identity', cls: 'featured' }, { label: 'Theorem 3.2' }, { label: 'Verified' }],
-  2: [{ label: 'Theorem 4.2' }, { label: 'Product Class' }, { label: 'Exact Prefactor' }],
-  3: [{ label: 'Theorem 5.2' }, { label: 'Haar Class' }, { label: 'Exact Prefactor' }],
-  4: [
-    { label: 'Money Plot', cls: 'featured' },
-    { label: 'Type II &rarr; Type III' },
-    { label: 'Scaling Exponents' },
-    { label: 'Verified &middot; Phase 1 &amp; 2' },
-  ],
-  5: [{ label: 'Empirical', cls: 'featured' }, { label: 'Open Problem' }, { label: 'Subleading' }],
+  1: [{ label: 'Theorem 1', cls: 'featured' }, { label: 'Headline' }, { label: 'Unconditional (Haar)' }],
+  2: [{ label: 'Theorem 2', cls: 'featured' }, { label: 'Haar Class' }, { label: 'Unconditional' }, { label: 'No numerical constant' }],
+  3: [{ label: 'Theorem 3' }, { label: 'Product Class' }, { label: 'Conditional', cls: 'open' }],
+  4: [{ label: 'Integer Gap', cls: 'featured' }, { label: 'αₚ − αₕ = 1' }, { label: 'Open Problem' }],
+  5: [{ label: 'Lemma 1' }, { label: 'Structural Identity' }, { label: 'First-moment collapse' }],
 };
 const tags = tagsByResult[resultNumber] ?? [];
 ---
@@ -52,7 +45,7 @@ const tags = tagsByResult[resultNumber] ?? [];
 
     <div class="running-head">
       <span class="side">The Donkey on the Edge</span>
-      <span class="center">Vol.&thinsp;I&emsp;&middot;&emsp;The Paper&emsp;&middot;&emsp;Result {roman}</span>
+      <span class="center">Vol.&thinsp;II&emsp;&middot;&emsp;The Paper&emsp;&middot;&emsp;Result {roman}</span>
       <span class="side right">May MMXXVI</span>
     </div>
 
@@ -88,287 +81,34 @@ const tags = tagsByResult[resultNumber] ?? [];
       </div>
     </header>
 
-    {isMoneyPlot && (
-      <section class="plot-section" aria-labelledby="plot-heading">
-        <div class="section-header">
-          <div class="section-label">Fig. 1</div>
-          <h2 class="section-title" id="plot-heading">Entropy Disagreement vs. Observer Dimension</h2>
-        </div>
-        <p class="plot-caption-above">Log-log axes &middot; <span set:html="\(d_M = 4\)"></span> &middot; Two series with fit lines &middot; Synthetic data, seed 1142</p>
-
-        <div class="plot-wrap">
-          <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg"
-               role="img" aria-label="Log-log plot of entropy disagreement E|S_A - S_B| versus observer algebra dimension d_B. Two series: Product class with slope -1/2 and Haar class with slope -3/2. The exponent gap is exactly one.">
-            <defs>
-              <filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="3" result="turb"/>
-                <feDisplacementMap in="SourceGraphic" in2="turb" scale="0.6" xChannelSelector="R" yChannelSelector="G"/>
-              </filter>
-              <linearGradient id="plotBg" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="rgba(232,219,184,0.22)"/>
-                <stop offset="100%" stop-color="rgba(215,200,165,0.12)"/>
-              </linearGradient>
-            </defs>
-
-            <rect x="100" y="60" width="650" height="370" fill="url(#plotBg)"/>
-
-            <g stroke="#D4C8A3" stroke-width="0.5" stroke-dasharray="3,4">
-              <line x1="232.7" y1="60" x2="232.7" y2="430"/>
-              <line x1="347.1" y1="60" x2="347.1" y2="430"/>
-              <line x1="428.3" y1="60" x2="428.3" y2="430"/>
-              <line x1="542.8" y1="60" x2="542.8" y2="430"/>
-              <line x1="624.0" y1="60" x2="624.0" y2="430"/>
-              <line x1="738.5" y1="60" x2="738.5" y2="430"/>
-            </g>
-            <g stroke="#D4C8A3" stroke-width="0.5" stroke-dasharray="3,4">
-              <line x1="100" y1="112.9" x2="750" y2="112.9"/>
-              <line x1="100" y1="218.6" x2="750" y2="218.6"/>
-              <line x1="100" y1="324.3" x2="750" y2="324.3"/>
-            </g>
-
-            <rect x="100" y="60" width="650" height="370" fill="none" stroke="#211810" stroke-width="1.5"/>
-
-            <g font-family="'JetBrains Mono', monospace" font-size="13" fill="#211810">
-              <line x1="232.7" y1="430" x2="232.7" y2="437" stroke="#211810" stroke-width="1.2"/>
-              <text x="232.7" y="452" text-anchor="middle">16</text>
-              <line x1="347.1" y1="430" x2="347.1" y2="437" stroke="#211810" stroke-width="1.2"/>
-              <text x="347.1" y="452" text-anchor="middle">24</text>
-              <line x1="428.3" y1="430" x2="428.3" y2="437" stroke="#211810" stroke-width="1.2"/>
-              <text x="428.3" y="452" text-anchor="middle">32</text>
-              <line x1="542.8" y1="430" x2="542.8" y2="437" stroke="#211810" stroke-width="1.2"/>
-              <text x="542.8" y="452" text-anchor="middle">48</text>
-              <line x1="624.0" y1="430" x2="624.0" y2="437" stroke="#211810" stroke-width="1.2"/>
-              <text x="624.0" y="452" text-anchor="middle">64</text>
-              <line x1="738.5" y1="430" x2="738.5" y2="437" stroke="#211810" stroke-width="1.2"/>
-              <text x="738.5" y="452" text-anchor="middle">96</text>
-            </g>
-
-            <g font-family="'JetBrains Mono', monospace" font-size="13" fill="#211810">
-              <line x1="100" y1="112.9" x2="93" y2="112.9" stroke="#211810" stroke-width="1.2"/>
-              <text x="88" y="117.4" text-anchor="end">10&#x207B;&#xB9;</text>
-              <line x1="100" y1="218.6" x2="93" y2="218.6" stroke="#211810" stroke-width="1.2"/>
-              <text x="88" y="223.1" text-anchor="end">10&#x207B;&#xB2;</text>
-              <line x1="100" y1="324.3" x2="93" y2="324.3" stroke="#211810" stroke-width="1.2"/>
-              <text x="88" y="328.8" text-anchor="end">10&#x207B;&#xB3;</text>
-              <line x1="100" y1="430.0" x2="93" y2="430.0" stroke="#211810" stroke-width="1.2"/>
-              <text x="88" y="434.5" text-anchor="end">10&#x207B;&#x2074;</text>
-            </g>
-
-            <line x1="165.0" y1="88.2" x2="717.5" y2="133.1"
-                  stroke="#211810" stroke-width="2" filter="url(#rough)" opacity="0.85"/>
-            <line x1="165.0" y1="255.6" x2="717.5" y2="390.4"
-                  stroke="#8A1818" stroke-width="2" filter="url(#rough)" opacity="0.85"/>
-
-            <g stroke="#211810" stroke-width="1.2">
-              <line x1="232.7" y1="91.8" x2="232.7" y2="94.0"/>
-              <line x1="347.1" y1="101.5" x2="347.1" y2="103.7"/>
-              <line x1="428.3" y1="108.7" x2="428.3" y2="110.9"/>
-              <line x1="542.8" y1="117.0" x2="542.8" y2="119.2"/>
-              <line x1="624.0" y1="125.2" x2="624.0" y2="127.4"/>
-              <line x1="738.5" y1="134.0" x2="738.5" y2="136.2"/>
-            </g>
-
-            <g stroke="#8A1818" stroke-width="1.2">
-              <line x1="232.7" y1="272.6" x2="232.7" y2="275.8"/>
-              <line x1="347.1" y1="298.8" x2="347.1" y2="302.0"/>
-              <line x1="428.3" y1="317.6" x2="428.3" y2="320.8"/>
-              <line x1="542.8" y1="343.2" x2="542.8" y2="346.4"/>
-              <line x1="624.0" y1="362.0" x2="624.0" y2="365.2"/>
-              <line x1="738.5" y1="393.3" x2="738.5" y2="396.5"/>
-            </g>
-
-            <g fill="#211810">
-              <circle cx="232.7" cy="92.9" r="5"/>
-              <circle cx="347.1" cy="102.6" r="5"/>
-              <circle cx="428.3" cy="109.8" r="5"/>
-              <circle cx="542.8" cy="118.1" r="5"/>
-              <circle cx="624.0" cy="126.3" r="5"/>
-              <circle cx="738.5" cy="135.1" r="5"/>
-            </g>
-
-            <g fill="#8A1818">
-              <circle cx="232.7" cy="274.2" r="5"/>
-              <circle cx="347.1" cy="300.4" r="5"/>
-              <circle cx="428.3" cy="319.2" r="5"/>
-              <circle cx="542.8" cy="344.8" r="5"/>
-              <circle cx="624.0" cy="363.6" r="5"/>
-              <circle cx="738.5" cy="394.9" r="5"/>
-            </g>
-
-            <text x="456" y="99" font-family="'Old Standard TT', serif" font-style="italic"
-                  font-size="14" fill="#211810" transform="rotate(-4, 456, 99)">slope = &#x2212;&#xBD;</text>
-            <text x="456" y="311" font-family="'Old Standard TT', serif" font-style="italic"
-                  font-size="14" fill="#8A1818" transform="rotate(-13, 456, 311)">slope = &#x2212;&#xB3;&#x2044;&#x2082;</text>
-
-            <g stroke="#6E5E48" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.6">
-              <line x1="750" y1="125.1" x2="760" y2="125.1"/>
-              <line x1="760" y1="125.1" x2="760" y2="367.0"/>
-              <line x1="750" y1="367.0" x2="760" y2="367.0"/>
-            </g>
-            <text x="768" y="252" font-family="'IM Fell DW Pica SC', serif"
-                  font-size="10.5" fill="#6E5E48" writing-mode="vertical-rl" letter-spacing="2">Gap = 1</text>
-
-            <rect x="556" y="68" width="182" height="54" fill="rgba(239,229,204,0.85)" stroke="#B5A37C" stroke-width="0.8"/>
-            <g font-family="'Old Standard TT', serif" font-size="13">
-              <circle cx="572" cy="88" r="5" fill="#211810"/>
-              <text x="584" y="92" fill="#211810">Product class  d&#x1D435;&#x207B;&#xB9;&#x2044;&#xB2;</text>
-              <circle cx="572" cy="109" r="5" fill="#8A1818"/>
-              <text x="584" y="113" fill="#8A1818">Haar class  d&#x1D435;&#x207B;&#xB3;&#x2044;&#xB2;</text>
-            </g>
-
-            <text x="425" y="490" text-anchor="middle"
-                  font-family="'IM Fell DW Pica', serif" font-size="15" fill="#211810">
-              d<tspan dy="4" font-size="11">B</tspan><tspan dy="-4">  (observer algebra dimension)</tspan>
-            </text>
-            <text x="-250" y="28" transform="rotate(-90)"
-                  text-anchor="middle"
-                  font-family="'IM Fell DW Pica', serif" font-size="15" fill="#211810">
-              &#x1D53C;|S<tspan dy="4" font-size="11">A</tspan><tspan dy="-4"> &#x2212; S</tspan><tspan dy="4" font-size="11">B</tspan><tspan dy="-4">|</tspan>
-            </text>
-          </svg>
-        </div>
-
-        <p class="plot-caption-below">
-          <span class="fig-label">Fig.&thinsp;1.</span>
-          Expected entropy disagreement <span set:html="\(\mathbb{E}|S_A - S_B|\)"></span> as a function of observer algebra dimension <span set:html="\(d_B\)"></span>,
-          with <span set:html="\(d_M = 4\)"></span>. Product-class states (ink) follow a <span set:html="\(d_B^{-1/2}\)"></span> power law;
-          Haar-class states (oxblood) follow <span set:html="\(d_B^{-3/2}\)"></span>. The exponent gap is exactly one.
-          Error bars show approximate standard error of the mean. Fit lines carry an engraved-texture filter
-          to distinguish them visually from the data.
-        </p>
-      </section>
-    )}
-
-    <section aria-labelledby="voice-heading">
+    <section aria-labelledby="full-card-heading">
       <div class="section-header">
-        <div class="section-label">On the result</div>
-        <h2 class="section-title" id="voice-heading">Two Ways of Reading the Same Finding</h2>
+        <div class="section-label">The result, in full</div>
+        <h2 class="section-title" id="full-card-heading">{title}</h2>
       </div>
 
-      <div class="two-voice">
-        <div class="voice-col">
-          <div class="voice-label paper-voice">Paper Voice</div>
-          <div class="voice-text">
-            <Content />
-          </div>
-        </div>
-        <div class="voice-col">
-          <div class="voice-label donkey-voice">Donkey Voice</div>
-          <p class="voice-text donkey">
-            A plain-language companion to the result above, in the Donkey voice. The full essay
-            lives in the field notes; this column carries the short version.
-          </p>
-          <a class="voice-link" href="/field-notes/a-little-help-for-my-friends">
-            The G-chord / symphony analogy, full essay &rsaquo;
-          </a>
-        </div>
+      <div class="result-detail-body">
+        <Content />
       </div>
     </section>
-
-    <div class="rule-ornamental">
-      <div class="line"></div>
-      <div class="glyph">&#x2726;</div>
-      <div class="line"></div>
-    </div>
-
-    {isMoneyPlot && (
-      <section class="evidence-section" aria-labelledby="table-heading">
-        <div class="section-header">
-          <div class="section-label">Numerical verification</div>
-          <h2 class="section-title" id="table-heading">The Gap Holds Across All Configurations</h2>
-        </div>
-
-        <table class="evidence-table">
-          <caption>Exponent fits across parameter variations &middot; Phases 1 to 2 &middot; Source: phase2_exponents.csv, phase2_config_A/B/C.csv, phase2_dM_scan.csv</caption>
-          <thead>
-            <tr>
-              <th>Configuration</th>
-              <th>d<sub>M</sub></th>
-              <th>d<sub>B</sub> range</th>
-              <th>Product exponent</th>
-              <th>Haar exponent</th>
-              <th class="gap-col">Gap</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Config A</td>
-              <td>4</td>
-              <td>16 to 96</td>
-              <td>&minus;0.501 &plusmn; 0.008</td>
-              <td>&minus;1.498 &plusmn; 0.012</td>
-              <td class="gap-col">0.997</td>
-            </tr>
-            <tr>
-              <td>Config B</td>
-              <td>4</td>
-              <td>16 to 96</td>
-              <td>&minus;0.499 &plusmn; 0.009</td>
-              <td>&minus;1.503 &plusmn; 0.011</td>
-              <td class="gap-col">1.004</td>
-            </tr>
-            <tr>
-              <td>Config C</td>
-              <td>4</td>
-              <td>16 to 96</td>
-              <td>&minus;0.502 &plusmn; 0.007</td>
-              <td>&minus;1.501 &plusmn; 0.014</td>
-              <td class="gap-col">0.999</td>
-            </tr>
-            <tr>
-              <td>d<sub>M</sub> scan</td>
-              <td>2 to 8</td>
-              <td>32 to 64</td>
-              <td>&minus;0.500 &plusmn; 0.006</td>
-              <td>&minus;1.500 &plusmn; 0.010</td>
-              <td class="gap-col">1.000</td>
-            </tr>
-          </tbody>
-        </table>
-        <p class="evidence-table note">
-          The gap is 1.000 to within numerical precision across all four parameter configurations.
-          This consistency across varying <span set:html="\(d_M\)"></span> and <span set:html="\(d_B\)"></span> ranges is the robustness claim.
-          See also: HUZ verification in <a href="/lab/code-data">phase2_huz_verification.py</a>.
-        </p>
-      </section>
-    )}
-
-    {isMoneyPlot && (
-      <section aria-labelledby="open-heading">
-        <div class="open-problem">
-          <div class="op-label">Open Problem &middot; The Paper, &sect;4.3</div>
-          <p class="op-claim" id="open-heading">
-            Why an integer? The gap is exact but we do not have a proof that it must be.
-          </p>
-          <p class="op-body">
-            The numerical result is unambiguous: the gap between the two scaling exponents is one, to within
-            measurement error, across all tested configurations. But we do not yet have a first-principles argument
-            for why this particular integer should appear. The algebraic distinction between Type II and Type III
-            is structural, entropy is well-defined for one and not the other, but a derivation that would
-            predict the gap as one rather than some other value remains an open question.
-            It is the paper's most interesting loose thread.
-          </p>
-        </div>
-      </section>
-    )}
 
     <section class="xref" aria-label="Cross-references">
       <div class="xref-label">See also</div>
       <div class="xref-grid">
         <div class="xref-item">
-          <div class="xref-item-label">Adjacent Results</div>
-          {prev && <a href={`/paper/${prev.data.resultNumber}`}>&larr; Result {ROMAN[prev.data.resultNumber]} &middot; {prev.data.title}</a>}
-          {next && <a href={`/paper/${next.data.resultNumber}`} style="margin-top:8px;display:block;">Result {ROMAN[next.data.resultNumber]} &middot; {next.data.title} &rarr;</a>}
+          <div class="xref-item-label">Manuscript</div>
+          <a href="/paper/full">Paper III, in full &middot; the manuscript browser</a>
+          <a href="/paper/appendix-c" style="margin-top:8px;display:block;">Appendix C &middot; the entropy-replacement proof</a>
         </div>
         <div class="xref-item">
-          <div class="xref-item-label">Curriculum</div>
-          <a href="/curriculum/qft-xxv-black-holes">QFT XXV &middot; Black Holes</a>
-          <a href="/curriculum/qft-xxvi-quantum-gravity" style="margin-top:8px;display:block;">QFT XXVI &middot; Quantum Gravity</a>
+          <div class="xref-item-label">The Evolution</div>
+          <a href="/evolution">The walk, in three steps</a>
+          <a href="/evolution/paper-one" style="margin-top:8px;display:block;">Paper I &middot; preserved</a>
         </div>
         <div class="xref-item">
-          <div class="xref-item-label">Field Notes &amp; Method</div>
-          <a href="/lab/phase-memos">Phase Memos (1 to 5), the research record</a>
-          <a href="/field-notes/a-little-help-for-my-friends" style="margin-top:8px;display:block;">A Little Help for My Friends, Donkey Voice explainer</a>
+          <div class="xref-item-label">Field Notes &amp; Reviewer</div>
+          <a href="/field-notes/alice-and-bob">Alice and Bob &middot; the plain-English companion</a>
+          <a href="/paper/reviewer-note" style="margin-top:8px;display:block;">The Reviewer's Note &middot; Scholar (ChatGPT)</a>
         </div>
       </div>
     </section>
@@ -396,3 +136,21 @@ const tags = tagsByResult[resultNumber] ?? [];
     </nav>
   </div>
 </Base>
+
+<style>
+  .result-detail-body {
+    max-width: 760px;
+    margin: 24px auto 48px;
+    padding: 0 var(--s4);
+    font-family: 'Old Standard TT', serif;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .result-detail-body p { margin: 0 0 1em; text-align: justify; hyphens: auto; }
+  .result-detail-body strong { color: var(--ink); }
+  .result-detail-body em { color: var(--ink); }
+  .result-detail-body ul { padding-left: 1.2em; margin: 1em 0; }
+  .result-detail-body li { margin-bottom: 0.5em; }
+  .result-detail-body .katex-display { margin: 1.4em 0; }
+</style>

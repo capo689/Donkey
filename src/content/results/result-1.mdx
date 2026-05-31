@@ -1,13 +1,35 @@
 ---
-title: "The structural identity"
+title: "The Entropy-Replacement Theorem"
 resultNumber: 1
-scaling: "\\mathbb{E}|S_A - S_B| = \\mathcal{F}(d_A, d_B, d_\\text{eff}, \\rho_\\text{class})"
-status: "clean"
-summary: "For any non-isometric holographic code, the expected entropy disagreement between two observers decomposes as a product of a state-class prefactor and a universal scaling function of the dimensions."
+scaling: "[S(\\rho_{R_A}) - S(\\rho_{R_B})] - [H(P_A) - H(P_B)] = O_{L^2}(d^{-2} d_M^{-1})"
+status: "headline"
+summary: "The hard, fully-quantum disagreement between two observers reduces, at leading order with a controlled mean-square error, to the classical Shannon disagreement of the bulk-marginal diagonals. The result that makes everything downstream rigorous rather than model-dependent. It is what Paper II was missing."
 ---
 
-For any non-isometric holographic code with bulk dimension $d_\text{eff}$, encoding two boundary observers $A$ and $B$, the expected absolute difference in entropy reconstructions satisfies a structural identity:
+The headline of Paper III. For Haar-random bulk states, the difference between the two
+observers' von Neumann entropies and the Shannon entropy difference of their bulk-marginal
+diagonals is provably small in mean square — one power of $d$ below the signal variance.
 
-$$\mathbb{E}|S_A - S_B| = \mathcal{F}(d_A, d_B, d_\text{eff}, \rho_\text{class})$$
+$$\big[S(\rho_{R_A}) - S(\rho_{R_B})\big] \;-\; \big[H(P_A) - H(P_B)\big] \;=\; O_{L^2}\!\big(d^{-2}\,d_M^{-1}\big).$$
 
-The function $\mathcal{F}$ decomposes as a product of a state-class-dependent prefactor and a universal scaling function of the dimensions. Established via AEHPV encoding and Haar-measure integration.
+**Why this is the headline.** Paper II established that the *averaged* observer state
+collapses to the diagonal of the bulk marginal. It did not establish that the
+*entropy* — a non-linear functional — is therefore governed by the diagonal. The
+entropy-replacement theorem is the missing step. It is what Paper II was missing.
+
+**Shape of the proof.** Expand the true entropy around the bulk-marginal diagonal. The
+error splits into two pieces: an **off-diagonal** part $F_{\rm off}$ (coming from
+coherences thrown away by the diagonal model) and a **diagonal-to-bulk** part
+$F_{\rm diag}$ (the difference between the actual reduced diagonal and the
+bulk-marginal diagonal we replace it with). Both must be $O(d^{-4}\,d_M^{-2})$ — one
+power of $d$ below the signal variance $\Theta(d^{-3}\,d_M^{-2})$.
+
+- $F_{\rm off}$ is closed by a resolvent representation, a linear bound, and a
+  fourth-moment estimate (Appendix C.1–C.5).
+- $F_{\rm diag}$ is closed by a **centered-operator identity** that routes it through
+  the same base moment as $F_{\rm off}$ (Appendix C.6). No numerical constant survives
+  inside the proof.
+
+The full Haar-class proof is unconditional. The product-class version is conditional
+on a parallel replacement principle in a regime where probabilities are concentrated;
+that conditional is named in plain sight on Result III.

@@ -1,0 +1,19 @@
+---
+// Placeholder for /paper/paper3.pdf — the PDF file has not yet been dropped into
+// public/paper/paper3.pdf. Until then, redirect to the in-site manuscript browser.
+// When the editor drops an actual PDF into /public/paper/paper3.pdf, that static
+// file will take precedence over this route.
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Paper III — PDF</title>
+    <meta http-equiv="refresh" content="0; url=/paper/full" />
+    <link rel="canonical" href="/paper/full" />
+  </head>
+  <body>
+    <p>The Paper III PDF is in preparation. The full manuscript is browsable in-site at <a href="/paper/full">/paper/full</a>; the complete package (manuscript, appendices, figures, reproducibility bundle) is at <a href="/code-and-data">/code-and-data</a>.</p>
+    <script>window.location.replace('/paper/full');</script>
+  </body>
+</html>

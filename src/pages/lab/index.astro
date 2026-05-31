@@ -1,24 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
 ---
-
-<Base
-  title="The Lab"
-  description="What is happening right now. Paper 1 on arXiv. Paper 2 in progress."
->
-  <main class="shell">
-    <header class="article-byline">
-      <p class="rh-mark">The Lab</p>
-      <h1 class="article-title">The Lab</h1>
-      <p class="article-preamble">What is happening right now. This is the part of the site that updates while you read it.</p>
-      <p>Paper 1 is on arXiv (or shortly will be). The research program continues. Paper 2 is in progress: applying the same complexity-sensitive framework to evaporating black holes, looking for an observer-disagreement crossover at the Page time. If it lands, it is a tier-one result. If it does not, it is a publishable null. Either way the work is open here.</p>
-    </header>
-
-    <nav class="related">
-      <a href="/lab/now" class="related-entry"><span class="related-title">Now</span></a>
-      <a href="/lab/roadmap" class="related-entry"><span class="related-title">Roadmap</span></a>
-      <a href="/lab/phase-memos" class="related-entry"><span class="related-title">Phase memos</span></a>
-      <a href="/lab/code-and-data" class="related-entry"><span class="related-title">Code and data</span></a>
-    </nav>
+<Base title="The Laboratory" description="The Laboratory has been retired; its useful contents have moved.">
+  <meta http-equiv="refresh" content="0; url=/evolution" slot="head" />
+  <main class="shell" style="padding:80px 20px;text-align:center;">
+    <p style="font-family:'Old Standard TT', serif;font-size:18px;line-height:1.6;max-width:560px;margin:0 auto;">
+      The Laboratory has been retired. Its contents have moved:
+    </p>
+    <ul style="list-style:none;padding:0;margin:24px auto;max-width:520px;font-family:'Old Standard TT',serif;line-height:1.7;text-align:left;">
+      <li>&middot; The Paper II roadmap is superseded by <a href="/evolution">The Evolution</a>.</li>
+      <li>&middot; Code &amp; data have moved to <a href="/code-and-data">/code-and-data</a>.</li>
+      <li>&middot; Phase memos have moved to <a href="/field-notes/phase-memos">/field-notes/phase-memos</a>.</li>
+    </ul>
+    <p style="font-family:'Old Standard TT', serif;font-style:italic;color:var(--ink-soft);">Redirecting to <a href="/evolution">The Evolution</a>&hellip;</p>
   </main>
 </Base>
+<script is:inline>window.location.replace('/evolution');</script>

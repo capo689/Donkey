@@ -11,14 +11,14 @@ const protocol = findById('method-protocol');
 
 <Base
   title="The Method"
-  description="What we did, how we did it, where it worked, and where it did not."
+  description="What we did, how we did it, where it worked, and where it did not. Now with a method section for each of the three papers, including the methodological advance of Paper III: an external adversarial reviewer."
 >
   <div class="shell">
 
     <div class="running-head">
       <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
       <div class="rh-meta">
-        <span>Vol. I</span><span class="dot"></span><span>The Method</span><span class="dot"></span><span>&sect; IV</span>
+        <span>Vol. II</span><span class="dot"></span><span>The Method</span><span class="dot"></span><span>&sect; V</span>
       </div>
     </div>
 
@@ -30,10 +30,10 @@ const protocol = findById('method-protocol');
 
     <article>
       <header class="article-preamble">
-        <div class="article-section">The Method &nbsp;&middot;&nbsp; &sect; IV</div>
+        <div class="article-section">The Method &nbsp;&middot;&nbsp; &sect; V</div>
         <h1 class="article-title">On the Doing of This Sort of Work.</h1>
         <p class="article-subtitle">
-          What we did, how we did it, where it worked, and where it did not. The thesis, the protocol, and the open calibration log.
+          What we did, how we did it, where it worked, and where it did not. The thesis, the protocol, the calibration log &mdash; and now a method section for each of the three papers, because the method itself evolved. Paper I and Paper II were done one way; Paper III added something new.
         </p>
       </header>
 
@@ -65,7 +65,16 @@ const protocol = findById('method-protocol');
           <div class="method-body">
             <h3 class="method-title">The Calibration Log</h3>
             <p class="method-sub">Predictions on the record, outcomes when they land.</p>
-            <p class="method-deck">A live ledger of forecast versus result. Eight Paper-I predictions, all open Paper-II claims.</p>
+            <p class="method-deck">A live ledger of forecast versus result. Eight Paper-I predictions; the Paper II / III outcomes appended.</p>
+          </div>
+          <span class="method-arrow">&rsaquo;</span>
+        </a>
+        <a href="/method/by-paper" class="method-item-card method-featured">
+          <span class="method-num">IV.</span>
+          <div class="method-body">
+            <h3 class="method-title">Method by Paper</h3>
+            <p class="method-sub">How the method changed across Papers I, II, and III. <strong>NEW</strong> in Vol. II.</p>
+            <p class="method-deck">Paper I: one human, one model, first principles. Paper II: the same pair, reading themselves harder. Paper III: opening the loop &mdash; enter Scholar.</p>
           </div>
           <span class="method-arrow">&rsaquo;</span>
         </a>
@@ -73,3 +82,8 @@ const protocol = findById('method-protocol');
     </article>
   </div>
 </Base>
+
+<style>
+  .method-featured { border-color: var(--accent) !important; background: rgba(138, 24, 24, 0.04); }
+  .method-featured .method-title { color: var(--accent); }
+</style>

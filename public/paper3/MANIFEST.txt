@@ -1,0 +1,38 @@
+PAPER V4.0 — final submission package (flat)
+"Entropy Replacement and Complexity-Sensitive Observer Complementarity
+ in Non-Isometric Holographic Codes"
+================================================================================
+FLAT LAYOUT (figure links in the .md resolve directly; no nested archive):
+  paper_full_v3_FINAL.md      §§1-9, Figures 1-5 inline
+  paper_appendix_A.md         Generalized EGH formulas
+  paper_appendix_B.md         Reproducibility (manifest matches reproducibility/)
+  paper_appendix_C.md         Entropy-replacement proof (Haar):
+                              C.1-C.5 off-diagonal F_off; C.6 diagonal-to-bulk
+                              F_diag (centered-operator reduction to the C.3 base
+                              moment); C.7 assembly -> Theorem C.1
+  figure1.png .. figure5.png  rendered from reproducibility/ CSVs (seed 707070)
+  reproducibility/            see contents below
+  REVIEWER_NOTE_v3final.md    summary of the review history and final state
+  MANIFEST.txt                this file
+
+THEOREM HIERARCHY
+  Theorem 1 = entropy-replacement principle (target: bulk-marginal diagonal P_X)
+  Theorem 2 = Haar disagreement law, UNCONDITIONAL
+  Theorem 3 = product disagreement law, CONDITIONAL (by design)
+  Lemma 1   = structural identity  E_V[rho_RA] = diag(rho_A^bulk) + O(1/d^2)
+  Lemma 3   = grouped-Dirichlet moments (T_A, T_B)
+
+reproducibility/ CONTENTS
+  backend (1):        bh_lab_backend.py
+  figure generators (3): make_fig2.py, make_figs_1345.py, make_figs_41.py
+  proof/verification scripts (5):
+        scratch_fourth_moment.py     (Lemma C.5, fourth-moment projector estimate)
+        scratch_centered_C6.py       (Lemma C.6 centered-operator representation)
+        scratch_Fdiag.py             (Lemma C.6 direct F_diag check)
+        scratch_grouped_dirichlet.py (Lemma 3 grouped-Dirichlet moments)
+        scratch_Mdom.py              (DIAGNOSTIC ONLY -- supports no proof step)
+  data CSVs (15):     table1_full_scan.csv (single source for Table 1, Fig 4c, Fig 5),
+                      fig1_*, fig2_*, fig3_*, fig4_*, fig5_* , entropy_replacement.csv,
+                      phase2_dM_scan.csv, phase2_exponents.csv
+
+SINGLE SOURCE OF TRUTH: table1_full_scan.csv feeds Table 1, Figure 4(c), Figure 5.

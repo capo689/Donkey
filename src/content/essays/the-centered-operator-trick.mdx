@@ -1,0 +1,51 @@
+---
+title: "The Centered-Operator Trick"
+subtitle: "The route that worked. Closing the hardest bound with no numerical constant — by routing the diagonal-to-bulk error through the same base moment that already controlled the off-diagonal error."
+date: 2026-05-28
+backdated: false
+section: "field-notes"
+subsection: "work-post"
+voice: "donkey"
+status: "ready"
+series: "paper-2-3"
+---
+
+The fix for the diagonal-to-bulk bound is short, which is how you know it is right. The
+failed route — splitting the matrix, trusting the script — was long and full of caveats.
+The working route is one identity and a reuse.
+
+Here is the move. Instead of attacking the covariance matrix $M$ directly, you rewrite the
+diagonal-to-bulk error using **centered** block operators. For each observer $X$ and each
+pointer value $a$, define
+$$\widetilde Q_X^{(a)} = Q_X^{(a)} - p_X^a\, Q,$$
+the block operator with its trace piece subtracted off, and collect them into
+$G_X = \sum_a \delta_a^X\,\widetilde Q_X^{(a)}$. The centering is the whole trick: it kills
+the non-zero-trace part that was spoiling everything. With it, the leading
+diagonal-to-bulk fluctuation becomes a single trace against the projector fluctuation,
+$$L_A - L_B = -\frac{d}{\rho}\,\operatorname{Tr}\!\big[(P - \rho I)(G_A - G_B)\big] + \text{remainder},$$
+and the rank-projector variance formula bounds its mean square by
+$\mathbb{E}_V[(L_A-L_B)^2 \mid \psi] \le C\,(d^2/D)\,\operatorname{Tr}[(G_A - G_B)^2]$.
+
+Now the reuse. That object, $\mathbb{E}_\psi \operatorname{Tr}[(G_A - G_B)^2]$, is not new.
+It is the **same base moment** we had already proved, in closed form, to control the
+*off-diagonal* error $F_{\mathrm{off}}$ — bounded by $C_0/(d^4 d_M)$. So the
+diagonal-to-bulk piece and the off-diagonal piece are now bounded by the *same quantity*
+through the *same* projector estimate. Put $D = d^2 d_M$ in and you get
+$\mathbb{E}[(L_A - L_B)^2] = O(d^{-4} d_M^{-2})$ — exactly the order required — with no
+new constant, and nothing left to a script.
+
+That is the difference between the two routes, stated cleanly. The failed route needed a
+numerical constant because it treated the diagonal-to-bulk error as a *separate* problem
+with its own off-diagonal block to estimate. The working route shows it was never a
+separate problem: centred correctly, it is the off-diagonal error in different clothing,
+and the bound we already had covers both. One identity collapses two problems into one.
+
+We verified the representation before we trusted it — the correlation between the
+centered-operator form and the direct fluctuation is better than 0.999 in simulation — but
+the verification only *checks* the proof; it is not *part* of it. That is the line Scholar
+drew, and drawing it is what made the theorem unconditional.
+
+When a bound resists every direct attack, the question to ask is not "how do I estimate
+this harder," but "is this secretly the same as something I have already bounded?"
+Centering the operators made the secret visible. That is the trick, and it closed
+Appendix C.
