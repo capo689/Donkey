@@ -1,0 +1,262 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const stations = await getCollection('curriculum');
+const essays = await getCollection('essays');
+
+const featuredEssay = essays.find((e) => e.id === 'a-little-help-for-my-friends') ?? essays[0];
+---
+
+<Base
+  title="Vol. I, No. I"
+  description="A Naturalist's Record of an Investigation from First Principles to the Frontier of Quantum Gravity. Vol. I, No. I."
+>
+  <a href="#main" class="skip">Skip to contents</a>
+
+  <div class="page">
+
+    <header class="masthead">
+      <div class="masthead-corners">
+        <span>No. I</span>
+        <span>Bend &middot; Oregon</span>
+      </div>
+      <h1 class="masthead-title">
+        <span class="masthead-title-main">The Donkey</span>
+        <span class="masthead-title-conn">on the</span>
+        <span class="masthead-title-main">Edge</span>
+      </h1>
+      <p class="masthead-strap">
+        A Naturalist's Record of an Investigation from First Principles<br />
+        to the Frontier of Quantum Gravity.
+      </p>
+      <div class="masthead-line">
+        <span class="masthead-line-rule"></span>
+        <span class="masthead-meta">
+          <span>Vol. I</span>
+          <span class="dot"></span>
+          <span>No. I</span>
+          <span class="dot"></span>
+          <span>May MMXXVI</span>
+        </span>
+        <span class="masthead-line-rule"></span>
+      </div>
+      <nav class="masthead-nav" aria-label="Primary">
+        <a href="/paper">The Paper</a>
+        <span class="ms-sep" aria-hidden="true">&middot;</span>
+        <a href="/curriculum">The Curriculum</a>
+        <span class="ms-sep" aria-hidden="true">&middot;</span>
+        <a href="/field-notes">Field Notes</a>
+        <span class="ms-sep" aria-hidden="true">&middot;</span>
+        <a href="/method">The Method</a>
+        <span class="ms-sep" aria-hidden="true">&middot;</span>
+        <a href="/lab">The Lab</a>
+        <span class="ms-sep" aria-hidden="true">&middot;</span>
+        <a href="/about">About</a>
+      </nav>
+    </header>
+
+    <main id="main">
+
+      <!-- ━━ LEAD ━━ -->
+      <section class="lead" aria-label="Lead Story">
+        <p class="lead-kicker">Lead Story &middot; Vol. I, No. I &middot; The Frontier</p>
+        <h2 class="lead-headline">
+          A Non-Physicist and an A.I. Walked to the Frontier of <em>Quantum Gravity.</em>
+        </h2>
+        <p class="lead-deck">
+          Eighteen days. Thirty-eight reference documents. One paper, headed for the arXiv. The full record, begun in Bend, Oregon and ended at the edge of the field, is presented herein.
+        </p>
+        <div class="lead-body">
+          <figure class="lead-plate">
+            <div class="plate">
+              <div class="plate-inner">
+                <img src="/images/donkeyedge.png" alt="A donkey upon the edge of a cliff, looking out over the investigation." width="800" height="600" />
+              </div>
+            </div>
+            <figcaption class="plate-caption">
+              <span class="fig">Fig. I.</span> Donkey upon the Edge of the Investigation. Drawn from life, April MMXXVI.
+            </figcaption>
+          </figure>
+          <p><span class="lead-dropcap">O</span>n the twenty-third of April in the year MMXXVI, a man in Bend, Oregon asked an artificial intelligence where to start learning quantum mechanics. The conversation proceeded, in a single unbroken thread, from <em>F&nbsp;=&nbsp;ma</em> to the open problems of quantum gravity. By the eleventh of May, a paper had been written: a proof of two theorems, a verified empirical scaling law, and one integer-valued exponent gap that nobody has yet explained.</p>
+          <p>This site is the record. It is presented as a Victorian scientific journal because the work it documents, a generalist setting out from first principles in pursuit of a question at the edge of human knowledge, belongs to that tradition. The curriculum is presented as a railway chart. The paper is presented as a folio. The field notes are presented as a notebook, open. Everything is here; the wrong turns are kept on the page along with the right ones, because the texture of doing the work is itself part of the record.</p>
+          <p>What sits at the end of the walk is small and specific. Two observers of the same quantum object, looking through a noisy and irreversible code, disagree about what they see by an amount that depends on the <em>structure</em> of the object. The dependence has a clean closed form for two extremal cases and an integer-valued gap between them. The integer is exactly one. Nobody yet knows why.</p>
+        </div>
+        <div class="lead-cta">
+          <a class="btn-primary" href="/paper">Read the Paper</a>
+          <a class="btn-secondary" href="/field-notes/a-little-help-for-my-friends">Start with the Symphony</a>
+          <a class="btn-secondary" href="/curriculum">Study the Map</a>
+        </div>
+      </section>
+
+      <div class="band-rule" aria-hidden="true">
+        <span class="band-rule-line"></span>
+        <span class="band-rule-mark">&#10086;</span>
+        <span class="band-rule-line"></span>
+      </div>
+
+      <!-- ━━ BELOW THE FOLD : I. THE PAPER (banner) ━━ -->
+      <section class="below-fold-head" aria-hidden="true">
+        <span class="bf-rule"></span>
+        <span class="bf-label">Below the Fold &middot; The Three Articles</span>
+        <span class="bf-rule"></span>
+      </section>
+
+      <article class="banner banner-paper" aria-label="The Paper">
+        <header class="banner-head">
+          <span class="banner-num">I.</span>
+          <p class="banner-eyebrow">The Paper &middot; Article &sect; I</p>
+        </header>
+        <div class="banner-body">
+          <div class="banner-text">
+            <h3 class="banner-headline">Five Results. Three Theorems. One Integer Gap.</h3>
+            <p class="banner-deck"><em>Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes.</em></p>
+            <p class="banner-lede">Two observers look at the same quantum object through the same noisy lens, and disagree. The paper makes the disagreement precise; it has structure, the structure is computable, and the structure depends in a specific way on the complexity of what is being observed. A simple object yields a slow drop in disagreement. A complicated object, a fast one. The gap between the two scalings is <em>exactly one</em>. Nobody yet knows why.</p>
+            <div class="banner-cta">
+              <a class="btn-primary" href="/paper">Read the Paper</a>
+              <a class="btn-secondary" href="/paper/paper1.pdf" target="_blank" rel="noopener">PDF (668 kB)</a>
+            </div>
+          </div>
+          <aside class="banner-side">
+            <ul class="banner-stats">
+              <li><span class="stat-n">5</span> <span class="stat-l">Results</span></li>
+              <li><span class="stat-n">3</span> <span class="stat-l">Theorems</span></li>
+              <li><span class="stat-n">38</span> <span class="stat-l">References</span></li>
+              <li><span class="stat-n">1</span> <span class="stat-l">Integer Gap</span></li>
+            </ul>
+            <p class="banner-caption">
+              <span class="banner-caption-eyebrow">Submitted</span>
+              May XI &middot; MMXXVI, headed for arXiv.
+            </p>
+          </aside>
+        </div>
+      </article>
+
+      <!-- ━━ II. THE CURRICULUM + III. FIELD NOTES (two-up) ━━ -->
+      <section class="duo" aria-label="Curriculum and Field Notes">
+
+        <article class="duo-card duo-curriculum">
+          <header class="duo-head">
+            <span class="duo-num">II.</span>
+            <p class="duo-eyebrow">The Curriculum &middot; Article &sect; II</p>
+          </header>
+          <h3 class="duo-headline">Physics 101 to Quantum Gravity, Mapped.</h3>
+          <p class="duo-deck">The full path of study, drawn as a Victorian railway chart. Thirty-eight stations on six lines, from Newtonian mechanics to the speculative frontier. All routes terminate at Paper&nbsp;I.</p>
+          <figure class="duo-map">
+            <div class="duo-map-frame" aria-hidden="true">
+              <svg viewBox="0 0 360 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Decorative chart of curriculum lines">
+                <!-- Quantum Trunk (thick spine, ink) -->
+                <path d="M 24 100 L 320 100" stroke="#211810" stroke-width="6" fill="none" stroke-linecap="round"/>
+                <!-- Foundation Way (top, oxblood, thin) -->
+                <path d="M 24 100 L 24 48 L 200 48" stroke="#8A1818" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Classical Branch (oxblood, dashed) -->
+                <path d="M 80 100 L 80 158 L 250 158" stroke="#8A1818" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Advanced QFT Loop (ink, dashed) -->
+                <path d="M 200 100 L 200 70 L 280 70 L 280 100" stroke="#211810" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6,4"/>
+                <!-- Gravitational Spur -->
+                <path d="M 100 100 L 100 178 L 260 178 L 320 100" stroke="#211810" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <!-- Stations (small dots) -->
+                <g fill="#211810">
+                  <circle cx="24"  cy="100" r="5"/>
+                  <circle cx="80"  cy="100" r="4"/>
+                  <circle cx="140" cy="100" r="4"/>
+                  <circle cx="200" cy="100" r="5"/>
+                  <circle cx="260" cy="100" r="4"/>
+                </g>
+                <g fill="#8A1818">
+                  <circle cx="24"  cy="48" r="4"/>
+                  <circle cx="100" cy="48" r="4"/>
+                  <circle cx="200" cy="48" r="4"/>
+                  <circle cx="80"  cy="158" r="4"/>
+                  <circle cx="170" cy="158" r="4"/>
+                  <circle cx="250" cy="158" r="4"/>
+                </g>
+                <!-- PAPER I terminus (big concentric mark, oxblood) -->
+                <circle cx="320" cy="100" r="14" fill="none" stroke="#5C0E0E" stroke-width="2"/>
+                <circle cx="320" cy="100" r="9"  fill="none" stroke="#5C0E0E" stroke-width="1.2"/>
+                <circle cx="320" cy="100" r="5"  fill="#5C0E0E"/>
+                <text x="320" y="36" text-anchor="middle" font-family="'IM Fell DW Pica SC', serif" font-size="11" letter-spacing="1.2" fill="#5C0E0E">PAPER I</text>
+              </svg>
+            </div>
+            <figcaption>Pl. II &middot; A Chart of the Curriculum &middot; Six lines, thirty-eight stations</figcaption>
+          </figure>
+          <a class="duo-cta" href="/curriculum">Study the Map &rsaquo;</a>
+        </article>
+
+        <article class="duo-card duo-field-notes">
+          <header class="duo-head">
+            <span class="duo-num">III.</span>
+            <p class="duo-eyebrow">Field Notes &middot; Article &sect; III</p>
+          </header>
+          <h3 class="duo-headline">The Notebook, Open. Eighteen Days, Visible.</h3>
+          <p class="duo-deck">Phase memos written during the work, essays written about it, and one symphony of an analogy that started the whole thing. The plain-English record, with the wrong turns kept on the page.</p>
+          <blockquote class="duo-quote">
+            <p>&ldquo;It is not that the universe has one answer for how much two observers can disagree. It has a <em>hierarchy</em> of answers, indexed by how structured the thing they are looking at is. And we can actually compute the hierarchy.&rdquo;</p>
+            <cite>From <a href="/field-notes/a-little-help-for-my-friends">A Little Help for My Friends</a></cite>
+          </blockquote>
+          <a class="duo-cta" href="/field-notes">Open the Notebook &rsaquo;</a>
+        </article>
+
+      </section>
+
+      <!-- ━━ FROM THE WIRE ━━ -->
+      <aside class="dispatches" aria-labelledby="dispatches-head">
+        <div class="dispatches-frame">
+          <span class="dispatches-corner dispatches-corner-left">
+            <span class="dispatches-corner-text">Latest</span>
+          </span>
+          <span class="dispatches-corner dispatches-corner-right">
+            <span class="dispatches-corner-text">Dispatches</span>
+          </span>
+          <h3 class="dispatches-head" id="dispatches-head">From the Wire</h3>
+          <div class="dispatches-rule" aria-hidden="true">
+            <span class="dispatches-rule-line"></span>
+            <span class="dispatches-rule-mark">&#10086;</span>
+            <span class="dispatches-rule-line"></span>
+          </div>
+          <div class="dispatches-grid">
+            <div class="dispatch-item">
+              <p class="dispatch-date">MMXXVI &middot; V &middot; XI</p>
+              <p class="dispatch-body"><strong>Paper&nbsp;I complete.</strong> Five results, three theorems, headed for arXiv pending number assignment.</p>
+            </div>
+            <div class="dispatch-item">
+              <p class="dispatch-date">MMXXVI &middot; V &middot; X</p>
+              <p class="dispatch-body"><strong>Phase 8 begun.</strong> The continuation, Paper&nbsp;II, has a published roadmap. <a href="/lab/roadmap">See the plan.</a></p>
+            </div>
+            <div class="dispatch-item">
+              <p class="dispatch-date">MMXXVI &middot; IV &middot; XXIII</p>
+              <p class="dispatch-body"><strong>Investigation begins.</strong> A man in Bend, Oregon asks Claude where to start with quantum mechanics. The walk to the frontier opens.</p>
+            </div>
+          </div>
+          <div class="dispatches-foot">
+            <span class="pulse" aria-hidden="true"></span>
+            <span>The research continues. Updated as it happens.</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ━━ THE METHOD + THE LAB (compact secondaries) ━━ -->
+      <section class="secondaries" aria-label="Method and Lab">
+        <a href="/method" class="secondary">
+          <div class="secondary-num">IV.</div>
+          <div class="secondary-body">
+            <p class="secondary-eyebrow">The Method</p>
+            <h3 class="secondary-headline">On the Doing of This Sort of Work.</h3>
+            <p class="secondary-deck">The thesis, the protocol, the failure modes, the calibration log. A guide for other generalists.</p>
+          </div>
+          <span class="secondary-arrow">&rsaquo;</span>
+        </a>
+        <a href="/lab" class="secondary">
+          <div class="secondary-num">V.</div>
+          <div class="secondary-body">
+            <p class="secondary-eyebrow">The Laboratory</p>
+            <h3 class="secondary-headline">What Is Happening, Now.</h3>
+            <p class="secondary-deck">Paper&nbsp;II in progress. Phase memos, code, data, predictions on the record.</p>
+          </div>
+          <span class="secondary-arrow">&rsaquo;</span>
+        </a>
+      </section>
+
+    </main>
+  </div>
+</Base>

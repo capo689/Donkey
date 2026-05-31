@@ -1,0 +1,940 @@
+---
+title: "Physics 102"
+stationNumber: 2
+line: "Foundation Way"
+date: 2026-04-24
+backdated: true
+prerequisites: [1]
+extendsTo: [3]
+classReportTitle: "The fields beneath the wires."
+---
+
+*Electromagnetism, circuits, optics, and a doorway into modern physics.*
+
+This is the companion to Physics 101. Where 101 dealt with *mechanical* forces, 102 introduces a whole new class of force; electromagnetism; and by the end, sets you up for relativity and quantum mechanics.
+
+---
+
+## Table of Contents
+
+1. [Electric Charge and Coulomb's Law](#1-electric-charge-and-coulombs-law)
+2. [Electric Fields](#2-electric-fields)
+3. [Gauss's Law](#3-gausss-law)
+4. [Electric Potential](#4-electric-potential)
+5. [Capacitance and Dielectrics](#5-capacitance-and-dielectrics)
+6. [Current, Resistance, and Power](#6-current-resistance-and-power)
+7. [DC Circuits](#7-dc-circuits)
+8. [Magnetic Fields and Forces](#8-magnetic-fields-and-forces)
+9. [Sources of Magnetic Fields](#9-sources-of-magnetic-fields)
+10. [Electromagnetic Induction](#10-electromagnetic-induction)
+11. [Inductance and AC Circuits](#11-inductance-and-ac-circuits)
+12. [Maxwell's Equations and EM Waves](#12-maxwells-equations-and-em-waves)
+13. [Geometric Optics](#13-geometric-optics)
+14. [Wave Optics](#14-wave-optics)
+15. [Introduction to Modern Physics](#15-introduction-to-modern-physics)
+16. [Appendix: Constants and Units](#appendix-constants-and-units)
+
+---
+
+## 1. Electric Charge and Coulomb's Law
+
+Electromagnetism starts with a single new idea: matter carries a property called **charge**, which comes in two varieties (positive and negative), and charges exert forces on each other.
+
+### Properties of Charge
+
+- **Two types:** positive and negative. Like charges repel, opposites attract.
+- **Quantized:** charge comes in integer multiples of the elementary charge $e = 1.602 \times 10^{-19}$ C.
+- **Conserved:** the total charge of an isolated system never changes.
+- **Unit:** the coulomb (C).
+
+### Coulomb's Law
+
+The force between two point charges:
+
+$$F = k_e \frac{|q_1 q_2|}{r^2}$$
+
+where $k_e = 8.988 \times 10^9$ N·m²/C² is Coulomb's constant. Often written using the permittivity of free space $\varepsilon_0$:
+
+$$k_e = \frac{1}{4\pi \varepsilon_0}, \qquad \varepsilon_0 = 8.854 \times 10^{-12} \text{ C}^2/(\text{N·m}^2)$$
+
+In vector form:
+
+$$\vec{F}_{12} = k_e \frac{q_1 q_2}{r^2} \hat{r}_{12}$$
+
+The force points along the line joining the charges. For multiple charges, forces **superpose** (add as vectors).
+
+### Coulomb vs. Gravity
+
+Structurally identical to Newton's law of gravitation; both inverse-square, both along the line joining the two objects. But the electric force is roughly $10^{36}$ times stronger, and it can repel as well as attract.
+
+---
+
+## 2. Electric Fields
+
+Rather than thinking of charges acting directly on each other across space, we say each charge creates a **field** that fills the surrounding space. Other charges then respond to that field.
+
+### Definition
+
+The electric field at a point is the force per unit positive test charge placed there:
+
+$$\vec{E} = \frac{\vec{F}}{q_0}$$
+
+Units: N/C, equivalently V/m.
+
+### Field of a Point Charge
+
+$$\vec{E} = k_e \frac{q}{r^2} \hat{r}$$
+
+Points outward from positive charges, inward toward negative charges.
+
+### Superposition
+
+Fields from multiple sources add as vectors:
+
+$$\vec{E}_{\text{total}} = \sum_i \vec{E}_i$$
+
+### Continuous Charge Distributions
+
+For charge spread over a line, surface, or volume:
+
+$$\vec{E} = k_e \int \frac{dq}{r^2} \hat{r}$$
+
+with charge densities:
+
+- Linear: $\lambda = dq/d\ell$ (C/m)
+- Surface: $\sigma = dq/dA$ (C/m²)
+- Volume: $\rho = dq/dV$ (C/m³)
+
+### Field Lines (Visual Tool)
+
+- Point from positive to negative charges
+- Never cross
+- Density of lines indicates field strength
+- Perpendicular to conductor surfaces in electrostatic equilibrium
+
+### Electric Dipole
+
+Two equal and opposite charges separated by $d$. Dipole moment:
+
+$$\vec{p} = q\vec{d}$$
+
+In an external field, a dipole experiences a torque:
+
+$$\vec{\tau} = \vec{p} \times \vec{E}$$
+
+with potential energy:
+
+$$U = -\vec{p} \cdot \vec{E}$$
+
+---
+
+## 3. Gauss's Law
+
+A powerful reformulation of Coulomb's law that makes problems with high symmetry almost trivial.
+
+### Electric Flux
+
+Flux is the "amount of field" passing through a surface:
+
+$$\Phi_E = \int \vec{E} \cdot d\vec{A}$$
+
+For a uniform field and flat surface: $\Phi_E = EA\cos(\theta)$.
+
+### Gauss's Law
+
+The flux through any *closed* surface equals the enclosed charge divided by $\varepsilon_0$:
+
+$$\oint \vec{E} \cdot d\vec{A} = \frac{Q_{\text{enc}}}{\varepsilon_0}$$
+
+This is one of Maxwell's equations. It's completely equivalent to Coulomb's law but far easier to apply in symmetric situations.
+
+### Classic Applications
+
+**Infinite line of charge** (linear density $\lambda$):
+
+$$E = \frac{\lambda}{2\pi \varepsilon_0 r}$$
+
+**Infinite sheet of charge** (surface density $\sigma$):
+
+$$E = \frac{\sigma}{2\varepsilon_0}$$
+
+**Uniformly charged sphere** (outside, total charge $Q$):
+
+$$E = k_e \frac{Q}{r^2}$$
+
+(Behaves as if all charge were concentrated at the center; the "shell theorem.")
+
+**Inside a conductor in electrostatic equilibrium:** $\vec{E} = 0$ everywhere. All excess charge sits on the surface.
+
+---
+
+## 4. Electric Potential
+
+Just as we defined gravitational potential energy to sidestep forces, we define electric potential energy; and its per-unit-charge version, **voltage**.
+
+### Electric Potential Energy
+
+For a charge $q$ in a field:
+
+$$U = qV$$
+
+For two point charges:
+
+$$U = k_e \frac{q_1 q_2}{r}$$
+
+(Note: unlike gravity, this can be positive or negative depending on signs.)
+
+### Electric Potential (Voltage)
+
+Potential energy per unit charge:
+
+$$V = \frac{U}{q}$$
+
+Units: volts (V). 1 V = 1 J/C.
+
+### Potential from a Point Charge
+
+$$V = k_e \frac{q}{r}$$
+
+(Taking $V = 0$ at infinity.)
+
+### Potential Difference
+
+$$\Delta V = V_B - V_A = -\int_A^B \vec{E} \cdot d\vec{\ell}$$
+
+And the reverse relation:
+
+$$\vec{E} = -\nabla V \qquad \text{(or in 1D: } E_x = -\frac{dV}{dx}\text{)}$$
+
+### Equipotential Surfaces
+
+Surfaces of constant potential. The electric field is always perpendicular to them. No work is done moving a charge along an equipotential.
+
+### Work and Voltage
+
+Work done by the electric force moving charge $q$ from A to B:
+
+$$W_{AB} = q(V_A - V_B) = -q\Delta V$$
+
+### The Electron Volt
+
+A handy energy unit in atomic and particle physics:
+
+$$1 \text{ eV} = 1.602 \times 10^{-19} \text{ J}$$
+
+(The energy gained by an electron falling through 1 volt.)
+
+---
+
+## 5. Capacitance and Dielectrics
+
+A capacitor stores energy in an electric field between two conductors.
+
+### Definition of Capacitance
+
+$$C = \frac{Q}{V}$$
+
+Units: farads (F). 1 F = 1 C/V. (Real capacitors are usually µF, nF, or pF; 1 F is huge.)
+
+### Parallel Plate Capacitor
+
+$$C = \frac{\varepsilon_0 A}{d}$$
+
+where $A$ is plate area and $d$ is separation.
+
+### Energy Stored
+
+$$U = \frac{1}{2} CV^2 = \frac{Q^2}{2C} = \frac{1}{2} QV$$
+
+### Energy Density of the Electric Field
+
+$$u_E = \tfrac{1}{2} \varepsilon_0 E^2$$
+
+(Energy per unit volume; the field itself stores the energy.)
+
+### Capacitors in Circuits
+
+**In parallel** (voltages equal, charges add):
+
+$$C_{\text{eq}} = C_1 + C_2 + \ldots$$
+
+**In series** (charges equal, voltages add):
+
+$$\frac{1}{C_{\text{eq}}} = \frac{1}{C_1} + \frac{1}{C_2} + \ldots$$
+
+### Dielectrics
+
+Insulating material between plates increases capacitance by the dielectric constant $\kappa$:
+
+$$C = \kappa C_0$$
+
+Dielectrics let capacitors store more charge at the same voltage, and they raise the breakdown voltage.
+
+---
+
+## 6. Current, Resistance, and Power
+
+Charges move; and when they do, we call it current.
+
+### Electric Current
+
+$$I = \frac{dQ}{dt}$$
+
+Units: amperes (A). 1 A = 1 C/s. By convention, current flows in the direction positive charges would move (opposite to actual electron flow in a wire).
+
+### Current Density
+
+$$\vec{J} = \frac{I}{A} \hat{n} \qquad \vec{J} = nq\vec{v}_d$$
+
+where $n$ is charge carrier density and $\vec{v}_d$ is drift velocity.
+
+### Ohm's Law
+
+For many materials, current is proportional to voltage:
+
+$$V = IR$$
+
+where $R$ is resistance, measured in ohms ($\Omega$). 1 Ω = 1 V/A.
+
+### Resistance and Resistivity
+
+$$R = \rho \frac{L}{A}$$
+
+where $\rho$ is resistivity (Ω·m), a property of the material. $L$ is length, $A$ is cross-sectional area.
+
+### Temperature Dependence
+
+$$\rho = \rho_0 [1 + \alpha(T - T_0)]$$
+
+where $\alpha$ is the temperature coefficient of resistivity.
+
+### Electrical Power
+
+$$P = IV = I^2 R = \frac{V^2}{R}$$
+
+Units: watts (W).
+
+### Energy Delivered
+
+$$E = Pt$$
+
+Utility companies bill in kilowatt-hours (kWh): 1 kWh = 3.6 × 10⁶ J.
+
+---
+
+## 7. DC Circuits
+
+Combining batteries, resistors, and capacitors into circuits governed by two simple rules.
+
+### Resistors in Series and Parallel
+
+**Series** (same current, voltages add):
+
+$$R_{\text{eq}} = R_1 + R_2 + \ldots$$
+
+**Parallel** (same voltage, currents add):
+
+$$\frac{1}{R_{\text{eq}}} = \frac{1}{R_1} + \frac{1}{R_2} + \ldots$$
+
+### Kirchhoff's Laws
+
+**Junction Rule** (conservation of charge): The sum of currents flowing into a node equals the sum flowing out.
+
+$$\sum I_{\text{in}} = \sum I_{\text{out}}$$
+
+**Loop Rule** (conservation of energy): The sum of voltage changes around any closed loop is zero.
+
+$$\sum_{\text{loop}} \Delta V = 0$$
+
+Sign conventions: across a resistor, voltage drops in the direction of current; across an EMF source, voltage rises when going from − to +.
+
+### EMF and Internal Resistance
+
+A real battery:
+
+$$V_{\text{terminal}} = \varepsilon - Ir$$
+
+where $\varepsilon$ is the EMF and $r$ is internal resistance.
+
+### RC Circuits
+
+**Charging a capacitor through a resistor:**
+
+$$Q(t) = Q_{\max}\left(1 - e^{-t/RC}\right)$$
+
+$$I(t) = \frac{\varepsilon}{R} e^{-t/RC}$$
+
+**Discharging:**
+
+$$Q(t) = Q_0 e^{-t/RC}$$
+
+The **time constant** is:
+
+$$\tau = RC$$
+
+After one time constant, the capacitor has charged/discharged about 63% of the way.
+
+---
+
+## 8. Magnetic Fields and Forces
+
+Magnetism is the second half of electromagnetism. It turns out; as we'll see; to be the *same force* as electricity, viewed from a moving frame.
+
+### Magnetic Force on a Moving Charge
+
+$$\vec{F} = q\vec{v} \times \vec{B}$$
+
+Magnitude: $F = qvB\sin(\theta)$. Units: tesla (T). 1 T = 1 N/(A·m).
+
+Key facts:
+- Force is perpendicular to both $\vec{v}$ and $\vec{B}$
+- No force on a charge at rest
+- No force when motion is parallel to the field
+- Magnetic force does **no work** (always perpendicular to motion)
+
+### Circular Motion in a Magnetic Field
+
+A charged particle moving perpendicular to $\vec{B}$ follows a circle:
+
+$$r = \frac{mv}{qB}$$
+
+$$\omega = \frac{qB}{m} \quad \text{(cyclotron frequency)}$$
+
+### Lorentz Force
+
+Combined electric and magnetic force:
+
+$$\vec{F} = q(\vec{E} + \vec{v} \times \vec{B})$$
+
+### Force on a Current-Carrying Wire
+
+$$\vec{F} = I\vec{L} \times \vec{B}$$
+
+Magnitude: $F = BIL\sin(\theta)$.
+
+### Torque on a Current Loop
+
+For a loop with magnetic moment $\vec{\mu} = I\vec{A}$:
+
+$$\vec{\tau} = \vec{\mu} \times \vec{B}$$
+
+$$U = -\vec{\mu} \cdot \vec{B}$$
+
+This is how electric motors work.
+
+---
+
+## 9. Sources of Magnetic Fields
+
+Where do magnetic fields come from? Moving charges.
+
+### Biot-Savart Law
+
+The magnetic field from a current element:
+
+$$d\vec{B} = \frac{\mu_0}{4\pi} \frac{I \, d\vec{\ell} \times \hat{r}}{r^2}$$
+
+where $\mu_0 = 4\pi \times 10^{-7}$ T·m/A is the permeability of free space.
+
+### Common Field Configurations
+
+**Long straight wire** at distance $r$:
+
+$$B = \frac{\mu_0 I}{2\pi r}$$
+
+Field circles the wire (right-hand rule).
+
+**Center of a circular loop** of radius $R$:
+
+$$B = \frac{\mu_0 I}{2R}$$
+
+**Inside a long solenoid** (n turns per unit length):
+
+$$B = \mu_0 n I$$
+
+**Inside a toroid**:
+
+$$B = \frac{\mu_0 N I}{2\pi r}$$
+
+### Ampère's Law
+
+For a closed loop ("Amperian loop"):
+
+$$\oint \vec{B} \cdot d\vec{\ell} = \mu_0 I_{\text{enc}}$$
+
+The magnetic analog of Gauss's law; great for symmetric situations.
+
+### Force Between Parallel Wires
+
+Two parallel wires carrying currents $I_1$ and $I_2$, separated by $d$:
+
+$$\frac{F}{L} = \frac{\mu_0 I_1 I_2}{2\pi d}$$
+
+Parallel currents attract; antiparallel currents repel.
+
+### Gauss's Law for Magnetism
+
+No magnetic monopoles exist (as far as we know), so:
+
+$$\oint \vec{B} \cdot d\vec{A} = 0$$
+
+Magnetic field lines always form closed loops.
+
+---
+
+## 10. Electromagnetic Induction
+
+A changing magnetic field creates an electric field. This single fact powers every generator, transformer, and electric car on Earth.
+
+### Magnetic Flux
+
+$$\Phi_B = \int \vec{B} \cdot d\vec{A}$$
+
+Units: webers (Wb). 1 Wb = 1 T·m².
+
+### Faraday's Law
+
+The induced EMF around a closed loop equals the negative rate of change of magnetic flux:
+
+$$\varepsilon = -\frac{d\Phi_B}{dt}$$
+
+For $N$ tightly wound turns:
+
+$$\varepsilon = -N\frac{d\Phi_B}{dt}$$
+
+### Lenz's Law
+
+The direction of induced current opposes the change in flux that caused it. (This is what the minus sign in Faraday's law encodes.)
+
+A physical expression of conservation of energy; you can't get induced current for free; something must do work against the induced force.
+
+### Motional EMF
+
+For a rod of length $L$ moving with velocity $v$ perpendicular to $\vec{B}$:
+
+$$\varepsilon = BLv$$
+
+### Generators
+
+A coil rotating in a magnetic field produces sinusoidal EMF:
+
+$$\varepsilon(t) = NBA\omega \sin(\omega t)$$
+
+This is the principle behind every power plant in the world (except photovoltaic).
+
+### Eddy Currents
+
+Changing flux in a bulk conductor induces swirling currents that dissipate energy. Used in induction stoves, magnetic brakes, and metal detectors.
+
+---
+
+## 11. Inductance and AC Circuits
+
+### Self-Inductance
+
+A changing current in a coil induces an EMF in *itself*:
+
+$$\varepsilon = -L\frac{dI}{dt}$$
+
+where $L$ is the inductance, measured in henries (H). 1 H = 1 V·s/A.
+
+For a solenoid:
+
+$$L = \mu_0 n^2 V$$
+
+### Energy Stored in an Inductor
+
+$$U = \tfrac{1}{2} L I^2$$
+
+### Energy Density of the Magnetic Field
+
+$$u_B = \frac{B^2}{2\mu_0}$$
+
+### RL Circuits
+
+Current rising through an inductor and resistor in series:
+
+$$I(t) = \frac{\varepsilon}{R}\left(1 - e^{-t/\tau}\right), \qquad \tau = \frac{L}{R}$$
+
+### LC Circuits
+
+An ideal LC circuit oscillates forever:
+
+$$\omega = \frac{1}{\sqrt{LC}}$$
+
+Energy sloshes back and forth between the capacitor (electric) and the inductor (magnetic), perfectly analogous to a mass-spring system.
+
+### AC Circuits: Key Quantities
+
+For $V(t) = V_0 \cos(\omega t)$:
+
+- **Peak value:** $V_0$
+- **RMS value:** $V_{\text{rms}} = V_0/\sqrt{2}$
+- **Average power** (resistor): $P_{\text{avg}} = V_{\text{rms}} I_{\text{rms}} \cos(\phi)$
+
+### Reactance and Impedance
+
+**Capacitive reactance:**
+
+$$X_C = \frac{1}{\omega C}$$
+
+**Inductive reactance:**
+
+$$X_L = \omega L$$
+
+**Impedance** of a series RLC circuit:
+
+$$Z = \sqrt{R^2 + (X_L - X_C)^2}$$
+
+### Resonance
+
+An RLC circuit has a natural resonant frequency:
+
+$$\omega_0 = \frac{1}{\sqrt{LC}}$$
+
+At resonance, impedance is minimized and current is maximized; the principle behind radio tuners.
+
+### Transformers
+
+$$\frac{V_2}{V_1} = \frac{N_2}{N_1}$$
+
+For an ideal transformer (conservation of power): $I_1 V_1 = I_2 V_2$.
+
+---
+
+## 12. Maxwell's Equations and EM Waves
+
+The triumph of 19th-century physics. Four equations unify everything about electricity and magnetism and *predict light*.
+
+### Maxwell's Equations (Integral Form)
+
+**1. Gauss's Law for Electricity:**
+
+$$\oint \vec{E} \cdot d\vec{A} = \frac{Q_{\text{enc}}}{\varepsilon_0}$$
+
+**2. Gauss's Law for Magnetism:**
+
+$$\oint \vec{B} \cdot d\vec{A} = 0$$
+
+**3. Faraday's Law:**
+
+$$\oint \vec{E} \cdot d\vec{\ell} = -\frac{d\Phi_B}{dt}$$
+
+**4. Ampère-Maxwell Law:**
+
+$$\oint \vec{B} \cdot d\vec{\ell} = \mu_0 I_{\text{enc}} + \mu_0 \varepsilon_0 \frac{d\Phi_E}{dt}$$
+
+Maxwell's crucial addition was the "displacement current" term $\mu_0 \varepsilon_0 \, d\Phi_E/dt$; without it, the whole system falls apart.
+
+### The Prediction: Light
+
+Combining the equations in empty space yields a wave equation. The predicted wave speed:
+
+$$c = \frac{1}{\sqrt{\mu_0 \varepsilon_0}} \approx 2.998 \times 10^8 \text{ m/s}$$
+
+That's the measured speed of light; the first major clue that light *is* an electromagnetic wave.
+
+### Properties of EM Waves
+
+- Transverse waves: $\vec{E} \perp \vec{B} \perp$ direction of propagation
+- Related magnitudes: $E = cB$
+- Travel at $c$ in vacuum, slower in matter
+- Do not require a medium
+
+### Energy and Intensity
+
+**Poynting vector** (energy flow per unit area):
+
+$$\vec{S} = \frac{1}{\mu_0} \vec{E} \times \vec{B}$$
+
+**Intensity** (time-averaged):
+
+$$I = \frac{c \varepsilon_0 E_0^2}{2}$$
+
+### Radiation Pressure
+
+For complete absorption: $P = I/c$. For complete reflection: $P = 2I/c$.
+
+### The EM Spectrum
+
+From longest to shortest wavelength: radio, microwave, infrared, visible, ultraviolet, X-ray, gamma ray. All are the same phenomenon; EM waves at different frequencies.
+
+---
+
+## 13. Geometric Optics
+
+When wavelengths are much smaller than objects, light behaves like rays; and a lot of useful optics follows from just two rules.
+
+### Reflection
+
+$$\theta_i = \theta_r$$
+
+(Angle of incidence equals angle of reflection, measured from the normal.)
+
+### Refraction; Snell's Law
+
+$$n_1 \sin(\theta_1) = n_2 \sin(\theta_2)$$
+
+where $n = c/v$ is the index of refraction of the medium.
+
+### Total Internal Reflection
+
+When light goes from higher $n$ to lower $n$, above a critical angle it reflects entirely:
+
+$$\sin(\theta_c) = \frac{n_2}{n_1}$$
+
+(Basis of fiber optics.)
+
+### Mirrors
+
+**Focal length** of a spherical mirror: $f = R/2$.
+
+**Mirror equation:**
+
+$$\frac{1}{d_o} + \frac{1}{d_i} = \frac{1}{f}$$
+
+**Magnification:**
+
+$$M = -\frac{d_i}{d_o} = \frac{h_i}{h_o}$$
+
+Sign conventions:
+- $f > 0$ concave (converging), $f < 0$ convex (diverging)
+- $d_i > 0$ real image (in front), $d_i < 0$ virtual image (behind)
+
+### Thin Lenses
+
+Same equation as mirrors:
+
+$$\frac{1}{d_o} + \frac{1}{d_i} = \frac{1}{f}$$
+
+**Lensmaker's equation:**
+
+$$\frac{1}{f} = (n - 1)\left(\frac{1}{R_1} - \frac{1}{R_2}\right)$$
+
+**Power of a lens** (diopters):
+
+$$P = \frac{1}{f}$$
+
+Converging lenses have $f > 0$; diverging lenses have $f < 0$.
+
+### Optical Instruments
+
+- **Magnifying glass:** $M \approx 25\text{ cm}/f$
+- **Microscope:** $M = M_{\text{obj}} \times M_{\text{eyepiece}}$
+- **Telescope:** $M = f_{\text{obj}} / f_{\text{eye}}$
+
+---
+
+## 14. Wave Optics
+
+When wavelengths are comparable to object sizes, light's wave nature shows up directly; interference and diffraction.
+
+### Double-Slit Interference (Young's Experiment)
+
+**Condition for bright fringes (constructive):**
+
+$$d\sin(\theta) = m\lambda, \quad m = 0, \pm 1, \pm 2, \ldots$$
+
+**Dark fringes (destructive):**
+
+$$d\sin(\theta) = \left(m + \tfrac{1}{2}\right)\lambda$$
+
+**Fringe spacing on a screen** at distance $L$ (small angles):
+
+$$\Delta y = \frac{\lambda L}{d}$$
+
+### Thin Film Interference
+
+A phase flip of $\pi$ occurs on reflection from a higher-$n$ medium. Conditions for constructive/destructive interference depend on whether 0, 1, or 2 flips happen. The optical path difference is $2nt$, where $t$ is film thickness and $n$ is the film's index.
+
+### Single-Slit Diffraction
+
+**Condition for dark fringes:**
+
+$$a\sin(\theta) = m\lambda, \quad m = \pm 1, \pm 2, \ldots$$
+
+The central bright fringe is twice as wide as the others.
+
+### Diffraction Grating
+
+**Bright fringes:**
+
+$$d\sin(\theta) = m\lambda$$
+
+Gratings produce very sharp, widely-separated fringes; useful for spectroscopy.
+
+### Resolution; Rayleigh Criterion
+
+Minimum angular separation for two point sources to be resolved through an aperture of diameter $D$:
+
+$$\theta_{\min} = 1.22 \frac{\lambda}{D}$$
+
+(Why bigger telescopes see finer detail.)
+
+### Polarization
+
+**Malus's Law** (intensity through a polarizer, with angle $\theta$ between the light's polarization and the axis):
+
+$$I = I_0 \cos^2(\theta)$$
+
+**Brewster's Angle** (light reflected at this angle is fully polarized):
+
+$$\tan(\theta_B) = \frac{n_2}{n_1}$$
+
+---
+
+## 15. Introduction to Modern Physics
+
+The end of Physics 102 typically previews the two revolutions of the 20th century; relativity and quantum mechanics. This is where classical physics starts breaking.
+
+### Special Relativity; Postulates
+
+Einstein, 1905:
+
+1. The laws of physics are the same in all inertial frames.
+2. The speed of light $c$ is the same in all inertial frames, regardless of the motion of source or observer.
+
+The consequences are profound and very, very weird.
+
+### Lorentz Factor
+
+$$\gamma = \frac{1}{\sqrt{1 - v^2/c^2}}$$
+
+### Time Dilation
+
+A moving clock ticks slowly:
+
+$$\Delta t = \gamma \Delta t_0$$
+
+where $\Delta t_0$ is the proper time (measured in the clock's rest frame).
+
+### Length Contraction
+
+A moving object is shortened along the direction of motion:
+
+$$L = \frac{L_0}{\gamma}$$
+
+### Relativistic Momentum and Energy
+
+$$\vec{p} = \gamma m \vec{v}$$
+
+$$E = \gamma m c^2$$
+
+At rest ($v = 0$, $\gamma = 1$):
+
+$$E_0 = mc^2$$
+
+The famous equation. Mass is a form of energy.
+
+**Energy-momentum relation:**
+
+$$E^2 = (pc)^2 + (mc^2)^2$$
+
+For massless particles (like photons): $E = pc$.
+
+### The Photoelectric Effect
+
+Light shining on a metal ejects electrons, but only if the frequency exceeds a threshold. Einstein (1905) explained it by proposing light comes in quanta; photons; with energy:
+
+$$E = hf$$
+
+where $h = 6.626 \times 10^{-34}$ J·s is Planck's constant.
+
+**Photoelectric equation:**
+
+$$K_{\max} = hf - \phi$$
+
+where $\phi$ is the work function of the metal.
+
+Classical wave theory could not explain this. It marked the birth of the photon.
+
+### Wave-Particle Duality
+
+Light behaves as waves (interference, diffraction) and as particles (photoelectric effect, Compton scattering). De Broglie (1924) proposed the same is true of matter; every particle has a wavelength:
+
+$$\lambda = \frac{h}{p}$$
+
+This was confirmed by electron diffraction experiments and underlies all of quantum mechanics.
+
+### The Bohr Model of the Atom
+
+Bohr proposed electrons orbit the nucleus only at discrete energy levels:
+
+$$E_n = -\frac{13.6 \text{ eV}}{n^2}, \quad n = 1, 2, 3, \ldots$$
+
+Transitions between levels emit or absorb photons:
+
+$$hf = E_i - E_f$$
+
+Not the full story (see: quantum mechanics), but a crucial stepping stone; and still useful for understanding atomic spectra.
+
+### Heisenberg's Uncertainty Principle
+
+You cannot simultaneously know position and momentum of a particle to arbitrary precision:
+
+$$\Delta x \, \Delta p \geq \frac{\hbar}{2}$$
+
+where $\hbar = h/(2\pi) \approx 1.055 \times 10^{-34}$ J·s.
+
+Similarly for energy and time:
+
+$$\Delta E \, \Delta t \geq \frac{\hbar}{2}$$
+
+This is not a limit of measurement technology; it's a limit of reality itself. And it's the door into the quantum world.
+
+---
+
+## Appendix: Constants and Units
+
+### Useful Physical Constants
+
+| Symbol | Name | Value |
+|---|---|---|
+| $e$ | Elementary charge | 1.602 × 10⁻¹⁹ C |
+| $k_e$ | Coulomb's constant | 8.988 × 10⁹ N·m²/C² |
+| $\varepsilon_0$ | Permittivity of free space | 8.854 × 10⁻¹² C²/(N·m²) |
+| $\mu_0$ | Permeability of free space | 4π × 10⁻⁷ T·m/A |
+| $c$ | Speed of light in vacuum | 2.998 × 10⁸ m/s |
+| $h$ | Planck's constant | 6.626 × 10⁻³⁴ J·s |
+| $\hbar$ | Reduced Planck's constant | 1.055 × 10⁻³⁴ J·s |
+| $m_e$ | Electron mass | 9.109 × 10⁻³¹ kg |
+| $m_p$ | Proton mass | 1.673 × 10⁻²⁷ kg |
+| 1 eV | Electron volt | 1.602 × 10⁻¹⁹ J |
+
+### Electromagnetic Units
+
+| Quantity | Unit | Symbol | In base units |
+|---|---|---|---|
+| Charge | coulomb | C | A·s |
+| Voltage | volt | V | J/C = kg·m²/(A·s³) |
+| Resistance | ohm | Ω | V/A |
+| Capacitance | farad | F | C/V |
+| Inductance | henry | H | V·s/A |
+| Magnetic field | tesla | T | kg/(A·s²) |
+| Magnetic flux | weber | Wb | T·m² = V·s |
+
+### Typical Ranges
+
+| Quantity | Everyday scale |
+|---|---|
+| Household voltage | 120 V (US), 230 V (EU) |
+| Household current | 10–30 A |
+| Phone battery | 3–4 V, ~3000 mAh |
+| Lightning bolt | ~10⁹ V, ~30 kA |
+| Earth's magnetic field | ~50 µT |
+| MRI machine | 1.5–7 T |
+| Visible light wavelength | 380–750 nm |
+
+---
+
+## Closing Note
+
+Physics 102 is where a lot of students fall in love with the subject or walk away from it. It's also where the experimental evidence stops fitting comfortably inside classical intuition. By the end, you've seen:
+
+- The unification of electricity and magnetism into a single framework
+- The prediction that light is an electromagnetic wave; from pure theory
+- The first cracks in classical physics (photoelectric effect, atomic spectra, wave-particle duality) that will eventually require throwing out the whole foundation and rebuilding it as quantum mechanics
+
+From here, the natural next steps are **modern physics** (a proper treatment of special relativity plus a survey of quantum phenomena), **quantum mechanics** (the real thing; Schrödinger equation, operators, all of it), and **electromagnetism II** (Maxwell's equations in differential form, relativistic EM, radiation).
+
+And always: work problems. Physics isn't a spectator sport.

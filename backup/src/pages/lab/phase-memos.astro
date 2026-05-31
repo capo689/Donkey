@@ -1,0 +1,44 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+const memos = await getCollection('phase-memos');
+memos.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+---
+
+<Base
+  title="Phase Memos"
+  description="Research phase memos from the Paper 1 program. Full record of each gate condition and outcome."
+>
+  <main class="shell">
+    <header class="page-header">
+      <p class="header-eyebrow">The Lab</p>
+      <h1 class="header-title">Phase Memos</h1>
+      <p class="header-meta">The full record of each research phase, written after the phase cleared.</p>
+    </header>
+
+    {memos.length === 0 ? (
+      <p class="article-body">Phase memos will appear here as they are published.</p>
+    ) : (
+      <div class="memo-list">
+        {memos.map(async (memo) => {
+          const { Content } = await render(memo);
+          return (
+            <article class="memo-entry" id={memo.id}>
+              <header class="memo-header">
+                <h2 class="memo-title">{memo.data.title}</h2>
+                <p class="memo-meta">
+                  Phases {memo.data.phases}
+                  <span class={`status-badge ${memo.data.status}`}>{memo.data.status}</span>
+                </p>
+              </header>
+              <div class="article-body">
+                <Content />
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )}
+  </main>
+</Base>

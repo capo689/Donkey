@@ -1,0 +1,1057 @@
+---
+title: "General Relativity"
+stationNumber: 9
+line: "Gravitational Spur"
+date: 2026-05-01
+backdated: true
+prerequisites: [6]
+extendsTo: [37]
+classReportTitle: "Spacetime curves and I learn to read it."
+---
+
+*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+
+# General Relativity: A Comprehensive Reference
+
+*Einstein's theory of gravity as the geometry of spacetime; and the deepest classical description of the physical universe.*
+
+Special relativity (covered in Modern Physics and the covariant tensors reference) describes physics in flat spacetime. But gravity was Einstein's unfinished business after 1905. The theory he completed in 1915; general relativity; is one of the most beautiful and least classically-based constructions in physics: gravity is not a force at all, but a manifestation of the curvature of spacetime caused by matter and energy.
+
+This document develops general relativity at the senior-undergraduate-through-early-graduate level, roughly the level of Schutz's *A First Course in General Relativity* or Carroll's *Spacetime and Geometry*. You should finish it able to read Wald or MTW (*Misner, Thorne, Wheeler*) with difficulty but not bewilderment.
+
+### A Convention Note
+
+Up to now, the references have used the **mostly-minus** metric signature $\eta = \text{diag}(+1, -1, -1, -1)$; standard in particle physics. This document switches to **mostly-plus** signature $\eta = \text{diag}(-1, +1, +1, +1)$, which is the near-universal GR convention. You'll find mostly-plus in Schutz, Carroll, Wald, and MTW. Physical results don't depend on the choice, but intermediate signs do. If you're ever confused about a sign, check the signature convention.
+
+---
+
+## Table of Contents
+
+1. [Why General Relativity?](#1-why-general-relativity)
+2. [The Equivalence Principle](#2-the-equivalence-principle)
+3. [Manifolds and Curvature: Mathematical Setup](#3-manifolds-and-curvature-mathematical-setup)
+4. [The Metric on Curved Spacetime](#4-the-metric-on-curved-spacetime)
+5. [Covariant Derivatives and Christoffel Symbols](#5-covariant-derivatives-and-christoffel-symbols)
+6. [Geodesics](#6-geodesics)
+7. [The Riemann Curvature Tensor](#7-the-riemann-curvature-tensor)
+8. [Einstein's Field Equations](#8-einsteins-field-equations)
+9. [The Schwarzschild Solution](#9-the-schwarzschild-solution)
+10. [Classical Tests of General Relativity](#10-classical-tests-of-general-relativity)
+11. [Black Holes](#11-black-holes)
+12. [Gravitational Waves](#12-gravitational-waves)
+13. [Cosmology](#13-cosmology)
+14. [Open Frontiers](#14-open-frontiers)
+15. [Appendix: Formulas and Reference](#appendix-formulas-and-reference)
+
+---
+
+## 1. Why General Relativity?
+
+### Newton's Gravity Has Problems
+
+Newtonian gravity; $F = Gm_1 m_2/r^2$; is a spectacular approximation that predicts planets, cannonballs, and tides. But by 1905, it was clearly wrong in subtle ways:
+
+**It's instantaneous.** If the Sun disappeared, Newton's theory says Earth would feel it immediately. But special relativity forbids any influence traveling faster than light. Something had to give.
+
+**It's not Lorentz-invariant.** Newton's law picks out a particular frame (absolute space) and a particular time (absolute time). Special relativity demolished both.
+
+**It can't explain Mercury's orbit.** Mercury's perihelion precesses by about 43 arcseconds per century more than Newton predicts (after accounting for other planets). A small but genuine discrepancy.
+
+**It has no clear microscopic origin.** Electromagnetism has charges; gravity has... mass? But mass is energy is momentum in relativity. Something deeper was needed.
+
+### What Einstein Did
+
+Over ten years (1905-1915), Einstein found the answer by taking seriously an observation as old as Galileo: **all objects fall at the same rate in a gravitational field.** A feather and a bowling ball in vacuum accelerate identically under gravity. This is completely unlike any other force; electric forces depend on charge-to-mass ratio, magnetic forces on velocity, etc. Gravity alone treats everything the same.
+
+Einstein's conclusion: gravity is not a force. It is the geometry of spacetime.
+
+Matter and energy curve spacetime. Objects in free fall follow the *straightest possible paths* through the curved geometry. What looks like gravitational attraction is objects moving inertially through a curved manifold.
+
+This single idea, formalized through differential geometry, produces:
+
+- Newton's gravity in the weak-field, slow-motion limit
+- Corrections accounting for Mercury's precession, light bending, and Shapiro delay
+- Black holes and gravitational waves
+- Expanding universe and Big Bang cosmology
+- The CMB, cosmic structure, and the large-scale geometry of the universe
+
+All have been confirmed. General relativity remains the most successful theory of gravity ever written.
+
+---
+
+## 2. The Equivalence Principle
+
+The conceptual core of GR. Three levels of increasing strength:
+
+### Weak Equivalence Principle
+
+**The inertial mass equals the gravitational mass.** An object's resistance to acceleration ($F = m_i a$) equals its response to gravity ($F = m_g g$). Consequence: all objects fall the same way in a gravitational field.
+
+Tested to ~$10^{-13}$ precision (Eötvös experiments, MICROSCOPE satellite).
+
+### Einstein Equivalence Principle
+
+**Locally, gravity is indistinguishable from acceleration.** A person in a sealed elevator cannot tell whether:
+
+- The elevator is at rest on Earth (gravity pulling everything down at $g$)
+- The elevator is accelerating through empty space at $g$
+
+The two situations are locally identical. An observer inside performs experiments; they give the same results either way.
+
+More carefully: in a sufficiently small region of spacetime around any event, you can find a coordinate system in which the laws of physics reduce to those of special relativity. Gravity "disappears" locally.
+
+This is where geometry enters. Curved spaces have the same property; locally, they look flat. Earth's surface looks flat if you only survey your backyard; its curvature only shows up over large distances. Similarly, spacetime is only globally curved; locally it's Minkowski.
+
+### Strong Equivalence Principle
+
+The Einstein principle extended: it applies to *all* experiments, including ones involving gravity (for example, comparing the gravitational attraction between two massive objects in an elevator versus in free space).
+
+Tested, and so far consistent with GR. Some alternative theories violate it.
+
+### Consequences (Immediate)
+
+**Light bends in gravity.** Imagine a beam of light entering an accelerating elevator horizontally. In the elevator's frame, the light appears to curve downward (because the floor rises to meet it). By equivalence, light must also curve in gravity.
+
+**Clocks run differently at different heights.** A light signal sent up from a gravitational potential climbs against the field, losing energy. By $E = hf$, the frequency drops; the clock ran "fast" at the bottom, "slow" at the top. **Gravitational time dilation.**
+
+**Gravity redshifts light.** The same effect: light climbing out of a well is redshifted. Measured by Pound-Rebka (1959) in a Harvard tower; confirming the prediction with ~1% precision.
+
+### Why This Matters
+
+If gravity is locally indistinguishable from acceleration, and if gravity universally affects all forms of energy, then gravity can't be a force in the usual sense. It must be something more fundamental; a modification of the arena itself. Einstein's answer: gravity is curvature of spacetime.
+
+---
+
+## 3. Manifolds and Curvature: Mathematical Setup
+
+GR requires differential geometry on curved manifolds. This is a real mathematical step up from the flat-space tensors we've used. Don't skip this section.
+
+### Manifolds
+
+A **manifold** is a space that locally looks like $\mathbb{R}^n$ but globally may be curved or topologically non-trivial. Examples:
+
+- $\mathbb{R}^n$ itself (trivial case)
+- The surface of a sphere $S^2$ (locally looks flat, globally curved)
+- The surface of a torus $T^2$
+- Spacetime in general relativity: a 4-dimensional (Lorentzian) manifold
+
+Formally, a manifold is covered by overlapping coordinate patches, each of which looks like $\mathbb{R}^n$. Transitioning between overlapping patches requires smooth coordinate transformations.
+
+### Coordinates Are Labels, Not Geometry
+
+A crucial conceptual point: coordinates on a manifold are just labels. They have no intrinsic meaning. The geometry; distances, angles, curvature; is encoded in the *metric tensor*, not the coordinates.
+
+Two observers with different coordinate systems describe the same geometry using different numbers. Physics must be expressed in ways that don't depend on the choice; i.e., using tensors.
+
+### Tangent and Cotangent Spaces
+
+At each point $p$ of a manifold, there is a **tangent space** $T_pM$; the set of directions you could go from $p$. For a 4D manifold, $T_pM$ is a 4D vector space. Tangent vectors at $p$ are elements of this space.
+
+The **cotangent space** $T^*_pM$ is the dual: linear functionals on $T_pM$. One-forms (covariant vectors) live here.
+
+Why distinguish? In flat Minkowski space, you can freely move vectors around and compare them. On a curved manifold, a vector at one point and a vector at another point live in *different* tangent spaces; comparing them requires extra structure.
+
+### Tensor Fields on a Manifold
+
+A **tensor field** assigns a tensor of given type $(r, s)$ to each point. In coordinates $\{x^\mu\}$:
+
+$$T^{\mu_1\cdots\mu_r}{}_{\nu_1\cdots\nu_s}(x)$$
+
+Under a change of coordinates $x^\mu \to x'^\mu(x)$, the components transform as:
+
+$$T'^{\mu_1\cdots\mu_r}{}_{\nu_1\cdots\nu_s} = \frac{\partial x'^{\mu_1}}{\partial x^{\alpha_1}} \cdots \frac{\partial x'^{\mu_r}}{\partial x^{\alpha_r}}\frac{\partial x^{\beta_1}}{\partial x'^{\nu_1}}\cdots \frac{\partial x^{\beta_s}}{\partial x'^{\nu_s}} T^{\alpha_1\cdots\alpha_r}{}_{\beta_1\cdots\beta_s}$$
+
+Upper indices transform with $\partial x'/\partial x$; lower indices with the inverse $\partial x/\partial x'$.
+
+This is the generalization of Lorentz transformation of flat-space tensors: instead of a single matrix $\Lambda^\mu{}_\nu$ (same at every point), we use position-dependent matrices $\partial x'^\mu/\partial x^\nu$ that change from point to point.
+
+### Why This Is Harder
+
+In flat space with Cartesian coordinates, partial derivatives of tensors produce tensors. In curved space (or flat space in curvilinear coordinates), this fails. $\partial_\mu V^\nu$ is *not* a tensor. Correcting this requires the **covariant derivative**, which we'll develop in section 5.
+
+The issue, intuitively: to take a derivative, you compare vectors at nearby points. But vectors at different points live in different tangent spaces. You need a rule for "parallel transporting" vectors before comparing; and different choices of rule give different derivatives. This extra structure is called a **connection**.
+
+---
+
+## 4. The Metric on Curved Spacetime
+
+### The Metric Tensor
+
+The metric $g_{\mu\nu}(x)$ is a symmetric, position-dependent rank-2 tensor that encodes all geometric information: distances, angles, and light cones. It's the object that plays the role of $\eta_{\mu\nu}$ in Minkowski space, but now varies from point to point.
+
+$$g_{\mu\nu}(x) = g_{\nu\mu}(x)$$
+
+### The Line Element
+
+Distances are computed using:
+
+$$ds^2 = g_{\mu\nu}(x) \, dx^\mu \, dx^\nu$$
+
+This is the **line element**. Every metric can be written this way; specifying the line element is how metrics are usually presented.
+
+**Examples:**
+
+**Flat 3-space in Cartesian coordinates:**
+
+$$ds^2 = dx^2 + dy^2 + dz^2$$
+
+So $g_{ij} = \delta_{ij}$.
+
+**Flat 3-space in spherical coordinates:**
+
+$$ds^2 = dr^2 + r^2 d\theta^2 + r^2 \sin^2\theta\, d\phi^2$$
+
+So $g_{rr} = 1$, $g_{\theta\theta} = r^2$, $g_{\phi\phi} = r^2\sin^2\theta$, others zero. **This metric depends on position even though the space is flat!** Coordinates affect metric components; they don't affect geometry.
+
+**Minkowski space (Cartesian):**
+
+$$ds^2 = -c^2 dt^2 + dx^2 + dy^2 + dz^2$$
+
+(mostly-plus convention)
+
+**Surface of a sphere of radius $R$:**
+
+$$ds^2 = R^2 d\theta^2 + R^2 \sin^2\theta\, d\phi^2$$
+
+### The Inverse Metric
+
+$g^{\mu\nu}$, defined by:
+
+$$g^{\mu\alpha} g_{\alpha\nu} = \delta^\mu_\nu$$
+
+As with Minkowski, the metric raises and lowers indices:
+
+$$V^\mu = g^{\mu\nu} V_\nu, \quad V_\mu = g_{\mu\nu} V^\nu$$
+
+### Determinant
+
+$g \equiv \det(g_{\mu\nu})$. Crucial for integration over curved manifolds:
+
+$$\int d^4x \to \int d^4x \sqrt{-g}$$
+
+where $-g > 0$ because of the Lorentzian signature. The $\sqrt{-g}$ is the natural volume element.
+
+### Types of Intervals
+
+Just like in flat space:
+
+- $ds^2 < 0$: **timelike** (massive particles follow these)
+- $ds^2 = 0$: **null** (light rays follow these)
+- $ds^2 > 0$: **spacelike** (no causal connection)
+
+(In mostly-minus signature, the signs reverse. Check your convention!)
+
+### Proper Time
+
+For a massive particle, define **proper time** along its worldline:
+
+$$d\tau^2 = -ds^2/c^2 = -g_{\mu\nu} dx^\mu dx^\nu / c^2$$
+
+(or $d\tau^2 = -g_{\mu\nu} dx^\mu dx^\nu$ with $c = 1$.) This is the time measured by a clock carried along the worldline; the generalization of SR's proper time to curved spacetime.
+
+### The Metric as Gravity
+
+The absolutely crucial conceptual point: **the metric $g_{\mu\nu}$ encodes the gravitational field**. Instead of a Newtonian potential $\Phi(\vec x)$ that causes forces, GR has a metric that *is* the gravitational field. The 10 independent components of $g_{\mu\nu}$ are the 10 gravitational field variables.
+
+When we write field equations for $g_{\mu\nu}$ (Einstein's equations), we're writing the dynamical equations for gravity itself.
+
+---
+
+## 5. Covariant Derivatives and Christoffel Symbols
+
+We need to differentiate tensor fields in a way that yields tensors. The partial derivative $\partial_\mu$ doesn't do this in curved space (or even in flat space with curvilinear coordinates).
+
+### The Problem with Partial Derivatives
+
+If we naively differentiate a vector field:
+
+$$\partial_\mu V^\nu$$
+
+then under a coordinate transformation, the transformation law has extra terms (from differentiating the transformation matrix). The result does not transform as a tensor.
+
+### The Covariant Derivative
+
+The fix: define a new derivative $\nabla_\mu$ that transforms properly.
+
+**On a vector field:**
+
+$$\nabla_\mu V^\nu \equiv \partial_\mu V^\nu + \Gamma^\nu_{\mu\alpha} V^\alpha$$
+
+**On a covector field:**
+
+$$\nabla_\mu W_\nu \equiv \partial_\mu W_\nu - \Gamma^\alpha_{\mu\nu} W_\alpha$$
+
+**On a scalar:**
+
+$$\nabla_\mu \phi = \partial_\mu \phi$$
+
+The objects $\Gamma^\nu_{\mu\alpha}$ are called **Christoffel symbols** (or **connection coefficients**). They are not tensors; they transform inhomogeneously, precisely so that $\nabla V$ *is* a tensor.
+
+For a general tensor, add a $+\Gamma$ term for each upper index and a $-\Gamma$ term for each lower index.
+
+### The Christoffel Symbols
+
+For the metric-compatible, torsion-free connection used in GR (the **Levi-Civita connection**):
+
+$$\boxed{\Gamma^\alpha_{\mu\nu} = \tfrac{1}{2} g^{\alpha\beta}(\partial_\mu g_{\beta\nu} + \partial_\nu g_{\mu\beta} - \partial_\beta g_{\mu\nu})}$$
+
+Derived by demanding two conditions:
+- **Torsion-free**: $\Gamma^\alpha_{\mu\nu} = \Gamma^\alpha_{\nu\mu}$ (symmetric in lower indices)
+- **Metric-compatible**: $\nabla_\mu g_{\alpha\beta} = 0$
+
+These pick out a unique connection from the geometry (i.e., the metric itself). The Christoffel symbols are completely determined by the metric.
+
+### What the Christoffels Represent
+
+Physically, $\Gamma^\alpha_{\mu\nu}$ encodes how coordinate basis vectors change from point to point. In flat Cartesian coordinates, basis vectors are constant everywhere; so all Christoffels vanish. In curved space (or curvilinear coordinates), basis vectors rotate as you move around, and Christoffels encode that rotation.
+
+### Parallel Transport
+
+To move a vector "parallel to itself" along a curve $x^\mu(\lambda)$:
+
+$$\frac{DV^\mu}{d\lambda} \equiv \frac{dx^\nu}{d\lambda}\nabla_\nu V^\mu = \frac{dV^\mu}{d\lambda} + \Gamma^\mu_{\nu\rho}\frac{dx^\nu}{d\lambda} V^\rho = 0$$
+
+This is the **parallel transport equation**. In flat space, parallel transport just means "keep the components constant in Cartesian coordinates." In curved space, even a "parallel" vector rotates as you transport it around a closed loop; a signature of curvature.
+
+### Covariant Derivative in Various Bases
+
+In a general coordinate basis, $\nabla_\mu V^\nu$ has both a partial derivative piece (changing components) and a Christoffel piece (changing basis). In a specially-chosen "orthonormal frame" basis, things look different; but the underlying geometry is the same.
+
+### Divergence of a Vector
+
+$$\nabla_\mu V^\mu = \frac{1}{\sqrt{-g}}\partial_\mu(\sqrt{-g}\, V^\mu)$$
+
+Useful identity. Generalizes the divergence theorem to curved spacetime.
+
+---
+
+## 6. Geodesics
+
+The generalization of "straight line" to curved manifolds.
+
+### Two Equivalent Definitions
+
+**Extremal path:** a geodesic is a path that extremizes the proper time (or path length, for spacelike geodesics). For timelike curves:
+
+$$\delta \int d\tau = 0$$
+
+**Parallel transport:** a geodesic is a curve whose tangent vector is parallel-transported along itself.
+
+These are equivalent for the Levi-Civita connection.
+
+### The Geodesic Equation
+
+From either definition, applied to a curve $x^\mu(\lambda)$ parameterized by an affine parameter $\lambda$:
+
+$$\boxed{\frac{d^2 x^\mu}{d\lambda^2} + \Gamma^\mu_{\nu\rho} \frac{dx^\nu}{d\lambda}\frac{dx^\rho}{d\lambda} = 0}$$
+
+For a massive particle, $\lambda$ is typically proper time $\tau$. For a light ray (which has $d\tau = 0$), use any affine parameter.
+
+### Free Fall = Geodesic Motion
+
+In GR, a particle with no non-gravitational forces follows a geodesic. This is the formal statement of the equivalence principle: gravity isn't a force, and free-fall trajectories are determined by the geometry (via the Christoffels, via the metric).
+
+### Deriving from Lagrangian
+
+The action for a massive particle in curved spacetime:
+
+$$S = -mc^2 \int d\tau = -mc^2 \int \sqrt{-g_{\mu\nu}\dot x^\mu \dot x^\nu}\, d\lambda$$
+
+The Euler-Lagrange equations for this action give the geodesic equation (with a proper-time parametrization).
+
+Equivalently, you can use the simpler-looking Lagrangian:
+
+$$\mathcal{L} = \tfrac{1}{2} g_{\mu\nu} \dot x^\mu \dot x^\nu$$
+
+which gives the same geodesic equation for affine parameters.
+
+### Example: Free Fall Near Earth
+
+In Schwarzschild coordinates (below), the radial geodesic equation for a particle released from rest at large $r$ simplifies to something that, in the weak-field limit, is:
+
+$$\ddot r \approx -\frac{GM}{r^2}$$
+
+Newton's law of gravity, recovered from pure geometry. This is why Newton works: GR reduces to it in the appropriate limit.
+
+### Null Geodesics
+
+For light rays, $d\tau = 0$ so we parametrize by an affine parameter. The geodesic equation is the same:
+
+$$\frac{d^2 x^\mu}{d\lambda^2} + \Gamma^\mu_{\nu\rho}\frac{dx^\nu}{d\lambda}\frac{dx^\rho}{d\lambda} = 0$$
+
+with the constraint $g_{\mu\nu}\dot x^\mu \dot x^\nu = 0$. This is how light bending is computed; integrate the null geodesic equation through a curved geometry.
+
+---
+
+## 7. The Riemann Curvature Tensor
+
+The mathematical object that encodes curvature. If curvature is zero, the Riemann tensor vanishes; if it's nonzero, spacetime is genuinely curved (can't be coordinate-transformed to flat).
+
+### Definition via Commutator of Covariant Derivatives
+
+For a vector field $V^\mu$:
+
+$$[\nabla_\mu, \nabla_\nu] V^\rho = R^\rho{}_{\sigma\mu\nu} V^\sigma$$
+
+where the **Riemann tensor** is:
+
+$$\boxed{R^\rho{}_{\sigma\mu\nu} = \partial_\mu \Gamma^\rho_{\nu\sigma} - \partial_\nu \Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\rho_{\nu\lambda}\Gamma^\lambda_{\mu\sigma}}$$
+
+Three ways to interpret this:
+
+- Commutator of covariant derivatives: covariant derivatives don't commute if there's curvature
+- Parallel transport around a closed loop: a vector transported around a tiny loop comes back rotated by an amount proportional to Riemann
+- Geodesic deviation: nearby geodesics converge or diverge, governed by Riemann
+
+### Symmetries
+
+$R^\rho{}_{\sigma\mu\nu}$ has 256 components in 4D, but symmetries reduce the independent ones to 20:
+
+$$R_{\rho\sigma\mu\nu} = -R_{\sigma\rho\mu\nu} = -R_{\rho\sigma\nu\mu} = R_{\mu\nu\rho\sigma}$$
+
+$$R_{\rho[\sigma\mu\nu]} = 0 \quad \text{(Bianchi identity, first form)}$$
+
+Lowering the first index with the metric gives $R_{\rho\sigma\mu\nu}$, which is antisymmetric on the first two indices, antisymmetric on the last two, and symmetric under swap of pairs.
+
+### Second Bianchi Identity
+
+$$\nabla_{[\lambda} R_{\rho\sigma]\mu\nu} = 0$$
+
+A differential identity, guaranteed by the geometry (not imposed as an additional equation). It will play a crucial role in deriving the field equations.
+
+### Ricci Tensor and Scalar Curvature
+
+Contract Riemann to get a rank-2 tensor:
+
+$$R_{\mu\nu} \equiv R^\alpha{}_{\mu\alpha\nu} = g^{\alpha\beta} R_{\beta\mu\alpha\nu}$$
+
+The **Ricci tensor**. It is symmetric: $R_{\mu\nu} = R_{\nu\mu}$.
+
+Contract again to get a scalar:
+
+$$R \equiv g^{\mu\nu} R_{\mu\nu}$$
+
+The **Ricci scalar** (or **scalar curvature**). A single number at each point that characterizes the "total" curvature.
+
+### The Einstein Tensor
+
+$$\boxed{G_{\mu\nu} \equiv R_{\mu\nu} - \tfrac{1}{2} g_{\mu\nu} R}$$
+
+Crucially, the Einstein tensor is **divergenceless**:
+
+$$\nabla^\mu G_{\mu\nu} = 0$$
+
+This follows from the contracted Bianchi identity. It's what makes $G_{\mu\nu}$ the right object to appear on the left side of Einstein's equations; the right side (stress-energy tensor) is also conserved.
+
+### Examples of Curved Spaces
+
+**Sphere of radius $R$:**
+
+$$R_{1212} = R_{\theta\phi\theta\phi} = R^2 \sin^2\theta$$
+
+Ricci scalar: $R = 2/R^2$. Constant positive curvature.
+
+**Hyperbolic plane:** constant negative curvature.
+
+**Flat Minkowski:** all curvature components vanish, trivially.
+
+**Schwarzschild** (the geometry around a point mass): Ricci-flat ($R_{\mu\nu} = 0$) in vacuum, but Riemann tensor is nonzero; the curvature is all in the "tidal" part that doesn't contract into Ricci.
+
+### Tidal Forces and Curvature
+
+The physical meaning of the Riemann tensor: it measures **tidal forces**; the relative acceleration of nearby free-falling particles.
+
+Two initially parallel geodesics in flat spacetime stay parallel. In curved spacetime, they converge or diverge. The rate of convergence is the geodesic deviation equation:
+
+$$\frac{D^2 \xi^\mu}{d\tau^2} = R^\mu{}_{\nu\rho\sigma} u^\nu u^\sigma \xi^\rho$$
+
+where $\xi^\mu$ is the separation vector between nearby geodesics and $u^\mu$ is the tangent. Two particles in free fall toward Earth get pushed together by tidal forces; and this is exactly the Riemann tensor doing its thing.
+
+Gravity is tidal forces. Tidal forces are spacetime curvature. Newton's "gravitational force" is an artifact of accelerating coordinates.
+
+---
+
+## 8. Einstein's Field Equations
+
+The equations relating geometry to matter.
+
+### What They Should Look Like
+
+Einstein sought equations of the form
+
+$$[\text{geometry}] = [\text{matter}]$$
+
+Constraints:
+
+1. Both sides must be tensors
+2. Rank 2, symmetric (there are 10 equations)
+3. Reduce to Newton's law in the appropriate limit
+4. Both sides must be divergenceless (for consistency with local conservation)
+
+### Stress-Energy Tensor (Right Side)
+
+$T_{\mu\nu}$ is the stress-energy tensor (covered in the tensor reference). Components:
+
+- $T_{00}$: energy density
+- $T_{0i}$: energy flux = momentum density
+- $T_{ij}$: stress (momentum flux)
+
+For a perfect fluid with density $\rho$ and pressure $p$:
+
+$$T_{\mu\nu} = (\rho + p) u_\mu u_\nu + p g_{\mu\nu}$$
+
+where $u^\mu$ is the fluid four-velocity. Conservation: $\nabla^\mu T_{\mu\nu} = 0$.
+
+### Einstein's Equations
+
+$$\boxed{G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G \, T_{\mu\nu}}$$
+
+(with $c = 1$.) Here:
+
+- $G_{\mu\nu}$ is the Einstein tensor (section 7)
+- $\Lambda$ is the **cosmological constant** (Einstein's 1917 addition)
+- $G$ is Newton's gravitational constant
+- $T_{\mu\nu}$ is the stress-energy tensor
+
+The left side is the geometry; the right side is the matter. In a slogan: **matter tells spacetime how to curve; spacetime tells matter how to move** (the latter via the geodesic equation).
+
+### Alternative Form
+
+Taking the trace:
+
+$$R = -8\pi G T + 4\Lambda$$
+
+where $T = T^\mu{}_\mu$. Substituting back:
+
+$$R_{\mu\nu} = 8\pi G \left(T_{\mu\nu} - \tfrac{1}{2}g_{\mu\nu}T\right) + \Lambda g_{\mu\nu}$$
+
+Sometimes useful, depending on what you know.
+
+### The Cosmological Constant
+
+Einstein added $\Lambda$ to permit static cosmological solutions. When Hubble discovered expansion in 1929, Einstein called this "my greatest blunder."
+
+But $\Lambda$ came back: observations of distant supernovae in the 1990s showed the universe's expansion is accelerating, requiring $\Lambda > 0$. This is **dark energy**; roughly 68% of the energy content of the universe.
+
+Measured value: $\Lambda \approx 1.1 \times 10^{-52}$ m$^{-2}$. Astonishingly small in natural units; one of the "naturalness problems" in physics.
+
+### Derivation from an Action
+
+Remarkably, Einstein's equations follow from a variational principle. The **Einstein-Hilbert action** is:
+
+$$S_{EH} = \frac{1}{16\pi G}\int d^4x \, \sqrt{-g}\, (R - 2\Lambda)$$
+
+Varying with respect to $g^{\mu\nu}$ yields $G_{\mu\nu} + \Lambda g_{\mu\nu} = 0$. Adding a matter action whose variation gives $T_{\mu\nu}$ completes the picture:
+
+$$G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}$$
+
+The fact that GR has an action principle means it fits into the same framework as every other fundamental theory; and it's the starting point for attempts to quantize gravity.
+
+### Why These Are Hard to Solve
+
+Einstein's equations are 10 coupled, nonlinear partial differential equations for the 10 components of $g_{\mu\nu}$. Exact solutions are known only in cases with high symmetry:
+
+- Schwarzschild (spherically symmetric vacuum)
+- Kerr (axially symmetric rotating vacuum)
+- Reissner-Nordström (spherically symmetric with charge)
+- FLRW (homogeneous, isotropic cosmology)
+- Special wave solutions
+
+For realistic problems (two orbiting black holes, say), numerical GR is required. The field of numerical relativity only cracked the binary black hole merger problem in 2005; essential for interpreting LIGO's gravitational wave detections.
+
+### Newtonian Limit
+
+In the limit of weak fields and slow motion, $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ with $|h_{\mu\nu}| \ll 1$. Einstein's equations reduce to:
+
+$$\nabla^2 \Phi = 4\pi G \rho$$
+
+with $h_{00} = -2\Phi/c^2$. Poisson's equation for the Newtonian gravitational potential, recovered as a limiting case. The weak-field regime is where GR and Newton agree.
+
+---
+
+## 9. The Schwarzschild Solution
+
+The first (and still most important) exact solution of Einstein's equations. Found by Karl Schwarzschild in early 1916, mere months after Einstein published the field equations; from a trench during World War I, where he died of disease shortly after.
+
+### The Setup
+
+Solve Einstein's vacuum equations ($T_{\mu\nu} = 0$, $\Lambda = 0$) assuming spherical symmetry and time-independence. The result is the **Schwarzschild metric**:
+
+$$\boxed{ds^2 = -\left(1 - \frac{2GM}{r}\right) dt^2 + \left(1 - \frac{2GM}{r}\right)^{-1} dr^2 + r^2 d\Omega^2}$$
+
+with $c = 1$ and $d\Omega^2 = d\theta^2 + \sin^2\theta\, d\phi^2$ the metric of a unit 2-sphere.
+
+$M$ is the mass of the source (as measured at infinity). The geometry is that outside a spherically symmetric, non-rotating, uncharged mass.
+
+### The Schwarzschild Radius
+
+The coefficient $1 - 2GM/r$ vanishes at:
+
+$$r_s = \frac{2GM}{c^2}$$
+
+(restoring $c$). For the Sun: $r_s \approx 3$ km. For Earth: $r_s \approx 9$ mm. These are *much* smaller than the actual radii of the Sun or Earth; the Schwarzschild metric only applies outside the source, so this singularity doesn't appear in normal astrophysical objects.
+
+For a **black hole**, however, all the mass is concentrated within $r_s$. The surface $r = r_s$ is then an **event horizon**; a one-way boundary.
+
+### Birkhoff's Theorem
+
+Schwarzschild is the *unique* spherically symmetric vacuum solution. A spherically symmetric oscillating/collapsing mass still has Schwarzschild geometry outside; no gravitational waves are emitted. (Gravitational waves require non-spherical sources.)
+
+### The Singularities
+
+Two potential problems:
+- $r = 2GM$: coordinate singularity. Not a physical singularity; changing coordinates removes it. Still a crucial surface (event horizon).
+- $r = 0$: genuine physical singularity. Curvature invariants (e.g., $R_{\mu\nu\rho\sigma}R^{\mu\nu\rho\sigma}$) diverge. All geodesics hit $r = 0$ in finite proper time. GR breaks down here.
+
+### Kruskal-Szekeres Coordinates
+
+An alternative coordinate system that removes the coordinate singularity at $r = 2GM$ and reveals the complete geometry, including regions behind the horizon and (mathematically) a "white hole" and a second universe connected by a wormhole. The maximally extended Schwarzschild geometry is a remarkable structure, most of which doesn't apply to astrophysical black holes (which form from collapse and don't include the white-hole part).
+
+### Time Dilation in Schwarzschild
+
+A clock at radius $r$ (at rest) runs slower than a clock at infinity by:
+
+$$\frac{d\tau}{dt} = \sqrt{1 - \frac{2GM}{r}}$$
+
+For Earth: at the surface vs. infinity, $d\tau/dt \approx 1 - 7 \times 10^{-10}$. GPS satellites must correct for this, or positions drift by kilometers per day.
+
+### Orbital Motion
+
+The geodesic equation in Schwarzschild reduces to an equation for $r(\phi)$ that looks like a central-force problem with an *extra* term:
+
+$$u'' + u = \frac{GM}{L^2} + 3GM u^2$$
+
+where $u = 1/r$ and $L$ is angular momentum. The first two terms give Newton's orbit. The last term, $3GM u^2$, is new; a GR correction. It causes the **perihelion precession** that resolved Mercury's orbital anomaly.
+
+---
+
+## 10. Classical Tests of General Relativity
+
+The three classical tests; and modern ones.
+
+### Mercury's Perihelion Precession
+
+The last term in the Schwarzschild orbit equation causes the perihelion (closest approach to the Sun) to advance with each orbit. Calculation:
+
+$$\Delta\phi_{\text{per orbit}} = \frac{6\pi GM}{a(1-e^2) c^2}$$
+
+where $a$ is the semimajor axis, $e$ is eccentricity.
+
+For Mercury: 43 arcseconds per century; matching the observed unexplained residual after accounting for other planets.
+
+### Deflection of Light
+
+Light grazing the Sun is deflected by:
+
+$$\Delta\phi = \frac{4GM}{Rc^2}$$
+
+For light grazing the Sun: 1.75 arcseconds. Measured during the 1919 solar eclipse by Eddington's expedition, making Einstein world-famous.
+
+Note: Newtonian gravity with the "photon as particle" approach predicts half this value (0.87 arcseconds). The factor of 2 difference was the first experimental distinction between Newton and Einstein.
+
+### Gravitational Redshift
+
+Light climbing out of a gravitational well is redshifted:
+
+$$\frac{\Delta\lambda}{\lambda} = \frac{GM}{rc^2}$$
+
+For Earth's surface: $\sim 10^{-16}$. Measured by Pound-Rebka (1959) using gamma rays from $^{57}$Fe and the Mössbauer effect, at the Harvard physics tower.
+
+### Shapiro Delay (Time Delay)
+
+Light passing near a massive body takes slightly longer than you'd compute in flat space. Observable for radio signals from spacecraft passing behind the Sun:
+
+$$\Delta t = \frac{4GM}{c^3}\ln\left(\frac{4 r_1 r_2}{b^2}\right)$$
+
+(where $b$ is the impact parameter). Measured for Cassini: agreement with GR to about 0.001%.
+
+### Modern High-Precision Tests
+
+**Lunar laser ranging:** corner reflectors on the Moon, laser pulses timed to ps precision. Tests of strong/weak equivalence principle, gravitational constant variation, time-of-flight effects. Agreement with GR at the $10^{-4}$ level.
+
+**Gravity Probe B (2011):** measured the frame-dragging and geodetic precession of gyroscopes in Earth orbit. Both GR predictions confirmed.
+
+**LIGO/Virgo (2015+):** gravitational wave detections allow testing GR in strong-field, dynamical regimes. All observations consistent with GR to date.
+
+**Event Horizon Telescope (2019, 2022):** direct imaging of supermassive black holes (M87*, Sgr A*). Shapes and sizes match GR predictions.
+
+**Double pulsar PSR J0737-3039:** two neutron stars orbiting each other. The orbital decay from gravitational wave emission matches GR to 0.04%.
+
+GR has passed every test ever devised.
+
+---
+
+## 11. Black Holes
+
+### Definition
+
+A **black hole** is a region of spacetime from which nothing; not even light; can escape. The boundary is the **event horizon**.
+
+### The Schwarzschild Black Hole
+
+The simplest: spherically symmetric, uncharged, non-rotating. Characterized entirely by its mass $M$. The event horizon is at $r = 2GM$ (the Schwarzschild radius).
+
+Inside the horizon, the $r$ coordinate becomes timelike. Every trajectory must move to smaller $r$; there is no way to stay at fixed $r$ or increase it. The central singularity at $r = 0$ is in your future.
+
+### Kerr Black Holes (Rotating)
+
+A black hole with angular momentum is described by the **Kerr metric** (Kerr, 1963). Parameters: mass $M$ and angular momentum $J$.
+
+Features:
+- Two horizons (outer and inner, or Cauchy horizon)
+- **Ergosphere**: a region outside the event horizon where spacetime is dragged so strongly that no observer can remain stationary
+- **Ring singularity** instead of a point
+- **Penrose process**: extract rotational energy from a black hole
+
+### Reissner-Nordström (Charged)
+
+Parameters: $M$ and charge $Q$. Mostly a theoretical curiosity; astrophysical black holes are expected to be nearly neutral since charge would be quickly neutralized by surrounding plasma.
+
+### No-Hair Theorem
+
+A remarkable result: isolated black holes in GR are completely characterized by mass, angular momentum, and charge (the "hair"). Any other information about what fell in is lost at the horizon.
+
+"Black holes have no hair." Everything you could know about a black hole from outside fits in three numbers.
+
+### Hawking Radiation
+
+Quantum field theory near a black hole horizon leads to the prediction that black holes emit thermal radiation at a temperature:
+
+$$T_H = \frac{\hbar c^3}{8\pi GM k_B}$$
+
+For a solar-mass black hole: $T_H \sim 10^{-7}$ K; utterly undetectable. For a primordial black hole small enough to be evaporating now, it could be much hotter.
+
+Hawking radiation implies black holes evaporate on a timescale $\tau \sim M^3$. For astrophysical black holes, far longer than the age of the universe. For tiny primordial ones, observable; if they exist.
+
+### Black Hole Thermodynamics
+
+Black holes obey laws that mirror thermodynamics:
+
+- **Zeroth law:** surface gravity is constant on the horizon (like temperature is constant in equilibrium)
+- **First law:** $dM = \tfrac{\kappa}{8\pi G} dA + \Omega dJ + \Phi dQ$ where $\kappa$ is surface gravity, $A$ is area
+- **Second law:** $dA/dt \geq 0$ (horizon area never decreases, classically; quantum mechanically with Hawking, total entropy never decreases)
+- **Third law:** can't reach zero surface gravity in finite time
+
+This suggests a profound connection between gravity, quantum mechanics, and thermodynamics; the **Bekenstein-Hawking entropy**:
+
+$$S_{BH} = \frac{k_B c^3 A}{4 G \hbar}$$
+
+(with $A$ the horizon area). A macroscopic entropy in units of $\hbar$; inherently semi-classical, and one of the deepest hints about quantum gravity.
+
+### Astrophysical Black Holes
+
+Observed (or strongly inferred) in three classes:
+
+1. **Stellar-mass** (~5–100 solar masses): from supernova explosions. Detected via X-ray binaries and gravitational waves.
+2. **Intermediate-mass** (~100-$10^5$ solar masses): rare, mechanisms uncertain.
+3. **Supermassive** ($10^6$–$10^{10}$ solar masses): in the centers of most galaxies. Sgr A* in our galaxy ($4 \times 10^6 M_\odot$). M87* in M87 ($6.5 \times 10^9 M_\odot$). Formation mechanisms still debated.
+
+### The Information Paradox
+
+If black holes evaporate via Hawking radiation, what happens to the information that fell in? Unitary quantum evolution requires it to be preserved; standard Hawking radiation is thermal (information-free).
+
+This is the **black hole information paradox**. Recent work (AdS/CFT, island formulas, Page curves) suggests information does come out, via subtle correlations in the Hawking radiation. But it's still not fully resolved.
+
+---
+
+## 12. Gravitational Waves
+
+### Linearized Gravity
+
+Weak field: $g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ with $|h_{\mu\nu}| \ll 1$. Linearizing Einstein's equations in vacuum and choosing the harmonic gauge:
+
+$$\Box h_{\mu\nu} = 0$$
+
+(where $h_{\mu\nu}$ is the trace-reversed metric perturbation). A wave equation! Solutions are plane waves traveling at $c$.
+
+So GR predicts **gravitational waves**: ripples in spacetime geometry propagating at the speed of light.
+
+### Polarization
+
+Gravitational waves have two polarizations, called $h_+$ and $h_\times$. Unlike electromagnetic waves (which stretch charges), gravitational waves stretch and squeeze space itself, in a quadrupolar pattern.
+
+### Generation
+
+Leading-order emission is **quadrupolar**; no dipole emission (unlike EM). Power emitted by a system with quadrupole moment $Q_{ij}$:
+
+$$P = \frac{G}{5 c^5}\langle \dddot Q_{ij} \dddot Q^{ij}\rangle$$
+
+The $1/c^5$ is enormous; for normal lab-scale systems, gravitational radiation is utterly negligible. Only for astrophysical catastrophes (merging black holes, neutron stars) does GW emission become significant.
+
+### Binary Inspiral
+
+Two orbiting masses lose energy to gravitational waves, causing them to spiral inward. The frequency and amplitude sweep up as they approach merger; the "chirp" signal.
+
+Hulse and Taylor (1974+) observed the binary pulsar PSR B1913+16 and measured its orbital decay. The rate agrees with GR's GW prediction to ~0.2%. 1993 Nobel Prize.
+
+### Direct Detection: LIGO
+
+Laser Interferometer Gravitational-wave Observatory. Two 4-km arms; laser light reflects between mirrors, and strain from a passing GW changes the effective arm lengths by $\sim 10^{-18}$ m; less than the diameter of a proton divided by 1000.
+
+**GW150914** (14 September 2015): first direct detection. Merger of two ~30-solar-mass black holes at ~1.3 billion light-years distance. Waveform matched GR predictions precisely. 2017 Nobel Prize (Weiss, Barish, Thorne).
+
+Since: dozens of detections, including binary neutron star mergers (GW170817), which produced both GW and electromagnetic signatures, opening **multi-messenger astronomy**.
+
+### Future
+
+- **LISA** (Laser Interferometer Space Antenna): space-based, arms of millions of km, sensitive to lower frequencies (supermassive black hole mergers). Launch ~2035.
+- **Einstein Telescope, Cosmic Explorer**: next-generation ground-based, 10-40 km arms.
+- **Pulsar Timing Arrays** (NANOGrav, etc.): use millisecond pulsars as ultra-stable clocks; sensitive to nanohertz GWs from supermassive black hole binaries. First hints of a stochastic background announced in 2023.
+
+### Physics from Gravitational Waves
+
+GW observations are now directly testing GR in strong-field, dynamical regimes; exactly where Einstein's equations are hardest. So far: GR passes. The speed of GWs equals $c$ to parts per $10^{15}$ (from GW170817 timing vs. electromagnetic signal).
+
+---
+
+## 13. Cosmology
+
+GR applied to the universe as a whole.
+
+### The Cosmological Principle
+
+**On large scales, the universe is homogeneous and isotropic.** Same everywhere, same in all directions. Well-supported observationally at scales $\gtrsim 100$ Mpc.
+
+### The FLRW Metric
+
+The most general homogeneous isotropic metric:
+
+$$ds^2 = -dt^2 + a(t)^2\left[\frac{dr^2}{1 - kr^2} + r^2 d\Omega^2\right]$$
+
+(Friedmann-Lemaître-Robertson-Walker.) Parameters:
+
+- $a(t)$: the **scale factor**. Captures expansion or contraction.
+- $k$: spatial curvature. $k = +1$ (closed, like a 3-sphere), $k = 0$ (flat), $k = -1$ (open, hyperbolic).
+
+Current observations: $k \approx 0$ (spatially flat, or very nearly).
+
+### Friedmann Equations
+
+Plug FLRW into Einstein's equations. Get:
+
+$$\left(\frac{\dot a}{a}\right)^2 = \frac{8\pi G}{3}\rho - \frac{k}{a^2} + \frac{\Lambda}{3}$$
+
+$$\frac{\ddot a}{a} = -\frac{4\pi G}{3}(\rho + 3p) + \frac{\Lambda}{3}$$
+
+The first is the **Friedmann equation**; the second is the **acceleration equation**.
+
+Define the **Hubble parameter**:
+
+$$H(t) = \frac{\dot a}{a}$$
+
+### Conservation
+
+From the conservation of stress-energy:
+
+$$\dot\rho + 3H(\rho + p) = 0$$
+
+Given an equation of state $p = w\rho$:
+
+- Matter ($w = 0$): $\rho \propto a^{-3}$
+- Radiation ($w = 1/3$): $\rho \propto a^{-4}$
+- Cosmological constant ($w = -1$): $\rho$ constant
+
+### The Standard Cosmological Model (ΛCDM)
+
+Current best fit to observations:
+
+- **Dark energy** ($\Omega_\Lambda \approx 0.685$): the cosmological constant
+- **Dark matter** ($\Omega_{\rm DM} \approx 0.265$): non-baryonic, gravitates but doesn't emit light
+- **Baryonic matter** ($\Omega_b \approx 0.049$): atoms, ions, everything we see
+- **Photons + neutrinos** ($\Omega_r \approx 10^{-4}$): nearly negligible today
+
+Plus parameters: $H_0 \approx 67$–73 km/s/Mpc (tension!), age $\approx 13.8$ Gyr.
+
+### Thermal History
+
+As the universe expands, it cools. Running history backward:
+
+- Today: $T \approx 2.7$ K (CMB)
+- $z \approx 1100$: recombination; CMB released
+- $T \approx 10^9$ K: Big Bang nucleosynthesis (H, He, Li)
+- $T \approx 10^{12}$ K: quark-hadron transition
+- $T \approx 10^{15}$ K: electroweak transition
+- Earlier: inflation, Planck era
+
+Statistical mechanics determines what happens at each stage. The CMB's blackbody spectrum at $T = 2.725$ K to one part in $10^5$ is a spectacular confirmation.
+
+### Horizons
+
+Because the universe has finite age, light has only traveled so far. The **particle horizon** bounds the observable universe:
+
+$$d_H = \int_0^{t_0} \frac{c\, dt}{a(t)}$$
+
+Current value: ~46 billion light-years (co-moving). Beyond this, not yet visible to us.
+
+An accelerating universe also has an **event horizon**; regions that will *never* be visible, because they're receding faster than light can catch up.
+
+### Inflation
+
+Theoretical extension: a period of extraordinary expansion in the very early universe ($\sim 10^{-36}$ to $10^{-32}$ seconds after the Big Bang), during which the universe expanded by a factor of $\gtrsim 10^{26}$.
+
+Explains:
+- Horizon problem (why CMB is isotropic across regions that were out of causal contact)
+- Flatness problem (why $\Omega_{\rm total} \approx 1$)
+- Origin of structure (quantum fluctuations stretched to cosmological scales)
+
+The CMB's angular correlation spectrum matches detailed inflationary predictions to high precision. Whether inflation is *the* right theory of the early universe is still debated; whether *some* period of inflation occurred is pretty well established.
+
+---
+
+## 14. Open Frontiers
+
+### Dark Matter
+
+Gravitational effects consistent with ~27% of the universe's mass-energy being dark matter. Possible candidates:
+- **WIMPs** (weakly interacting massive particles): direct detection experiments (LZ, XENONnT) have pushed limits, no detection.
+- **Axions**: motivated by strong CP; searches ongoing.
+- **Primordial black holes**: possibly a fraction.
+- **MOND** (modified Newtonian dynamics): modifies gravity instead, struggles with CMB and cluster data.
+
+### Dark Energy
+
+~68% of the energy content. Could be the cosmological constant (simplest, and currently best fit), or could be a dynamical field (quintessence), or modified gravity. Dark Energy Survey, Euclid, Rubin Observatory are probing this.
+
+### The Hubble Tension
+
+Different methods of measuring $H_0$ disagree:
+- CMB (Planck) + ΛCDM: $H_0 = 67.4 \pm 0.5$ km/s/Mpc
+- Local distance ladder (SH0ES): $H_0 = 73.0 \pm 1.0$ km/s/Mpc
+
+Difference is about $5\sigma$. Either there's a systematic error in one (or both) measurements, or new physics is hiding in cosmology.
+
+### Singularities and Quantum Gravity
+
+GR predicts singularities (Big Bang, black hole centers). These mark where classical GR breaks down; quantum gravity is needed. But no consistent quantum gravity theory has been confirmed.
+
+**Approaches:**
+- **String theory**: oldest and most developed. Unifies forces and gravity, but with a landscape of possibilities and few testable predictions.
+- **Loop quantum gravity**: background-independent, quantizes geometry directly.
+- **Asymptotic safety, causal dynamical triangulations, emergent gravity, etc.**: various programs with partial success.
+
+### The Black Hole Information Paradox
+
+Mentioned earlier. Recent progress (Page curve, islands, ER=EPR) suggests unitarity is preserved; black holes are not information sinks after all. But the microscopic mechanism is still debated.
+
+### Primordial Gravitational Waves
+
+Inflation produces a stochastic background of gravitational waves. Searching for them in CMB polarization (BICEP, Simons Observatory, LiteBIRD) or pulsar timing arrays. Detection would be a window into physics at energies no particle accelerator could ever reach.
+
+### Firewalls, Islands, ER = EPR
+
+Recent theoretical ideas blurring the line between gravity, quantum mechanics, and entanglement. Suggest that spacetime itself may be emergent from quantum entanglement; "geometry = entanglement."
+
+These are research frontiers. The right answers aren't known.
+
+---
+
+## Appendix: Formulas and Reference
+
+### Notation and Conventions
+
+- Mostly-plus signature: $\eta = \text{diag}(-1, +1, +1, +1)$
+- $\hbar = c = 1$ unless stated
+- Greek indices $\mu, \nu, \ldots \in \{0, 1, 2, 3\}$
+- Latin indices $i, j, \ldots \in \{1, 2, 3\}$
+- $G$: Newton's gravitational constant
+- $\Lambda$: cosmological constant
+
+### Key Objects
+
+| Object | Symbol | Equation |
+|---|---|---|
+| Metric | $g_{\mu\nu}$ | line element $ds^2 = g_{\mu\nu}dx^\mu dx^\nu$ |
+| Christoffel | $\Gamma^\alpha_{\mu\nu}$ | $\tfrac{1}{2}g^{\alpha\beta}(\partial_\mu g_{\beta\nu} + \partial_\nu g_{\mu\beta} - \partial_\beta g_{\mu\nu})$ |
+| Covariant derivative | $\nabla_\mu$ | $\partial_\mu + \Gamma$ corrections |
+| Riemann | $R^\rho{}_{\sigma\mu\nu}$ | $\partial_\mu\Gamma^\rho_{\nu\sigma} - \partial_\nu\Gamma^\rho_{\mu\sigma} + \Gamma^\rho_{\mu\lambda}\Gamma^\lambda_{\nu\sigma} - \Gamma^\rho_{\nu\lambda}\Gamma^\lambda_{\mu\sigma}$ |
+| Ricci tensor | $R_{\mu\nu}$ | $R^\alpha{}_{\mu\alpha\nu}$ |
+| Ricci scalar | $R$ | $g^{\mu\nu}R_{\mu\nu}$ |
+| Einstein tensor | $G_{\mu\nu}$ | $R_{\mu\nu} - \tfrac{1}{2}g_{\mu\nu}R$ |
+
+### Einstein's Field Equations
+
+$$G_{\mu\nu} + \Lambda g_{\mu\nu} = 8\pi G T_{\mu\nu}$$
+
+### Common Metrics
+
+**Minkowski (Cartesian):**
+
+$$ds^2 = -dt^2 + dx^2 + dy^2 + dz^2$$
+
+**Schwarzschild:**
+
+$$ds^2 = -(1 - 2GM/r) dt^2 + (1 - 2GM/r)^{-1} dr^2 + r^2 d\Omega^2$$
+
+**FLRW (flat):**
+
+$$ds^2 = -dt^2 + a(t)^2(dx^2 + dy^2 + dz^2)$$
+
+**Kerr (Boyer-Lindquist), outline only:**
+
+$$ds^2 = -\left(1 - \frac{2GMr}{\Sigma}\right) dt^2 + \frac{\Sigma}{\Delta} dr^2 + \Sigma d\theta^2 + \ldots$$
+
+with $\Sigma = r^2 + a^2 \cos^2\theta$, $\Delta = r^2 - 2GMr + a^2$, $a = J/M$.
+
+### Important Timescales and Lengths
+
+- **Schwarzschild radius**: $r_s = 2GM/c^2$
+- **Solar $r_s$**: 2.95 km
+- **Earth $r_s$**: 8.87 mm
+- **Planck length**: $\ell_P = \sqrt{\hbar G/c^3} \approx 1.6 \times 10^{-35}$ m
+- **Planck time**: $t_P \approx 5.4 \times 10^{-44}$ s
+- **Planck mass**: $M_P = \sqrt{\hbar c/G} \approx 2.2 \times 10^{-8}$ kg
+- **Hubble time**: $1/H_0 \approx 14$ Gyr
+- **Hubble radius**: $c/H_0 \approx 14$ Gly
+
+### Useful Identities
+
+**Bianchi identity:** $\nabla_{[\lambda} R_{\rho\sigma]\mu\nu} = 0$
+
+**Contracted Bianchi:** $\nabla^\mu G_{\mu\nu} = 0$
+
+**Trace of Einstein equations:** $R = -8\pi G T + 4\Lambda$
+
+**Weak-field correspondence:** $g_{00} = -(1 + 2\Phi/c^2)$ with $\Phi$ the Newtonian potential
+
+### Worth Memorizing
+
+- Perihelion precession per orbit: $\Delta\phi = 6\pi GM/(a(1-e^2)c^2)$
+- Light deflection: $\Delta\phi = 4GM/(Rc^2)$
+- Gravitational redshift: $\Delta\lambda/\lambda = GM/(rc^2)$
+- Gravitational time dilation (Schwarzschild): $d\tau = \sqrt{1 - 2GM/r}\, dt$
+- Hawking temperature: $T_H = \hbar c^3/(8\pi GMk_B)$
+- Bekenstein-Hawking entropy: $S = k_B A c^3/(4G\hbar)$
+
+---
+
+## Closing Note
+
+General relativity is arguably the most beautiful theory in physics; a profound conceptual shift (gravity is not a force but geometry) that also produces quantitatively precise, experimentally confirmed predictions.
+
+Key takeaways:
+
+- **Gravity is geometry.** The metric $g_{\mu\nu}$ is the gravitational field.
+- **Matter curves spacetime; curved spacetime guides matter.** Einstein's equations plus geodesic motion give the full dynamics.
+- **Black holes exist and are extreme tests of GR.** So far, passed every one.
+- **The universe is expanding and accelerating.** Both predicted by GR plus a cosmological constant.
+- **Gravitational waves exist and are detectable.** A new branch of observational astronomy.
+- **GR is classically complete but incomplete at singularities.** Quantum gravity is needed, but unresolved.
+
+**Further reading:**
+
+1. **Schutz, *A First Course in General Relativity***; best introductory text
+2. **Carroll, *Spacetime and Geometry***; more thorough, covers cosmology well
+3. **Wald, *General Relativity***; graduate-level, geometrically sophisticated
+4. **MTW (*Misner, Thorne, Wheeler*), *Gravitation***; encyclopedic; everyone should own a copy
+5. **Hartle, *Gravity***; physics-first approach, lighter on math
+
+**Practice:**
+
+- Compute Christoffel symbols from metrics (mechanical but illuminating)
+- Solve geodesic equations in Schwarzschild and FLRW
+- Verify conservation $\nabla^\mu G_{\mu\nu} = 0$ from Bianchi
+- Work through perihelion precession from the Schwarzschild geodesic equation
+- Derive the Friedmann equations from Einstein + FLRW
+
+You now have eleven reference documents covering physics from Newton through black holes and cosmology. Next on the list: **condensed matter physics**, where the quantum mechanics, statistical mechanics, and field theory you've built come together to describe real materials. After that, QFT proper.
+

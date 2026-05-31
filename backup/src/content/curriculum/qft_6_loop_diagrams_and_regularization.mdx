@@ -1,0 +1,887 @@
+---
+title: "QFT VI: Loop Diagrams and Regularization"
+stationNumber: 18
+line: "Quantum Trunk"
+date: 2026-05-05
+backdated: true
+prerequisites: [17]
+extendsTo: [19]
+classReportTitle: "Loops, and where the infinities come from."
+---
+
+*QFT document 6: where loops appear, integrals diverge, and the first deep structural features of quantum field theory reveal themselves.*
+
+Document 5 computed tree-level amplitudes. Those calculations are finite, clean, and give excellent agreement with experiment; as long as you don't demand too much precision. Push for more digits, and you need to include **loop corrections**.
+
+Loop diagrams are the heart of QFT's conceptual richness. They're also where the subject's most famous technical difficulty appears: the **ultraviolet divergences**. Many loop integrals are infinite. Not "approximately infinite" or "large"; genuinely, mathematically infinite when computed naively.
+
+For decades after QED was first written down (1927-1947), this was considered a catastrophe; a sign that quantum field theory was fundamentally broken. Then Bethe, Tomonaga, Schwinger, Feynman, and Dyson showed how to handle the infinities systematically. The procedure is called **renormalization** (document 7), and it turns out to be one of the most profound ideas in physics. But before we can renormalize, we need to **regularize**; make the infinite integrals finite in a controlled way.
+
+This document sets up the loop problem carefully: what kinds of divergences appear, what they physically represent, and how to make them tractable.
+
+### Prerequisites and Conventions
+
+- QFT documents 1-5
+- Familiarity with contour integration and complex analysis
+- Gamma function identities (we'll need many)
+- Same conventions: mostly-minus metric, $\hbar = c = 1$
+
+---
+
+## Table of Contents
+
+1. [Why Loops Appear](#1-why-loops-appear)
+2. [The Three Classic One-Loop QED Diagrams](#2-the-three-classic-one-loop-qed-diagrams)
+3. [Power Counting: When Do Integrals Diverge?](#3-power-counting-when-do-integrals-diverge)
+4. [The Physical Origin of UV Divergences](#4-the-physical-origin-of-uv-divergences)
+5. [Regularization Strategy #1: Momentum Cutoff](#5-regularization-strategy-1-momentum-cutoff)
+6. [Regularization Strategy #2: Pauli-Villars](#6-regularization-strategy-2-pauli-villars)
+7. [Regularization Strategy #3: Dimensional Regularization](#7-regularization-strategy-3-dimensional-regularization)
+8. [Feynman Parameters and Loop Integrals](#8-feynman-parameters-and-loop-integrals)
+9. [Worked Example: The Electron Self-Energy](#9-worked-example-the-electron-self-energy)
+10. [Worked Example: Vacuum Polarization](#10-worked-example-vacuum-polarization)
+11. [Worked Example: The Vertex Correction](#11-worked-example-the-vertex-correction)
+12. [Infrared Divergences: A Different Problem](#12-infrared-divergences-a-different-problem)
+13. [Preview: Renormalization](#13-preview-renormalization)
+14. [Appendix: Loop Integral Toolkit](#appendix-loop-integral-toolkit)
+
+---
+
+## 1. Why Loops Appear
+
+### Counting in the Coupling
+
+A Feynman diagram's order in perturbation theory equals the number of vertices. Each vertex contributes a factor of the coupling (in QED, a factor of $e$).
+
+At each vertex, momentum is conserved. With $V$ vertices, you have $V$ momentum-conservation constraints. With $I$ internal lines (propagators), you have $I$ internal momenta to integrate over. The number of independent loop integrations is:
+
+$$L = I - V + 1$$
+
+(The $+1$ comes from the overall momentum conservation being trivial; it relates external momenta only.)
+
+### Tree Diagrams: $L = 0$
+
+Tree diagrams have no closed cycles: $I - V + 1 = 0$, or $I = V - 1$. All internal momenta are determined by the external momenta via conservation. No integrations remain. Every line carries a fixed momentum.
+
+The $e^+e^- \to \mu^+\mu^-$ diagram: 2 vertices, 1 internal line. $L = 1 - 2 + 1 = 0$. ✓ Tree level.
+
+### Loop Diagrams: $L \geq 1$
+
+At each order in the coupling beyond the lowest, you add either vertices that make loops or extra legs. The number of loops counts the number of truly independent momentum integrations.
+
+For example, at **one loop** in QED, you have:
+- **Electron self-energy:** An electron propagates, emits a virtual photon, reabsorbs it. One closed loop.
+- **Vacuum polarization:** A photon propagates, creates an electron-positron pair, which annihilate back to a photon. One closed loop.
+- **Vertex correction:** The $e$-$e$-$\gamma$ vertex, dressed by a virtual photon connecting the two electron lines. One closed loop.
+
+These are the **three fundamental one-loop diagrams** of QED. Every other one-loop QED diagram is built from them as sub-diagrams.
+
+### The Loop Momentum Integration
+
+Each loop comes with an integration $\int d^4\ell/(2\pi)^4$ over a 4-momentum that isn't fixed by external momenta. This is where QFT's real computational challenge lives.
+
+The integrand is built from propagators; factors of $1/(\ell^2 - m^2 + i\epsilon)$ for each internal line. For large $|\ell|$, each propagator falls as $1/\ell^2$, and the measure $d^4\ell$ grows as $\ell^3 d\ell$. Whether the integral converges at large $\ell$ depends on how many propagators versus how much measure; a question of *power counting*.
+
+### Why Loops Matter Physically
+
+Loop diagrams represent **virtual processes**: short-lived quantum fluctuations that contribute to physical observables. The vacuum fluctuations that create and annihilate virtual particle pairs for brief moments, inaccessible by any direct measurement but producing measurable effects like:
+
+- The anomalous magnetic moment of the electron (vertex correction)
+- The Lamb shift in hydrogen (combination of self-energy + vertex + vacuum polarization)
+- The running of the fine-structure constant with energy (vacuum polarization)
+- Many other precision tests of QED
+
+Loops aren't a mathematical nuisance; they encode quantum reality.
+
+---
+
+## 2. The Three Classic One-Loop QED Diagrams
+
+Let's name them precisely before computing anything.
+
+### Electron Self-Energy ($\Sigma$)
+
+An electron with momentum $p$ emits a virtual photon with momentum $k$, propagates briefly as a virtual electron with momentum $p - k$, then reabsorbs the photon, returning to momentum $p$.
+
+Graphically: a single electron line with a "rainbow" over it (a photon that starts and ends on the same electron line).
+
+Expression (using QED Feynman rules):
+
+$$-i\Sigma(p) = \int\frac{d^4k}{(2\pi)^4}(-ie\gamma^\mu)\cdot\frac{i(\slashed{p} - \slashed{k} + m)}{(p-k)^2 - m^2 + i\epsilon}\cdot(-ie\gamma^\nu)\cdot\frac{-i\eta_{\mu\nu}}{k^2 + i\epsilon}$$
+
+Simplifying:
+
+$$-i\Sigma(p) = -e^2\int\frac{d^4k}{(2\pi)^4}\frac{\gamma^\mu(\slashed{p} - \slashed{k} + m)\gamma_\mu}{((p-k)^2 - m^2 + i\epsilon)(k^2 + i\epsilon)}$$
+
+### Vacuum Polarization ($\Pi^{\mu\nu}$)
+
+A photon with momentum $q$ creates a virtual electron-positron pair, which propagates and annihilates back to a photon. The electron carries momentum $\ell$, the positron $\ell - q$.
+
+Graphically: a photon line with a "bubble" in the middle (a fermion loop).
+
+Expression:
+
+$$i\Pi^{\mu\nu}(q) = -\int\frac{d^4\ell}{(2\pi)^4}\text{Tr}\left[(-ie\gamma^\mu)\frac{i(\slashed{\ell} + m)}{\ell^2 - m^2 + i\epsilon}(-ie\gamma^\nu)\frac{i(\slashed{\ell} - \slashed{q} + m)}{(\ell - q)^2 - m^2 + i\epsilon}\right]$$
+
+The overall minus sign comes from the closed fermion loop.
+
+Simplifying:
+
+$$i\Pi^{\mu\nu}(q) = -e^2\int\frac{d^4\ell}{(2\pi)^4}\frac{\text{Tr}[\gamma^\mu(\slashed{\ell} + m)\gamma^\nu(\slashed{\ell} - \slashed{q} + m)]}{(\ell^2 - m^2 + i\epsilon)((\ell - q)^2 - m^2 + i\epsilon)}$$
+
+### Vertex Correction ($\Gamma^\mu$)
+
+At the $e$-$e$-$\gamma$ vertex, add a virtual photon connecting the incoming and outgoing electron lines (before and after the vertex).
+
+Graphically: the standard vertex, with an extra photon line forming a triangle inside.
+
+Expression:
+
+$$-ie\Gamma^\mu(p', p) = \int\frac{d^4k}{(2\pi)^4}(-ie\gamma^\nu)\frac{i(\slashed{p}' - \slashed{k} + m)}{(p'-k)^2 - m^2}(-ie\gamma^\mu)\frac{i(\slashed{p} - \slashed{k} + m)}{(p-k)^2 - m^2}(-ie\gamma_\nu)\frac{-i\eta^{\text{(gauge)}}}{k^2}$$
+
+(I'm being loose with the photon propagator index structure; in Feynman gauge, it's just $-i\eta_{\nu\rho}/k^2$.)
+
+This is a more complex integral; two fermion propagators and one photon propagator in the denominator.
+
+### Why These Three
+
+In QED, these are the only *primitively divergent* one-loop diagrams. "Primitively divergent" means: they're divergent in their own right, not because they contain a divergent sub-diagram. Every other divergent loop integral in QED is built from these as building blocks.
+
+That's a remarkable fact. The UV structure of QED is controlled by just three fundamental objects. Document 7 (renormalization) will absorb their divergences into the parameters of the theory.
+
+---
+
+## 3. Power Counting: When Do Integrals Diverge?
+
+Before computing anything, we can estimate whether a loop integral diverges; how badly; by simple power counting.
+
+### The Degree of Divergence
+
+Consider a loop integral $\int d^4\ell / [\text{propagators}]$. For large $|\ell|$:
+
+- $d^4\ell$ scales as $\ell^4 d(\log|\ell|)$
+- Each boson propagator $1/k^2$ scales as $\ell^{-2}$
+- Each fermion propagator $\slashed{k}/k^2$ scales as $\ell^{-1}$ (one power of $\ell$ in the numerator)
+
+The **superficial degree of divergence** is:
+
+$$D = 4L - 2P_B - P_F$$
+
+where $L$ is the number of loops, $P_B$ is the number of bosonic propagators, $P_F$ is the number of fermionic propagators.
+
+If $D \geq 0$: the integral diverges as a power of the cutoff
+If $D = 0$: logarithmic divergence
+If $D < 0$: the integral converges (at least at infinity)
+
+### Applied to QED One-Loop
+
+**Electron self-energy:** 1 loop, 1 photon propagator, 1 fermion propagator. $D = 4 - 2 - 1 = 1$. Linearly divergent (naively). After Lorentz and gauge symmetry constraints, it's only logarithmically divergent (one power of $\ell$ cancels).
+
+**Vacuum polarization:** 1 loop, 0 photon propagators, 2 fermion propagators. $D = 4 - 0 - 2 = 2$. Quadratically divergent (naively). Gauge invariance reduces this to logarithmic.
+
+**Vertex correction:** 1 loop, 1 photon propagator, 2 fermion propagators. $D = 4 - 2 - 2 = 0$. Logarithmically divergent.
+
+All three have residual *logarithmic* divergences after symmetry considerations. These $\log\Lambda$ terms (where $\Lambda$ is some cutoff) are what renormalization will absorb.
+
+### Renormalizable Theories
+
+A theory is **power-counting renormalizable** if all its primitive divergences can be absorbed into a finite number of parameters; specifically, into the coefficients of the terms already present in the Lagrangian.
+
+For QED, the divergent structures produced by loops take the forms:
+
+- $\Sigma(p) \sim \slashed{p}\log\Lambda + m\log\Lambda$; renormalizes the electron mass and wave function
+- $\Pi^{\mu\nu}(q) \sim (q^\mu q^\nu - q^2\eta^{\mu\nu})\log\Lambda$; renormalizes the photon field strength and charge
+- $\Gamma^\mu(p', p) \sim \gamma^\mu\log\Lambda$; renormalizes the coupling
+
+All fit into the existing Lagrangian structure. **QED is renormalizable.** So are all the other gauge theories of the Standard Model.
+
+### Non-Renormalizable Theories
+
+By contrast, a theory like Fermi's 4-fermion interaction ($G_F[\bar\psi\Gamma\psi][\bar\psi\Gamma\psi]$) produces divergences that can't be absorbed into the original Lagrangian; you'd need operators of higher and higher dimension, proliferating endlessly. These theories are **non-renormalizable**, and they only make sense as effective descriptions below some cutoff scale.
+
+General relativity has $G_N$ with dimension of inverse mass squared, making it non-renormalizable. This is one of the deepest reasons that quantizing gravity is hard.
+
+### A Historical Note
+
+For 20 years after 1927, it wasn't clear whether QED (or any QFT) could be made consistent. The divergences looked catastrophic, and many physicists (including Bohr, Heisenberg, and Dirac) considered abandoning the whole field-theoretic framework. The 1947-1948 breakthroughs in handling the infinities (Schwinger, Tomonaga, Feynman, Dyson) rescued QFT and set the template for all subsequent particle physics.
+
+Renormalizability turned out to be both a technical requirement and a profound principle. It's why the Standard Model has the specific structure it does; non-renormalizable interactions are excluded as fundamental, constraining what theories are even possible.
+
+---
+
+## 4. The Physical Origin of UV Divergences
+
+Before we regularize, let's understand what the divergences really represent.
+
+### Short-Distance Physics
+
+UV divergences (from the ultraviolet, i.e., high energy/short distance) come from the integral's behavior at large $|\ell|$. Physically, they represent contributions from virtual processes at arbitrarily short distances.
+
+But we *know* our theories aren't valid at arbitrarily short distances. At the Planck scale ($\sim 10^{-35}$ m), quantum gravity effects become important, and pure QED certainly isn't the right theory there. Below that, we might encounter strings, extra dimensions, or structures we haven't imagined.
+
+So the divergences are, in some sense, an artifact of treating QED as if it's valid to arbitrarily high energies; which it isn't. The divergences are the theory's way of complaining that it's being asked questions outside its domain of validity.
+
+### The Wilsonian View
+
+Kenneth Wilson's renormalization group picture (1970s) reinterprets the entire story:
+
+- Every QFT should be understood as an **effective field theory** valid below some cutoff scale $\Lambda$
+- Above $\Lambda$, unknown physics lives; new particles, new interactions, ultimately quantum gravity
+- The divergences in loop integrals are just telling you that you're integrating over modes with $|\ell| > \Lambda$, where your theory doesn't apply
+- **All effects of those high-energy modes** on low-energy physics can be absorbed into the renormalized values of a finite number of parameters
+
+This is why renormalization works: the high-energy junk cancels out of low-energy physics. The theory is self-consistent at every scale, even if it's not the full theory of nature.
+
+### The Predictive Power Survives
+
+Even though the divergent bits of a loop integral depend on the unknown high-energy physics, the *differences* between measurable quantities at different kinematic points are independent of the cutoff. In concrete terms:
+
+- The electron mass gets a divergent correction from the self-energy
+- But the **observed** mass is whatever the experimentalist measures
+- The *difference* between this observed mass and the "bare" parameter in the Lagrangian is divergent, but the observed mass is finite and well-defined
+
+Renormalization trades unknown bare parameters for measured physical parameters. Once you've done that, all predictions for other quantities are finite.
+
+### So Why Bother With Regularization?
+
+To do this cancellation carefully, we need to first make the divergent quantities finite in a controlled way. A cutoff $\Lambda$, or dimensional regularization $\epsilon$, or Pauli-Villars fields; any of these gives us a handle on "how infinite" the divergence is. We can then subtract systematically.
+
+This is regularization: making the infinity manipulable, so renormalization can handle it properly.
+
+---
+
+## 5. Regularization Strategy #1: Momentum Cutoff
+
+The most intuitive regularization: just cut off the integral at some high momentum $\Lambda$.
+
+### The Prescription
+
+Replace $\int d^4\ell \to \int_{|\ell| < \Lambda} d^4\ell$. This makes the integral obviously finite.
+
+### Pros
+
+- Physically intuitive: matches the Wilsonian EFT picture
+- Easy to understand at first sight
+
+### Cons
+
+- **Breaks Lorentz invariance.** The condition $|\ell| < \Lambda$ picks out a frame (the one where the cutoff is evaluated).
+- **Breaks gauge invariance.** The shift symmetry $A^\mu \to A^\mu + \partial^\mu\lambda$ mixes different modes; cutting off at fixed momentum breaks this.
+- **Hard to do loop calculations cleanly.** Results are full of cutoff-dependent messiness.
+
+For these reasons, cutoff regularization is rarely used in modern calculations. But it's conceptually the clearest way to understand what regularization is doing.
+
+### Example: A Scalar Loop
+
+Consider the simplest divergent integral:
+
+$$I = \int\frac{d^4\ell}{(2\pi)^4}\frac{1}{\ell^2 - m^2 + i\epsilon}$$
+
+In Euclidean space (after Wick rotation $\ell^0 \to i\ell^0_E$), this becomes:
+
+$$I_E = \int\frac{d^4\ell_E}{(2\pi)^4}\frac{i}{\ell_E^2 + m^2}$$
+
+Using spherical coordinates and $\int d^4\ell_E = 2\pi^2 \ell_E^3 d\ell_E$ (4D volume):
+
+$$I_E = \frac{i}{(2\pi)^4}\cdot 2\pi^2\int_0^\Lambda\frac{\ell_E^3 d\ell_E}{\ell_E^2 + m^2}$$
+
+This diverges as $\Lambda^2$; quadratically divergent.
+
+The message: simple scalar integrals can diverge badly. Regularization exposes the divergence structure.
+
+---
+
+## 6. Regularization Strategy #2: Pauli-Villars
+
+A more sophisticated approach: introduce *auxiliary massive fields* whose contributions cancel the large-momentum divergence.
+
+### The Prescription
+
+Modify each propagator:
+
+$$\frac{1}{k^2 - m^2} \to \frac{1}{k^2 - m^2} - \frac{1}{k^2 - M^2}$$
+
+with $M \gg m$. The difference behaves as $\sim 1/k^4$ for large $k$ (rather than $1/k^2$), making integrals with this modified propagator more convergent.
+
+For more severely divergent integrals, use additional subtractions with different masses.
+
+### Why It Works
+
+The modified propagator equals the original at low momenta (where $M^2 \gg k^2$ makes the second term negligible), but is suppressed at high momenta. This effectively introduces a soft cutoff at scale $M$.
+
+### Pros
+
+- Preserves Lorentz invariance (each subtracted term is a proper propagator)
+- Preserves gauge invariance (if done carefully; the auxiliary field needs to have the same gauge structure)
+- Translates to Feynman diagrams with auxiliary particles (the "Pauli-Villars ghosts")
+
+### Cons
+
+- For non-abelian theories, maintaining all symmetries with Pauli-Villars is tricky
+- Less elegant than dimensional regularization
+- The large mass $M$ plays a role similar to a cutoff
+
+Pauli-Villars is still occasionally used, especially for QED, but dimensional regularization has largely replaced it as the standard method.
+
+---
+
+## 7. Regularization Strategy #3: Dimensional Regularization
+
+The most powerful regularization scheme; and the one used in nearly all modern calculations.
+
+### The Idea
+
+'T Hooft and Veltman's insight (1972): compute the integral in $d$ spacetime dimensions, then analytically continue $d$ to the physical value of 4. The divergences appear as poles at $d = 4$.
+
+### The Prescription
+
+Replace $\int d^4\ell/(2\pi)^4$ with $\int d^d\ell/(2\pi)^d$. For $d < 4$, the integral converges; for $d > 4$, it diverges worse. Define everything for general $d$, express the answer, and let $d \to 4$.
+
+Write $d = 4 - 2\epsilon$ with $\epsilon > 0$ small. Then:
+
+- Logarithmic divergences show up as $1/\epsilon$ poles
+- Quadratic divergences show up as poles at $\epsilon = 1/2, -1$, etc. (finite terms only in $d = 4$)
+- Finite parts are separated cleanly from divergent parts
+
+### Pros
+
+- **Preserves Lorentz invariance:** The measure $d^d\ell$ is rotationally symmetric in $d$ dimensions.
+- **Preserves gauge invariance:** The gauge structure is maintained in $d$ dimensions.
+- **Preserves most symmetries:** Works for QED, QCD, electroweak theory.
+- **Systematic:** The divergent parts are isolated as poles in $\epsilon$, easy to track.
+- **Compatible with Feynman parameters** and other standard tricks.
+
+### Cons
+
+- **Conceptually strange:** What does it mean to compute in $3.99$ dimensions?
+- **Dimensionally-dependent objects:** $\gamma^5$ and $\epsilon^{\mu\nu\rho\sigma}$ are defined specifically in 4 dimensions. This creates subtleties in chiral theories.
+- **Doesn't preserve supersymmetry:** Dimensional regularization breaks SUSY because different numbers of bosonic and fermionic degrees of freedom exist in different dimensions.
+
+Despite these subtleties, dimensional regularization is the workhorse of modern loop calculations.
+
+### Basic Dim-Reg Identities
+
+The key integral:
+
+$$\int\frac{d^d\ell}{(2\pi)^d}\frac{1}{(\ell^2 - \Delta + i\epsilon)^n} = \frac{(-1)^n\, i}{(4\pi)^{d/2}}\frac{\Gamma(n - d/2)}{\Gamma(n)}\Delta^{d/2 - n}$$
+
+For $n = 2$ and $d = 4 - 2\epsilon$:
+
+$$\int\frac{d^d\ell}{(2\pi)^d}\frac{1}{(\ell^2 - \Delta)^2} = \frac{i}{(4\pi)^{d/2}}\frac{\Gamma(\epsilon)}{\Gamma(2)}\Delta^{-\epsilon}$$
+
+As $\epsilon \to 0$, $\Gamma(\epsilon) \sim 1/\epsilon - \gamma_E + O(\epsilon)$ where $\gamma_E \approx 0.577$ is the Euler-Mascheroni constant. The $1/\epsilon$ pole is the divergence; the $-\gamma_E$ is finite.
+
+### Couplings in $d$ Dimensions
+
+In $d$ dimensions, coupling constants are not dimensionless. For QED:
+
+$$\mathcal{L}_{\text{int}} = -e\bar\psi\gamma^\mu\psi A_\mu$$
+
+has $[\bar\psi\psi] = d-1$ and $[A_\mu] = (d-2)/2$, giving $[e] = 4 - d = 2\epsilon$.
+
+So $e$ has positive dimension in $d < 4$. To keep the canonical dimensionless coupling, introduce an arbitrary mass scale $\mu$:
+
+$$e \to e\mu^\epsilon$$
+
+The scale $\mu$ is unphysical; it's introduced purely for dimensional consistency in dim reg. Physical observables must be independent of $\mu$ at any given order in perturbation theory. This is encoded in the **renormalization group equations** (document 8).
+
+---
+
+## 8. Feynman Parameters and Loop Integrals
+
+A standard trick for evaluating multi-propagator loop integrals.
+
+### The Feynman Parameter Identity
+
+$$\frac{1}{A_1 A_2 \cdots A_n} = (n-1)!\int_0^1 dx_1\cdots dx_n\, \delta\left(1 - \sum x_i\right)\frac{1}{[x_1 A_1 + \cdots + x_n A_n]^n}$$
+
+This converts a product of propagators into a single combined propagator at the cost of introducing Feynman parameters $x_i$ to integrate over.
+
+For two factors:
+
+$$\frac{1}{A B} = \int_0^1 dx\, \frac{1}{[xA + (1-x)B]^2}$$
+
+### The Strategy
+
+For a two-propagator loop:
+
+1. Combine propagators using Feynman parameters
+2. Shift the loop momentum to eliminate linear terms
+3. The integrand becomes a function of $\ell^2$ only (Lorentz invariance)
+4. Evaluate the $\ell$ integral using dim-reg identities
+5. Finally, integrate over the Feynman parameter
+
+### Example: Two-Propagator Integral
+
+Consider:
+
+$$I = \int\frac{d^d\ell}{(2\pi)^d}\frac{1}{(\ell^2 - m_1^2)((\ell - q)^2 - m_2^2)}$$
+
+**Step 1:** Feynman parameter:
+
+$$\frac{1}{AB} = \int_0^1 dx\,\frac{1}{(xA + (1-x)B)^2}$$
+
+With $A = \ell^2 - m_1^2$ and $B = (\ell - q)^2 - m_2^2$:
+
+$$xA + (1-x)B = x(\ell^2 - m_1^2) + (1-x)((\ell-q)^2 - m_2^2)$$
+
+$$= \ell^2 - 2(1-x)\ell\cdot q + (1-x)q^2 - xm_1^2 - (1-x)m_2^2$$
+
+**Step 2:** Complete the square in $\ell$. Let $\ell' = \ell - (1-x)q$:
+
+$$= \ell'^2 + (1-x)q^2 - (1-x)^2 q^2 - xm_1^2 - (1-x)m_2^2$$
+
+$$= \ell'^2 - \Delta$$
+
+where $\Delta \equiv x m_1^2 + (1-x)m_2^2 - x(1-x)q^2$.
+
+**Step 3:** The integrand is now a function of $\ell'^2$:
+
+$$I = \int_0^1 dx\int\frac{d^d\ell'}{(2\pi)^d}\frac{1}{(\ell'^2 - \Delta)^2}$$
+
+**Step 4:** Use the standard dim-reg identity:
+
+$$\int\frac{d^d\ell'}{(2\pi)^d}\frac{1}{(\ell'^2 - \Delta)^2} = \frac{i}{(4\pi)^{d/2}}\frac{\Gamma(2 - d/2)}{\Gamma(2)}\Delta^{d/2 - 2}$$
+
+$$= \frac{i}{(4\pi)^{d/2}}\Gamma(\epsilon)\Delta^{-\epsilon}$$
+
+**Step 5:** Expand in $\epsilon$ and integrate over $x$. The divergent part is straightforward; the finite part requires some care.
+
+This is the template for every one-loop calculation. Master it, and you can compute any one-loop integral in QFT.
+
+---
+
+## 9. Worked Example: The Electron Self-Energy
+
+Let's apply the tools to the electron self-energy.
+
+### The Integral
+
+$$-i\Sigma(p) = -e^2\int\frac{d^4k}{(2\pi)^4}\frac{\gamma^\mu(\slashed{p} - \slashed{k} + m)\gamma_\mu}{((p-k)^2 - m^2)(k^2)}$$
+
+(Where I'm suppressing the $i\epsilon$ for clarity and working in Feynman gauge.)
+
+### Step 1: Simplify the Numerator
+
+Use $\gamma^\mu(\slashed{p} - \slashed{k} + m)\gamma_\mu$. Apply $\gamma^\mu\gamma^\nu\gamma_\mu = -2\gamma^\nu$ (from the workbook) and $\gamma^\mu\gamma_\mu = 4$:
+
+$$\gamma^\mu(\slashed{p} - \slashed{k})\gamma_\mu = -2(\slashed{p} - \slashed{k})$$
+
+$$\gamma^\mu m\gamma_\mu = 4m$$
+
+So the numerator is $-2(\slashed{p} - \slashed{k}) + 4m = 4m - 2\slashed{p} + 2\slashed{k}$.
+
+### Step 2: Feynman Parameter
+
+Combine the two denominators:
+
+$$\frac{1}{((p-k)^2 - m^2)(k^2)} = \int_0^1 dx\frac{1}{(x((p-k)^2 - m^2) + (1-x)k^2)^2}$$
+
+Expand the combined denominator:
+
+$$x((p-k)^2 - m^2) + (1-x)k^2 = xp^2 - 2xp\cdot k + xk^2 - xm^2 + (1-x)k^2$$
+
+$$= k^2 - 2xp\cdot k + xp^2 - xm^2$$
+
+Complete the square: let $\ell = k - xp$:
+
+$$= \ell^2 - x^2 p^2 + xp^2 - xm^2 = \ell^2 + x(1-x)p^2 - xm^2$$
+
+Hmm, $x - x^2 = x(1-x)$. And we want $\Delta = xm^2 - x(1-x)p^2$? Let me recheck. The standard form is $\ell^2 - \Delta$:
+
+$$\ell^2 + x(1-x)p^2 - xm^2 = \ell^2 - [xm^2 - x(1-x)p^2] = \ell^2 - \Delta$$
+
+where $\Delta = xm^2 - x(1-x)p^2$.
+
+### Step 3: Shift the Loop Momentum
+
+With $k = \ell + xp$, the numerator becomes:
+
+$$4m - 2\slashed{p} + 2\slashed{k} = 4m - 2\slashed{p} + 2(\slashed{\ell} + x\slashed{p}) = 4m - 2(1-x)\slashed{p} + 2\slashed{\ell}$$
+
+### Step 4: The $\ell$-Linear Term Vanishes
+
+The $2\slashed{\ell}$ term, when integrated over $d^d\ell$, vanishes by symmetry (odd integrand in $\ell$).
+
+### Step 5: Evaluate the Integral
+
+$$-i\Sigma(p) = -e^2\int_0^1 dx\int\frac{d^d\ell}{(2\pi)^d}\frac{4m - 2(1-x)\slashed{p}}{(\ell^2 - \Delta)^2}$$
+
+Using the standard dim-reg identity:
+
+$$\int\frac{d^d\ell}{(2\pi)^d}\frac{1}{(\ell^2 - \Delta)^2} = \frac{i\Gamma(\epsilon)}{(4\pi)^{2-\epsilon}}\Delta^{-\epsilon}$$
+
+So:
+
+$$-i\Sigma(p) = -e^2\int_0^1 dx\,\frac{i\Gamma(\epsilon)}{(4\pi)^{2-\epsilon}}[4m - 2(1-x)\slashed{p}]\Delta^{-\epsilon}$$
+
+$$\Sigma(p) = \frac{e^2 \Gamma(\epsilon)}{(4\pi)^{2-\epsilon}}\int_0^1 dx\,[4m - 2(1-x)\slashed{p}]\Delta^{-\epsilon}$$
+
+### Step 6: Expand in $\epsilon$
+
+Use $\Gamma(\epsilon) = 1/\epsilon - \gamma_E + O(\epsilon)$ and $\Delta^{-\epsilon} = 1 - \epsilon\ln\Delta + O(\epsilon^2)$:
+
+$$\Sigma(p) = \frac{e^2}{(4\pi)^2}\int_0^1 dx\,[4m - 2(1-x)\slashed{p}]\left[\frac{1}{\epsilon} - \gamma_E + \ln(4\pi) - \ln\Delta + O(\epsilon)\right]$$
+
+### The Divergence Structure
+
+Separating into divergent and finite parts:
+
+$$\Sigma(p) = \frac{e^2}{(4\pi)^2}\left[\frac{1}{\epsilon}\int_0^1 dx\,[4m - 2(1-x)\slashed{p}] + \text{finite}\right]$$
+
+The $\int_0^1 dx$ is just 1 for the $4m$ term and $\int_0^1 (1-x)dx = 1/2$ for the $\slashed{p}$ term:
+
+$$\Sigma^{\rm div}(p) = \frac{e^2}{(4\pi)^2}\left[\frac{4m}{\epsilon} - \frac{\slashed{p}}{\epsilon}\right] = \frac{e^2}{16\pi^2\epsilon}[4m - \slashed{p}]$$
+
+The divergent part is linear in $\slashed{p}$ and proportional to $m$.
+
+### Interpretation
+
+The divergent part has the structure $A\slashed{p} + Bm$ with $A, B \propto 1/\epsilon$.
+
+- The $A\slashed{p}$ piece can be absorbed by renormalizing the *field strength* (wave function renormalization, $Z_2$).
+- The $Bm$ piece can be absorbed by renormalizing the *mass* ($m \to m + \delta m$).
+
+Both divergences fit into redefinitions of parameters already present in the QED Lagrangian. This is the power of renormalizability; the loop corrections don't generate new operator structures.
+
+Document 7 will show how these absorptions are done systematically.
+
+---
+
+## 10. Worked Example: Vacuum Polarization
+
+The vacuum polarization is the most consequential one-loop QED diagram because it leads to the running of the electromagnetic coupling.
+
+### The Integral
+
+$$i\Pi^{\mu\nu}(q) = -e^2\int\frac{d^d\ell}{(2\pi)^d}\frac{\text{Tr}[\gamma^\mu(\slashed{\ell} + m)\gamma^\nu(\slashed{\ell} - \slashed{q} + m)]}{(\ell^2 - m^2)((\ell - q)^2 - m^2)}$$
+
+### Step 1: Compute the Trace
+
+$$\text{Tr}[\gamma^\mu(\slashed{\ell} + m)\gamma^\nu(\slashed{\ell} - \slashed{q} + m)]$$
+
+$$= \text{Tr}[\gamma^\mu\slashed{\ell}\gamma^\nu(\slashed{\ell} - \slashed{q})] + m\text{Tr}[\gamma^\mu\gamma^\nu(\slashed{\ell} - \slashed{q})] + m\text{Tr}[\gamma^\mu\slashed{\ell}\gamma^\nu] + m^2\text{Tr}[\gamma^\mu\gamma^\nu]$$
+
+The odd-gamma traces (terms with 3 gammas) vanish. Left:
+
+$$\text{Tr}[\gamma^\mu\slashed{\ell}\gamma^\nu(\slashed{\ell} - \slashed{q})] + m^2\text{Tr}[\gamma^\mu\gamma^\nu]$$
+
+**First term:** $\text{Tr}[\gamma^\mu\gamma^\alpha\gamma^\nu\gamma^\beta]\ell_\alpha(\ell_\beta - q_\beta)$. Using the 4-gamma trace identity:
+
+$$= 4(\eta^{\mu\alpha}\eta^{\nu\beta} - \eta^{\mu\nu}\eta^{\alpha\beta} + \eta^{\mu\beta}\eta^{\alpha\nu})\ell_\alpha(\ell_\beta - q_\beta)$$
+
+$$= 4[\ell^\mu(\ell - q)^\nu - \eta^{\mu\nu}\ell\cdot(\ell-q) + \ell^\nu(\ell - q)^\mu]$$
+
+**Second term:** $m^2\cdot 4\eta^{\mu\nu}$.
+
+**Total:**
+
+$$\text{Tr}[\ldots] = 4[\ell^\mu(\ell-q)^\nu + \ell^\nu(\ell - q)^\mu - \eta^{\mu\nu}\ell\cdot(\ell-q)] + 4m^2\eta^{\mu\nu}$$
+
+### Step 2: Feynman Parameter
+
+$$\frac{1}{(\ell^2 - m^2)((\ell - q)^2 - m^2)} = \int_0^1 dx\,\frac{1}{(\ell^2 - 2x\ell\cdot q + xq^2 - m^2)^2}$$
+
+Complete the square: $\ell' = \ell - xq$, giving $\ell^2 - 2x\ell\cdot q + xq^2 = \ell'^2 - x^2q^2 + xq^2 = \ell'^2 + x(1-x)q^2$.
+
+So the denominator is $(\ell'^2 - \Delta)^2$ with $\Delta = m^2 - x(1-x)q^2$.
+
+### Step 3: Rewrite Numerator in $\ell'$
+
+With $\ell = \ell' + xq$:
+
+$$\ell^\mu(\ell - q)^\nu = (\ell' + xq)^\mu(\ell' + (x-1)q)^\nu$$
+
+Expanding:
+
+$$= \ell'^\mu\ell'^\nu + (x-1)\ell'^\mu q^\nu + xq^\mu\ell'^\nu + x(x-1)q^\mu q^\nu$$
+
+Terms linear in $\ell'$ vanish on integration. The symmetric combination:
+
+$$\ell^\mu(\ell - q)^\nu + \ell^\nu(\ell - q)^\mu = 2\ell'^\mu\ell'^\nu + 2x(x-1)q^\mu q^\nu + [\text{linear in }\ell', \text{ drop}]$$
+
+And $\ell\cdot(\ell - q)$: similar computation gives $\ell'^2 + x(x-1)q^2$.
+
+So after dropping linear-in-$\ell'$ terms:
+
+$$\text{Numerator} = 4[2\ell'^\mu\ell'^\nu + 2x(x-1)q^\mu q^\nu - \eta^{\mu\nu}(\ell'^2 + x(x-1)q^2)] + 4m^2\eta^{\mu\nu}$$
+
+### Step 4: Use the Tensor Integral Identities
+
+In $d$ dimensions:
+
+$$\int\frac{d^d\ell'}{(2\pi)^d}\frac{\ell'^\mu\ell'^\nu}{(\ell'^2 - \Delta)^n} = \frac{\eta^{\mu\nu}}{d}\int\frac{d^d\ell'}{(2\pi)^d}\frac{\ell'^2}{(\ell'^2 - \Delta)^n}$$
+
+(By Lorentz invariance, $\ell'^\mu\ell'^\nu$ must be proportional to $\eta^{\mu\nu}$; the coefficient is obtained by taking the trace.)
+
+### Step 5: The Result (Schematic)
+
+After all the algebra (this is a long computation; I'll cite the result):
+
+$$i\Pi^{\mu\nu}(q) = i(q^\mu q^\nu - q^2\eta^{\mu\nu})\Pi(q^2)$$
+
+where:
+
+$$\Pi(q^2) = \frac{e^2}{2\pi^2}\int_0^1 dx\, x(1-x)\left[\frac{1}{\epsilon} - \ln\Delta + \text{finite}\right]$$
+
+### The Gauge-Invariant Structure
+
+Crucially, $\Pi^{\mu\nu}$ has the structure $(q^\mu q^\nu - q^2\eta^{\mu\nu})\Pi(q^2)$. The transverse projector $q^\mu q^\nu - q^2\eta^{\mu\nu}$ satisfies $q_\mu(q^\mu q^\nu - q^2\eta^{\mu\nu}) = q^2 q^\nu - q^2 q^\nu = 0$; **it's transverse to $q$**.
+
+This is required by gauge invariance (Ward identity for the photon self-energy): the photon must remain massless, which requires $q_\mu\Pi^{\mu\nu}(q) = 0$.
+
+The appearance of this structure is a nontrivial check; the naive power counting gave quadratic divergence, but gauge invariance forces the result to factor out a $q^2$, reducing the actual divergence to logarithmic.
+
+### The Physical Consequence
+
+The function $\Pi(q^2)$ modifies the photon propagator. At the level of a full geometric series of vacuum polarization insertions:
+
+$$\frac{1}{q^2} \to \frac{1}{q^2[1 - \Pi(q^2)]}$$
+
+This makes the *effective* electromagnetic coupling depend on $q^2$:
+
+$$\alpha_{\rm eff}(q^2) = \frac{\alpha(0)}{1 - \Pi(q^2)}$$
+
+At high $q^2$, $\Pi(q^2) \sim (e^2/12\pi^2)\ln(q^2/m^2)$ (positive), so $\alpha$ *increases* with energy. This is the **running of the fine-structure constant**:
+
+$$\alpha(M_Z^2) \approx 1/128$$
+
+compared to the low-energy value $\alpha(0) \approx 1/137$. Measured and confirmed at LEP.
+
+We'll develop this properly in document 8 (renormalization group). For now: the divergent structure of vacuum polarization carries real physical content.
+
+---
+
+## 11. Worked Example: The Vertex Correction
+
+The vertex correction gives rise to the famous anomalous magnetic moment of the electron; one of the most precisely tested predictions in all of science.
+
+### The Integral
+
+The one-loop vertex correction is:
+
+$$\bar u(p')\Lambda^\mu(p', p)u(p) = \int\frac{d^4k}{(2\pi)^4}\bar u(p')\Gamma u(p)$$
+
+where $\Gamma$ is a product of gamma matrices from the vertex plus fermion propagators plus a photon propagator; a three-factor denominator.
+
+### The Structure of the Result
+
+After much algebra, the vertex function has the general form:
+
+$$\bar u(p')\Lambda^\mu u(p) = \bar u(p')\left[F_1(q^2)\gamma^\mu + F_2(q^2)\frac{i\sigma^{\mu\nu}q_\nu}{2m}\right]u(p)$$
+
+where $q = p' - p$ and $\sigma^{\mu\nu} = \frac{i}{2}[\gamma^\mu, \gamma^\nu]$. The two functions $F_1$ and $F_2$ are the **form factors**.
+
+**$F_1(q^2)$** is the electric charge form factor. It's logarithmically divergent, and after renormalization is forced to satisfy $F_1(0) = 1$ (the electron has its physical charge).
+
+**$F_2(q^2)$** is the anomalous magnetic moment form factor. Remarkably, it's **finite**; no renormalization needed.
+
+### The One-Loop Result for $F_2(0)$
+
+After working through the integrals:
+
+$$F_2(0) = \frac{\alpha}{2\pi}$$
+
+The anomalous magnetic moment of the electron, $a_e = (g-2)/2 = F_2(0)$, is predicted at one loop to be:
+
+$$a_e^{(1\text{-loop})} = \frac{\alpha}{2\pi} \approx 0.00116$$
+
+This is **Schwinger's 1948 result**; the first quantitative test of QED loop corrections, derived in one of the foundational papers of renormalized QFT.
+
+### Higher Orders
+
+The calculation has been pushed to five loops (involving diagrams with hundreds of terms and requiring significant numerical work). The full QED prediction:
+
+$$a_e = 0.00115965218073(28)$$
+
+### Experimental Value
+
+Current best measurement:
+
+$$a_e = 0.00115965218091(26)$$
+
+**Agreement to better than one part in $10^{10}$.** This is perhaps the most precise confirmed prediction in all of physics.
+
+### A Key Feature: Finite Prediction
+
+Note: $F_2(0) = \alpha/(2\pi)$ is completely finite; no poles in $\epsilon$, no cutoff dependence. This is a genuine prediction of QED, not something we've fit or tuned.
+
+The reason: $F_2$ multiplies an operator ($\sigma^{\mu\nu}q_\nu$) that doesn't appear in the original QED Lagrangian. So it can't receive contributions from divergent pieces that get absorbed into bare parameters. Whatever finite coefficient loop integrals give is the answer.
+
+This is a common story in QFT: some quantities are renormalized (absorbing divergences), while others are genuine predictions (finite, computable).
+
+---
+
+## 12. Infrared Divergences: A Different Problem
+
+UV divergences come from large loop momenta. But some loop integrals diverge at *low* momenta too; **infrared (IR) divergences**.
+
+### Where IR Divergences Appear
+
+Consider a one-loop diagram where a virtual photon with momentum $k$ is emitted and reabsorbed by an electron. The photon is massless. As $k \to 0$:
+
+- Photon propagator: $1/k^2 \to \infty$
+- Phase space: $d^4k \sim k^3 dk$; finite contribution
+
+Integrated, the divergence is logarithmic in the photon energy cutoff.
+
+### IR Divergences Are Physical
+
+Unlike UV divergences, IR divergences reflect real physics: any charged particle radiates arbitrarily soft photons (remember the classical $d\omega/\omega$ spectrum of soft photon emission).
+
+**The resolution:** IR divergences in loop diagrams cancel against IR divergences in *real emission* diagrams; processes where the particle emits a real soft photon. When you sum both contributions and integrate over photon phase space, the divergences cancel.
+
+This is the **Bloch-Nordsieck theorem** (1937). Any physical observable (like a cross section measured with finite detector resolution) is IR-finite.
+
+### Why This Matters
+
+In QED, you don't actually compute single-particle scattering amplitudes; you compute inclusive cross sections, summing over emission of any number of soft photons below some energy threshold. These inclusive observables are IR-finite.
+
+In QCD, IR divergences are more severe (gluon is both emitted and exchanged, and it's non-abelian). The resolution involves **jets**; grouping collinear and soft radiation into inclusive quantities that are calculable.
+
+### Bottom Line
+
+- **UV divergences:** Require regularization + renormalization. Absorb into physical parameters.
+- **IR divergences:** Cancel automatically between virtual and real emission, *if* you compute the right (inclusive) observable.
+
+Loop calculations in QED must handle both. The technology is by now entirely standard; what the divergences mean philosophically is still interesting.
+
+---
+
+## 13. Preview: Renormalization
+
+Document 7 will make the loop divergence story systematic. The plan:
+
+**Step 1: Identify the structure of divergences.** In QED, all one-loop UV divergences take specific forms that correspond to specific terms already in the Lagrangian. This is the payoff of power counting plus gauge invariance.
+
+**Step 2: Introduce counterterms.** Write the Lagrangian as $\mathcal{L} = \mathcal{L}_{\rm physical} + \mathcal{L}_{\rm counterterms}$. The counterterms have specific forms (mass counterterm $\delta m$, field-strength counterterm $\delta_2$, charge counterterm $\delta_1$, etc.). They absorb the divergences.
+
+**Step 3: Renormalization schemes.** Different choices for how to fix the counterterms give different schemes:
+- **On-shell scheme:** Define parameters by matching to on-shell masses and couplings at specific kinematic points.
+- **Minimal subtraction (MS) or $\overline{MS}$:** Subtract only the pole in $\epsilon$ (and certain "universal" finite pieces). Most convenient for dim-reg calculations.
+
+**Step 4: Renormalization group flow.** Different schemes give different finite answers, but physical observables must be independent of scheme. This independence is encoded in the **renormalization group equations**, which determine how couplings flow with scale. Document 8 will develop this in full.
+
+The end result: a finite, predictive theory where all divergences are absorbed into measurable parameters, and everything else can be computed from first principles.
+
+---
+
+## 14. Appendix: Loop Integral Toolkit
+
+### Wick Rotation
+
+To evaluate Lorentzian integrals, rotate to Euclidean space:
+
+$$\ell^0 \to i\ell^0_E, \quad \ell_E^2 = (\ell^0_E)^2 + |\vec\ell|^2$$
+
+This turns $\ell^2 - m^2 \to -(\ell_E^2 + m^2)$, making the integrand positive and the integral obviously convergent (or divergent in a way amenable to regularization).
+
+### Standard Dim-Reg Integral
+
+For $n \geq 1$:
+
+$$\int\frac{d^d\ell}{(2\pi)^d}\frac{1}{(\ell^2 - \Delta + i\epsilon)^n} = \frac{(-1)^n\, i}{(4\pi)^{d/2}}\frac{\Gamma(n - d/2)}{\Gamma(n)}\frac{1}{\Delta^{n - d/2}}$$
+
+### Tensor Reductions
+
+$$\int\frac{d^d\ell}{(2\pi)^d}\frac{\ell^\mu}{(\ell^2 - \Delta)^n} = 0$$
+
+(odd in $\ell$).
+
+$$\int\frac{d^d\ell}{(2\pi)^d}\frac{\ell^\mu\ell^\nu}{(\ell^2 - \Delta)^n} = \frac{\eta^{\mu\nu}}{d}\int\frac{d^d\ell}{(2\pi)^d}\frac{\ell^2}{(\ell^2 - \Delta)^n}$$
+
+Then use:
+
+$$\int\frac{d^d\ell}{(2\pi)^d}\frac{\ell^2}{(\ell^2 - \Delta)^n} = \Delta\int\frac{d^d\ell}{(2\pi)^d}\frac{1}{(\ell^2 - \Delta)^{n-1}} + \int\frac{d^d\ell}{(2\pi)^d}\frac{\Delta}{(\ell^2 - \Delta)^n}$$
+
+(algebraic identity; add and subtract $\Delta$).
+
+### Feynman Parameter Identities
+
+**Two factors:**
+
+$$\frac{1}{AB} = \int_0^1 dx\,\frac{1}{[xA + (1-x)B]^2}$$
+
+**Three factors:**
+
+$$\frac{1}{ABC} = 2\int_0^1 dx_1 dx_2 dx_3\,\delta(1 - x_1 - x_2 - x_3)\frac{1}{[x_1 A + x_2 B + x_3 C]^3}$$
+
+**$n$ factors:**
+
+$$\frac{1}{A_1 \cdots A_n} = (n-1)!\int_0^1 dx_1\cdots dx_n\,\delta\left(1 - \sum x_i\right)\frac{1}{[\sum x_i A_i]^n}$$
+
+### Gamma Function Expansion
+
+$$\Gamma(\epsilon) = \frac{1}{\epsilon} - \gamma_E + O(\epsilon)$$
+
+where $\gamma_E \approx 0.577$ is the Euler-Mascheroni constant.
+
+$$\Gamma(n + \epsilon) = (n-1)!\left[1 + \epsilon\left(-\gamma_E + \sum_{k=1}^{n-1}\frac{1}{k}\right) + O(\epsilon^2)\right]$$
+
+### Useful $d = 4 - 2\epsilon$ Expansions
+
+$$\Delta^{-\epsilon} = 1 - \epsilon\ln\Delta + \frac{\epsilon^2}{2}\ln^2\Delta + \cdots$$
+
+$$\frac{1}{(4\pi)^{d/2}} = \frac{1}{(4\pi)^2}(4\pi)^\epsilon$$
+
+The scale $\mu$ enters as $\mu^\epsilon$ or $(\mu^2)^\epsilon$ to keep couplings dimensionless.
+
+### Common Divergent Structures
+
+The divergent parts of one-loop QED integrals take the forms:
+
+- Electron self-energy: $\Sigma(p) \ni \frac{e^2}{16\pi^2\epsilon}[a\slashed{p} + bm]$
+- Vacuum polarization: $\Pi(q^2) \ni \frac{e^2}{12\pi^2\epsilon}$
+- Vertex: $\Lambda^\mu \ni \frac{e^2}{16\pi^2\epsilon}\gamma^\mu \cdot c$
+
+(with specific coefficients $a$, $b$, $c$).
+
+### Useful Books
+
+- **Peskin & Schroeder, Chapter 10:** the standard reference for one-loop QED
+- **Srednicki, Chapters 14-17:** dim-reg done cleanly
+- **Collins, *Renormalization*:** deep and technical
+- **Schwartz, Chapters 16-19:** modern pedagogical presentation
+- **'t Hooft and Veltman, original paper:** for historical interest
+
+### Problems to Work
+
+1. Verify the basic dim-reg integral by direct calculation: $\int d^d\ell/(2\pi)^d\,1/(\ell^2 - \Delta)^2 = i\Gamma(\epsilon)/(4\pi)^{d/2}\cdot\Delta^{-\epsilon}$. Do the Wick rotation carefully.
+
+2. Compute the divergent part of the electron self-energy $\Sigma(p)$ in full detail; fill in the steps I sketched.
+
+3. Derive the transversality of $\Pi^{\mu\nu}$: show $q_\mu\Pi^{\mu\nu}(q) = 0$ from gauge invariance.
+
+4. Compute $F_2(0)$ at one loop to confirm Schwinger's result $\alpha/(2\pi)$. This is genuinely challenging but entirely within reach.
+
+5. Work through the counting for the electron self-energy: why does $D = 1$ reduce to a logarithmic divergence after Lorentz-invariant evaluation?
+
+Problems 2 and 4 are the benchmarks. Do them (or at least start them) to internalize how loop calculations actually work.
+
+---
+
+## Closing Note
+
+This document confronted the problem of loop divergences head-on. The key ideas:
+
+**Power counting** tells you the superficial degree of divergence: how bad an integral can get. Symmetries (Lorentz, gauge) often reduce this to logarithmic.
+
+**Regularization** makes divergent integrals finite in a controlled way. Dimensional regularization is the modern standard; it preserves Lorentz and gauge invariance, and isolates divergences cleanly as $1/\epsilon$ poles.
+
+**Feynman parameters** combine multiple propagators into a single quadratic form in the loop momentum, reducing any one-loop integral to a standard form.
+
+**The three QED divergent diagrams** (self-energy, vacuum polarization, vertex correction) contain the essential UV structure. Their divergences fit into redefinitions of the Lagrangian parameters; *renormalizability*.
+
+**Finite loop predictions** (like $F_2(0) = \alpha/(2\pi)$) are genuine theoretical predictions testable to extraordinary precision.
+
+**IR divergences** are cured by summing over real soft photon emission in physical (inclusive) observables.
+
+### What's Next
+
+Document 7 (renormalization) shows how to systematically absorb the divergences into redefinitions of physical parameters. The key idea: the Lagrangian parameters (bare mass, bare coupling, bare fields) aren't what you measure. What you measure are the renormalized parameters; and these are finite.
+
+Document 8 (renormalization group) goes deeper: the renormalized parameters *run* with energy scale. The beta function $\beta(g)$ tells you how fast. In QED, the coupling grows logarithmically with energy. In QCD, the coupling *decreases* with energy; asymptotic freedom, the Nobel-worthy discovery of Gross, Politzer, and Wilczek.
+
+These two concepts; renormalization and the renormalization group; transform QFT from a collection of tricks into a theory of remarkable conceptual depth. The loop divergences aren't a problem. They're a feature, encoding how physics at different scales connect.
+
+You've seen the problem. The solution comes next.

@@ -1,0 +1,276 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import SubwayMap from '../../components/SubwayMap.svg?raw';
+
+const stations = await getCollection('curriculum');
+stations.sort((a, b) => a.data.stationNumber - b.data.stationNumber);
+
+const lines = [
+  {
+    key: 'Foundation Way',
+    cssKey: 'foundation',
+    name: 'The Foundation Way',
+    desc: 'Where the journey begins. Newtonian mechanics, classical EM, the road to modern physics.',
+  },
+  {
+    key: 'Math & Quantum Hub',
+    cssKey: 'math',
+    name: 'The Math & Quantum Hub',
+    desc: 'Mathematical foundations and quantum mechanics, the interchange to the Trunk.',
+  },
+  {
+    key: 'Quantum Trunk',
+    cssKey: 'quantum',
+    name: 'The Quantum Trunk',
+    desc: 'The spine of the curriculum: special relativity through the Standard Model.',
+  },
+  {
+    key: 'Advanced QFT Loop',
+    cssKey: 'advanced',
+    name: 'The Advanced QFT Loop',
+    desc: 'What you reach after QFT XII: effective theories, anomalies, instantons.',
+  },
+  {
+    key: 'Classical Branch',
+    cssKey: 'classical',
+    name: 'The Classical Branch',
+    desc: 'Lagrangian mechanics through statistical mechanics and condensed matter.',
+  },
+  {
+    key: 'Gravitational Spur',
+    cssKey: 'gravity',
+    name: 'The Gravitational Spur',
+    desc: 'General relativity through string theory and the quantum gravity frontier.',
+  },
+];
+
+const romanNumerals = ['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi','xii','xiii','xiv','xv','xvi','xvii','xviii','xix','xx','xxi','xxii','xxiii','xxiv','xxv','xxvi','xxvii','xxviii','xxix','xxx','xxxi','xxxii','xxxiii','xxxiv','xxxv','xxxvi','xxxvii','xxxviii'];
+---
+
+<Base
+  title="The Curriculum"
+  description="38 physics documents from Newton to quantum gravity. The full learning path, visualized as a Victorian railway chart."
+>
+  <div class="shell">
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&#8592;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span><span class="dot"></span><span>The Curriculum</span><span class="dot"></span><span>&sect; II</span>
+      </div>
+    </div>
+
+    <article id="main">
+      <header class="article-preamble">
+        <div class="article-section">The Curriculum &nbsp;&middot;&nbsp; &sect; II</div>
+        <h1 class="article-title">A Chart of the Territory.</h1>
+        <p class="article-subtitle">
+          Thirty-eight reference documents, mapped from <em>Physics 101</em> to the frontier of <em>quantum gravity</em>. The full path of study, with its junctions and its branches.
+        </p>
+      </header>
+
+      <div class="sigil-block" aria-hidden="true">
+        <img src="/images/donkey-sigil.png" alt="" width="160" />
+      </div>
+
+      <div class="intro-block">
+        <p>The curriculum is presented here as a <em>railway chart</em>, in the manner of a Victorian transit map. The thirty-eight reference documents are stations. Six lines connect them. The Quantum Trunk is the spine of the work, with the Classical Branch running alongside and the Gravitational Spur descending to the frontier. All routes terminate at <em>Paper&nbsp;I.</em></p>
+        <p>Click any station to read the document. The full station index follows below the chart.</p>
+      </div>
+
+      <figure class="map-wrap">
+        <div class="map-frame">
+          <div class="map-cartouche"><span class="map-cartouche-title">A Chart of the Curriculum</span></div>
+          <div class="map-plate">Pl. II</div>
+          <div class="map-ornament"><span class="mark">&#10086;</span>From the Press at Bend, Oregon &middot; MMXXVI</div>
+          <div class="map-scroll">
+            <Fragment set:html={SubwayMap} />
+          </div>
+          <div class="map-legend-wrap">
+            <p class="map-legend-title">Lines of the Curriculum</p>
+            <div class="map-legend-grid">
+              {lines.map(l => (
+                <div class="map-legend-row" data-line-filter={l.cssKey} role="button" tabindex="0" aria-pressed="false">
+                  <div class="map-legend-swatch">
+                    <div class={`swatch-${l.cssKey}`} style="width:50px"></div>
+                  </div>
+                  <span>{l.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div class="map-tooltip" data-map-tooltip aria-hidden="true">
+          <span class="map-tooltip-num" data-map-tooltip-num></span>
+          <span data-map-tooltip-label></span>
+        </div>
+      </figure>
+
+      <section class="station-index" aria-labelledby="index-head">
+        <header class="index-head">
+          <p class="index-head-mark" id="index-head">Index of Stations</p>
+          <h2 class="index-head-title">All Thirty-Eight, by Line.</h2>
+          <p class="index-head-sub">arranged in the order of the journey</p>
+        </header>
+
+        <div class="station-search" role="search">
+          <label class="station-search-label" for="station-search-input">Search</label>
+          <input
+            id="station-search-input"
+            class="station-search-input"
+            type="search"
+            placeholder="Filter by station name, title, or line…"
+            autocomplete="off"
+            data-station-search
+          />
+          <span class="station-search-count" data-station-count>38 of 38</span>
+          <button type="button" data-line-clear>Clear line filter</button>
+        </div>
+
+        <div class="index-grid" data-station-grid>
+          {lines.map(line => {
+            const lineStations = stations.filter(s => s.data.line === line.key);
+            return (
+              <div class={`line-block`} data-line={line.cssKey}>
+                <header class="line-block-head">
+                  <span class={`line-swatch line-swatch-${line.cssKey}`} aria-hidden="true"></span>
+                  <h3 class="line-name">{line.name}</h3>
+                  <p class="line-desc">{line.desc}</p>
+                </header>
+                <ol class="line-stations">
+                  {lineStations.map(s => {
+                    const ordinal = romanNumerals[s.data.stationNumber - 1] || s.data.stationNumber;
+                    return (
+                      <li data-station-haystack={`${s.data.classReportTitle} ${s.data.title} ${line.name}`.toLowerCase()}>
+                        <a href={`/curriculum/${s.id}`}>
+                          <span class="ord">{ordinal}.</span>
+                          <span class="name">{s.data.classReportTitle}</span>
+                          <em>{s.data.title}</em>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ol>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+</article>
+  </div>
+
+  <script is:inline define:vars={{ stationMap: Object.fromEntries(stations.map(s => [s.id, { num: s.data.stationNumber, label: s.data.classReportTitle }])) }}>
+    // ── Subway map: hover/focus tooltip ─────────────────────────────
+    (function () {
+      const tooltip = document.querySelector('[data-map-tooltip]');
+      const numEl = document.querySelector('[data-map-tooltip-num]');
+      const labelEl = document.querySelector('[data-map-tooltip-label]');
+      const wrap = document.querySelector('.map-scroll');
+      if (!tooltip || !wrap || !numEl || !labelEl) return;
+
+      function entryFromTarget(target) {
+        const anchor = target.closest('a[href^="/curriculum/"]');
+        if (!anchor) return null;
+        const slug = anchor.getAttribute('href').replace('/curriculum/', '').replace(/\/$/, '');
+        const entry = stationMap[slug];
+        if (!entry) return null;
+        return { anchor, entry };
+      }
+
+      function show(e) {
+        const hit = entryFromTarget(e.target);
+        if (!hit) return;
+        numEl.textContent = 'Station ' + String(hit.entry.num).padStart(2, '0');
+        labelEl.textContent = hit.entry.label;
+        const rect = hit.anchor.getBoundingClientRect();
+        const wrapRect = wrap.getBoundingClientRect();
+        tooltip.style.left = (rect.left - wrapRect.left + rect.width / 2) + 'px';
+        tooltip.style.top = (rect.top - wrapRect.top) + 'px';
+        tooltip.classList.add('is-visible');
+        tooltip.setAttribute('aria-hidden', 'false');
+      }
+      function hide() {
+        tooltip.classList.remove('is-visible');
+        tooltip.setAttribute('aria-hidden', 'true');
+      }
+
+      wrap.addEventListener('mouseover', show);
+      wrap.addEventListener('focusin', show);
+      wrap.addEventListener('mouseout', hide);
+      wrap.addEventListener('focusout', hide);
+
+      // Arrow-key navigation between stations (left/right traverses tab order)
+      wrap.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        const anchors = Array.from(wrap.querySelectorAll('a[href^="/curriculum/"]'));
+        const active = document.activeElement;
+        const idx = anchors.indexOf(active);
+        if (idx === -1) return;
+        e.preventDefault();
+        const next = e.key === 'ArrowRight' ? idx + 1 : idx - 1;
+        const target = anchors[(next + anchors.length) % anchors.length];
+        if (target) target.focus();
+      });
+    })();
+
+    // ── Station search + line filter ────────────────────────────────
+    (function () {
+      const input = document.querySelector('[data-station-search]');
+      const countEl = document.querySelector('[data-station-count]');
+      const grid = document.querySelector('[data-station-grid]');
+      const legendRows = document.querySelectorAll('[data-line-filter]');
+      const clearBtn = document.querySelector('[data-line-clear]');
+      const searchBar = document.querySelector('.station-search');
+      if (!input || !grid || !countEl || !searchBar) return;
+
+      let activeLine = null;
+
+      function applyFilters() {
+        const q = input.value.trim().toLowerCase();
+        let visible = 0, total = 0;
+        grid.querySelectorAll('.line-block').forEach((block) => {
+          const blockLine = block.getAttribute('data-line');
+          const lineHidden = activeLine && activeLine !== blockLine;
+          let blockVisible = 0;
+          block.querySelectorAll('li').forEach((li) => {
+            total++;
+            const hay = li.getAttribute('data-station-haystack') || '';
+            const matches = !q || hay.indexOf(q) !== -1;
+            const hidden = lineHidden || !matches;
+            li.classList.toggle('is-hidden', hidden);
+            if (!hidden) { blockVisible++; visible++; }
+          });
+          block.classList.toggle('is-hidden', lineHidden);
+          block.classList.toggle('is-empty', !lineHidden && blockVisible === 0);
+        });
+        countEl.textContent = visible + ' of ' + total;
+        searchBar.classList.toggle('is-filtered', !!activeLine);
+      }
+
+      input.addEventListener('input', applyFilters);
+
+      legendRows.forEach((row) => {
+        const toggle = () => {
+          const lineKey = row.getAttribute('data-line-filter');
+          activeLine = activeLine === lineKey ? null : lineKey;
+          legendRows.forEach((r) => {
+            r.setAttribute('aria-pressed', String(r.getAttribute('data-line-filter') === activeLine));
+          });
+          applyFilters();
+        };
+        row.addEventListener('click', toggle);
+        row.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        });
+      });
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          activeLine = null;
+          legendRows.forEach((r) => r.setAttribute('aria-pressed', 'false'));
+          applyFilters();
+        });
+      }
+    })();
+  </script>
+</Base>

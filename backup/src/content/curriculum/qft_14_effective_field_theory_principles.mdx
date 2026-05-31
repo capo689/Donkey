@@ -1,0 +1,821 @@
+---
+title: "QFT XIV: Effective Field Theory"
+stationNumber: 26
+line: "Advanced QFT Loop"
+date: 2026-05-07
+backdated: true
+prerequisites: [25]
+extendsTo: [27]
+classReportTitle: "The most useful idea in physics."
+---
+
+*The most widely used framework in modern theoretical physics. Where we stop asking "what's the true theory?" and start asking "what theory works at my scale?"*
+
+Documents 1-13 built up the Standard Model as a quantum field theory. But here's a truth about the Standard Model that's easy to miss: **it's almost certainly not a fundamental theory.** Quantum gravity isn't in it. Dark matter isn't. Neutrino masses are awkward. Most physicists suspect the SM is an *effective field theory* valid below some energy scale, above which new physics takes over.
+
+This reframing; from "fundamental theory" to "effective theory"; isn't a defeat. It's arguably the most productive organizing principle in modern physics. Almost every successful calculation in particle physics, condensed matter, nuclear physics, and cosmology uses EFT methods, explicitly or implicitly. Fermi theory is an EFT. Chiral perturbation theory is an EFT. General relativity (as a QFT) is an EFT. HQET is an EFT. NRQCD is an EFT. SMEFT is an EFT. Even QED and QCD, at scales below the Planck mass, are EFTs of something more fundamental.
+
+This document develops the general framework. Documents 15 and 16 apply it in depth.
+
+### Prerequisites
+
+- QFT documents 1-13 (especially 6-8 for renormalization/RG, 12 for SM)
+- Dimensional analysis and power counting
+
+### Conventions
+
+- Mostly-minus metric
+- $\hbar = c = 1$
+- Operators labeled by mass dimension: $[\mathcal{O}]_d$ means dimension-$d$
+
+---
+
+## Table of Contents
+
+1. [What Is an EFT?](#1-what-is-an-eft)
+2. [The Philosophy Shift](#2-the-philosophy-shift)
+3. [The EFT Construction Algorithm](#3-the-eft-construction-algorithm)
+4. [Power Counting](#4-power-counting)
+5. [Operator Dimensions and Classifications](#5-operator-dimensions-and-classifications)
+6. [Matching: Connecting UV and IR Theories](#6-matching-connecting-uv-and-ir-theories)
+7. [Running of Wilson Coefficients](#7-running-of-wilson-coefficients)
+8. [The Decoupling Theorem](#8-the-decoupling-theorem)
+9. [Top-Down vs. Bottom-Up EFTs](#9-top-down-vs-bottom-up-efts)
+10. [Fermi Theory: The Canonical Example](#10-fermi-theory-the-canonical-example)
+11. [When EFTs Fail](#11-when-efts-fail)
+12. [Why EFTs Work](#12-why-efts-work)
+13. [Appendix: EFT Methodology Reference](#appendix-eft-methodology-reference)
+
+---
+
+## 1. What Is an EFT?
+
+### The Basic Definition
+
+An **effective field theory** is a quantum field theory that:
+
+1. Describes physics below some **cutoff scale** $\Lambda$
+2. Contains fields for the **relevant degrees of freedom** at energies $E \ll \Lambda$
+3. Respects the **symmetries** of the underlying physics
+4. Has a systematic **power counting** organizing contributions by $E/\Lambda$
+
+The Lagrangian has the schematic form:
+
+$$\mathcal{L}_{\rm EFT} = \mathcal{L}_{d\leq 4} + \sum_i\frac{c_i^{(5)}}{\Lambda}\mathcal{O}_i^{(5)} + \sum_j\frac{c_j^{(6)}}{\Lambda^2}\mathcal{O}_j^{(6)} + \ldots$$
+
+where $\mathcal{O}^{(n)}$ are operators of mass dimension $n$, and $c$'s are dimensionless coefficients.
+
+### What Makes It "Effective"
+
+Three key features:
+
+**1. Finite cutoff.** The theory is valid up to $\Lambda$, not to arbitrarily high energies. Above $\Lambda$, new physics takes over.
+
+**2. Infinite tower of operators.** Unlike a "fundamental" renormalizable theory with finitely many operators, an EFT has infinitely many; organized by dimension. At any given precision, only finitely many matter.
+
+**3. Suppressed higher-dimension contributions.** Operators of dimension $d > 4$ come with coefficients $1/\Lambda^{d-4}$. Their contributions to observables at energy $E$ are suppressed by $(E/\Lambda)^{d-4}$.
+
+### The Key Advantage
+
+An EFT lets you compute low-energy predictions without knowing the high-energy theory. You just need:
+
+- The field content at your energy
+- The symmetries
+- A measurement or calculation of the Wilson coefficients $c_i$
+
+The high-energy physics is "integrated out" and its effects are encoded in the coefficients. You don't need to know the details.
+
+This is why EFTs are so useful: they separate the problems of "what physics is present" from "what are the specific coupling values." The first is a qualitative question (what operators can appear?), the second a quantitative measurement.
+
+### Why Most Theories Are EFTs
+
+Almost every theory a physicist uses is an EFT:
+
+- **Standard Model** below the Planck scale (we don't know what's above, but gravity is one thing that must appear)
+- **Fermi theory** below $M_W$ (with W bosons being the heavy physics integrated out)
+- **Chiral perturbation theory** below $\Lambda_\chi \sim 1$ GeV (below the QCD confinement scale)
+- **Nonrelativistic QED** at scales $\ll m_e$ (atomic physics)
+- **General relativity** below the Planck scale (as a QFT)
+- **Low-energy nuclear physics** below the pion mass
+- **Phonon effective theories** in condensed matter
+
+The exceptions; theories that might be fundamental; include string theory (if it turns out to be correct) and perhaps some specific conformal field theories. Everything else is an EFT of something else.
+
+---
+
+## 2. The Philosophy Shift
+
+Before EFT thinking became dominant, physicists tried to build renormalizable theories as "fundamental." Non-renormalizable interactions were considered a sickness to be cured. Gravity's non-renormalizability was seen as a fundamental obstacle.
+
+Wilson and others reframed this in the 1970s: **every theory is effective at some scale.** Non-renormalizability just means the theory has a finite domain of validity.
+
+### Three Types of Theories
+
+**Type 1; Renormalizable theories as EFTs.** QED, QCD, the SM. These have cleanly separated UV and IR. Below their characteristic scales (electron mass for QED, $\Lambda_{\rm QCD}$ for QCD), they can be matched to different EFTs.
+
+**Type 2; Non-renormalizable theories as EFTs.** Fermi theory, chiral perturbation theory, general relativity as a QFT. These are explicitly effective; they have irrelevant operators that suppress contributions at low energy.
+
+**Type 3; Fundamental theories (speculative).** Candidates for theories valid at arbitrarily high energy: string theory, or asymptotically safe quantum gravity. These would be "the" theory, not effective.
+
+Whether Type 3 exists is unknown. Even string theory has its own EFTs in various limits.
+
+### Practical Consequences
+
+Accepting the EFT view changes how you approach physics problems:
+
+- **Don't fear non-renormalizable operators.** They're fine, just suppressed by powers of cutoff.
+- **Don't require a theory to extend to all scales.** No theory does. Just characterize the domain of validity.
+- **Separate scales explicitly.** Use different EFTs for different energy ranges.
+- **Embrace irrelevant operators at high precision.** They're small corrections you can compute.
+
+### An Analogy
+
+Physics is like a mountain range. You can describe a region with a local map. When you want to travel farther, you need a different map, appropriate for the new region. The maps connect at their boundaries (matching), and together they describe the whole.
+
+No single map works everywhere. But each map works very well locally. EFTs are those local maps.
+
+---
+
+## 3. The EFT Construction Algorithm
+
+Constructing an EFT is remarkably systematic. The algorithm has six steps:
+
+### Step 1: Identify the Relevant Degrees of Freedom
+
+What fields describe the physics at your energy scale? This is usually the hardest step because you need to know what's "light."
+
+Examples:
+- **Fermi theory at $E \ll M_W$:** fermions (quarks, leptons), photons, gluons. Integrate out $W, Z$.
+- **Chiral perturbation theory at $E \ll \Lambda_\chi$:** pions, kaons, eta (pseudo-Goldstones). Integrate out quarks, gluons.
+- **NRQED for atoms:** non-relativistic electrons, photons. Use non-relativistic Lagrangian.
+
+The heavy degrees of freedom are *integrated out*; removed as explicit fields.
+
+### Step 2: Identify the Symmetries
+
+What symmetries constrain the operators? Common ones:
+
+- **Lorentz invariance** (almost always)
+- **Gauge symmetries** that survive at low energy (e.g., $U(1)_{\rm EM}$)
+- **Global symmetries** (e.g., flavor symmetry, isospin)
+- **Discrete symmetries** (CP, parity, time reversal)
+- **Spontaneously broken symmetries** (these constrain Goldstone boson interactions)
+
+The EFT Lagrangian must respect all these symmetries.
+
+### Step 3: Write Down All Allowed Operators
+
+Enumerate every operator built from the relevant fields that respects the symmetries. Organize by mass dimension.
+
+For dimension $\leq 4$: the "renormalizable" part, same as in fundamental theories.
+
+For dimension $> 4$: higher-dimension operators suppressed by $1/\Lambda^{d-4}$.
+
+Crucially, you write down **all** allowed operators, not just a few. If it's allowed by symmetry, it's in the Lagrangian with some coefficient.
+
+### Step 4: Determine the Power Counting
+
+What controls which operators are important? Usually it's a small ratio $E/\Lambda$, where $E$ is the energy of interest and $\Lambda$ is the cutoff.
+
+But "power counting" can be subtle. For non-relativistic systems, velocity $v$ can play a similar role. For systems with multiple scales, multiple expansion parameters can appear.
+
+Getting power counting right is essential; it tells you how many terms you need to include for a desired precision.
+
+### Step 5: Match to UV Theory (If Known)
+
+If you know the underlying theory, compute low-energy amplitudes in both theories and match. This determines the Wilson coefficients $c_i$.
+
+If the UV theory is unknown (e.g., beyond-SM physics), the Wilson coefficients are free parameters to be determined from experiment.
+
+### Step 6: Compute Observables
+
+Use the EFT to compute what you want. Renormalize as needed, run Wilson coefficients between scales, etc.
+
+Consistency check: the result should be independent of the cutoff $\Lambda$ at the order you're working to, up to corrections of the next order in $E/\Lambda$.
+
+### Example Application of the Algorithm
+
+Let's sketch how this applies to Fermi theory (fully developed in section 10):
+
+1. **Light fields:** leptons, quarks, photons
+2. **Symmetries:** Lorentz, QED gauge, SU(3) color, flavor
+3. **Operators:** kinetic + mass terms (dim 3, 4) + four-fermion operators (dim 6)
+4. **Power counting:** $E/M_W$
+5. **Matching:** tree-level W exchange gives $G_F/\sqrt 2 = g^2/(8M_W^2)$
+6. **Compute:** beta decay, muon decay, etc.
+
+---
+
+## 4. Power Counting
+
+Power counting is the heart of any EFT. It tells you which operators matter for a given precision and organizes the expansion.
+
+### Basic Power Counting
+
+Consider an operator $\mathcal{O}$ of mass dimension $d$ with coefficient $c/\Lambda^{d-4}$ (dimensional coefficient made from the cutoff).
+
+For a process at energy $E \ll \Lambda$, the typical contribution of $\mathcal{O}$ to a matrix element scales as:
+
+$$\text{Contribution} \sim \left(\frac{E}{\Lambda}\right)^{d-4}\cdot c$$
+
+So operators of higher dimension contribute less. The expansion is in $E/\Lambda$.
+
+### Counting Derivatives and Fields
+
+The dimension of an operator is determined by the dimensions of its constituents:
+
+| Field | Dimension |
+|---|---|
+| Scalar $\phi$ | 1 |
+| Fermion $\psi$ | 3/2 |
+| Gauge field $A^\mu$ | 1 |
+| Derivative $\partial_\mu$ | 1 |
+| Field strength $F^{\mu\nu}$ | 2 |
+
+An operator with $n_\phi$ scalars, $n_\psi$ fermions, $n_A$ gauge fields, and $n_\partial$ derivatives has dimension:
+
+$$d = n_\phi + \frac{3}{2}n_\psi + n_A + n_\partial$$
+
+(Plus contributions from field strengths at dim 2 each.)
+
+### Why Higher-Dimension Operators Are Suppressed
+
+For an amplitude at energy $E$, dimensional analysis dictates that a contribution from a dim-$d$ operator scales as $E^{d-4}$. With the coefficient $c/\Lambda^{d-4}$:
+
+$$\text{Amplitude contribution} \sim c\cdot\frac{E^{d-4}}{\Lambda^{d-4}} = c\left(\frac{E}{\Lambda}\right)^{d-4}$$
+
+For $d > 4$: suppressed by $(E/\Lambda)^{d-4}$ (small when $E \ll \Lambda$).
+For $d = 4$: unsuppressed (marginal).
+For $d < 4$: enhanced at low energy (relevant).
+
+### Power Counting Beyond the Basic Case
+
+The simple "count dimensions" approach works for many EFTs but can be refined. Some common refinements:
+
+**Non-relativistic power counting:** For slow-moving particles, $v \ll c$, you can have separate counting in momenta, energies, and velocities. NRQED and NRQCD use this.
+
+**Chiral power counting:** In ChPT, you count powers of momenta $p$ and pion mass $m_\pi$ together: $p \sim m_\pi \sim \Lambda_\chi/(4\pi)$.
+
+**Heavy-quark power counting:** HQET uses $m_b$ as a hard scale and expansion in $1/m_b$. Different from $E/\Lambda$.
+
+**Regge / small-$x$ counting:** In QCD at very high energy, a different counting emerges for hadronic scattering.
+
+Each EFT has its own power counting adapted to the physics.
+
+### Naturalness and Large Logarithms
+
+Two subtleties can complicate power counting:
+
+**Unnatural coefficients.** If a Wilson coefficient is parametrically larger than expected (say, $c \gg 1$ for no reason), the corresponding operator might dominate. This is "tuning" and suggests missing physics.
+
+**Large logarithms.** Loop corrections can produce factors of $\ln(\Lambda/E)$. For $\Lambda/E$ very large, these can be order 1 or larger, undermining the expansion. The RG resums these (section 7).
+
+---
+
+## 5. Operator Dimensions and Classifications
+
+Systematic enumeration of operators is the craft of EFT construction. Let's see how it works.
+
+### Classification of Operators by Dimension
+
+Given a set of fields and symmetries, you enumerate all possible operators up to some dimension. For the Standard Model, the classification gives:
+
+**Dimension 5:** $\mathcal{O}_5 = (L_L^c H)(L_L H)/\Lambda$; the Weinberg operator, giving Majorana neutrino masses. *This is the unique dimension-5 operator consistent with SM symmetries.*
+
+**Dimension 6:** There are 59 independent dimension-6 operators in SMEFT (59 baryon-number-conserving, plus 4 baryon-number-violating). They parameterize deviations from SM physics.
+
+**Dimension 7:** More operators, including some that violate baryon and lepton number.
+
+**Dimension 8:** Many more operators. Operator bases become unwieldy.
+
+Practical calculations typically truncate at dimension 6 or 8, with higher-dimension operators providing incrementally smaller corrections.
+
+### Reducing Operators to a Basis
+
+Multiple operators can be physically equivalent by equations of motion or integration by parts. You want a **basis**; a set of independent operators with no redundancy.
+
+**Integration by parts:** $\bar\psi(i\slashed\partial + m)\psi \leftrightarrow -i\partial_\mu\bar\psi\cdot\gamma^\mu\psi + m\bar\psi\psi$. Moving derivatives around changes which operator you're using but gives the same physics.
+
+**Equations of motion:** For a scalar $\phi$ satisfying $(\Box + m^2)\phi = 0$ at tree level, the operator $\phi\Box\phi$ can be rewritten as $-m^2\phi^2$. One is in the basis, not both.
+
+**Fierz identities:** For four-fermion operators, you can rearrange the spinor index contractions. Some Fierz rearrangements map an operator to a linear combination of others.
+
+**Group-theoretic relations:** Traces, Bianchi identities, and group-theory identities can relate operators.
+
+Constructing a clean basis requires careful accounting. Published bases like Warsaw basis (for SMEFT) are the standard reference.
+
+### Example: Dimension-4 SM Lagrangian
+
+Recall the SM Lagrangian (document 12). Every dim-4 operator:
+
+$$\mathcal{L}_{\leq 4} = -\tfrac{1}{4}G_{\mu\nu}G^{\mu\nu} - \tfrac{1}{4}W_{\mu\nu}W^{\mu\nu} - \tfrac{1}{4}B_{\mu\nu}B^{\mu\nu}$$
+$$+ \bar\psi\, i\slashed D\,\psi + |D_\mu\phi|^2 + \mu^2\phi^\dagger\phi - \lambda(\phi^\dagger\phi)^2$$
+$$- Y^{ij}_e\bar L^i_L\phi e^j_R - Y^{ij}_d\bar Q^i_L\phi d^j_R - Y^{ij}_u\bar Q^i_L\tilde\phi u^j_R + \text{h.c.}$$
+
+These are all the dim-$\leq 4$ operators compatible with SM gauge symmetry, Lorentz invariance, and baryon/lepton conservation. Every coefficient (couplings, masses, Yukawas) is a parameter measured from experiment.
+
+### Dimension-5: The Weinberg Operator
+
+Adding dim-5 operators, the unique new operator is:
+
+$$\mathcal{O}_5 = \frac{c_5}{\Lambda}(\bar L^c_L H)(H^T L_L)$$
+
+where $L_L^c$ is the charge-conjugate lepton doublet and the contraction is with $SU(2)_L$ structure.
+
+After EWSB, this becomes:
+
+$$\frac{c_5 v^2}{2\Lambda}\nu_L^T\mathcal{C}\nu_L$$
+
+giving a Majorana neutrino mass $m_\nu \sim c_5 v^2/\Lambda$.
+
+Neutrino masses $m_\nu \sim 0.05$ eV require $\Lambda \sim 10^{14} c_5$ GeV. The **seesaw mechanism** interprets this as $\Lambda = M_R/c_5$ with $M_R \sim 10^{14}$ GeV being the right-handed neutrino mass. The Weinberg operator is how you add neutrino masses to the SM without modifying its particle content at low energy.
+
+### Counting Operators: SMEFT at Dim-6
+
+The number of dimension-6 operators in SMEFT is 59 (per generation, plus flavor-changing operators). These parameterize deviations from the SM in a model-independent way.
+
+Each operator has a Wilson coefficient that could be nonzero due to new physics. Constraining these coefficients from data is the program of modern particle physics phenomenology.
+
+---
+
+## 6. Matching: Connecting UV and IR Theories
+
+**Matching** is the procedure for determining Wilson coefficients in terms of the UV theory's parameters.
+
+### The Procedure
+
+To match an EFT to a UV theory:
+
+1. **Compute an amplitude** in the UV theory at low external momenta
+2. **Compute the same amplitude** in the EFT
+3. **Equate** the two, with the EFT coefficients as unknowns
+4. **Solve** for the Wilson coefficients
+
+The result: Wilson coefficients as functions of UV parameters (and possibly couplings).
+
+### Tree-Level Matching: Example
+
+Consider integrating out a heavy scalar $\phi$ of mass $M$ coupled to lighter fields via $\mathcal{L}_{\rm int} = g\phi\bar\psi\psi$.
+
+**UV theory** amplitude for $\psi\psi \to \psi\psi$ via $\phi$ exchange (low external momenta, $p \ll M$):
+
+$$\mathcal{M}_{\rm UV} = g^2\bar u\psi\cdot\frac{1}{(p_1 + p_2)^2 - M^2}\cdot\bar u\psi \approx -\frac{g^2}{M^2}(\bar u u)(\bar u u)$$
+
+(In the limit $s = (p_1 + p_2)^2 \ll M^2$, we've expanded $1/(s - M^2) \approx -1/M^2$.)
+
+**EFT** amplitude: add a four-fermion operator $(c/\Lambda^2)(\bar\psi\psi)^2$:
+
+$$\mathcal{M}_{\rm EFT} = \frac{c}{\Lambda^2}(\bar u u)(\bar u u)$$
+
+**Matching** gives:
+
+$$\frac{c}{\Lambda^2} = -\frac{g^2}{M^2}$$
+
+So $c = -g^2$ if we identify $\Lambda = M$. The Wilson coefficient of the four-fermion operator is proportional to $g^2$.
+
+### Higher-Dimension Corrections
+
+The matching expansion continues. At dim-8, there are additional four-fermion operators with derivatives, contributing corrections of $\mathcal{O}(p^2/M^2)$ relative to the leading dim-6 operator.
+
+Going to higher precision requires matching more operators. This is systematic: you can compute to any order in $p/M$.
+
+### One-Loop Matching
+
+Tree-level matching gives the leading Wilson coefficients. But loop corrections in the UV theory also generate Wilson coefficients at lower orders. This is **one-loop matching**.
+
+Example: the top-quark loop contribution to $h \to gg$ (Higgs to gluons). There's no tree-level $hgg$ coupling in the SM. But at one loop, the top quark mediates it, and in the EFT below the top mass:
+
+$$\mathcal{L}_{\rm eff} \supset \frac{\alpha_s}{12\pi v}\cdot h\, G^a_{\mu\nu}G^{a\mu\nu}$$
+
+This is a dim-5 operator with a Wilson coefficient determined by matching through a one-loop top quark triangle diagram.
+
+One-loop matching is often essential for precision calculations, especially in flavor physics where loop-induced operators drive key observables.
+
+### Matching with Multiple Heavy States
+
+When multiple heavy states are integrated out, matching gets involved. You can integrate them out sequentially (one at a time, at their respective mass scales) or simultaneously (if they're at similar masses).
+
+Sequential integration is cleaner because you can use the EFT at each stage to run Wilson coefficients between scales. This is how modern effective theories like HQET and NRQCD are built.
+
+---
+
+## 7. Running of Wilson Coefficients
+
+Once you've matched at a scale $\mu_{\rm high}$, you need to evolve the coefficients down to the scale of interest $\mu_{\rm low}$. This is the **renormalization group running** of Wilson coefficients.
+
+### The Need for Running
+
+Wilson coefficients depend on scale:
+
+$$c_i = c_i(\mu)$$
+
+At the matching scale $\mu_{\rm high}$: $c_i(\mu_{\rm high}) = c_i^{\rm match}$ (from matching).
+
+At a lower scale $\mu_{\rm low} < \mu_{\rm high}$: the coefficients have evolved due to loop corrections.
+
+The evolution is governed by **anomalous dimensions** of operators:
+
+$$\mu\frac{d c_i}{d\mu} = \gamma_{ij}(g(\mu)) c_j(\mu)$$
+
+where $\gamma_{ij}$ is the anomalous dimension matrix (operators can mix under RG flow).
+
+### Operator Mixing
+
+An important feature: dimension-6 operators generically mix with each other under RG. An operator that starts as $\mathcal{O}_1$ at the matching scale can develop contributions from other operators as you run:
+
+$$c_1(\mu_{\rm low}) = c_1(\mu_{\rm high})\cdot U_{11} + c_2(\mu_{\rm high})\cdot U_{12} + \ldots$$
+
+where $U$ is the evolution matrix. Getting operator mixing right is crucial for precision predictions.
+
+### Large Logarithms
+
+Why do we bother with RG running in EFTs? Because at lower scales, loop corrections generate logarithms $\ln(\mu_{\rm high}/\mu_{\rm low})$. For large scale hierarchies, these logs can be $O(1)$ or larger.
+
+**Without resummation:** Naive perturbation theory has corrections of order $\alpha_s\ln(M/m)$ for a quantity computed at scale $m$ using matching at scale $M$. For $\alpha_s \sim 0.1$ and $\ln(M/m) \sim 5$, this is $\sim 0.5$; not small.
+
+**With RG resummation:** The running sums up the large logs systematically. Instead of expanding in $\alpha_s\ln$, you effectively replace $\alpha_s \to \alpha_s(\mu)$ at an appropriate scale, and the log terms are gone.
+
+RG resummation is what makes precision EFT predictions possible across multiple scales.
+
+### Example: $b \to s\gamma$
+
+The decay $b \to s\gamma$ (a rare flavor-changing process) is a textbook example. The SM predicts this via loops involving W bosons and top quarks. In EFT below the W mass:
+
+1. **Match at $\mu = M_W$:** get Wilson coefficient $c_{7\gamma}$ for the operator $(\bar s_L\sigma^{\mu\nu}b_R)F_{\mu\nu}$.
+
+2. **Run from $M_W$ to $m_b$:** the coefficient evolves due to QCD loops, mixing with four-quark operators.
+
+3. **Compute branching ratio at $\mu = m_b$:** using the evolved Wilson coefficient.
+
+Without RG running, the prediction would be off by $\sim 30\%$. With RG, it agrees with experiment at the percent level. This precision agreement is a strong constraint on new physics, as we'll see in SMEFT.
+
+---
+
+## 8. The Decoupling Theorem
+
+The **Appelquist-Carazzone decoupling theorem** (1975) is the theoretical foundation for EFT validity.
+
+### The Statement
+
+For a renormalizable theory with both light and heavy particles, low-energy observables computed in the full theory can be obtained from an EFT that:
+
+1. Contains only the light particles
+2. Has non-renormalizable operators suppressed by the heavy mass
+
+The heavy particles' contributions to low-energy physics are fully captured by the EFT's Wilson coefficients.
+
+### What "Decoupling" Means
+
+At energies $E \ll M$ (where $M$ is the heavy mass), the heavy particle's effect on observables is:
+
+$$(\text{heavy effect}) \sim \text{const} + \left(\frac{E}{M}\right)^2 + \left(\frac{E}{M}\right)^4 + \ldots$$
+
+The constant piece can be absorbed into redefinitions of parameters in the light theory. The $(E/M)^n$ pieces are captured by higher-dimension operators in the EFT.
+
+So when you work at energies well below $M$, you can ignore the heavy particle; as long as you use the right effective theory.
+
+### Why Decoupling Matters
+
+Without the decoupling theorem, you'd need to know the full UV theory to compute any low-energy observable. Decoupling guarantees that low-energy physics is predictive from the EFT alone.
+
+This also justifies treating our theories as EFTs. If the Standard Model is just the low-energy limit of something larger (GUTs, supersymmetry, strings), the new physics decouples from low-energy experiments; we can still predict SM observables without knowing the UV.
+
+### When Decoupling Can Fail
+
+Three cases where decoupling has subtleties:
+
+**1. Chiral fermions.** If a heavy chiral fermion is removed, its contribution to anomalies doesn't decouple in the usual way. The anomaly coefficient must still be matched.
+
+**2. Quadratic divergences and fine-tuning.** Scalars like the Higgs have quadratically-sensitive corrections to masses from heavy physics. Decoupling still holds in a technical sense (observables are finite), but the fine-tuning required for a light Higgs in a theory with heavy physics is the hierarchy problem.
+
+**3. Non-decoupling symmetries.** Some symmetry relations (like unitarity of the CKM matrix) don't decouple; they involve sums over all particles.
+
+Generally, decoupling works for vector-like particles and most physical observables. Chiral fermions and scalar masses require more care.
+
+---
+
+## 9. Top-Down vs. Bottom-Up EFTs
+
+### Top-Down (Matching from a Known UV Theory)
+
+If you know the UV theory (or suspect a specific one), you can construct the EFT by:
+
+1. Start with the UV Lagrangian
+2. Integrate out heavy fields (match)
+3. Get explicit Wilson coefficients in terms of UV parameters
+
+Examples:
+- **Fermi theory** from the Standard Model
+- **Chiral perturbation theory** from QCD (with symmetry arguments)
+- **NRQCD** from QCD
+- **Heavy neutrino EFT** from see-saw
+
+The Wilson coefficients are predictions of the UV theory.
+
+### Bottom-Up (Agnostic About UV)
+
+If you don't know (or care) what the UV theory is, you:
+
+1. Identify the light fields and their symmetries
+2. Write down all allowed operators
+3. Treat Wilson coefficients as free parameters
+4. Constrain them from experiment
+
+Examples:
+- **SMEFT** (covered in document 16)
+- **Chiral perturbation theory at higher orders** (where matching to QCD is hard)
+- **General EFT for new physics** at colliders
+
+The Wilson coefficients are parameters to be measured.
+
+### Matching Schemes
+
+Sometimes you want to combine both. Start with a specific UV theory, match at high scales, then treat any remaining coefficients as free when comparing to data.
+
+**Matching and running:** Modern precision EFT work uses:
+
+1. Start with a UV theory at scale $\mu_{\rm UV}$
+2. Match to an EFT at some lower scale $\mu_1$
+3. Run Wilson coefficients from $\mu_1$ to $\mu_2$ using RG
+4. At $\mu_2$, integrate out more fields and match to a new EFT
+5. Continue until you reach the scale of interest
+
+This "tower of EFTs" framework is how precision calculations in flavor physics, Higgs physics, and heavy-ion physics are organized.
+
+---
+
+## 10. Fermi Theory: The Canonical Example
+
+Let's see all these ideas come together in the classic example.
+
+### The Context
+
+At energies well below $M_W = 80$ GeV, weak interactions appear local: beta decay, muon decay, pion decay. These are described by Fermi's theory (originally 1933, before the weak interaction structure was understood).
+
+The full theory: electroweak, with $W$ and $Z$ bosons mediating weak forces. Fermi theory is the EFT below $M_W$.
+
+### The Matching Calculation
+
+Consider muon decay: $\mu \to e + \bar\nu_e + \nu_\mu$.
+
+**Full theory (electroweak):** the muon emits a virtual $W^-$, which decays to $e^-\bar\nu_e$:
+
+$$i\mathcal{M}_{\rm EW} = \left(\frac{ig}{\sqrt 2}\bar u_{\nu_\mu}\gamma^\mu P_L u_\mu\right)\cdot\frac{-i[\eta_{\mu\nu} - q_\mu q_\nu/M_W^2]}{q^2 - M_W^2}\cdot\left(\frac{ig}{\sqrt 2}\bar u_e\gamma^\nu P_L v_{\nu_e}\right)$$
+
+where $q$ is the $W$-boson momentum and $P_L = (1 - \gamma^5)/2$.
+
+For $q^2 \ll M_W^2$ (muon energies are $\sim 100$ MeV $\ll 80$ GeV), expand:
+
+$$\frac{-i}{q^2 - M_W^2} \approx \frac{i}{M_W^2}\left(1 + \frac{q^2}{M_W^2} + \ldots\right)$$
+
+Taking the leading term (dim-6 in the EFT):
+
+$$i\mathcal{M}_{\rm EW} \approx \frac{ig^2}{2M_W^2}(\bar u_{\nu_\mu}\gamma^\mu P_L u_\mu)(\bar u_e\gamma_\mu P_L v_{\nu_e})$$
+
+**EFT (Fermi theory):** posit a four-fermion operator:
+
+$$\mathcal{L}_{\rm Fermi} = -\frac{4G_F}{\sqrt 2}(\bar\psi_{\nu_\mu}\gamma^\mu P_L\psi_\mu)(\bar\psi_e\gamma_\mu P_L\psi_{\nu_e})$$
+
+Amplitude:
+
+$$i\mathcal{M}_{\rm Fermi} = \frac{-i4G_F}{\sqrt 2}(\bar u\gamma^\mu P_L u)(\bar u\gamma_\mu P_L v)$$
+
+**Matching:** equate the amplitudes:
+
+$$\frac{4G_F}{\sqrt 2} = \frac{g^2}{2M_W^2} \implies G_F = \frac{g^2}{4\sqrt 2 M_W^2}$$
+
+Using $M_W = gv/2$ (from the Higgs mechanism): $G_F = g^2/(4\sqrt 2)\cdot 4/(g^2 v^2) = 1/(\sqrt 2 v^2)$.
+
+So:
+
+$$\boxed{G_F = \frac{1}{\sqrt 2 v^2}}$$
+
+With $v = 246$ GeV: $G_F \approx 1.166\times 10^{-5}$ GeV$^{-2}$. Matches measurement to high precision.
+
+### Why Fermi Theory Is Historic
+
+Fermi's original theory (1933) had the four-fermion coupling without understanding where it came from. It was non-renormalizable; scattering cross sections grow with energy and violate unitarity at $\sim M_W$.
+
+Glashow-Weinberg-Salam (1960s-1970s) showed that this is exactly the behavior expected of an EFT: valid up to some cutoff, with the cutoff being the mass of the physics you integrated out. Above $\sim M_W$, Fermi theory breaks down and you need the full electroweak theory.
+
+This was the first case where a non-renormalizable theory was understood as an EFT, pointing toward Wilson's unified picture.
+
+### What Fermi Theory Can Compute
+
+Fermi theory + QED accurately describes all weak-interaction processes at energies $\ll M_W$:
+
+- Muon decay: $G_F = 1.1663787(6)\times 10^{-5}$ GeV$^{-2}$ measured to 0.5 ppm
+- Neutron beta decay, pion decay, K decay
+- Charged-current neutrino interactions at $E \ll M_W$
+- Various weak processes in atomic and nuclear physics
+
+The agreement is excellent, and the scale where Fermi theory breaks down (unitarity-violation at $s \sim M_W^2$) precisely locates the W boson mass.
+
+### Corrections Beyond Leading Order
+
+Higher-dimension operators in Fermi theory give corrections of $\mathcal{O}(q^2/M_W^2)$. For muon decay with $q^2 \sim m_\mu^2 = 0.01$ GeV$^2$, this is $\sim 10^{-6}$; negligible.
+
+For higher-energy processes (like $\bar\nu_e + e^- \to \bar\nu_e + e^-$ at HERA-scale energies), these corrections become important and the full electroweak theory must be used.
+
+---
+
+## 11. When EFTs Fail
+
+EFTs are powerful but not universal. Several situations where they break down or need extension:
+
+### At the Cutoff Scale
+
+An EFT breaks down when $E \gtrsim \Lambda$. At these energies:
+
+- The expansion in $E/\Lambda$ stops converging
+- Heavy-particle effects can no longer be integrated out
+- You need the full UV theory
+
+For Fermi theory, this happens at $E \sim M_W \sim 80$ GeV. At the LHC, you're well above this scale; Fermi theory is irrelevant; use full electroweak.
+
+For ChPT, this happens at $\Lambda_\chi \sim 1$ GeV. Above this, you need QCD.
+
+### Strongly Coupled Regimes
+
+EFTs with strongly-coupled constituents are tricky. Perturbative methods fail. Power counting works, but matching to the UV theory can't be done perturbatively.
+
+For QCD below $\Lambda_{\rm QCD}$: chiral perturbation theory handles mesons (Goldstones of broken symmetry), but arbitrary hadronic processes require non-perturbative methods (lattice QCD).
+
+For strongly-coupled beyond-SM theories: same issue. You can write an EFT for the light states, but matching requires non-perturbative input.
+
+### Multiple Scales
+
+When there are multiple comparable scales, you might need multiple EFTs:
+
+- SMEFT → at some scale → Fermi theory → at $M_W$ → ChPT at $\Lambda_\chi$
+- Each transition requires matching
+
+Organizing this hierarchy is part of EFT craft.
+
+### Non-Decoupling Effects
+
+Anomalies don't decouple. If a chiral fermion becomes heavy, its anomaly contribution must be matched; you can't just drop it.
+
+The Higgs hierarchy problem is another manifestation: scalar masses are quadratically sensitive to heavy physics, so integrating out heavy scalars requires fine-tuning to maintain a light Higgs.
+
+### Gauge Symmetry Breaking
+
+If the UV theory has a gauge symmetry broken by the Higgs mechanism, the EFT below the symmetry-breaking scale has the *unbroken* gauge symmetry. This requires the Higgs mechanism + Goldstone bosons to be handled carefully.
+
+In the SM, this is handled by introducing the Higgs doublet explicitly in SMEFT. In ChPT, the Goldstones (pions) are the primary fields.
+
+### When Power Counting Fails
+
+Power counting assumes a hierarchy of scales. When this hierarchy is violated; when "small" parameters become $O(1)$; the EFT predictions become unreliable.
+
+Example: in ChPT, at high energies (say $p \sim 800$ MeV, comparable to $\Lambda_\chi$), the $p/\Lambda_\chi$ expansion has $O(1)$ corrections. The theory stops working cleanly.
+
+---
+
+## 12. Why EFTs Work
+
+Let me step back and appreciate why this framework is so powerful.
+
+### Universality
+
+Different physical systems with the same symmetries have the same EFT. This is one of the deepest predictions of the framework:
+
+- The EFT for hadrons of different species (but same quantum numbers) is the same
+- The EFT for different superconductors (but same symmetry breaking) is the same
+- The EFT for gravity from different UV theories (strings, loop quantum gravity) might be the same at low energy
+
+**This is why EFTs are predictive.** Once you know the symmetries and field content, the EFT structure is fixed (up to coefficients). Measuring a few coefficients determines everything.
+
+### Separation of Scales
+
+Physics is naturally organized by scale. Atomic physics involves length scales $\sim 10^{-10}$ m. Nuclear physics involves $\sim 10^{-15}$ m. Electroweak involves $\sim 10^{-18}$ m. Each has its own EFT, each works at its scale.
+
+You don't need to solve quark-gluon dynamics to understand chemistry. You don't need to know string theory to do particle physics. EFTs let us work at our scale without worrying about every smaller scale.
+
+This is more than convenience; it's how nature seems to be organized. The universe appears to decouple scales cleanly.
+
+### Predictive Power Despite Ignorance
+
+Before EFTs: to make a precise prediction, you needed the exact UV theory. Physics seemed impossible without "the truth."
+
+After EFTs: you can make precise predictions knowing only the light fields and their symmetries. The UV is parameterized by Wilson coefficients, which you either compute (if you know the UV theory) or measure.
+
+This framework is what makes particle physics phenomenology work. We don't know beyond-SM physics, but SMEFT lets us parameterize it model-independently and constrain it from data.
+
+### Mathematical Beauty
+
+EFTs connect to beautiful mathematical structures:
+
+- **Differential geometry:** EFTs on manifolds (moduli spaces)
+- **Category theory:** EFT flows and 't Hooft anomaly matching
+- **Algebraic geometry:** Wilson coefficient spaces with geometric structure
+- **Topology:** operator classification via characteristic classes
+
+Modern mathematical physics finds EFT structures everywhere.
+
+### Philosophical Payoff
+
+Accepting EFTs is accepting that physics might not have a "final theory." What we have is a tower of theories, each good at its scale, with incomplete but sufficient predictive power.
+
+This is humbler than the "final theory" framing, but also more honest. It's what physics actually looks like in practice, now that we've looked carefully.
+
+---
+
+## 13. Appendix: EFT Methodology Reference
+
+### The EFT Construction Checklist
+
+1. Identify relevant degrees of freedom
+2. Identify symmetries (gauge, global, discrete, spacetime)
+3. Write down all allowed operators up to desired dimension
+4. Establish power counting
+5. Match Wilson coefficients (from UV theory or experiment)
+6. Run Wilson coefficients with RG
+
+### Operator Dimension Formula
+
+For an operator built from $n_\phi$ scalars, $n_\psi$ fermions, $n_A$ gauge fields, $n_F$ field strengths, and $n_\partial$ derivatives:
+
+$$d = n_\phi + \frac{3}{2}n_\psi + n_A + 2n_F + n_\partial$$
+
+### Power Counting Rule
+
+Operators of dim $d$ contribute to amplitudes at energy $E$ as:
+
+$$\sim \left(\frac{E}{\Lambda}\right)^{d-4}$$
+
+### Matching Formula (Tree-Level)
+
+Wilson coefficient of operator $\mathcal{O}_i$ in EFT matches UV amplitude:
+
+$$c_i^{\rm EFT} = \lim_{E \to 0}\mathcal{M}_{\rm UV}^{\mathcal{O}_i}(E)/\mathcal{M}_{\rm EFT}^{\mathcal{O}_i}(E)$$
+
+### RG Running
+
+$$\mu\frac{dc_i}{d\mu} = \gamma_{ij}(g)c_j$$
+
+where $\gamma$ is the anomalous dimension matrix (operators mix).
+
+### Decoupling Theorem (Schematic)
+
+Low-energy amplitudes: $\mathcal{M}_{\rm UV}(E \ll M) = \mathcal{M}_{\rm EFT}(E) + O(E/M)^n$
+
+The EFT with dim-$\leq (4 + n - 1)$ operators reproduces UV physics to order $(E/M)^{n-1}$.
+
+### Common EFTs at a Glance
+
+| Name | UV Theory | Light Fields | Cutoff |
+|---|---|---|---|
+| Fermi theory | Electroweak | Leptons, quarks, $\gamma$, $g$ | $M_W$ |
+| ChPT | QCD | Pions, kaons | $\Lambda_\chi \sim 1$ GeV |
+| NRQED | QED | Non-relativistic $e^-$, $\gamma$ | $m_e$ |
+| NRQCD | QCD | Non-relativistic quarks | $m_Q$ |
+| HQET | QCD | Heavy quark + light hadrons | $m_Q$ |
+| SMEFT | Unknown | SM fields | New physics scale |
+| GR as QFT | Quantum gravity | Gravitons, matter | $M_{\rm Pl}$ |
+
+### Further Reading
+
+- **Georgi**, *Effective Field Theory*, Annu. Rev. Nucl. Part. Sci. 1993: the standard review
+- **Manohar**, *Introduction to Effective Field Theories*, Les Houches 2017 lectures: clean and modern
+- **Kaplan**, *Effective Field Theories*, nucl-th/9506035: pedagogical
+- **Burgess**, *Introduction to Effective Field Theory*: comprehensive textbook (2020)
+- **Rothstein**, *TASI lectures on EFT*: excellent for applications
+
+### Problems
+
+1. Enumerate all dim-5 and dim-6 operators consistent with Lorentz and a single $U(1)$ gauge symmetry (photon QED).
+
+2. For a heavy particle $X$ of mass $M$ coupled to a light scalar $\phi$ via $\mathcal{L}_{\rm int} = g X \phi^2$, integrate out $X$ at tree level and determine the Wilson coefficient of the resulting dim-4 $\phi^4$ operator.
+
+3. For Fermi theory, derive the muon decay rate $\Gamma(\mu \to e\nu\bar\nu) = G_F^2 m_\mu^5/(192\pi^3)$ from the four-fermion operator.
+
+4. Show that dimension-6 four-fermion operators in Fermi theory contribute to muon decay at relative order $m_\mu^2/M_W^2$.
+
+5. For the Standard Model, confirm that the Weinberg operator $(LH)(LH)/\Lambda$ is the unique dim-5 operator consistent with SM symmetries.
+
+---
+
+## Closing Note
+
+EFTs are the workhorse framework of modern theoretical physics. Once you see it, you see it everywhere; in particle physics, condensed matter, nuclear physics, cosmology, and quantum gravity.
+
+### What You Now Have
+
+- The conceptual framework: EFTs as universal description of nature at each scale
+- The construction algorithm: how to build an EFT systematically
+- Power counting: organizing the infinite tower of operators
+- Matching: connecting EFTs to UV theories
+- Running: evolving Wilson coefficients between scales
+- The decoupling theorem: why all this works
+- The Fermi theory example: a concrete application showing the machinery
+
+### Where We Go Next
+
+Document 15 develops **chiral perturbation theory**; the canonical worked example of a strongly-coupled EFT. It's QCD at low energies, where the relevant degrees of freedom are pseudo-Goldstone bosons (pions, kaons, eta) from spontaneously broken chiral symmetry. ChPT is the most thoroughly developed EFT in physics and a template for how to handle strongly-interacting systems at low energies.
+
+Document 16 covers **SMEFT and HQET**; the two most important modern applications. SMEFT parameterizes beyond-SM physics model-independently; HQET makes heavy-quark physics tractable.
+
+Together, these three documents will give you a working knowledge of EFT methods at the level of contemporary theoretical particle physics. After this, you can read most papers in flavor physics, Higgs physics, and new-physics phenomenology.
+
+The tools are set up. Onward.

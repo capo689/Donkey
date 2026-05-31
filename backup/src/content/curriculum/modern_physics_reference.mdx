@@ -1,0 +1,993 @@
+---
+title: "Modern Physics"
+stationNumber: 3
+line: "Foundation Way"
+date: 2026-04-25
+backdated: true
+prerequisites: [2]
+extendsTo: [4]
+classReportTitle: "Everything I thought I knew about time was wrong."
+---
+
+*The bridge from classical physics to the 20th century revolutions; relativity, quantum mechanics, and the structure of matter.*
+
+This is the companion to the Physics 101 and 102 references. By the end of the 19th century, physics seemed nearly complete; classical mechanics, thermodynamics, and Maxwell's equations described everything known. Then three sets of experimental results (the constancy of $c$, blackbody radiation, atomic spectra) shattered the picture and forced the rebuilding of physics from the ground up. That rebuilding is what this document covers.
+
+---
+
+## Table of Contents
+
+1. [Special Relativity: Foundations](#1-special-relativity-foundations)
+2. [Relativistic Kinematics](#2-relativistic-kinematics)
+3. [Relativistic Dynamics](#3-relativistic-dynamics)
+4. [General Relativity (Conceptual)](#4-general-relativity-conceptual)
+5. [The Breakdown of Classical Physics](#5-the-breakdown-of-classical-physics)
+6. [The Photon and Wave-Particle Duality](#6-the-photon-and-wave-particle-duality)
+7. [Matter Waves](#7-matter-waves)
+8. [The Uncertainty Principle](#8-the-uncertainty-principle)
+9. [The Schrödinger Equation](#9-the-schrödinger-equation)
+10. [Quantum Phenomena: Wells, Barriers, Tunneling](#10-quantum-phenomena-wells-barriers-tunneling)
+11. [The Hydrogen Atom](#11-the-hydrogen-atom)
+12. [Multi-Electron Atoms and the Periodic Table](#12-multi-electron-atoms-and-the-periodic-table)
+13. [Molecules, Solids, and Statistical Distributions](#13-molecules-solids-and-statistical-distributions)
+14. [Nuclear Physics](#14-nuclear-physics)
+15. [Particle Physics and the Standard Model](#15-particle-physics-and-the-standard-model)
+16. [Cosmology](#16-cosmology)
+17. [Appendix: Constants and Units](#appendix-constants-and-units)
+
+---
+
+## 1. Special Relativity: Foundations
+
+By 1900, Maxwell's equations predicted that light travels at speed $c$; but *relative to what*? Classical mechanics said velocities always add ($v_{\text{total}} = v_1 + v_2$). The Michelson-Morley experiment (1887) tried to detect Earth's motion through a hypothetical "luminiferous aether" and found nothing. Einstein's resolution (1905) was to throw out the aether and the classical addition of velocities, and keep $c$ constant.
+
+### The Two Postulates
+
+**1. Principle of Relativity:** The laws of physics are the same in all inertial reference frames.
+
+**2. Invariance of $c$:** The speed of light in vacuum is the same in all inertial frames, regardless of the motion of the source or observer.
+
+Everything that follows; time dilation, length contraction, $E = mc^2$; is just the logical consequence.
+
+### Inertial Frames
+
+An **inertial frame** is one in which Newton's first law holds; a free particle moves at constant velocity. Any frame moving at constant velocity relative to an inertial frame is also inertial. Accelerating frames are *not* inertial and require general relativity.
+
+### Spacetime
+
+Relativity welds space and time into a single 4-dimensional manifold called **spacetime**. An "event" is a point $(t, x, y, z)$. Observers in different frames disagree on the individual coordinates but agree on the **spacetime interval**:
+
+$$\Delta s^2 = -c^2 \Delta t^2 + \Delta x^2 + \Delta y^2 + \Delta z^2$$
+
+This is invariant; the same for all inertial observers. It plays the role in relativity that distance plays in Euclidean geometry.
+
+Intervals are classified as:
+
+- **Timelike** ($\Delta s^2 < 0$): events can be causally connected; a massive particle can travel between them
+- **Lightlike / null** ($\Delta s^2 = 0$): only light can connect them
+- **Spacelike** ($\Delta s^2 > 0$): no causal connection possible
+
+### The Lorentz Factor
+
+Appears everywhere in relativity:
+
+$$\gamma = \frac{1}{\sqrt{1 - v^2/c^2}} = \frac{1}{\sqrt{1 - \beta^2}}$$
+
+where $\beta = v/c$. Note that $\gamma \to 1$ as $v \to 0$ (recovering classical physics) and $\gamma \to \infty$ as $v \to c$.
+
+### Lorentz Transformations
+
+Relating coordinates in frame $S$ to coordinates in frame $S'$ moving at velocity $v$ along the $x$-axis:
+
+$$x' = \gamma(x - vt)$$
+
+$$t' = \gamma\left(t - \frac{vx}{c^2}\right)$$
+
+$$y' = y, \qquad z' = z$$
+
+Inverse transformation (swap primed/unprimed, $v \to -v$):
+
+$$x = \gamma(x' + vt')$$
+
+$$t = \gamma\left(t' + \frac{vx'}{c^2}\right)$$
+
+These replace the Galilean transformations of classical physics ($x' = x - vt$, $t' = t$), which are recovered in the limit $v \ll c$.
+
+---
+
+## 2. Relativistic Kinematics
+
+The strange consequences of the postulates.
+
+### Time Dilation
+
+A clock moving relative to you ticks slowly:
+
+$$\Delta t = \gamma \Delta t_0$$
+
+where $\Delta t_0$ is the **proper time**; the time interval measured in the frame where the two events occur at the same spatial location.
+
+**Canonical example:** muons produced in the upper atmosphere shouldn't reach the ground in their ~2 µs half-life traveling at near $c$. But they do; because from our frame their clocks run slow, extending their effective lifetime.
+
+### Length Contraction
+
+An object moving past you is shorter along the direction of motion:
+
+$$L = \frac{L_0}{\gamma}$$
+
+where $L_0$ is the **proper length**; the length measured in the object's rest frame. No contraction perpendicular to motion.
+
+Time dilation and length contraction are two sides of the same coin. From the muon's frame, the atmosphere is length-contracted, so it crosses the thin layer in its normal lifetime.
+
+### Relativity of Simultaneity
+
+Two events simultaneous in one frame are generally *not* simultaneous in another. If two events separated by $\Delta x$ are simultaneous in $S$ ($\Delta t = 0$), then in $S'$:
+
+$$\Delta t' = -\frac{\gamma v \Delta x}{c^2}$$
+
+This is the deepest of the three effects. There is no universal "now."
+
+### Velocity Addition
+
+The classical rule $u' = u - v$ fails. The correct relativistic rule (for motion along the $x$-axis):
+
+$$u' = \frac{u - v}{1 - uv/c^2}$$
+
+Equivalently:
+
+$$u = \frac{u' + v}{1 + u'v/c^2}$$
+
+Consequence: you can never exceed $c$ by combining sub-$c$ velocities. If $u = c$, then $u' = c$ in any frame; exactly what postulate 2 demands.
+
+### Relativistic Doppler Effect
+
+For light from a source moving directly toward or away from you:
+
+$$f_{\text{obs}} = f_{\text{src}} \sqrt{\frac{1 + \beta}{1 - \beta}} \quad \text{(approaching)}$$
+
+$$f_{\text{obs}} = f_{\text{src}} \sqrt{\frac{1 - \beta}{1 + \beta}} \quad \text{(receding)}$$
+
+This redshift is how we know the universe is expanding.
+
+---
+
+## 3. Relativistic Dynamics
+
+Classical $\vec{F} = m\vec{a}$ and $KE = \tfrac{1}{2} mv^2$ also break at relativistic speeds. Their replacements are among the most famous equations in physics.
+
+### Relativistic Momentum
+
+$$\vec{p} = \gamma m \vec{v}$$
+
+Momentum diverges as $v \to c$, so no amount of force can push a massive particle to $c$.
+
+### Relativistic Energy
+
+**Total energy:**
+
+$$E = \gamma m c^2$$
+
+**Rest energy** (at $v = 0$):
+
+$$E_0 = m c^2$$
+
+Mass and energy are interconvertible. This is not a metaphor; nuclear reactors, stars, and particle accelerators demonstrate it daily.
+
+**Kinetic energy:**
+
+$$KE = E - E_0 = (\gamma - 1) m c^2$$
+
+For $v \ll c$, this reduces to $\tfrac{1}{2} m v^2$ (verify via Taylor expansion of $\gamma$).
+
+### Energy-Momentum Relation
+
+The master equation:
+
+$$E^2 = (pc)^2 + (mc^2)^2$$
+
+Special cases:
+- Particle at rest ($p = 0$): $E = mc^2$
+- Massless particle ($m = 0$): $E = pc$ (applies to photons)
+- Non-relativistic limit ($pc \ll mc^2$): $E \approx mc^2 + p^2/(2m)$
+
+### Four-Vectors
+
+Position, velocity, and momentum generalize into four-component objects that transform via Lorentz transformations. The momentum four-vector:
+
+$$p^\mu = (E/c, \vec{p})$$
+
+has invariant magnitude $p^\mu p_\mu = -(mc)^2$, equivalent to the energy-momentum relation.
+
+### Mass-Energy Equivalence: Practical Form
+
+The energy released in a reaction equals the mass deficit times $c^2$:
+
+$$\Delta E = \Delta m \cdot c^2$$
+
+One unified atomic mass unit converts to energy as:
+
+$$1 \text{ u} = 931.5 \text{ MeV}/c^2$$
+
+---
+
+## 4. General Relativity (Conceptual)
+
+Special relativity handles inertial frames. **General relativity** (Einstein, 1915) extends relativity to accelerating frames and, along the way, reveals that gravity isn't a force; it's the geometry of spacetime.
+
+### The Equivalence Principle
+
+Einstein's "happiest thought": a person in a closed elevator cannot tell whether the elevator is sitting on Earth (feeling gravity) or accelerating through space at $g$. **Gravitational mass and inertial mass are the same thing.**
+
+Consequence: in a freely falling frame, gravity locally disappears.
+
+### Gravity as Geometry
+
+Mass and energy curve spacetime. Free-falling objects follow **geodesics** (straightest possible paths) through this curved spacetime. What looks like "the force of gravity" is really objects moving in straight lines through curved geometry.
+
+Einstein's field equations (for reference, not solution):
+
+$$G_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4} T_{\mu\nu}$$
+
+Left side: geometry of spacetime. Right side: matter and energy content. Wheeler's summary: "Matter tells spacetime how to curve; spacetime tells matter how to move."
+
+### Key Predictions (All Confirmed)
+
+**Gravitational time dilation:** clocks run slower in stronger gravitational fields. For a weak field:
+
+$$\frac{\Delta t_\infty}{\Delta t} = \frac{1}{\sqrt{1 - 2GM/(rc^2)}}$$
+
+(GPS satellites must correct for this; otherwise their positions drift by about 10 km/day.)
+
+**Gravitational redshift:** light climbing out of a gravitational well loses energy.
+
+**Bending of light:** mass deflects passing light rays. First confirmed during the 1919 solar eclipse.
+
+**Perihelion precession:** Mercury's orbit rotates slightly faster than Newton predicts; by exactly the amount GR predicts.
+
+**Black holes:** if a mass is compressed within its **Schwarzschild radius**
+
+$$r_s = \frac{2GM}{c^2}$$
+
+nothing, not even light, can escape. Confirmed through X-ray binaries, gravitational-wave detections, and the 2019 and 2022 Event Horizon Telescope images.
+
+**Gravitational waves:** ripples in spacetime, predicted in 1916 and directly detected by LIGO in 2015 from a binary black hole merger.
+
+**Expansion of the universe:** GR's natural solution for a homogeneous universe is either expanding or contracting; leading to the Big Bang cosmology.
+
+---
+
+## 5. The Breakdown of Classical Physics
+
+Three experimental results around 1900 could not be explained by classical physics. Each led directly to quantum mechanics.
+
+### Blackbody Radiation and the UV Catastrophe
+
+Classical theory (Rayleigh-Jeans) predicted that a hot object should emit infinite energy at short wavelengths:
+
+$$u(\lambda, T) = \frac{8\pi k_B T}{\lambda^4}$$
+
+Obviously wrong; your oven doesn't vaporize you with gamma rays. Max Planck (1900) solved it by postulating that electromagnetic energy is exchanged only in discrete packets:
+
+$$E = nhf, \quad n = 0, 1, 2, \ldots$$
+
+with $h = 6.626 \times 10^{-34}$ J·s. The resulting **Planck distribution** fits the data perfectly:
+
+$$u(\lambda, T) = \frac{8\pi hc}{\lambda^5} \cdot \frac{1}{e^{hc/\lambda k_B T} - 1}$$
+
+### Stefan-Boltzmann Law
+
+Total power radiated per unit area by a blackbody:
+
+$$P/A = \sigma T^4$$
+
+where $\sigma = 5.67 \times 10^{-8}$ W/(m²·K⁴).
+
+### Wien's Displacement Law
+
+The peak wavelength shifts with temperature:
+
+$$\lambda_{\max} T = 2.898 \times 10^{-3} \text{ m·K}$$
+
+(Why hot things glow red-orange-white-blue as they heat up.)
+
+### The Photoelectric Effect
+
+Light shone on a metal ejects electrons; but only if the frequency exceeds a threshold. Intensity doesn't help; increasing intensity of red light won't eject electrons if red is below threshold. Classical wave theory had no explanation.
+
+Einstein (1905): light arrives in discrete quanta (photons), each with energy $E = hf$. An electron absorbs one photon at a time:
+
+$$KE_{\max} = hf - \phi$$
+
+where $\phi$ is the **work function** of the metal (energy required to free an electron). Below threshold frequency $f_0 = \phi/h$, no electrons come out no matter how bright the light is.
+
+This won Einstein the 1921 Nobel Prize; not relativity, the photoelectric effect.
+
+### Atomic Spectra
+
+Hot hydrogen doesn't emit a continuous rainbow; it emits a handful of sharp lines. Empirically, their wavelengths fit the **Rydberg formula:**
+
+$$\frac{1}{\lambda} = R_H\left(\frac{1}{n_f^2} - \frac{1}{n_i^2}\right), \quad n_i > n_f$$
+
+where $R_H = 1.097 \times 10^7$ m⁻¹ is the Rydberg constant. Classical physics predicted no such discrete pattern; and worse, predicted that orbiting electrons should radiate away their energy in 10⁻¹¹ seconds, making atoms unstable.
+
+Both problems required a quantum solution.
+
+---
+
+## 6. The Photon and Wave-Particle Duality
+
+Einstein's photon hypothesis was controversial for decades. Then in 1923, Compton's experiment nailed it.
+
+### Photon Properties
+
+A photon of frequency $f$ and wavelength $\lambda = c/f$ carries:
+
+$$E = hf = \frac{hc}{\lambda}$$
+
+$$p = \frac{E}{c} = \frac{h}{\lambda}$$
+
+$$m = 0$$
+
+It always travels at $c$.
+
+### Compton Scattering
+
+Photons scattering off electrons shift to longer wavelengths in a way that depends only on angle; exactly what you'd expect from a billiard-ball collision governed by conservation of relativistic energy and momentum.
+
+**Compton shift formula:**
+
+$$\Delta \lambda = \lambda' - \lambda = \frac{h}{m_e c}(1 - \cos\theta)$$
+
+The quantity $h/(m_e c) = 2.43 \times 10^{-12}$ m is the **Compton wavelength** of the electron.
+
+This cemented the photon as a genuine particle, with energy and momentum that obey conservation laws; not just a bookkeeping trick for Planck's formula.
+
+### Wave-Particle Duality for Light
+
+Light shows **both**:
+- Wave behavior: interference, diffraction, polarization
+- Particle behavior: photoelectric effect, Compton scattering, photon counting
+
+Neither picture alone is complete. Which shows up depends on what you measure.
+
+---
+
+## 7. Matter Waves
+
+Louis de Broglie (1924 PhD thesis) proposed that if waves can act like particles, maybe particles can act like waves.
+
+### De Broglie Wavelength
+
+Every particle of momentum $p$ has an associated wavelength:
+
+$$\lambda = \frac{h}{p}$$
+
+For a massive non-relativistic particle: $\lambda = h/(mv)$.
+
+A baseball has a de Broglie wavelength of ~10⁻³⁴ m (undetectable). An electron at a few eV has ~1 nm (comparable to atomic spacing; detectable).
+
+### Experimental Confirmation: Davisson-Germer
+
+In 1927, Davisson and Germer fired electrons at a nickel crystal and observed diffraction patterns matching the de Broglie wavelength exactly. Electrons are waves. This is not optional; it's how electron microscopes work.
+
+Diffraction has since been demonstrated for neutrons, atoms, small molecules, and even buckyballs (C₆₀).
+
+### Phase and Group Velocity
+
+A matter wave has a **phase velocity** $v_p = \omega/k$ and a **group velocity** $v_g = d\omega/dk$. The group velocity equals the particle's classical velocity; the phase velocity can exceed $c$ (no information travels at it).
+
+### Bohr Model Reinterpreted
+
+Bohr's quantization condition $L = n\hbar$ becomes natural: electron orbits must fit an integer number of de Broglie wavelengths:
+
+$$2\pi r = n\lambda = \frac{nh}{p}$$
+
+Self-interfering waves set the allowed orbits.
+
+---
+
+## 8. The Uncertainty Principle
+
+A direct consequence of matter being wavelike.
+
+### Heisenberg's Uncertainty Relations
+
+**Position-momentum:**
+
+$$\Delta x \, \Delta p_x \geq \frac{\hbar}{2}$$
+
+**Energy-time:**
+
+$$\Delta E \, \Delta t \geq \frac{\hbar}{2}$$
+
+where $\hbar = h/(2\pi)$.
+
+### What It Actually Means
+
+Not a limitation of your equipment. Not an effect of "the observer disturbing the system." A particle simply does not possess simultaneously definite values of position and momentum, any more than a wave packet has a single definite frequency and a single definite position.
+
+### Implications
+
+**Zero-point energy:** a particle confined in a region of size $\Delta x$ must have momentum at least $\sim \hbar/(2\Delta x)$, and so kinetic energy at least $\sim \hbar^2/(8m(\Delta x)^2)$. Nothing is ever truly at rest.
+
+**Stability of atoms:** the electron cannot collapse onto the nucleus because confining it to small $\Delta x$ demands huge kinetic energy, which costs more than the electrostatic potential energy saves.
+
+**Virtual particles:** energy conservation can be "violated" by $\Delta E$ for times shorter than $\hbar/(2\Delta E)$. Virtual particles popping in and out of the vacuum mediate forces in quantum field theory.
+
+---
+
+## 9. The Schrödinger Equation
+
+The master equation of non-relativistic quantum mechanics, written down by Erwin Schrödinger in 1926.
+
+### The Wave Function
+
+Every quantum system is described by a complex-valued **wave function** $\Psi(\vec{r}, t)$. It contains all the information about the system.
+
+**Born rule:** the probability density of finding the particle at position $\vec{r}$ is
+
+$$|\Psi(\vec{r}, t)|^2 = \Psi^* \Psi$$
+
+Normalization requires:
+
+$$\int |\Psi|^2 \, d^3r = 1$$
+
+### Time-Dependent Schrödinger Equation
+
+$$i\hbar \frac{\partial \Psi}{\partial t} = -\frac{\hbar^2}{2m} \nabla^2 \Psi + V(\vec{r}, t)\Psi$$
+
+In compact form: $i\hbar \, \partial_t \Psi = \hat{H} \Psi$, where $\hat{H}$ is the Hamiltonian (total energy) operator.
+
+### Time-Independent Schrödinger Equation
+
+For potentials that don't depend on time, write $\Psi(\vec{r}, t) = \psi(\vec{r}) e^{-iEt/\hbar}$. Then:
+
+$$-\frac{\hbar^2}{2m} \nabla^2 \psi + V(\vec{r}) \psi = E \psi$$
+
+This is an **eigenvalue equation**: allowed energies $E$ are those for which normalizable solutions exist.
+
+### Operators and Observables
+
+Every measurable quantity corresponds to a Hermitian operator:
+
+| Observable | Operator |
+|---|---|
+| Position | $\hat{x} = x$ |
+| Momentum | $\hat{p} = -i\hbar \nabla$ |
+| Energy | $\hat{H} = \hat{p}^2/(2m) + V$ |
+| Angular momentum | $\hat{L} = \hat{r} \times \hat{p}$ |
+
+**Expectation value** (average over many measurements):
+
+$$\langle \hat{A} \rangle = \int \Psi^* \hat{A} \Psi \, d^3r$$
+
+### Commutators and Uncertainty
+
+$$[\hat{A}, \hat{B}] = \hat{A}\hat{B} - \hat{B}\hat{A}$$
+
+**Canonical commutation relation:**
+
+$$[\hat{x}, \hat{p}] = i\hbar$$
+
+The generalized uncertainty principle says: for any two observables,
+
+$$\Delta A \, \Delta B \geq \tfrac{1}{2} |\langle [\hat{A}, \hat{B}]\rangle|$$
+
+Heisenberg's relation is just the special case for $\hat{x}$ and $\hat{p}$.
+
+### Superposition and Measurement
+
+Solutions can be added: if $\psi_1$ and $\psi_2$ are solutions, so is $c_1 \psi_1 + c_2 \psi_2$. The system is in *both* states at once until measured. Upon measurement, the wave function "collapses" to an eigenstate of the measured observable, with probability $|c_i|^2$.
+
+The interpretation of collapse remains philosophically contested (Copenhagen, many-worlds, etc.), but the predictions for experimental outcomes are not.
+
+---
+
+## 10. Quantum Phenomena: Wells, Barriers, Tunneling
+
+Simple 1D problems that reveal the strangeness of quantum mechanics.
+
+### Infinite Square Well ("Particle in a Box")
+
+Potential $V = 0$ inside $[0, L]$ and infinite outside. Solutions:
+
+$$\psi_n(x) = \sqrt{\frac{2}{L}} \sin\left(\frac{n\pi x}{L}\right)$$
+
+$$E_n = \frac{n^2 \pi^2 \hbar^2}{2mL^2}, \quad n = 1, 2, 3, \ldots$$
+
+**Lessons:**
+- Energy is quantized (discrete $n$)
+- Ground state has nonzero energy; a consequence of uncertainty
+- Energy scales as $1/L^2$; tighter confinement costs more energy
+
+### Finite Square Well
+
+Bound states exist at discrete energies below the well depth, with wave functions that extend a bit outside the well (classically forbidden region). Only a finite number of bound states.
+
+### Quantum Harmonic Oscillator
+
+Potential $V = \tfrac{1}{2} m\omega^2 x^2$. Energy levels:
+
+$$E_n = \hbar\omega\left(n + \tfrac{1}{2}\right), \quad n = 0, 1, 2, \ldots$$
+
+**Key features:**
+- Equally spaced levels
+- Zero-point energy $E_0 = \tfrac{1}{2}\hbar\omega$
+- Describes vibrations in molecules, phonons in solids, photons in cavities
+
+### Tunneling
+
+A particle encountering a barrier taller than its energy has a nonzero probability of appearing on the other side. For a rectangular barrier of height $V_0$ and width $L$:
+
+$$T \approx e^{-2\kappa L}, \quad \kappa = \frac{\sqrt{2m(V_0 - E)}}{\hbar}$$
+
+**Real-world consequences:**
+- Alpha decay of nuclei
+- Fusion in stars (classically too cold to overcome Coulomb repulsion)
+- Scanning tunneling microscopy
+- Flash memory cells
+
+---
+
+## 11. The Hydrogen Atom
+
+The one atom whose Schrödinger equation can be solved exactly; and the result is spectacular.
+
+### The Setup
+
+Electron in the Coulomb potential of a proton:
+
+$$V(r) = -\frac{k_e e^2}{r}$$
+
+The spherical symmetry makes it natural to work in spherical coordinates and separate variables.
+
+### Quantum Numbers
+
+Three from the Schrödinger equation, one more from spin:
+
+- **Principal quantum number** $n = 1, 2, 3, \ldots$; sets energy
+- **Orbital angular momentum** $\ell = 0, 1, \ldots, n-1$; labeled s, p, d, f
+- **Magnetic quantum number** $m_\ell = -\ell, \ldots, +\ell$; projection on $z$-axis
+- **Spin quantum number** $m_s = \pm \tfrac{1}{2}$
+
+### Energy Levels
+
+$$E_n = -\frac{m_e k_e^2 e^4}{2\hbar^2 n^2} = -\frac{13.6 \text{ eV}}{n^2}$$
+
+Depends only on $n$ (in the non-relativistic, spinless approximation; small corrections come from relativity and spin).
+
+### Angular Momentum
+
+$$|\vec{L}|^2 = \ell(\ell+1)\hbar^2$$
+
+$$L_z = m_\ell \hbar$$
+
+Note: $|\vec{L}|$ is *not* $\ell \hbar$; that was the Bohr model's error.
+
+### Wave Functions (Orbitals)
+
+$$\psi_{n\ell m}(r, \theta, \phi) = R_{n\ell}(r) Y_\ell^m(\theta, \phi)$$
+
+The $Y_\ell^m$ are spherical harmonics; the $R_{n\ell}$ contain the Bohr radius
+
+$$a_0 = \frac{\hbar^2}{m_e k_e e^2} = 5.29 \times 10^{-11} \text{ m}$$
+
+as their natural length scale.
+
+**Shapes:** s-orbitals are spherical; p-orbitals have two lobes; d-orbitals have four lobes (usually). These shapes determine chemistry.
+
+### Spin
+
+Electrons carry intrinsic angular momentum of magnitude
+
+$$|\vec{S}|^2 = s(s+1)\hbar^2, \quad s = \tfrac{1}{2}$$
+
+with $S_z = \pm \tfrac{1}{2}\hbar$. Not a literal spinning; it's a genuinely new property with no classical analog, discovered because atomic spectra have extra fine structure that only makes sense if electrons have angular momentum beyond orbital.
+
+### Spectral Lines of Hydrogen
+
+Transitions from $n_i$ to $n_f$ emit a photon with
+
+$$hf = E_{n_i} - E_{n_f}$$
+
+Named series:
+
+- **Lyman** ($n_f = 1$): ultraviolet
+- **Balmer** ($n_f = 2$): visible (H-α red, H-β blue-green, etc.)
+- **Paschen** ($n_f = 3$): infrared
+
+The pattern is exactly the Rydberg formula from section 5, now derived from first principles.
+
+---
+
+## 12. Multi-Electron Atoms and the Periodic Table
+
+### The Pauli Exclusion Principle
+
+No two electrons in an atom can have the same set of four quantum numbers $(n, \ell, m_\ell, m_s)$.
+
+More generally: the wave function of a system of identical fermions must be antisymmetric under exchange. Bosons (photons, etc.) have symmetric wave functions and can pile into the same state.
+
+### Consequences
+
+Pauli exclusion is why matter is *solid*; electrons in an atom can't all collapse into the ground state. It's why atoms have their structure, why the periodic table looks like it does, and why white dwarfs and neutron stars resist collapse.
+
+### Shell Structure
+
+Electrons fill orbitals in order of increasing energy, two per spatial orbital (opposite spins):
+
+$$1s^2, \, 2s^2, \, 2p^6, \, 3s^2, \, 3p^6, \, 4s^2, \, 3d^{10}, \, 4p^6, \, 5s^2, \ldots$$
+
+Maximum electrons per $n$-level: $2n^2$. Maximum per subshell $\ell$: $2(2\ell+1)$.
+
+### Hund's Rule
+
+Within a subshell, electrons fill separate orbitals with parallel spins before pairing up. Lowers energy via exchange interaction.
+
+### The Periodic Table
+
+Chemical behavior is determined almost entirely by the outer electron configuration. The columns of the periodic table align elements with the same valence structure; noble gases have filled shells, alkali metals have one valence electron, and so on. All of chemistry follows from the Schrödinger equation plus Pauli exclusion.
+
+### X-Ray Spectra and Moseley's Law
+
+Inner-shell transitions in heavy atoms produce characteristic X-rays. Their frequencies follow:
+
+$$\sqrt{f} \propto (Z - \sigma)$$
+
+This let Moseley determine atomic numbers directly, fixing the periodic table's ordering.
+
+---
+
+## 13. Molecules, Solids, and Statistical Distributions
+
+### Molecular Bonding
+
+- **Covalent:** electrons shared between atoms (H₂, O₂, organic molecules)
+- **Ionic:** electron transferred (NaCl)
+- **Metallic:** electrons delocalized across a lattice
+- **Van der Waals:** weak attraction from fluctuating dipoles
+
+### Molecular Energy Scales
+
+A molecule has, from largest to smallest: electronic, vibrational, and rotational energy levels.
+
+**Rotational levels** (rigid rotor):
+
+$$E_J = \frac{\hbar^2 J(J+1)}{2I}, \quad J = 0, 1, 2, \ldots$$
+
+**Vibrational levels** (harmonic oscillator):
+
+$$E_v = \hbar\omega\left(v + \tfrac{1}{2}\right)$$
+
+Molecular spectra consist of electronic transitions with vibrational fine structure and rotational hyperfine structure. This is how we do astrochemistry.
+
+### Band Theory of Solids
+
+When $N$ atoms combine into a solid, their discrete energy levels broaden into bands containing $N$ closely spaced states each.
+
+- **Metal:** partially filled band → free electrons → conducts
+- **Insulator:** filled valence band, large gap to empty conduction band → doesn't conduct
+- **Semiconductor:** same as insulator but with small gap → conducts when heated or doped
+
+Doping (adding impurities) creates n-type (extra electrons) or p-type (extra holes) semiconductors. All modern electronics descend from this.
+
+### Statistical Distributions
+
+How particles populate available energy states at temperature $T$:
+
+**Maxwell-Boltzmann** (classical, distinguishable):
+
+$$f_{\text{MB}}(E) = A e^{-E/k_B T}$$
+
+**Bose-Einstein** (bosons, e.g., photons):
+
+$$f_{\text{BE}}(E) = \frac{1}{e^{(E-\mu)/k_B T} - 1}$$
+
+**Fermi-Dirac** (fermions, e.g., electrons):
+
+$$f_{\text{FD}}(E) = \frac{1}{e^{(E-\mu)/k_B T} + 1}$$
+
+The Fermi-Dirac distribution is what gives metals their electronic properties, white dwarfs their pressure support, and semiconductors their temperature dependence.
+
+---
+
+## 14. Nuclear Physics
+
+The nucleus is a bound state of protons and neutrons, held together by the strong force.
+
+### Notation
+
+A nuclide is written $^{A}_{Z}X$ where:
+- $A$ = mass number (protons + neutrons)
+- $Z$ = atomic number (protons)
+- $N = A - Z$ = neutron number
+- $X$ = chemical symbol
+
+**Isotopes** share $Z$ but differ in $A$.
+
+### Nuclear Size
+
+$$R \approx R_0 A^{1/3}, \quad R_0 \approx 1.2 \text{ fm}$$
+
+Nuclear matter has roughly constant density.
+
+### Binding Energy
+
+The mass of a nucleus is less than the sum of its constituents. The difference is the binding energy:
+
+$$B = [Z m_p + N m_n - M(^A_Z X)] c^2$$
+
+Binding energy per nucleon peaks around iron-56 (~8.8 MeV/nucleon). This is why fusion releases energy below iron, and fission releases energy above it.
+
+### Radioactive Decay
+
+**Alpha decay:** $^A_Z X \to {}^{A-4}_{Z-2}Y + {}^4_2\text{He}$
+
+**Beta-minus decay:** $n \to p + e^- + \bar{\nu}_e$ (mediated by the weak force)
+
+**Beta-plus decay:** $p \to n + e^+ + \nu_e$
+
+**Gamma decay:** excited nucleus emits a high-energy photon; $Z$ and $A$ unchanged
+
+### Decay Law
+
+The number of undecayed nuclei falls exponentially:
+
+$$N(t) = N_0 e^{-\lambda t}$$
+
+**Half-life:**
+
+$$t_{1/2} = \frac{\ln 2}{\lambda} \approx \frac{0.693}{\lambda}$$
+
+**Mean lifetime:** $\tau = 1/\lambda$.
+
+**Activity** (decays per second):
+
+$$R = \lambda N$$
+
+Units: becquerel (Bq) = 1 decay/s. 1 curie (Ci) = 3.7 × 10¹⁰ Bq.
+
+### Carbon Dating
+
+Living things incorporate atmospheric $^{14}$C, which decays with $t_{1/2} \approx 5730$ yr. Once the organism dies, the ratio $^{14}$C/$^{12}$C falls predictably, giving an age up to ~50,000 years.
+
+### Fission and Fusion
+
+**Fission:** a heavy nucleus (e.g., $^{235}$U) splits, releasing neutrons that can induce further fissions; basis of reactors and nuclear weapons.
+
+**Fusion:** light nuclei combine. Powers stars. On Earth, achieving net-positive fusion has been a decades-long engineering challenge; recent tokamak and inertial-confinement experiments have crossed break-even in the lab.
+
+**Typical energy releases:**
+- Chemical reaction: ~1 eV per molecule
+- Nuclear reaction: ~1 MeV per nucleon
+- Annihilation: $2mc^2$ (~1 MeV per electron-positron pair)
+
+---
+
+## 15. Particle Physics and the Standard Model
+
+What are the truly fundamental constituents of matter, and what are the fundamental forces? The current best answer is the **Standard Model**.
+
+### Fundamental Forces
+
+| Force | Relative Strength | Range | Mediator |
+|---|---|---|---|
+| Strong | 1 | ~10⁻¹⁵ m | Gluons |
+| Electromagnetic | ~10⁻² | Infinite | Photons |
+| Weak | ~10⁻⁶ | ~10⁻¹⁸ m | W⁺, W⁻, Z bosons |
+| Gravity | ~10⁻³⁹ | Infinite | (Graviton, hypothetical) |
+
+Gravity is not part of the Standard Model; unifying it with quantum mechanics remains the biggest open problem in physics.
+
+### Matter Particles (Fermions, spin-½)
+
+**Quarks** (interact via strong, EM, weak):
+
+| Generation | Up-type | Down-type |
+|---|---|---|
+| 1st | up (u) | down (d) |
+| 2nd | charm (c) | strange (s) |
+| 3rd | top (t) | bottom (b) |
+
+Each has an antiquark; each comes in three "colors" (a strong-force charge).
+
+**Leptons** (no strong interaction):
+
+| Generation | Charged | Neutral |
+|---|---|---|
+| 1st | electron ($e$) | electron neutrino ($\nu_e$) |
+| 2nd | muon ($\mu$) | muon neutrino ($\nu_\mu$) |
+| 3rd | tau ($\tau$) | tau neutrino ($\nu_\tau$) |
+
+Each lepton has an antiparticle. Neutrinos have tiny but nonzero mass (demonstrated by neutrino oscillation).
+
+### Force Carriers (Bosons, spin-1)
+
+- **Photon** ($\gamma$); electromagnetism
+- **Gluons** (8 types); strong force
+- **W⁺, W⁻, Z**; weak force
+
+### The Higgs Boson (spin-0)
+
+Discovered at CERN in 2012. The Higgs field gives mass to the W, Z, and matter particles via the Higgs mechanism. Without it, the symmetry-preserving Standard Model would have all particles massless.
+
+### Hadrons: Composite Particles
+
+Quarks are never observed in isolation (confinement). They bind into hadrons:
+
+- **Baryons** (3 quarks): protons ($uud$), neutrons ($udd$), etc.
+- **Mesons** (quark-antiquark): pions, kaons, etc.
+
+Also observed: tetraquarks, pentaquarks, and exotic bound states.
+
+### Conservation Laws
+
+Beyond energy, momentum, and charge: baryon number, lepton number (by flavor, approximately), strangeness (in strong interactions), and others. Some are exactly conserved; others only by certain interactions.
+
+### Beyond the Standard Model
+
+Known gaps:
+
+- No description of gravity
+- Dark matter and dark energy not accounted for
+- Matter-antimatter asymmetry of the universe
+- Neutrino masses require extension
+- Hierarchy problem (why is the Higgs so light?)
+
+Candidate extensions (supersymmetry, string theory, etc.) remain experimentally unconfirmed.
+
+---
+
+## 16. Cosmology
+
+Applying general relativity and particle physics to the universe as a whole.
+
+### The Expanding Universe
+
+Hubble (1929) observed that distant galaxies recede with velocity proportional to distance:
+
+$$v = H_0 d$$
+
+The **Hubble constant** is currently measured at roughly $H_0 \approx 67\text{–}73$ km/s/Mpc (the exact value is contested; the "Hubble tension"). This expansion is of *spacetime itself*, not galaxies flying through a pre-existing space.
+
+### The Big Bang
+
+Running the expansion backward: the universe was once unimaginably hot and dense, roughly 13.8 billion years ago. Predictions and confirmations:
+
+**Cosmic microwave background (CMB):** relic radiation from when the universe became transparent ~380,000 years after the Big Bang. Discovered 1965. Now a blackbody at $T = 2.725$ K with tiny anisotropies mapped precisely by COBE, WMAP, and Planck.
+
+**Primordial nucleosynthesis:** the observed abundances of H, He, and Li match Big Bang predictions to high precision.
+
+**Structure formation:** the large-scale distribution of galaxies matches simulations seeded by CMB anisotropies.
+
+### Composition of the Universe
+
+Current best estimates (Planck satellite):
+
+- **Ordinary matter:** ~5%
+- **Dark matter:** ~27% (gravitates but doesn't interact electromagnetically; nature unknown)
+- **Dark energy:** ~68% (causes accelerating expansion; nature unknown)
+
+### The Friedmann Equation
+
+Governs expansion of a homogeneous, isotropic universe:
+
+$$\left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3} \rho - \frac{kc^2}{a^2} + \frac{\Lambda c^2}{3}$$
+
+where $a(t)$ is the cosmic scale factor, $\rho$ is energy density, $k$ is curvature, and $\Lambda$ is the cosmological constant (dark energy).
+
+### Accelerating Expansion
+
+Observations of distant supernovae in the late 1990s showed the expansion is speeding up, not slowing down. This required a nonzero $\Lambda$ (or some dynamical "dark energy"). 2011 Nobel Prize.
+
+### Cosmological Timeline
+
+| Time after Big Bang | Event |
+|---|---|
+| $<10^{-43}$ s | Planck era (quantum gravity required) |
+| $\sim 10^{-35}$ s | Inflation |
+| $\sim 10^{-10}$ s | Electroweak symmetry breaking |
+| $\sim 10^{-6}$ s | Quarks condense into hadrons |
+| $\sim 1$ s to $\sim 3$ min | Big Bang nucleosynthesis |
+| $\sim 380{,}000$ yr | Recombination; CMB released |
+| $\sim 150$ Myr | First stars |
+| $\sim 1$ Gyr | First galaxies |
+| $\sim 9.2$ Gyr | Solar system forms |
+| $\sim 13.8$ Gyr | Now |
+
+### Open Questions
+
+- What is dark matter?
+- What is dark energy?
+- What happened before (or "caused") the Big Bang?
+- Is the universe finite or infinite?
+- Why does the universe contain so much more matter than antimatter?
+- Is ours one of many universes?
+
+These are the frontier.
+
+---
+
+## Appendix: Constants and Units
+
+### Fundamental Constants
+
+| Symbol | Name | Value |
+|---|---|---|
+| $c$ | Speed of light in vacuum | 2.998 × 10⁸ m/s |
+| $h$ | Planck constant | 6.626 × 10⁻³⁴ J·s |
+| $\hbar$ | Reduced Planck constant | 1.055 × 10⁻³⁴ J·s |
+| $G$ | Gravitational constant | 6.674 × 10⁻¹¹ N·m²/kg² |
+| $k_B$ | Boltzmann constant | 1.381 × 10⁻²³ J/K |
+| $\sigma$ | Stefan-Boltzmann constant | 5.670 × 10⁻⁸ W/(m²·K⁴) |
+| $R_H$ | Rydberg constant | 1.097 × 10⁷ m⁻¹ |
+| $a_0$ | Bohr radius | 5.292 × 10⁻¹¹ m |
+| $N_A$ | Avogadro's number | 6.022 × 10²³ /mol |
+
+### Particle Properties
+
+| Particle | Mass (kg) | Mass (MeV/c²) | Charge |
+|---|---|---|---|
+| Electron | 9.109 × 10⁻³¹ | 0.511 | −e |
+| Proton | 1.673 × 10⁻²⁷ | 938.3 | +e |
+| Neutron | 1.675 × 10⁻²⁷ | 939.6 | 0 |
+| Photon | 0 | 0 | 0 |
+
+### Convenient Energy Units
+
+| Unit | Value |
+|---|---|
+| 1 eV | 1.602 × 10⁻¹⁹ J |
+| 1 keV | 10³ eV |
+| 1 MeV | 10⁶ eV |
+| 1 GeV | 10⁹ eV |
+| 1 u (atomic mass unit) | 931.5 MeV/c² |
+
+### Useful Combinations
+
+| Quantity | Value |
+|---|---|
+| $hc$ | 1240 eV·nm |
+| $\hbar c$ | 197 MeV·fm |
+| $k_B T$ at 300 K | 0.0259 eV |
+| Electron Compton wavelength | 2.43 × 10⁻¹² m |
+| Proton Compton wavelength | 1.32 × 10⁻¹⁵ m |
+
+### Length Scales
+
+| Scale | Order of Magnitude |
+|---|---|
+| Observable universe | 10²⁶ m |
+| Galaxy | 10²¹ m |
+| Solar system | 10¹³ m |
+| Earth | 10⁷ m |
+| Human | 10⁰ m |
+| Cell | 10⁻⁵ m |
+| Atom | 10⁻¹⁰ m |
+| Nucleus | 10⁻¹⁵ m |
+| Proton | 10⁻¹⁵ m |
+| Planck length | 10⁻³⁵ m |
+
+---
+
+## Closing Note
+
+Modern physics is the point where physics stops being a refinement of common sense and becomes something stranger and deeper. The lessons are hard-won and still being absorbed:
+
+- Space and time are not separate stages; they're a single flexible fabric that mass and energy distort.
+- Particles are not little billiard balls; they are excitations of quantum fields, simultaneously wavelike and particlelike.
+- Determinism in the classical sense is gone; probability is woven into the fabric of reality.
+- The fundamental laws are remarkably few, and remarkably mathematical.
+
+What you've seen in this document is more of a map than a terrain; the *names* of the key ideas and the *form* of the key equations. The actual terrain is covered in dedicated courses:
+
+**Next Steps:**
+
+- **Special Relativity** (dedicated course); four-vectors, tensors, covariant Maxwell's equations
+- **Quantum Mechanics I & II**; rigorous treatment of Hilbert spaces, operators, angular momentum, scattering
+- **General Relativity**; differential geometry, Einstein's field equations, black holes, cosmology
+- **Quantum Field Theory**; unifying quantum mechanics with special relativity; the basis of the Standard Model
+- **Statistical Mechanics**; emergence of thermodynamics from microscopic laws
+- **Solid State Physics**; quantum mechanics applied to many-body systems in crystals
+
+And always, always: work problems. Read papers. Be suspicious of pop-science explanations that sound too neat. The universe is stranger than any summary can capture; including this one.

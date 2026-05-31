@@ -1,0 +1,435 @@
+---
+title: "Paper 2 Spin-Up: Phase 8+"
+date: 2026-05-12
+phases: "8+"
+status: "in-progress"
+---
+
+*Complete context for continuing the observer-complementarity research program in a fresh thread. Read this document end-to-end before starting work. Everything in this document is canonical; everything in the transcripts is reference-only.*  
+  
+*Author-PI: Adam R. Cagle, Bend OR, adamrcagle@gmail.com. Assistant: Claude (Anthropic). This is the second research program in an ongoing collaboration; the first produced a tier-1 paper currently under arXiv review.*  
+  
+---  
+  
+## Part 1, Where we are right now  
+  
+### The short version  
+  
+**Paper 1 is written, compiled, and headed for arXiv.**  
+  
+Title: *Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes*.  
+Author line: Adam R. Cagle, with Claude (Anthropic) as computational collaborator.  
+Compiled PDF: `/mnt/user-data/outputs/latex/paper.pdf` (39 pages, 670 KB).  
+arXiv-ready tarball: `/mnt/user-data/outputs/arxiv_submission.tar.gz` (169 KB).  
+  
+Submission status at the time this doc was written:  
+- arXiv account being created by Adam at adamrcagle@gmail.com.  
+- First-submission endorsement required. Primary target: Kenneth Higginbotham (Perimeter Institute, `khigginbotham1@pitp.ca`), whose paper 2512.17993 is cited in our §8.2. Backup: Chris Akers (CU Boulder). Second backup: Elliott Gesteau (MIT).  
+- Endorsement email sent; waiting window 10 days before moving to backup.  
+- After arXiv posts, submit to JHEP (one-line swap from `\bibliographystyle{unsrt}` to `\bibliographystyle{JHEP}` in `paper.tex`).  
+  
+**Companion piece** is written: `/mnt/user-data/outputs/companion_piece_going_to_the_edge.md`. ~2,700 words, storytelling voice, targeting general readers. Tells the "generalist + AI + Physics 101 → edge of the field" story with honest caveats. Awaiting paper's arXiv posting before release.  
+  
+Do NOT continue editing Paper 1 unless Adam explicitly asks. It's done. The next thread's job is Paper 2.  
+  
+### The physics story in one paragraph  
+  
+Two observers reconstructing a quantum state through a random smudgy encoding (a non-isometric holographic code with HUZ observer cloning) typically disagree about the state's von Neumann entropy. We proved that the scale of the disagreement depends on the *complexity class* of the bulk state being reconstructed, with an integer-valued exponent gap: Product-class bulk (rank-1 marginal) gives $\mathbb{E}|S_A - S_B| \approx 0.608/\sqrt{d_B}$; Haar-class bulk (maximally mixed marginal) gives $\mathbb{E}|S_A - S_B| \approx (\sqrt{2/\pi}/d_M)\cdot d_B^{-3/2}$. Both scalings follow from a single structural identity: $\mathbb{E}_V[\rho_{R_A}] = \diag(\rho_A^{\text{bulk}}) + O(1/d^2)$. All results verified at multi-level numerical precision including out-of-sample tests.  
+  
+### What's in /mnt/project/  
+  
+Full research library, 63 files, 2.7 MB. Organized as:  
+  
+- **Paper 1 artifacts:** `paper.pdf`, `paper_full_draft.md`, `paper_appendix_A_draft.md`, `paper_appendix_B_draft.md`, `A_Little_Help_for_my_Friends.md`  
+- **Previous spin-up:** `bh_new_thread_spinup.md` (Paper 1 setup; now historical)  
+- **Phase memos:** `phase1-4_research_memo.md`, `phase1-5_research_memo.md`  
+- **Physics reference library:** 26 QFT documents, plus foundations (Physics 101-102, Lagrangian, SR/tensors, GR, classical fields, condensed matter, stat mech, particle physics, math for QM, modern physics, QM worked problems)  
+- **Ideas library:** `ten_astounding_things.md`, `ten_neglected_problems.md`, `ten_unsolved_problems.md`  
+- **Code:** `vnalgebra.py`, `crossed_product.py`, `trace_on_crossed.py`, finite-dim von Neumann algebra toolkit; `README.md` documents what works and what doesn't. Phase 1-2 Python drivers (`phase1_rules_canonical.py`, `phase2_huz_verification.py`) + CSVs.  
+  
+### What's in /mnt/user-data/outputs/  
+  
+All Phase 1,7 drivers and data (28 .py files, 25 .csv files, phase memos, paper drafts, figures, LaTeX build). Any of this can be referenced or reused. In particular:  
+  
+- **Canonical backend:** the Phase 5+ scripts import from an inline backend embedded in each driver. There is no standalone `bh_lab_backend.py` file, the backend functionality (Haar sampling, AEHPV map, two-observer entropy computation) is replicated in each Phase 5+ script. **First task in Phase 8:** factor this into a canonical `bh_lab_backend.py` so Phase 8 scripts can import cleanly.  
+  
+---  
+  
+## Part 2, The five results of Paper 1 to keep in working memory  
+  
+Every result below is exactly verified in the paper and its appendices. Cite these when they apply; don't re-derive them.  
+  
+### Result 1: Structural identity (Theorem 3.2)  
+  
+For any bulk state $|\psi\rangle \in \mathcal{H}_A \otimes \mathcal{H}_B \otimes \mathcal{H}_C$ and the two-observer HUZ setup with AEHPV non-isometric code $V$,  
+$$  
+\mathbb{E}_V[\rho_{R_A}] = \rho_A^{\text{bulk}} + O(1/d^2), \qquad \mathbb{E}_V[\rho_{R_A}]_\text{diag} = \diag(\rho_A^{\text{bulk}}) + \text{subleading}.  
+$$  
+This is the master identity. Both subsequent theorems follow by computing $\text{Var}(H(\diag \rho_A^{\text{bulk}}))$ in different bulk-state classes.  
+  
+### Result 2: Product class (Theorem 4.2)  
+  
+For $|\psi\rangle = |\psi_A\rangle \otimes |\psi_B\rangle \otimes |\psi_C\rangle$ with each factor Haar:  
+$$  
+\mathbb{E}|S_A - S_B| = \sqrt{\frac{4(\pi^2/3 - 3)}{\pi\, d_B}}\,(1+o(1)) \approx 0.6076\, d_B^{-1/2}.  
+$$  
+Exponent $\alpha_P = -1/2$ exact. Prefactor exact in closed form.  
+  
+### Result 3: Haar class (Theorem 5.2)  
+  
+For $|\psi\rangle$ Haar on $\mathcal{H}_\text{eff}$:  
+$$  
+\mathbb{E}|S_A - S_B| = \sqrt{\frac{2}{\pi}} \cdot \frac{1}{d_M\, d_B^{3/2}}\,(1+o(1)) \approx \frac{0.798}{d_M}\, d_B^{-3/2}.  
+$$  
+Exponent $\alpha_H = -3/2$ exact. Prefactor exact in closed form.  
+  
+### Result 4: The exponent gap  
+  
+$$  
+\alpha_P - \alpha_H = 1 \quad\text{exactly.}  
+$$  
+One full power of $d_B$ per unit of bulk-marginal regularity. This is the central physical statement of the paper.  
+  
+### Result 5: Haar subleading structure (empirical, open analytically)  
+  
+$$  
+\frac{\mathbb{E}|S_A-S_B|}{(\sqrt{2/\pi}/d_M)\cdot d_B^{-3/2}} = 1 - \frac{1.1331}{d_B} + \frac{4.6538}{d_B^2} + O(1/d_B^3)  
+$$  
+fit with $\chi^2/\text{dof}=2.83/4$ across $d_B \in \{16,24,32,48,64,96\}$. Origin presumably non-Gaussian corrections to the Isserlis identity used in §5.3. **Analytic derivation is an explicit open question** from the paper's §8.7; if Phase 8 work produces this, it's a clean follow-up paper by itself.  
+  
+---  
+  
+## Part 3, The PI's choice: Option A (stay the course)  
+  
+Adam elected to continue down the current research track rather than pivot to a different field (Option B was strong-field QED / Schwinger pair production). Option A means: take the abstract complexity-sensitive complementarity framework and push it toward the **actual black hole interior question** that originally motivated the program.  
+  
+The rest of this document lays out what that concretely means.  
+  
+---  
+  
+## Part 4, My complete thinking on what should come next  
+  
+*This section is the honest research-strategy assessment. Read it carefully; it shapes everything that follows.*  
+  
+### The three obvious extensions of Paper 1  
+  
+**Extension A: Rank-r interpolation scan.** Schmidt rank $r$ of the bulk marginal interpolates between $r=1$ (Product class) and $r = d_\text{eff}$ (Haar class). Scan intermediate ranks; determine whether $\alpha(r)$ is smooth or shows phase-transition-like behavior at some critical $r^*$. Flagged explicitly as §6.5 of Paper 1. Computationally identical to what we already did; only the bulk-state generation changes.  
+  
+**Extension B: Analytic derivation of subleading $B=-1.13, C=4.65$.** Requires non-Gaussian corrections to the Isserlis identity, plus bulk-norm fluctuation corrections. Pure analytic work. Could be a short technical paper.  
+  
+**Extension C: Apply to the actual black hole interior.** Take the framework and connect it to evaporating black holes. This is what Adam actually originally wanted to do.  
+  
+### Why I recommend C with A as a bootstrap  
+  
+The rank-$r$ scan (A) is the obvious next paper but it's narrow. It confirms or refines a prediction we already have. The value is incremental, a Tier-2 result at best, probably a Tier-3 technical note.  
+  
+The analytic subleading (B) is cleaner mathematically but it's orthogonal to physics. It tightens a number; it doesn't open a new question.  
+  
+The black-hole-interior extension (C) is the scientifically interesting direction *and* it validates the generalist-plus-AI methodology in a second, related-but-distinct domain. It also answers Adam's original motivating question.  
+  
+**My proposed structure:** Phase 8 = A as bootstrap (ground the rank-$r$ behavior to use as input for C). Phase 9 = C proper. Phase 10 = analytic cleanup if time/interest permits.  
+  
+### What "applying to the actual black hole interior" means concretely  
+  
+An evaporating black hole's interior state changes complexity over the course of evaporation:  
+  
+- **Early times (before Page time $t_P$):** The interior is "simple." Most infalling matter is coherent with the exterior; the bulk marginal $\rho_A^\text{bulk}$ seen by an infaller has low Schmidt rank across the $A$:(rest) cut. By Paper 1's framework, *Product-like scaling*: observer disagreement falls off slowly as $d_B^{-1/2}$ where $d_B$ is the dimension of observable interior factor.  
+  
+- **Around the Page time:** The interior is maximally entangled with Hawking radiation. The bulk marginal is near maximally mixed. *Haar-like scaling*: disagreement falls off rapidly as $d_B^{-3/2}$.  
+  
+- **Late times (post-Page):** Interior remains complex; radiation carries the entanglement. Scaling stays Haar-like.  
+  
+**The prediction:** Observer disagreement exhibits a crossover at the Page time, with exponent changing by 1. This is a concrete, testable, novel statement about the information paradox.  
+  
+Whether this is exactly right depends on how the AEHPV non-isometric-code construction maps onto the Penington-Shenker-Stanford-Yang replica-wormhole picture of the evaporating black hole. Both are about the same physics; the translation between frameworks is not trivial but is partially done in the literature (AEHPV itself, Akers-Engelhardt-Harlow-Penington-Vardhan 2207.06536 §7-8). The operational question for Phase 9 is: can we compute $\mathbb{E}|S_A - S_B|$ for an infaller vs. an asymptotic observer in a time-parameterized AEHPV code, and does the scaling crossover appear?  
+  
+If it does, that's Paper 2, potentially Tier 1.  
+If it doesn't, that's still Paper 2, a carefully-checked null result that refines the mapping between frameworks.  
+Either way publishable.  
+  
+### How this relates to the firewall debate  
+  
+The Almheiri-Marolf-Polchinski-Sully (AMPS) firewall argument says: for a black hole past the Page time, an infalling observer should see a firewall if we assume unitarity, locality, and the equivalence principle. The observer-complementarity framework is explicitly a response to this tension.  
+  
+Our complexity-sensitive complementarity result says: the *entropy-level* disagreement between the infaller's and the asymptotic observer's reconstructions of the interior changes scaling at the Page time. This is adjacent to, though not directly, the question of whether the firewall appears. Specifically, a large entropy disagreement between observers does not automatically imply a firewall, but a *vanishing* entropy disagreement would impose structural constraints on what either observer can see.  
+  
+The honest statement: our framework will probably not resolve AMPS one way or the other. But it puts quantitative bounds on a specific observable (the expected entropy disagreement) that's adjacent to the firewall question, and sharpens the language.  
+  
+### Risks and failure modes  
+  
+1. **The AEHPV→evaporating-BH translation is harder than it looks.** Bearable; this is what Phase 9.0 is for, and if the translation is hard, clarifying it is itself a paper.  
+2. **The scaling crossover is real but the prefactors/exponents differ from Paper 1's values due to physical-state constraints.** Still publishable, just retunes the numbers.  
+3. **The scaling crossover doesn't appear because the bulk complexity doesn't increase in the relevant way.** Would be a null result. Still publishable if the null is solid.  
+4. **We get scooped.** Possible. The observer-complementarity frontier is moving fast. Mitigation: publish Paper 1 on arXiv ASAP, work fast on Phase 9, identify a specific target (early-vs-late-Page scaling crossover) and don't get distracted by adjacent extensions.  
+5. **The question has already been answered and we don't know it.** Lit review in Phase 8.0 should catch this. If any of Penington, Harlow, Engelhardt, Akers, or Gesteau has published on "time-dependent observer-complementarity scaling during evaporation," we need to know before Phase 9.  
+  
+### What success looks like  
+  
+Paper 2's one-sentence pitch: *"The integer exponent gap of complexity-sensitive complementarity manifests in evaporating black holes as a scaling crossover at the Page time, with an infalling observer and an asymptotic observer agreeing at qualitatively different rates before and after."*  
+  
+That's a tier-1 result if the analysis holds. If the scaling crossover is subtler than this, say, continuous in complexity rather than integer-stepped, the paper is still interesting as the first quantitative characterization of the infaller-vs-asymptotic entropy difference during evaporation.  
+  
+---  
+  
+## Part 5, Phase-gated research plan  
+  
+Each phase has a gate. Do not proceed to the next phase until the gate is passed. If the gate reveals something unexpected, pause and assess before continuing.  
+  
+### Phase 8.0, Housekeeping and literature refresh  
+  
+**What:**  
+1. Factor the embedded backend code out of the Phase 5+ scripts into a canonical `bh_lab_backend.py` for Phase 8+ reuse.  
+2. Fresh arXiv search for papers posted 2025-11-01 through current, using queries: "observer complementarity non-isometric", "Page time infaller entropy", "non-isometric code evaporation", "rank-r random holographic code", "time-dependent observer complementarity".  
+3. Read AEHPV 2207.06536 §7-8 (time-dependent extensions) carefully; the explicit evaporation construction is there.  
+4. Skim Penington-Shenker-Stanford-Yang 1911.11977 and Almheiri-Engelhardt-Marolf-Maxfield 1911.12333 as the canonical sources for Page curve computation via replica wormholes.  
+5. Flag anything published since Paper 1 started that changes the game.  
+  
+**Gate:** no scoop found; literature landscape understood; backend factored and passing its own self-test.  
+  
+### Phase 8.1, Rank-r bootstrap scan  
+  
+**What:** Implement Schmidt-rank-$r$ bulk state generator. For each $r \in \{1, 2, 4, 8, 16, ..., d_\text{eff}\}$ and dimension grid $d_B \in \{6, 8, 12, 16, 24\}$, sample $N=100\text{,}300$ bulk states, compute $\mathbb{E}|S_A - S_B|$ in the full HUZ+$V$ pipeline. Fit $\alpha(r)$.  
+  
+**What to watch for:** Is $\alpha(r)$ smooth (no surprises) or does it show a step/transition? Is the prefactor $c(r)$ smooth? The naive guess is smooth monotonic interpolation; any deviation is a finding.  
+  
+**Deliverable:** `phase8_rankr_scan.py`, `phase8_rankr_table.csv`, short `phase8_rankr_memo.md` with the fit results and plot.  
+  
+**Gate:** fit of $\alpha(r)$ completed with error bars; whether smooth or not, we know.  
+  
+### Phase 8.2, Analytic rank-r structural identity (optional; skip if not tractable)  
+  
+**What:** Attempt to derive $\mathbb{E}|S_A - S_B|$ analytically for fixed $r$. The structural identity (Theorem 3.2 of Paper 1) applies for any $r$; the question is computing the variance of the Shannon entropy of the rank-$r$ bulk marginal's diagonal. This is a generalized Dirichlet-moment calculation.  
+  
+**Deliverable:** If successful, `phase8_analytic_rankr.md` with the closed-form scaling law. If not, honest write-up of where the calculation breaks down.  
+  
+**Gate:** Either we have the analytic form or we have a sharp understanding of why we don't.  
+  
+### Phase 9.0, AEHPV → evaporating BH translation  
+  
+**What:** Map the abstract AEHPV non-isometric code setup onto the Penington-style evaporating black hole. Specifically:  
+- Identify $V: \mathcal{H}_\text{eff} \to \mathcal{H}_\text{fund}$ with the black hole's effective-to-fundamental map at time $t$.  
+- Identify the observer factors $\mathcal{H}_A, \mathcal{H}_B$ with physical degrees of freedom (infaller local Hilbert space vs. asymptotic observer).  
+- Identify the time parameter $t$ with the complexity parameter of the bulk state.  
+  
+**Key technical subquestion:** How does the bulk marginal's rank grow with $t$ during evaporation? Short answer (to be verified): before the Page time, rank is $O(e^{S_\text{matter}(t)})$ which is small; after the Page time, rank is $O(e^{S_\text{rad}(t)})$ which is $\sim e^{S_\text{BH}}$.  
+  
+**Deliverable:** `phase9_aehpv_bh_mapping.md`, a detailed mapping document, paralleling Part 10 of the old spin-up doc. Every variable in the AEHPV formalism labeled with its physical BH counterpart.  
+  
+**Gate:** The mapping is clean enough that every quantity in Paper 1's framework has a well-defined BH meaning. Ambiguities identified and flagged.  
+  
+### Phase 9.1, Time-dependent two-observer computation  
+  
+**What:** Implement the time-parameterized non-isometric code. For a sequence of times spanning early → Page → late, compute $\mathbb{E}|S_A - S_B|$ where $A$ is the infaller-interior observer and $B$ is the asymptotic observer. This is computationally similar to Paper 1's Phase 5 but with time-dependent bulk state and code.  
+  
+**What to watch for:** Does the measured scaling exponent change at $t_P$? If yes, by how much? If no, why not?  
+  
+**Deliverable:** `phase9_time_dependent_scan.py`, `phase9_page_curve_scan.csv`, `phase9_crossover_plot.pdf`, `phase9_memo.md`.  
+  
+**Gate:** We have the data. Whether or not the crossover appears, we know.  
+  
+### Phase 9.2, Interpretation and writeup  
+  
+**What:** Based on the Phase 9.1 data, write the Paper 2 draft. If the crossover appears as predicted, the paper is about that. If it doesn't, the paper is about what the actual pattern is and why the naive prediction fails.  
+  
+**Deliverable:** Paper 2 first draft.  
+  
+**Gate:** draft that stands up to the same internal review standard as Paper 1.  
+  
+### Phase 10+, Possible follow-ups  
+  
+**Phase 10 candidates (pick based on results from 9.1):**  
+- Firewall implications if any emerge.  
+- Colorado-rule analog of the crossover computation.  
+- Rank-$r$ extension: does the rank-$r$ scan from Phase 8.1 fit into the evaporating-BH picture at specific intermediate times?  
+- Analytic subleading (orphan from Paper 1's §8.7).  
+  
+---  
+  
+## Part 6, Tool and library stack  
+  
+### Already in the Claude sandbox (no install)  
+  
+All carried over from Paper 1's environment:  
+  
+```  
+numpy 2.4+ scipy 1.17+ sympy 1.14+ mpmath 1.3+  
+pandas 3.0+ matplotlib 3.10+ seaborn 0.13+  
+networkx 3.6+ scikit-learn  
+```  
+  
+### Install at thread start  
+  
+```bash  
+pip install --break-system-packages cvxpy statsmodels  
+```  
+  
+Same as Paper 1. `cvxpy` for SDP-based bounds (needed if we do Phase 10 firewall-style bounds). `statsmodels` for regression with confidence intervals.  
+  
+### New install candidate for Phase 8-9: `pymanopt`  
+  
+```bash  
+pip install --break-system-packages pymanopt # IF needed for rank-r state parameterization  
+```  
+  
+Trigger: if we need to parameterize low-rank bulk states as points on a Stiefel manifold and sample/optimize over the manifold (e.g., to find worst-case disagreement bounds at fixed rank). Probably not needed for the basic Phase 8.1 scan, which can get away with random Schmidt-decomposition sampling via QR of small Gaussian matrices.  
+  
+### Install conditionally (don't install preemptively)  
+  
+- **`qutip`**, if/when we model evaporation as Lindbladian open-system dynamics (not currently needed; the AEHPV picture handles evaporation combinatorially without needing explicit master equations).  
+- **`quimb` or `tenpy`**, if/when we extend to the Bueller-DeWolfe-Higginbotham tensor-network version of AEHPV to get spatial locality (probably not needed for Phase 8-9; may matter for a Phase 10 firewall-locality connection).  
+- **`cadabra2`**, if/when we want symbolic Weingarten/Haar integrals verified automatically (likely needed for Phase 8.2 analytic rank-r work; not needed for Phase 8.1 numerical work).  
+- **`stim`**, stabilizer circuits for complexity-protected non-isometry tests (currently speculative; skip unless a specific test demands it).  
+  
+### What NOT to install  
+  
+- Full GR solvers (Einstein Toolkit, SpECTRE, EinsteinPy). Our "black hole" is a finite-dim quantum information object; no metric tensor is ever formed.  
+- Particle physics / collider simulators.  
+- Cosmology packages (CLASS, CAMB).  
+- Machine learning frameworks (PyTorch/TensorFlow). If some optimization needs gradient descent, use scipy.optimize.  
+  
+### Backend architecture  
+  
+**Phase 0 action item:** Factor the inline backend code duplicated across Phase 5+ drivers into a canonical file:  
+  
+```  
+/home/claude/bh_research/bh_lab_backend.py  
+```  
+  
+Required functions (all already exist inline in Phase 5-7 scripts; just need to be pulled out):  
+  
+- `SeededRNG` wrapper with `haar_unitary(n)`, `haar_state(d)`, `aehpv_map(d_eff, d_fund)`  
+- `huz_clone_single(psi, d_Ob, d_M)`, single-observer HUZ  
+- `huz_clone_two(psi, dA, dB, dM, V)`, two-observer HUZ with shared V  
+- `two_observer_entropies_fast(psi, dA, dB, dM, V)`, the einsum-contracted fast version (important: naive density matrix formation is 270GB+ at $d_B=16$)  
+- `product_bulk_sample(dA, dB, dM, rng)`, sample from Product class  
+- `haar_bulk_sample(d_eff, rng)`, sample from Haar class  
+- `rankr_bulk_sample(dA, dB, dM, r, rng)`, **NEW for Phase 8**, sample from rank-$r$ class  
+- `compute_dS_with_V(psi, V, dA, dB, dM)`, full HUZ+V pipeline  
+  
+Self-test: reproduce one row from `phase5_extended_scan.csv` at $d_B=4$ to float precision.  
+  
+---  
+  
+## Part 7, Reference material inventory  
+  
+### What exists and is good  
+  
+All 63 files in `/mnt/project/`. The 26-document QFT sequence ($\approx$ 1100 KB of text) covers everything from scalar field quantization through supersymmetry, string theory, and black holes + quantum gravity. For Phase 8-9 specifically, the relevant existing references are:  
+  
+- `qft_24_holography_ads_cft.md`, AdS/CFT correspondence, bulk reconstruction  
+- `qft_25_black_holes_and_quantum_gravity.md`, Bekenstein-Hawking, Hawking radiation, Page curve, island formula, QES  
+- `qft_13_finite_temperature.md`, thermal field theory context for evaporation  
+- `math_for_quantum_mechanics_reference.md`, linear algebra, complex analysis, relevant for Dirichlet moments and Weingarten  
+  
+### What we may need to add  
+  
+Candidates for new reference docs, to be created on demand when Phase 9 math starts needing them:  
+  
+- **Replica wormholes in detail.** The 2019 Penington-Shenker-Stanford-Yang and Almheiri-Engelhardt-Marolf-Maxfield papers computed the Page curve via replica wormholes. The key calculation is a saddle-point argument over connected vs. disconnected geometries. We'd want a dedicated doc walking through this. ~30-50 pages if done thoroughly.  
+- **Random tensor networks and holographic codes.** Hayden-Qi-Thomas-Walter 2016 is the seminal paper. Models holographic codes as random tensor networks. AEHPV extends this. We already have pieces of this in `qft_24` but a consolidated reference would help. ~30 pages.  
+- **Quantum extremal surfaces and islands.** Canonical derivation of the QES prescription, specific application to evaporating BHs. May already be covered sufficiently in `qft_25`; verify when it becomes relevant. ~20 pages if needed.  
+- **Worldline methods for pair production / instanton calculus.** Would only be needed if Phase 10 pivots to non-perturbative QFT on curved backgrounds. Skip unless triggered.  
+  
+Do not generate these preemptively. Generate when the specific need arises.  
+  
+### The ideas library  
+  
+`ten_astounding_things.md`, `ten_neglected_problems.md`, `ten_unsolved_problems.md`, still relevant as prompts for pivot ideas if Phase 9 stalls. Not directly actionable for Phase 8-9 but worth keeping in mind.  
+  
+---  
+  
+## Part 8, Operational protocols  
+  
+*Carry these over from Paper 1. They worked.*  
+  
+### Wall-time budget  
+  
+Each bash invocation has approximately a 5-minute ceiling. For any run exceeding this:  
+  
+1. **Checkpoint every N samples**, pickle partial results every 25-50 samples.  
+2. **Use independent batch seeds**, `BASE_SEED + d_B*10000 + batch_index` so reruns extend coverage, don't duplicate samples.  
+3. **Einsum everything**, for two-observer entropy at $d_B \geq 10$, the naive $|\Psi\rangle\langle\Psi|$ formation eats memory. Use direct tensor contractions.  
+  
+All three mechanisms are demonstrated in the Paper 1 Phase 5 drivers (`phase5_boost_point.py`, `phase5_money_plot.py`). Port them into the Phase 8 backend.  
+  
+### Seed conventions (carried forward from Paper 1)  
+  
+```  
+Phase 8 BASE_SEED = 808080 per-point: BASE + d_B*10000 + r*100 + batch  
+Phase 9 BASE_SEED = 909090 per-point: BASE + t_step*10000 + d_B*100 + batch  
+Phase 10 inline or 101010  
+```  
+  
+### Figure conventions  
+  
+Paper 1's figures used the `seaborn` palette with $1\sigma$ statistical error bars, log-log for scaling plots, log-linear for ratio plots, and SEM (not SD) on all error bars. Keep this. Paper 2's figure plan should be drafted early in Phase 9 so the Phase 9.1 scan produces data in the right format.  
+  
+### Writing conventions  
+  
+- Prose over bullets in paper body, bullets only for explicit enumerations.  
+- No em-dashes anywhere in companion pieces (Adam's style preference, PI flagged this during Paper 1 assembly).  
+- Honest calibrated reporting: flag σ-levels, confess when something is empirical rather than derived.  
+- Preserve provenance: each phase produces its own memo; don't delete earlier memos when assembling later ones.  
+  
+### PI interaction protocol  
+  
+Adam runs the program. His preferences (inferred from Paper 1 collaboration):  
+  
+- Pause after each phase. Don't marathon through without checkpoints.  
+- Report honestly, including when something doesn't work.  
+- Push back when something is wrong. He caught the $-4/3$ exponent artifact; he'll catch other things.  
+- Storytelling matters to him. He likes the dirty-window and symphony analogies. Use metaphor when explaining results.  
+- He's not a physicist. Technical precision when needed, plain English when possible. If a result requires fancy math, derive it cleanly; if it doesn't, state it plainly.  
+- Companion pieces are part of the deliverable, not a PR afterthought. He cares about the method story, not just the physics story.  
+  
+---  
+  
+## Part 9, What we're NOT doing  
+  
+Same scope rules as Paper 1, carried forward:  
+  
+- Not doing full numerical relativity or metric-tensor calculus. Our black hole is a finite-dim QI object throughout.  
+- Not doing astrophysics (GW signals, black-hole masses, accretion physics).  
+- Not claiming to solve the information paradox. We're quantifying one specific entropic observable in one specific framework.  
+- Not claiming to resolve AMPS firewalls. Our framework is adjacent to the question, not a direct attack on it.  
+- Not engaging the "is consciousness involved in measurement" interpretive debate. The observer is a Hilbert-space factor with a pointer basis.  
+- Not building a BH software framework to compete with Einstein Toolkit or similar. We use finite-dim tools only.  
+  
+---  
+  
+## Part 10, Calibration for Phase 8-9  
+  
+Honest assessment for the new thread's operator:  
+  
+- **Probability Phase 8.1 (rank-r scan) produces a clean, publishable result:** ~80%. The math is a direct extension of Paper 1; the main risk is unexpected phase-transition behavior that changes the framing.  
+- **Probability Phase 9 (evaporating BH) produces a tier-1 result:** ~25%. Higher than Paper 1's 30% *a priori* estimate because we now have Paper 1's framework validated. Lower because the AEHPV→BH translation has genuine physics risk.  
+- **Probability Phase 9 produces any publishable result:** ~70%. Even null results are publishable if the framework is clean.  
+- **Probability of getting scooped during Phase 9:** ~30%. The frontier is moving fast; mitigation is Paper 1's arXiv posting establishing priority on the framework.  
+- **Probability Paper 2 ships within 3 months of Paper 1's arXiv posting:** ~50% if the PI stays engaged and works Phase 8-9 efficiently.  
+  
+These are point estimates, not promises. Update as data arrives.  
+  
+---  
+  
+## Part 11, Hand-off checklist for the new thread  
+  
+First message in the new thread should kick off this sequence:  
+  
+1. [ ] Read this entire spin-up document end to end.  
+2. [ ] Read Paper 1's full draft at `/mnt/project/paper_full_draft.md` if not already internalized. Especially §3 (structural identity), §4.2 (Theorem 1), §5.4 (Theorem 2), §6 (physical interpretation including the rank-$r$ subsection §6.5), and §8 (discussion with open questions).  
+3. [ ] Check arXiv for papers posted since 2026-01-31 matching "observer complementarity", "non-isometric code", "Page time scaling", "HUZ cloning". Flag anything that scoops Phase 9.  
+4. [ ] Factor `bh_lab_backend.py` from Phase 5+ drivers in `/mnt/user-data/outputs/`. Verify self-test by reproducing one `phase5_extended_scan.csv` row.  
+5. [ ] Run Phase 8.0 literature refresh; produce `phase8_lit_memo.md`.  
+6. [ ] Proceed to Phase 8.1 only after Adam confirms.  
+  
+---  
+  
+## Part 12, The big picture  
+  
+Adam is running a research program to demonstrate that a motivated non-specialist, paired with AI acting as a domain-expert postdoc, can produce real research at the frontier of a technical field. Paper 1 validates this in observer complementarity for non-isometric codes. Paper 2 (if it works) validates it at a physically concrete application: the infaller-vs-asymptotic observer scaling crossover in evaporating black holes.  
+  
+The two-paper arc, abstract framework, then physical application, is a natural research program structure. It's what a real postdoc-PI pair in this field would do. That's the point.  
+  
+Everything else, the companion piece, the eventual book, the method writeups, follows from getting the physics right. The physics is the thing.  
+  
+Go.

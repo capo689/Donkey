@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const allEssays = await getCollection('essays');
+const methodEssays = allEssays.filter((e) => e.data.section === 'method');
+const findById = (id: string) => methodEssays.find((e) => e.id === id);
+const thesis   = findById('method-thesis');
+const protocol = findById('method-protocol');
+---
+
+<Base
+  title="The Method"
+  description="What we did, how we did it, where it worked, and where it did not."
+>
+  <div class="shell">
+
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span><span class="dot"></span><span>The Method</span><span class="dot"></span><span>&sect; IV</span>
+      </div>
+    </div>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Masthead</a>
+      <span class="sep">&rsaquo;</span>
+      <span>The Method</span>
+    </nav>
+
+    <article>
+      <header class="article-preamble">
+        <div class="article-section">The Method &nbsp;&middot;&nbsp; &sect; IV</div>
+        <h1 class="article-title">On the Doing of This Sort of Work.</h1>
+        <p class="article-subtitle">
+          What we did, how we did it, where it worked, and where it did not. The thesis, the protocol, and the open calibration log.
+        </p>
+      </header>
+
+      <section class="method-grid-list">
+        {thesis && (
+          <a href={`/method/${thesis.id}`} class="method-item-card">
+            <span class="method-num">I.</span>
+            <div class="method-body">
+              <h3 class="method-title">{thesis.data.title}</h3>
+              {thesis.data.subtitle && <p class="method-sub">{thesis.data.subtitle}</p>}
+              <p class="method-deck">The claim, in plain language. What this work is and what it is not.</p>
+            </div>
+            <span class="method-arrow">&rsaquo;</span>
+          </a>
+        )}
+        {protocol && (
+          <a href={`/method/${protocol.id}`} class="method-item-card">
+            <span class="method-num">II.</span>
+            <div class="method-body">
+              <h3 class="method-title">{protocol.data.title}</h3>
+              {protocol.data.subtitle && <p class="method-sub">{protocol.data.subtitle}</p>}
+              <p class="method-deck">Six operating principles. How a generalist actually does this with an A.I.</p>
+            </div>
+            <span class="method-arrow">&rsaquo;</span>
+          </a>
+        )}
+        <a href="/method/calibration" class="method-item-card">
+          <span class="method-num">III.</span>
+          <div class="method-body">
+            <h3 class="method-title">The Calibration Log</h3>
+            <p class="method-sub">Predictions on the record, outcomes when they land.</p>
+            <p class="method-deck">A live ledger of forecast versus result. Eight Paper-I predictions, all open Paper-II claims.</p>
+          </div>
+          <span class="method-arrow">&rsaquo;</span>
+        </a>
+      </section>
+    </article>
+  </div>
+</Base>

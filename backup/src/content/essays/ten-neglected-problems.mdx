@@ -1,0 +1,331 @@
+---
+title: "Ten Physics Problems We're Not Working On Enough"
+subtitle: "A personal list of problems the physics community systematically underweights."
+date: 2026-05-10
+backdated: true
+section: "field-notes"
+subsection: "reference"
+voice: "donkey"
+status: "ready"
+---
+
+*A personal list of problems that the physics community systematically underweights. Some of these have small communities working on them; most don't. A few might not be "physics problems" at all by traditional definition, which is part of the point, maybe some of our blind spots are about what counts as physics.*  
+  
+Caveat: saying "nobody's working on X" is usually wrong. Almost every question has someone somewhere pursuing it. What I mean is that these are areas where the level of effort seems vastly mismatched to the potential importance of the answers. Not neglected through conscious choice, but through the collective momentum of the field.  
+  
+I'll be honest about my confidence on each.  
+  
+---  
+  
+## 10. The foundations of probability in physics  
+  
+**Confidence: moderate**  
+  
+Physics uses probability everywhere: quantum mechanics, statistical mechanics, cosmology, inflation, multiverse reasoning. But the *foundations* of what probability means in a physical theory are surprisingly murky, and almost nobody works on this seriously.  
+  
+Specific unresolved issues:  
+  
+- **Born rule derivation.** Why do probabilities in QM go as $|\psi|^2$ rather than, say, $|\psi|^4$? Gleason's theorem gives a mathematical derivation under certain assumptions, but physically, we don't really understand why this specific rule. Everettian attempts (decision-theoretic arguments by Deutsch-Wallace) are contested. Bohmians have their own story. None is universally accepted.  
+  
+- **Probability in cosmology.** When we say "inflation predicts a spectrum of density perturbations with specific probabilities," what do those probabilities mean? We have *one* universe. Probabilities over cosmological initial conditions require a measure on possible universes, and we don't have a principled one. This matters for anthropic arguments, multiverse predictions, etc.  
+  
+- **Typicality arguments.** Much of modern cosmology (Boltzmann brains, multiverse predictions, eternal inflation) uses arguments like "typical observers see X." But "typical" requires a measure, and different natural-seeming measures give different answers. We have no principled way to choose.  
+  
+**Why it's neglected:** probability foundations sit awkwardly between physics, mathematics, and philosophy. Each field assumes another is handling it. Physicists think it's philosophy; philosophers think it's physics/math; mathematicians think it's already been formalized. Nobody has responsibility.  
+  
+**Why it matters:** any claim of the form "physics predicts X with probability P" depends on what P means. If our foundations are shaky, many modern results, especially in cosmology and quantum foundations, rest on unexamined assumptions.  
+  
+---  
+  
+## 9. Non-equilibrium statistical mechanics as a fundamental subject  
+  
+**Confidence: high**  
+  
+Equilibrium stat mech is essentially solved. We know how to compute partition functions, free energies, phase diagrams. Graduate courses teach it beautifully.  
+  
+Non-equilibrium stat mech is in radically worse shape. We have:  
+  
+- Linear response theory (fine for small deviations from equilibrium)  
+- Specific techniques (Boltzmann equations, Langevin dynamics, Fokker-Planck)  
+- Fluctuation theorems (Jarzynski, Crooks, relatively recent)  
+- Stochastic thermodynamics (growing field, ~20 years old)  
+  
+But no unified framework comparable to equilibrium stat mech. For systems far from equilibrium, we often can't:  
+- Predict relaxation to equilibrium reliably  
+- Understand entropy production in complex systems  
+- Treat driven systems systematically  
+- Handle strongly-interacting non-equilibrium physics  
+  
+**Why it's neglected:** the field does work on this, but I'd argue the *scale* of effort is wrong. Non-equilibrium stat mech touches:  
+- All of biology (life is a non-equilibrium steady state)  
+- Most of chemistry  
+- Climate, economics, brain dynamics  
+- Early universe cosmology  
+- Active matter, driven systems, living systems  
+  
+Given how much of the world is not in equilibrium, the discrepancy between "effort on equilibrium" and "effort on non-equilibrium" is striking.  
+  
+**Why it matters:** the deepest open problem might be understanding how equilibrium and non-equilibrium physics relate. Why does thermodynamics work? What's the statistical basis for the second law when you're far from equilibrium? These questions are embarrassingly open.  
+  
+---  
+  
+## 8. What happens inside the black hole?  
+  
+**Confidence: moderate**  
+  
+The islands story (documents 24-25) has made huge progress on black hole information, it's preserved, encoded in Hawking radiation. But the question of what the interior of a black hole *looks like*, what happens geometrically inside, is largely deferred.  
+  
+Most discussion focuses on:  
+- External observables (radiation, scattering)  
+- The Page curve (entanglement structure)  
+- Microstate counting (matching entropy formulas)  
+  
+What we genuinely don't understand:  
+  
+- **What does an infalling observer experience?** Does spacetime smoothly extend inside? Is there a firewall? A fuzzball? Some radical restructuring? Different approaches give different answers with no clear resolution.  
+  
+- **What happens at the singularity?** Classically, curvature diverges. Quantum mechanically, something else must happen. But what? We don't know.  
+  
+- **Do black holes have interiors at all?** Some approaches (fuzzballs, specific holographic arguments) suggest the interior is "illusory", not a real place with its own geometry.  
+  
+- **The age problem.** After a black hole exists for longer than the "scrambling time," we don't have a good description of what the interior state is. Different proposals disagree sharply.  
+  
+**Why it's neglected:** we've made so much progress on *external* black hole physics that interior questions seem less urgent. Also, the interior is causally disconnected from observers, making experimental tests impossible. So it feels like philosophy.  
+  
+**Why it matters:** the interior contains a putative singularity, a place where current physics predicts infinite curvature. Whatever resolves this singularity is quantum gravity in its purest form. If we understood black hole interiors, we'd understand how quantum gravity resolves singularities generally, including the Big Bang.  
+  
+**Connection to other problems:** the interior problem is entangled with initial conditions (Big Bang singularity is similar) and quantum gravity generally. We've built sophisticated tools (AdS/CFT, islands, QES) but haven't turned them on interior questions as forcefully as we could.  
+  
+---  
+  
+## 7. How does life fit into physics?  
+  
+**Confidence: moderate**  
+  
+Not "the origin of life" (which is a specific biochemistry problem) but: what *is* life from a physics perspective? Why does it exist? What physical principles, if any, make life possible or inevitable?  
+  
+Specific questions we're bad at:  
+  
+- **What distinguishes living from non-living matter physically?** We have functional definitions but no clear physical criterion. A candle flame is dissipative and maintains itself; is it alive? Obviously not, but why not, in physics terms?  
+  
+- **Is life an inevitable consequence of physics under certain conditions?** Or a freak accident? This affects our expectations for life elsewhere in the universe, but we have almost no theoretical framework.  
+  
+- **What's the thermodynamic role of life?** Schrödinger's *What Is Life?* (1944) suggested life is a "negentropy-consuming" structure. Modern non-equilibrium thermodynamics has refined this, but we still lack a clean framework.  
+  
+- **Is there a scaling law or principle that predicts when matter organizes into life-like structures?** Jeremy England and others have proposed things like "dissipation-driven adaptation," but these aren't yet definitive.  
+  
+**Why it's neglected:** falls between physics and biology. Biologists don't do theoretical physics; physicists don't do biology. A few people (England, Walker, Davies, Rovelli in some work) are attempting cross-disciplinary approaches, but it's not a mainstream subfield.  
+  
+**Why it matters:** life is an obvious physical phenomenon, it happens in the universe, it obeys physics. Our lack of a principled physical understanding of what life *is* feels like a gap. Also, this bears directly on questions of whether we're alone in the universe, which should be among the biggest questions in science.  
+  
+**My suspicion:** there's a real physical principle waiting to be found here. Something like "in systems with energy throughput and the right chemistry, complex self-maintaining structures are thermodynamically favored." If we found it, it would be huge.  
+  
+---  
+  
+## 6. The structure and origin of complexity  
+  
+**Confidence: moderate-high**  
+  
+Related to but distinct from the life question. Complexity is a general phenomenon: the universe started simple (hot, uniform) and became complex (galaxies, planets, ecosystems, civilizations). What physical principles govern this?  
+  
+We have scattered pieces:  
+- Self-organized criticality (Bak)  
+- Dissipative structures (Prigogine)  
+- Complex adaptive systems (Santa Fe Institute tradition)  
+- Information-theoretic measures of complexity  
+- Various specific models of emergence  
+  
+But no unified theory. The closest we have to a "law of complexity" is the second law of thermodynamics, which says complexity should *decrease* (entropy increases). The fact that we see increasing complexity in certain contexts (life, technology) is usually explained away as "local entropy decrease at cost of global increase", which is technically correct but doesn't explain *why* or *when* this happens.  
+  
+**Specific unresolved questions:**  
+  
+- Is there an "arrow of complexity" analogous to the arrow of time?  
+- Can we predict when complex structures will emerge from simple rules?  
+- What's the relationship between complexity and information?  
+- Why does evolution seem to produce increasing complexity over deep time, despite no inherent reason it should?  
+  
+**Why it's neglected:** complexity science exists (Santa Fe Institute, etc.) but isn't mainstream physics. It's seen as soft, speculative, or multidisciplinary. Physics departments rarely hire in it.  
+  
+**Why it matters:** if we had a real theory of complexity, we'd understand:  
+- Why the universe has the structure it does (not just uniform energy)  
+- Whether complexity is inevitable or accidental  
+- How to predict emergent behavior in physical, biological, and social systems  
+- Possibly, principles of intelligence and adaptation  
+  
+This feels like a subject waiting for its Newton.  
+  
+---  
+  
+## 5. Why does mathematics describe physics so well?  
+  
+**Confidence: moderate**  
+  
+Wigner called this "the unreasonable effectiveness of mathematics in the natural sciences" (1960). We've gotten so used to using math to describe physics that we've stopped noticing how strange it is.  
+  
+Specific ways in which math fits physics eerily well:  
+  
+- Abstract mathematical structures (group theory, differential geometry, Hilbert spaces) turn out to be exactly the tools needed for fundamental physics, often developed by mathematicians with no physics application in mind.  
+- Elegant mathematical structures tend to correspond to physical theories (gauge theory, supersymmetry, Calabi-Yau manifolds).  
+- Mathematical consistency requirements (anomaly cancellation, unitarity) constrain physics precisely to the forms we observe.  
+- Physicists routinely make predictions based on "this equation looks right" and turn out to be correct.  
+  
+**Why this might be deep:**  
+  
+Several hypotheses exist:  
+- **Platonism:** mathematical structures exist independently, and physics is selecting among them. ("The universe is mathematical.")  
+- **Evolutionary:** mathematics and physics co-evolved, we developed the math that describes our world because that's what was useful.  
+- **Anthropic:** in a world where math didn't describe physics, we couldn't exist to notice.  
+- **Tegmark's Mathematical Universe Hypothesis:** physical reality *is* a mathematical structure.  
+- **Selection effect in our understanding:** we only count the cases where math works; the cases where it doesn't, we don't recognize as physics.  
+  
+**Why it's neglected:** feels like philosophy. Physicists use math effectively without worrying about why it works. But the question of why our universe admits mathematical description at all is genuinely profound.  
+  
+**Why it matters:** if we understood this, we might understand why certain structures appear in physics, why elegance works as a heuristic, and possibly something about the nature of mathematical truth itself.  
+  
+---  
+  
+## 4. Emergence as a physical principle  
+  
+**Confidence: high**  
+  
+Everyone uses the word "emergence." Almost nobody has a rigorous theory of it.  
+  
+Examples of emergence in physics:  
+- Thermodynamics from statistical mechanics  
+- Classical mechanics from quantum mechanics  
+- Fluid dynamics from molecular dynamics  
+- Gauge symmetries emerging in condensed matter systems  
+- Spacetime possibly emerging from entanglement (in holography)  
+  
+We know emergence happens. We can often compute emergent behavior for specific systems. But we don't have a general theory that tells us:  
+  
+- When does emergence occur?  
+- What determines which features are "universal" across underlying microphysics?  
+- Can we predict emergent properties from microphysics without simulation?  
+- What does it mean for something to be "emergent but real" versus "emergent but epiphenomenal"?  
+  
+Related specifically: **effective field theory** gives us a structural framework for emergence in specific contexts (doc 14). Renormalization group tells us universality classes. These are real tools. But they don't give us the full picture.  
+  
+**Why it's neglected:** we use emergence constantly, so we don't need to understand it. Phenomenologically, we get by with specific techniques for each situation.  
+  
+**Why it matters:** If our deepest theories (holographic quantum gravity, possibly) have spacetime *itself* emergent from more basic structures, we need to understand emergence rigorously. The current "I know it when I see it" level is inadequate for the deepest questions.  
+  
+**Connection to complexity (#6):** emergence and complexity are closely related but not identical. Emergence is about how higher-level descriptions arise from lower-level ones. Complexity is about how systems come to have rich structure. A real theory of emergence would clarify complexity too.  
+  
+---  
+  
+## 3. What is the role of the observer in physics?  
+  
+**Confidence: moderate-high**  
+  
+Quantum mechanics famously makes observation important (measurement problem, #8 on my previous list). But observer dependence appears in other contexts too:  
+  
+- **Relativity:** different observers see different lengths, times, simultaneities. These aren't just perception, they're physical.  
+- **Quantum field theory:** the particle content of a state depends on the observer (Unruh effect, an accelerating observer sees thermal radiation where an inertial observer sees vacuum).  
+- **Black hole physics:** different observers see the black hole differently. An infalling observer may see no firewall; an external observer may see information encoded in radiation.  
+- **Cosmology:** we're observers inside the system we're describing. What does that mean for our theories?  
+- **Holography:** observations at the AdS boundary encode bulk physics. Different boundary observables correspond to different bulk reconstructions.  
+  
+In each case, "what physics is" seems to depend on "who's looking." But we lack a unified framework for observer dependence. We handle each case separately, often awkwardly.  
+  
+**Specific questions we're not addressing well:**  
+  
+- What's the right framework for quantum physics when the observer is inside the system (cosmology, quantum gravity)?  
+- How do different observers' descriptions relate? Must they all be consistent, or only overlapping?  
+- Is there a principled way to identify "physical" facts (observer-independent) versus "perspectival" facts (observer-dependent)?  
+- Does consciousness play any special role, or is any physical system that records information a legitimate observer?  
+  
+**Why it's neglected:** each subfield handles its own observer issues. Quantum foundations folks work on measurement; relativists think about frames; AdS/CFT people handle boundary/bulk. Few people try to unify.  
+  
+**Why it matters:** if we're looking for a fundamental theory, and "observer" keeps appearing as a load-bearing concept, we need to understand it fundamentally. This might be one of those problems where the answer reshapes our conception of what physics is.  
+  
+---  
+  
+## 2. The relationship between mathematics and physical reality  
+  
+**Confidence: moderate, but I think this is genuinely important**  
+  
+Related to #5 but deeper. The question isn't just "why does math work", it's "what is the relationship between mathematical structures and physical reality?"  
+  
+Three ways this matters:  
+  
+**First: what makes a mathematical structure physical?** Infinitely many mathematical structures exist. Only some describe physics. What selects "physical" ones? Is there a principle? Or are we just lucky?  
+  
+**Second: are physical laws mathematical in essence or described by mathematics?** When Einstein's equations are solved, is the solution describing a physical spacetime, or is the solution *itself* the spacetime? These are different ontologies with empirically-identical consequences.  
+  
+**Third: if physical theories can have identical mathematical content but different ontologies (as with QM interpretations), what does mathematical formalism actually capture?** There may be more structure in reality than mathematics tracks, or there may be exactly mathematical structure and our sense of "something more" is illusion. Both are profound.  
+  
+**Specific unresolved issues:**  
+  
+- **Mathematical redundancy:** some formulations have symmetries that are purely mathematical (gauge redundancy), do these correspond to anything physical?  
+- **Multiple mathematical descriptions:** QM has many formulations (Schrödinger, Heisenberg, path integral, Wigner function, etc.). Are they all describing the same thing?  
+- **What would it mean for physics to be beyond mathematics?** Is this even coherent?  
+  
+**Why it's neglected:** seen as philosophy. Most physicists don't engage.  
+  
+**Why it matters:** this question sits under everything. How we answer it affects whether we think there's a unique final theory, what "understanding" physics means, what counts as explanation. It's foundational in the deepest sense.  
+  
+---  
+  
+## 1. What are we, physically?  
+  
+**Confidence: low, but I think this is actually the biggest neglected question**  
+  
+The universe has produced observers. Us. We're physical systems that model the universe, make predictions, have experiences, act on the basis of understanding. This is astonishing and almost nobody in physics thinks about what it means physically.  
+  
+I don't mean consciousness specifically (that's #4 on my unsolved list). I mean something weirder and more fundamental: we are *self-modeling physical systems* embedded in the universe we model. This has implications we've barely begun to think through.  
+  
+**Specific aspects we're not addressing:**  
+  
+- **Physics of self-reference.** What does it mean, physically, for a system to contain a model of itself? We have Gödel's theorems in mathematics, but no analog in physics.  
+  
+- **Observers as physical systems.** In cosmology, we assume observers exist to make anthropic arguments. But what *is* an observer physically? What minimum physical structure is required?  
+  
+- **The physics of representation.** Our brains physically encode models of reality. How does this work at a physical level? Not neuroscience, fundamental physics of representation and symbol-use.  
+  
+- **Why do we exist as specific kinds of observers?** Why do we see a classical world, experience time flowing, feel embodied? These aren't anthropic facts in the usual sense, they're facts about *how* we observe, not *that* we observe. They require physical explanation.  
+  
+- **The embedding problem.** We're inside the universe, made of its parts, modeling the whole. There's no external perspective from which to verify our models. What does "correct physics" mean from an internal perspective?   
+  
+- **The physics of understanding.** When we "understand" something in physics, what's happening? Is there a physical characterization of what makes one model "better" than another that's equally empirically adequate?  
+  
+**Why it's neglected:** this isn't one problem but a cluster of related questions that each seem like philosophy, neuroscience, computer science, or cognitive science rather than physics. No physics department would hire someone to work on "the physics of observers."  
+  
+**Why it matters:** everything we know comes through us being physical systems of a particular kind. If our physics is the physics seen *by us*, and we haven't understood what that "by us" means physically, we might be missing something huge. Cosmology especially, where observers are inside the system and we're already making observer-dependent arguments, may hit walls without a better understanding of what we are.  
+  
+**My honest take:** I suspect there's genuinely physics here waiting to be done, and we're not doing it because it doesn't look like physics as currently defined. Some of our deepest puzzles (measurement problem, arrow of time, fine-tuning, anthropic reasoning) might dissolve or reframe when we understand what observers *are* physically, rather than just treating them as external given.  
+  
+This is my #1 because it's the most neglected relative to importance, and because it connects everything else: consciousness, information, emergence, the observer role, foundations of probability. Working on this properly might unlock progress on multiple other problems simultaneously.  
+  
+But also: I could be completely wrong. This might just not be physics, or might be so vague it can't yield progress. I'm flagging this as "low confidence" because it's the most speculative entry. It's on the list because I think the *pattern* of our collective neglect here is suspicious, it might indicate a genuine blind spot rather than a reasonable focus.  
+  
+---  
+  
+## Honorable mentions (also neglected)  
+  
+- **The physics of time itself.** Not spacetime geometry, but what time actually is. Most physicists treat time as a coordinate; few ask what this coordinate represents.  
+- **Information as physical substance.** Wheeler's "it from bit" is taken seriously by few, but modern holography pushes toward it.  
+- **Why quantum mechanics and not some other quantum-like theory.** We have specific QM; there are mathematical variants (higher-order, different probability rules). Why this one?  
+- **The physics of scale hierarchies generally.** Why are there separate scales in physics (QCD, electroweak, Planck)? What makes a "natural scale"?  
+- **The role of computation in physics.** What physical processes are computations? What's the physical basis of computational complexity?  
+  
+---  
+  
+## A pattern worth noticing  
+  
+Looking at this list, I see a common thread: most of these problems are about the *relationship* between things rather than things themselves.  
+  
+- Relationship between observers and observed (#1, #3)  
+- Relationship between math and physics (#2, #5)  
+- Relationship between levels (emergence, #4)  
+- Relationship between simple and complex (#6)  
+- Relationship between living and non-living (#7)  
+- Relationship between inside and outside black holes (#8)  
+- Relationship between equilibrium and non-equilibrium (#9)  
+- Relationship between probability and reality (#10)  
+  
+Physics is very good at specifying *things* (particles, fields, spacetimes). It's less good at specifying *relationships*, especially when those relationships involve us, mathematics, complexity, or levels of description.  
+  
+If I had to bet, I'd guess the next big conceptual revolution in physics will come from taking some of these relationship questions seriously. The 20th century figured out what kinds of things exist. The 21st century might be about figuring out what kinds of relationships matter.  
+  
+Or I might be completely wrong, and the next revolution will come from somewhere I haven't imagined. That's part of what makes physics worth doing.

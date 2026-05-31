@@ -1,0 +1,667 @@
+---
+title: "Physics 101"
+stationNumber: 1
+line: "Foundation Way"
+date: 2026-04-23
+backdated: true
+prerequisites: []
+extendsTo: [2]
+classReportTitle: "Newton, finally."
+---
+
+*An introductory survey of classical mechanics; the foundation of all physics.*
+
+---
+
+## Table of Contents
+
+1. [Kinematics](#1-kinematics)
+2. [Newton's Laws of Motion](#2-newtons-laws-of-motion)
+3. [Work, Energy, and Power](#3-work-energy-and-power)
+4. [Momentum and Collisions](#4-momentum-and-collisions)
+5. [Rotational Motion](#5-rotational-motion)
+6. [Gravitation](#6-gravitation)
+7. [Oscillations and Waves](#7-oscillations-and-waves)
+8. [Fluids and Thermodynamics](#8-fluids-and-thermodynamics)
+9. [Appendix: Constants and Units](#appendix-constants-and-units)
+
+---
+
+## 1. Kinematics
+
+**Kinematics** is the description of motion without concern for its causes. It answers *what* is happening, not *why*.
+
+### Core Quantities
+
+- **Position** ($x$ or $\vec{r}$): location in space, measured in meters (m)
+- **Displacement** ($\Delta x$): change in position (a vector)
+- **Velocity** ($v$): rate of change of position, m/s
+- **Acceleration** ($a$): rate of change of velocity, m/s²
+
+### Definitions (via calculus)
+
+$$v = \frac{dx}{dt} \qquad a = \frac{dv}{dt} = \frac{d^2x}{dt^2}$$
+
+Average quantities:
+
+$$v_{\text{avg}} = \frac{\Delta x}{\Delta t} \qquad a_{\text{avg}} = \frac{\Delta v}{\Delta t}$$
+
+### Equations of Motion (Constant Acceleration)
+
+These are the "big four" kinematic equations; memorize them cold.
+
+$$v = v_0 + at$$
+
+$$x = x_0 + v_0 t + \tfrac{1}{2} a t^2$$
+
+$$v^2 = v_0^2 + 2a(x - x_0)$$
+
+$$x = x_0 + \tfrac{1}{2}(v_0 + v)\,t$$
+
+### Projectile Motion (2D)
+
+Treat horizontal and vertical motion independently. Horizontal has no acceleration (ignoring air resistance); vertical has $a = -g$.
+
+Launch angle $\theta$, initial speed $v_0$:
+
+$$x(t) = v_0 \cos(\theta) \, t$$
+
+$$y(t) = v_0 \sin(\theta) \, t - \tfrac{1}{2} g t^2$$
+
+**Range** (level ground):
+
+$$R = \frac{v_0^2 \sin(2\theta)}{g}$$
+
+**Maximum height:**
+
+$$H = \frac{v_0^2 \sin^2(\theta)}{2g}$$
+
+**Time of flight** (level ground):
+
+$$T = \frac{2 v_0 \sin(\theta)}{g}$$
+
+---
+
+## 2. Newton's Laws of Motion
+
+The core of classical mechanics. These three laws describe *why* objects move as they do.
+
+### The Three Laws
+
+**First Law (Inertia):** An object at rest stays at rest, and an object in motion continues in motion with constant velocity, unless acted upon by a net external force.
+
+**Second Law:** The net force on an object equals its mass times its acceleration.
+
+$$\vec{F}_{\text{net}} = m\vec{a}$$
+
+More generally, in terms of momentum:
+
+$$\vec{F} = \frac{d\vec{p}}{dt}$$
+
+**Third Law:** For every action there is an equal and opposite reaction.
+
+$$\vec{F}_{AB} = -\vec{F}_{BA}$$
+
+### Common Forces
+
+| Force | Equation | Notes |
+|---|---|---|
+| Weight | $W = mg$ | $g \approx 9.81$ m/s² near Earth's surface |
+| Normal force | $N$ | Perpendicular to surface; found by balancing forces |
+| Static friction | $f_s \leq \mu_s N$ | Adjusts to prevent motion, up to a max |
+| Kinetic friction | $f_k = \mu_k N$ | Opposes motion; typically $\mu_k < \mu_s$ |
+| Tension | $T$ | Along a rope or cable |
+| Spring (Hooke's Law) | $F = -kx$ | Restoring force; $k$ is spring constant |
+
+### Uniform Circular Motion
+
+An object moving in a circle at constant speed still accelerates (direction changes). The acceleration points toward the center.
+
+**Centripetal acceleration:**
+
+$$a_c = \frac{v^2}{r} = \omega^2 r$$
+
+**Centripetal force:**
+
+$$F_c = \frac{mv^2}{r}$$
+
+Note: "Centripetal force" isn't a new kind of force; it's the *name for whatever force* (tension, gravity, friction, etc.) provides the inward pull.
+
+### Problem-Solving Recipe
+
+1. Identify all forces acting on the object.
+2. Draw a **free body diagram**.
+3. Choose a coordinate system.
+4. Write $\sum F_x = ma_x$ and $\sum F_y = ma_y$.
+5. Solve the system.
+
+---
+
+## 3. Work, Energy, and Power
+
+Energy gives us a second, often easier way to analyze motion; one that sidesteps the details of forces and timing.
+
+### Work
+
+Work is force applied through a displacement:
+
+$$W = \vec{F} \cdot \vec{d} = F d \cos(\theta)$$
+
+For a variable force along a path:
+
+$$W = \int_{x_1}^{x_2} F(x) \, dx$$
+
+Work is a scalar, measured in joules (J). 1 J = 1 N·m.
+
+### Kinetic Energy
+
+The energy of motion:
+
+$$KE = \tfrac{1}{2} m v^2$$
+
+### Work-Energy Theorem
+
+The net work done on an object equals its change in kinetic energy:
+
+$$W_{\text{net}} = \Delta KE = \tfrac{1}{2} m v_f^2 - \tfrac{1}{2} m v_i^2$$
+
+### Potential Energy
+
+Energy stored by virtue of position or configuration.
+
+**Gravitational (near Earth's surface):**
+
+$$PE_g = mgh$$
+
+**Elastic (spring):**
+
+$$PE_s = \tfrac{1}{2} k x^2$$
+
+**Gravitational (general, for two masses):**
+
+$$PE_g = -\frac{G m_1 m_2}{r}$$
+
+### Conservation of Mechanical Energy
+
+For conservative forces (gravity, springs), total mechanical energy is conserved:
+
+$$KE_i + PE_i = KE_f + PE_f$$
+
+When non-conservative forces (friction, drag) are present:
+
+$$W_{\text{nc}} = \Delta KE + \Delta PE$$
+
+### Power
+
+Rate of doing work, or equivalently, rate of energy transfer:
+
+$$P = \frac{dW}{dt} = \vec{F} \cdot \vec{v}$$
+
+Average power:
+
+$$P_{\text{avg}} = \frac{W}{t}$$
+
+Units: watts (W). 1 W = 1 J/s.
+
+---
+
+## 4. Momentum and Collisions
+
+Momentum is the other big conservation law, and it's the easier tool for analyzing collisions.
+
+### Linear Momentum
+
+$$\vec{p} = m\vec{v}$$
+
+A vector, measured in kg·m/s.
+
+### Newton's Second Law Restated
+
+$$\vec{F} = \frac{d\vec{p}}{dt}$$
+
+### Impulse
+
+Impulse equals the change in momentum:
+
+$$\vec{J} = \int \vec{F} \, dt = \Delta \vec{p}$$
+
+For a constant force:
+
+$$\vec{J} = \vec{F} \Delta t$$
+
+### Conservation of Momentum
+
+In an **isolated system** (no external forces), total momentum is conserved:
+
+$$\vec{p}_{\text{total, initial}} = \vec{p}_{\text{total, final}}$$
+
+This applies even when energy is *not* conserved (e.g., inelastic collisions).
+
+### Types of Collisions
+
+| Type | Momentum conserved? | Kinetic energy conserved? | Example |
+|---|---|---|---|
+| Elastic | Yes | Yes | Billiard balls (approximately) |
+| Inelastic | Yes | No | Car crash with damage |
+| Perfectly inelastic | Yes | No (maximum loss) | Objects that stick together |
+
+### 1D Elastic Collision Formulas
+
+For two objects with masses $m_1$, $m_2$ and initial velocities $v_1$, $v_2$:
+
+$$v_1' = \frac{m_1 - m_2}{m_1 + m_2} v_1 + \frac{2 m_2}{m_1 + m_2} v_2$$
+
+$$v_2' = \frac{2 m_1}{m_1 + m_2} v_1 + \frac{m_2 - m_1}{m_1 + m_2} v_2$$
+
+### Center of Mass
+
+$$\vec{r}_{\text{cm}} = \frac{\sum m_i \vec{r}_i}{\sum m_i}$$
+
+The center of mass moves as if all external forces acted on it alone.
+
+---
+
+## 5. Rotational Motion
+
+Every translational concept has a rotational analog. Learn the parallels.
+
+### Angular Quantities
+
+| Translational | Rotational | Relation |
+|---|---|---|
+| Position $x$ | Angle $\theta$ | $s = r\theta$ |
+| Velocity $v$ | Angular velocity $\omega$ | $v = r\omega$ |
+| Acceleration $a$ | Angular acceleration $\alpha$ | $a_t = r\alpha$ |
+| Mass $m$ | Moment of inertia $I$ |; |
+| Force $F$ | Torque $\tau$ |; |
+| Momentum $p$ | Angular momentum $L$ |; |
+
+Angles are measured in radians. $\omega$ in rad/s, $\alpha$ in rad/s².
+
+### Rotational Kinematics (Constant $\alpha$)
+
+Structurally identical to linear kinematics:
+
+$$\omega = \omega_0 + \alpha t$$
+
+$$\theta = \theta_0 + \omega_0 t + \tfrac{1}{2} \alpha t^2$$
+
+$$\omega^2 = \omega_0^2 + 2\alpha(\theta - \theta_0)$$
+
+### Torque
+
+$$\vec{\tau} = \vec{r} \times \vec{F} \qquad |\tau| = rF \sin(\theta)$$
+
+### Moment of Inertia
+
+The rotational equivalent of mass; it depends on how mass is distributed around the rotation axis.
+
+$$I = \sum_i m_i r_i^2 \qquad \text{or} \qquad I = \int r^2 \, dm$$
+
+**Common moments of inertia:**
+
+| Object | Moment of Inertia |
+|---|---|
+| Point mass at distance $r$ | $mr^2$ |
+| Solid sphere (through center) | $\tfrac{2}{5} M R^2$ |
+| Hollow sphere (through center) | $\tfrac{2}{3} M R^2$ |
+| Solid cylinder/disk (axis) | $\tfrac{1}{2} M R^2$ |
+| Thin hoop (axis) | $M R^2$ |
+| Thin rod (through center, perpendicular) | $\tfrac{1}{12} M L^2$ |
+| Thin rod (through end, perpendicular) | $\tfrac{1}{3} M L^2$ |
+
+**Parallel Axis Theorem:**
+
+$$I = I_{\text{cm}} + M d^2$$
+
+where $d$ is the distance between the new axis and the center of mass axis.
+
+### Newton's Second Law for Rotation
+
+$$\vec{\tau}_{\text{net}} = I \vec{\alpha}$$
+
+### Rotational Kinetic Energy
+
+$$KE_{\text{rot}} = \tfrac{1}{2} I \omega^2$$
+
+For rolling objects (translation + rotation):
+
+$$KE_{\text{total}} = \tfrac{1}{2} M v_{\text{cm}}^2 + \tfrac{1}{2} I_{\text{cm}} \omega^2$$
+
+Rolling without slipping condition: $v_{\text{cm}} = R\omega$.
+
+### Angular Momentum
+
+$$\vec{L} = \vec{r} \times \vec{p} \qquad \text{or} \qquad \vec{L} = I\vec{\omega}$$
+
+### Conservation of Angular Momentum
+
+If net external torque is zero:
+
+$$\vec{L}_i = \vec{L}_f \qquad I_i \omega_i = I_f \omega_f$$
+
+This is why a figure skater spins faster when she pulls her arms in; $I$ decreases, so $\omega$ must increase.
+
+---
+
+## 6. Gravitation
+
+Newton realized the force pulling the apple down is the same one holding the Moon in orbit. That unification is one of the great moments in science.
+
+### Newton's Law of Universal Gravitation
+
+Every pair of masses attracts every other pair:
+
+$$F = \frac{G m_1 m_2}{r^2}$$
+
+where $G = 6.674 \times 10^{-11}$ N·m²/kg² is the gravitational constant.
+
+### Gravitational Field (Acceleration Due to Gravity)
+
+$$g = \frac{GM}{r^2}$$
+
+At Earth's surface, $g \approx 9.81$ m/s². At altitude $h$: $g(h) = GM/(R_E + h)^2$.
+
+### Gravitational Potential Energy (General)
+
+For two point masses separated by $r$:
+
+$$PE_g = -\frac{G m_1 m_2}{r}$$
+
+(Defined as zero at infinite separation; negative because gravity is attractive.)
+
+### Orbital Motion
+
+For a circular orbit, gravity provides the centripetal force:
+
+$$\frac{G M m}{r^2} = \frac{m v^2}{r}$$
+
+**Orbital velocity:**
+
+$$v_{\text{orb}} = \sqrt{\frac{GM}{r}}$$
+
+**Orbital period:**
+
+$$T = 2\pi \sqrt{\frac{r^3}{GM}}$$
+
+### Escape Velocity
+
+The minimum speed to escape a gravitational well to infinity:
+
+$$v_{\text{esc}} = \sqrt{\frac{2GM}{r}}$$
+
+For Earth's surface: $\approx 11.2$ km/s.
+
+### Kepler's Laws of Planetary Motion
+
+1. **Law of Ellipses:** Planets orbit the Sun in ellipses, with the Sun at one focus.
+2. **Law of Equal Areas:** A line from the Sun to the planet sweeps out equal areas in equal times. (This is a consequence of conservation of angular momentum.)
+3. **Law of Periods:** The square of the orbital period is proportional to the cube of the semi-major axis.
+
+$$T^2 = \frac{4\pi^2}{GM} a^3$$
+
+---
+
+## 7. Oscillations and Waves
+
+Wave behavior shows up everywhere; in springs, strings, sound, light, and eventually quantum mechanics. This is where the math of sines and cosines becomes physics.
+
+### Simple Harmonic Motion (SHM)
+
+Any system where the restoring force is proportional to displacement produces SHM:
+
+$$F = -kx \quad \Longrightarrow \quad \frac{d^2x}{dt^2} = -\frac{k}{m} x$$
+
+**Solution:**
+
+$$x(t) = A \cos(\omega t + \phi)$$
+
+where $A$ is amplitude and $\phi$ is phase.
+
+**Angular frequency for a spring:**
+
+$$\omega = \sqrt{\frac{k}{m}}$$
+
+**For a simple pendulum (small angles):**
+
+$$\omega = \sqrt{\frac{g}{L}}$$
+
+**Period and frequency:**
+
+$$T = \frac{2\pi}{\omega} \qquad f = \frac{1}{T} = \frac{\omega}{2\pi}$$
+
+### Velocity and Acceleration in SHM
+
+$$v(t) = -A\omega \sin(\omega t + \phi)$$
+
+$$a(t) = -A\omega^2 \cos(\omega t + \phi) = -\omega^2 x$$
+
+### Energy in SHM
+
+Total energy is constant and proportional to $A^2$:
+
+$$E = \tfrac{1}{2} k A^2 = \tfrac{1}{2} m \omega^2 A^2$$
+
+### Wave Properties
+
+A traveling wave has:
+
+- **Wavelength** $\lambda$; distance between crests
+- **Frequency** $f$; cycles per second (Hz)
+- **Period** $T = 1/f$
+- **Speed** $v = f\lambda$
+- **Amplitude** $A$
+- **Wave number** $k = 2\pi/\lambda$
+
+### Wave Equation
+
+A traveling sinusoidal wave:
+
+$$y(x, t) = A \sin(kx - \omega t)$$
+
+**Wave speed:**
+
+$$v = \frac{\omega}{k} = f\lambda$$
+
+### Specific Wave Speeds
+
+**Wave on a string:**
+
+$$v = \sqrt{\frac{T}{\mu}}$$
+
+where $T$ is tension and $\mu$ is mass per unit length.
+
+**Speed of sound in a fluid:**
+
+$$v = \sqrt{\frac{B}{\rho}}$$
+
+where $B$ is bulk modulus and $\rho$ is density.
+
+### Superposition and Interference
+
+When waves meet, their displacements add. This leads to:
+
+- **Constructive interference**; crests align, amplitudes add
+- **Destructive interference**; crest meets trough, amplitudes cancel
+- **Standing waves**; formed by two waves of equal amplitude moving in opposite directions
+
+**Standing wave on a string fixed at both ends:**
+
+$$\lambda_n = \frac{2L}{n}, \quad f_n = \frac{nv}{2L}, \quad n = 1, 2, 3, \ldots$$
+
+### Doppler Effect
+
+Observed frequency when source and/or observer move:
+
+$$f' = f \left(\frac{v \pm v_o}{v \mp v_s}\right)$$
+
+Signs: upper signs when motion is *toward*, lower when *away*.
+
+### Intensity
+
+Power per unit area:
+
+$$I = \frac{P}{A}$$
+
+For a point source, intensity falls off as $1/r^2$.
+
+---
+
+## 8. Fluids and Thermodynamics
+
+Often bundled at the end of Physics 101 (or pushed to 102). Here's a compact tour.
+
+### Fluid Statics
+
+**Density:**
+
+$$\rho = \frac{m}{V}$$
+
+**Pressure:**
+
+$$P = \frac{F}{A}$$
+
+Measured in pascals (Pa). 1 Pa = 1 N/m².
+
+**Hydrostatic pressure** (pressure at depth $h$ in a fluid):
+
+$$P = P_0 + \rho g h$$
+
+**Pascal's Principle:** Pressure applied to an enclosed fluid is transmitted undiminished throughout. (Foundation of hydraulics.)
+
+**Archimedes' Principle:** The buoyant force on an object equals the weight of the fluid it displaces:
+
+$$F_B = \rho_{\text{fluid}} \, V_{\text{displaced}} \, g$$
+
+### Fluid Dynamics
+
+**Continuity equation** (conservation of mass for incompressible flow):
+
+$$A_1 v_1 = A_2 v_2$$
+
+**Bernoulli's equation** (conservation of energy for ideal fluid flow):
+
+$$P + \tfrac{1}{2} \rho v^2 + \rho g h = \text{constant}$$
+
+### Thermodynamics Basics
+
+**Temperature conversions:**
+
+$$T_K = T_C + 273.15$$
+
+$$T_F = \tfrac{9}{5} T_C + 32$$
+
+**Linear thermal expansion:**
+
+$$\Delta L = \alpha L_0 \Delta T$$
+
+**Volume expansion:**
+
+$$\Delta V = \beta V_0 \Delta T \qquad (\beta \approx 3\alpha \text{ for solids})$$
+
+### Heat
+
+**Heat for temperature change:**
+
+$$Q = mc\Delta T$$
+
+where $c$ is specific heat capacity.
+
+**Heat for phase change:**
+
+$$Q = mL$$
+
+where $L$ is latent heat of fusion or vaporization.
+
+### Ideal Gas Law
+
+$$PV = nRT$$
+
+where $R = 8.314$ J/(mol·K) is the gas constant. Alternative form:
+
+$$PV = Nk_B T$$
+
+where $k_B = 1.381 \times 10^{-23}$ J/K is Boltzmann's constant.
+
+### Laws of Thermodynamics
+
+**Zeroth Law:** If A is in thermal equilibrium with B, and B with C, then A is with C.
+
+**First Law** (conservation of energy):
+
+$$\Delta U = Q - W$$
+
+where $\Delta U$ is change in internal energy, $Q$ is heat added to the system, and $W$ is work done *by* the system.
+
+**Second Law:** The entropy of an isolated system never decreases; heat flows spontaneously from hot to cold, not the reverse.
+
+**Third Law:** Entropy approaches a constant minimum (often zero) as temperature approaches absolute zero.
+
+### Heat Engines
+
+**Efficiency:**
+
+$$\eta = \frac{W}{Q_h} = 1 - \frac{Q_c}{Q_h}$$
+
+**Carnot efficiency** (maximum possible for a heat engine operating between two temperatures):
+
+$$\eta_{\text{Carnot}} = 1 - \frac{T_c}{T_h}$$
+
+(Temperatures must be in kelvin.)
+
+### Entropy
+
+For a reversible process:
+
+$$\Delta S = \int \frac{dQ}{T}$$
+
+For an isothermal process:
+
+$$\Delta S = \frac{Q}{T}$$
+
+---
+
+## Appendix: Constants and Units
+
+### Useful Physical Constants
+
+| Symbol | Name | Value |
+|---|---|---|
+| $g$ | Gravity at Earth's surface | 9.81 m/s² |
+| $G$ | Gravitational constant | 6.674 × 10⁻¹¹ N·m²/kg² |
+| $c$ | Speed of light in vacuum | 2.998 × 10⁸ m/s |
+| $R$ | Gas constant | 8.314 J/(mol·K) |
+| $k_B$ | Boltzmann's constant | 1.381 × 10⁻²³ J/K |
+| $N_A$ | Avogadro's number | 6.022 × 10²³ /mol |
+| $M_E$ | Mass of Earth | 5.972 × 10²⁴ kg |
+| $R_E$ | Radius of Earth | 6.371 × 10⁶ m |
+
+### SI Base Units
+
+| Quantity | Unit | Symbol |
+|---|---|---|
+| Length | meter | m |
+| Mass | kilogram | kg |
+| Time | second | s |
+| Temperature | kelvin | K |
+| Current | ampere | A |
+| Amount | mole | mol |
+| Luminous intensity | candela | cd |
+
+### Derived Units
+
+| Quantity | Unit | Symbol | In base units |
+|---|---|---|---|
+| Force | newton | N | kg·m/s² |
+| Energy | joule | J | kg·m²/s² = N·m |
+| Power | watt | W | J/s |
+| Pressure | pascal | Pa | N/m² |
+| Frequency | hertz | Hz | 1/s |
+
+---
+
+## Closing Note
+
+The laws and equations above are the *tools*. The real skill of physics is learning when and how to use them; recognizing, for example, that a problem might be brutal with forces but trivial with energy conservation. Work lots of problems. Draw the diagram every single time. Check units. Check limits (what does your answer do when a variable goes to zero or infinity?). That habit of sanity-checking is what separates physicists from people who just solved the equation.
+
+Once you're comfortable here, the natural next step is **Physics 102**: electromagnetism, circuits, optics, and an introduction to modern physics; which is the doorway into relativity and quantum mechanics.

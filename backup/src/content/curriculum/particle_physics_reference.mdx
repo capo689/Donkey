@@ -1,0 +1,966 @@
+---
+title: "Particle Physics"
+stationNumber: 11
+line: "Foundation Way"
+date: 2026-05-02
+backdated: true
+prerequisites: [12, 17]
+extendsTo: [24]
+classReportTitle: "The particle zoo with a map."
+---
+
+*The Standard Model of particle physics; the deepest current understanding of matter and forces, covered at undergraduate depth.*
+
+This document picks up where the Modern Physics reference left off (section 15). That was a survey. This is an actual course. We'll work through the particle content carefully, treat symmetries and conservation laws with the weight they deserve, introduce Feynman diagrams as a working tool, and give honest (if non-rigorous) accounts of QED, QCD, the weak interaction, and the Higgs mechanism.
+
+What this document does *not* do is derive particle physics from quantum field theory. QFT is the proper foundation and requires its own multi-semester treatment. Everything here is presented at the level where a serious undergraduate can follow it using only the Modern Physics + QM prerequisites already covered.
+
+---
+
+## Table of Contents
+
+1. [From Modern Physics to Particle Physics](#1-from-modern-physics-to-particle-physics)
+2. [Particle Content of the Standard Model](#2-particle-content-of-the-standard-model)
+3. [Relativistic Kinematics for Particle Reactions](#3-relativistic-kinematics-for-particle-reactions)
+4. [Symmetries and Conservation Laws](#4-symmetries-and-conservation-laws)
+5. [The Quark Model and Hadrons](#5-the-quark-model-and-hadrons)
+6. [Feynman Diagrams](#6-feynman-diagrams)
+7. [Quantum Electrodynamics (QED)](#7-quantum-electrodynamics-qed)
+8. [Quantum Chromodynamics (QCD)](#8-quantum-chromodynamics-qcd)
+9. [The Weak Interaction](#9-the-weak-interaction)
+10. [Electroweak Unification and the Higgs Mechanism](#10-electroweak-unification-and-the-higgs-mechanism)
+11. [Neutrino Physics](#11-neutrino-physics)
+12. [Experimental Particle Physics](#12-experimental-particle-physics)
+13. [Beyond the Standard Model](#13-beyond-the-standard-model)
+14. [Appendix: Data, Units, and Conventions](#appendix-data-units-and-conventions)
+
+---
+
+## 1. From Modern Physics to Particle Physics
+
+Modern physics told the story through about 1930: relativity, quantum mechanics, the nuclear atom, antimatter predicted by Dirac. From there, the subject exploded.
+
+### A Capsule History
+
+**1930s:** Dirac predicts antimatter (1928, positron found 1932). Pauli postulates the neutrino (1930) to save energy conservation in beta decay. Fermi writes down the first theory of the weak interaction (1934). Yukawa proposes a massive mediator for the nuclear force (1935); eventually identified as the pion.
+
+**1940s–1950s:** Cosmic ray experiments and early accelerators reveal a zoo of unstable particles; pions, kaons, hyperons, muons, and more. No theory explains them. Parity violation is discovered in beta decay (1956), shocking the physics community.
+
+**1960s:** Gell-Mann and Zweig propose the **quark model** (1964), classifying hadrons as bound states of a few fundamental constituents. The Standard Model begins to take shape. Quarks at this point are still considered mathematical devices, not real particles.
+
+**1970s:** Deep inelastic scattering at SLAC reveals pointlike constituents inside protons. QCD is formulated. The charm quark is discovered (1974, the "November Revolution"). The tau lepton is found (1975). The bottom quark is found (1977). The electroweak theory of Glashow, Weinberg, and Salam predicts the W and Z bosons.
+
+**1980s:** W and Z bosons discovered at CERN (1983), confirming electroweak theory. Neutrino oscillation hints begin accumulating.
+
+**1990s:** LEP at CERN precisely tests the Standard Model. The top quark is discovered at Fermilab (1995).
+
+**2000s:** Neutrino oscillations firmly established (SNO, Super-Kamiokande). The LHC is built.
+
+**2010s:** The Higgs boson is discovered at CERN (2012). The last missing piece of the Standard Model falls into place. Gravitational waves are detected (2015); not particle physics per se, but a related triumph for relativistic physics.
+
+**2020s:** No discoveries beyond the Standard Model despite extensive searching. Persistent anomalies (muon $g-2$, flavor anomalies) remain unresolved. The era of "guaranteed discovery" ended with the Higgs.
+
+### What the Standard Model Is
+
+The Standard Model is a **quantum field theory** with three essential components:
+
+1. **Matter fields**; fermions (spin-½) arranged in three generations of quarks and leptons
+2. **Gauge fields**; bosons (spin-1) mediating the strong, weak, and electromagnetic forces
+3. **The Higgs field**; a scalar (spin-0) field that gives masses to particles
+
+Symmetry group: $SU(3)_C \times SU(2)_L \times U(1)_Y$. The subscripts stand for color, left-handed weak isospin, and weak hypercharge. This structure, parsed patiently, will make sense by the end of this document.
+
+It does **not** include gravity. It does not explain dark matter, dark energy, neutrino masses (cleanly), or the matter-antimatter asymmetry of the universe. Its parameters; particle masses, coupling strengths, mixing angles; must be measured rather than derived. By every other measure, it is the most successful scientific theory ever written.
+
+---
+
+## 2. Particle Content of the Standard Model
+
+Let's lay out the full cast carefully.
+
+### Fermions (Matter, Spin-½)
+
+Arranged in three **generations**. The particles of each generation have identical quantum numbers except for mass.
+
+**Quarks**; experience all three non-gravitational forces (strong, weak, electromagnetic):
+
+| Generation | Up-type (Q = +⅔) | Down-type (Q = −⅓) |
+|---|---|---|
+| 1st | up (u), ~2.2 MeV/c² | down (d), ~4.7 MeV/c² |
+| 2nd | charm (c), ~1.27 GeV/c² | strange (s), ~93 MeV/c² |
+| 3rd | top (t), ~173 GeV/c² | bottom (b), ~4.18 GeV/c² |
+
+**Leptons**; no strong interaction:
+
+| Generation | Charged (Q = −1) | Neutral neutrino (Q = 0) |
+|---|---|---|
+| 1st | electron (e), 0.511 MeV/c² | $\nu_e$, $< 1$ eV/c² |
+| 2nd | muon (μ), 105.7 MeV/c² | $\nu_\mu$, $< 0.2$ MeV/c² |
+| 3rd | tau (τ), 1776.9 MeV/c² | $\nu_\tau$, $< 18$ MeV/c² |
+
+Each fermion has an antiparticle with opposite charge and flavor quantum numbers. For charged particles these are distinct (e.g., $e^-$ and $e^+$); for neutrinos it's an open question (Dirac vs. Majorana).
+
+### Why Three Generations?
+
+Nobody knows. This is one of the deep mysteries of the Standard Model. Each generation is a perfect copy of the first except heavier. The first generation makes up all ordinary matter; the heavier generations are produced in high-energy interactions and quickly decay.
+
+The Large Electron-Positron Collider (LEP) established in the 1990s, from the measured width of the Z boson, that there are exactly three generations of *light* neutrinos. A fourth generation with a light neutrino is ruled out.
+
+### Color
+
+Quarks carry a strong-force charge called **color** that comes in three varieties conventionally labeled red, green, and blue (no relation to visible colors). Antiquarks carry anti-color. Leptons have no color. Isolated quarks are never observed; they are **confined** into color-neutral combinations called hadrons.
+
+### Gauge Bosons (Force Carriers, Spin-1)
+
+| Boson | Mass | Charge | Force mediated |
+|---|---|---|---|
+| Photon ($\gamma$) | 0 | 0 | Electromagnetic |
+| Gluons ($g$), 8 types | 0 | 0 (but carry color) | Strong |
+| W⁺, W⁻ | 80.4 GeV/c² | ±1 | Weak (charged current) |
+| Z⁰ | 91.2 GeV/c² | 0 | Weak (neutral current) |
+
+The photon and gluons are massless; the W and Z are very heavy; which is why weak interactions are weak (and short-ranged) despite having an intrinsic coupling comparable to the electromagnetic one.
+
+### The Higgs Boson (Spin-0)
+
+Mass $\approx 125.25$ GeV/c², discovered in 2012 at the LHC. The Higgs field permeates all of space and gives masses to the W, Z, and fermions through its interactions. We'll see how in section 10.
+
+### Counting the Standard Model
+
+- 6 quarks × 3 colors × 2 (particle + antiparticle) = 36 quark states
+- 3 charged leptons × 2 + 3 neutrinos × 2 = 12 lepton states
+- 1 photon + 8 gluons + 3 weak bosons = 12 gauge bosons
+- 1 Higgs
+
+Everything known that isn't gravity is a combination of these.
+
+---
+
+## 3. Relativistic Kinematics for Particle Reactions
+
+Particle physics is done at speeds where classical kinematics fails. We need special relativity as a working tool.
+
+### Natural Units
+
+Particle physicists set $\hbar = c = 1$. Then:
+
+- Energy, mass, and momentum all have the same units (GeV is standard)
+- Length and time are $1/\text{GeV}$
+- Conversion factors recovered when needed: $\hbar c \approx 0.197$ GeV·fm, so 1 GeV$^{-1}$ ≈ 0.197 fm
+
+Throughout this document we use natural units unless otherwise specified.
+
+### Four-Momentum
+
+A particle has four-momentum
+
+$$p^\mu = (E, \vec{p})$$
+
+with invariant mass
+
+$$p^\mu p_\mu = E^2 - |\vec{p}|^2 = m^2$$
+
+This last equation is the non-negotiable constraint: for any real particle, energy, momentum, and mass satisfy $E^2 = |\vec{p}|^2 + m^2$.
+
+### Mandelstam Variables
+
+For a 2→2 reaction $a + b \to c + d$, define
+
+$$s = (p_a + p_b)^2, \quad t = (p_a - p_c)^2, \quad u = (p_a - p_d)^2$$
+
+These are Lorentz invariants; same in every frame. Physical interpretations:
+
+- $s$: total energy squared in the center-of-mass frame
+- $t$: momentum transfer squared in the "exchange" direction
+- $u$: momentum transfer squared in the "crossed" channel
+
+Identity: $s + t + u = \sum_i m_i^2$.
+
+### Center-of-Mass Energy
+
+For colliding beams with four-momenta $p_1, p_2$:
+
+$$\sqrt{s} = \sqrt{(p_1 + p_2)^2}$$
+
+For fixed-target experiments (beam on stationary target), $s$ grows as $\sqrt{E_{\text{beam}}}$; much less efficient than colliders, where $s \sim E_{\text{beam}}^2$.
+
+### Thresholds
+
+To produce a final state of total rest mass $M$, you need $\sqrt{s} \geq M$. Example: to produce a Higgs + Z, you need at least $\sqrt{s} = m_H + m_Z \approx 216$ GeV in the CM frame.
+
+### Cross Sections and Decay Rates
+
+**Cross section** $\sigma$ measures the probability for a scattering process:
+
+$$\text{Number of events} = \sigma \cdot \mathcal{L} \cdot t$$
+
+where $\mathcal{L}$ is **luminosity** (particles per area per time per incident beam). Units: barns (1 b = $10^{-24}$ cm² = $10^{-28}$ m²). Typical scales:
+
+- Strong interaction cross sections: millibarns
+- Electromagnetic: microbarns
+- Weak: femtobarns or less
+
+**Decay rate** $\Gamma$ is the probability per unit time for a particle to decay:
+
+$$N(t) = N_0 e^{-\Gamma t}, \quad \tau = 1/\Gamma$$
+
+Lifetime $\tau$ and width $\Gamma$ are related by $\Gamma = \hbar/\tau$. When multiple decay channels exist,
+
+$$\Gamma_{\text{total}} = \sum_i \Gamma_i, \quad \text{BR}(i) = \Gamma_i / \Gamma_{\text{total}}$$
+
+where BR is the **branching ratio**; the fraction of decays into channel $i$.
+
+---
+
+## 4. Symmetries and Conservation Laws
+
+The deepest statement of particle physics is that the Standard Model is built from symmetries. **Noether's theorem** guarantees that every continuous symmetry yields a conservation law. Everything about what interactions can and cannot happen is tied to which symmetries the Standard Model respects.
+
+### Spacetime Symmetries (Exact)
+
+- **Translations in space** → conservation of momentum
+- **Translations in time** → conservation of energy
+- **Rotations** → conservation of angular momentum
+- **Lorentz boosts** → no new conservation law, but constrains dynamics
+
+These are assumed to hold exactly in all interactions.
+
+### Internal Symmetries
+
+Internal symmetries are transformations of the fields themselves, not of spacetime. They yield charges that are conserved in interactions respecting the symmetry.
+
+- **Electric charge (Q)**; exactly conserved in all interactions
+- **Baryon number (B)**; conserved in all known interactions (+⅓ for quarks, −⅓ for antiquarks, so baryons have B = 1)
+- **Lepton number (L)**; approximately conserved; individual flavor numbers ($L_e$, $L_\mu$, $L_\tau$) are violated by neutrino oscillations
+- **Color**; exactly conserved; quarks and gluons carry color charge
+
+### Approximate Symmetries
+
+Some symmetries are broken, either spontaneously or by specific interactions:
+
+- **Isospin** (approximate symmetry between u and d quarks); good to ~1% because $m_u \neq m_d$
+- **Flavor SU(3)** (u, d, s); cruder, since $m_s$ is substantially larger
+- **Chiral symmetry**; exact for massless quarks, broken by quark masses and confinement
+
+### Discrete Symmetries: C, P, T
+
+Three discrete transformations are fundamental:
+
+- **Parity (P):** $\vec{r} \to -\vec{r}$, i.e., spatial inversion. Flips momentum but not spin.
+- **Charge conjugation (C):** particle $\leftrightarrow$ antiparticle.
+- **Time reversal (T):** $t \to -t$. Reverses momenta and spins.
+
+**Conservation status:**
+
+| Symmetry | Strong | EM | Weak |
+|---|---|---|---|
+| P | Conserved | Conserved | **Violated** |
+| C | Conserved | Conserved | **Violated** |
+| CP | Conserved | Conserved | **Slightly violated** |
+| CPT | Conserved | Conserved | Conserved (by theorem) |
+| T | Conserved | Conserved | Violated (by CPT) |
+
+### Parity Violation; The Wu Experiment
+
+In 1956, Chien-Shiung Wu demonstrated that in beta decay of cobalt-60, electrons emerge preferentially opposite to the nuclear spin direction. Under parity, spin (an axial vector) doesn't flip but momentum does; so the asymmetry implies P violation.
+
+This was a genuine shock. Parity had been assumed exact on intuitive grounds. The result showed that the weak interaction treats left-handed and right-handed particles differently; in fact, **only left-handed particles (and right-handed antiparticles) participate in the charged weak interaction**. Nature has a preferred handedness at the fundamental level.
+
+### CP Violation
+
+After parity was found violated, the hope was that CP; the combination; would remain exact. This hope died in 1964 with the observation by Cronin and Fitch of CP violation in neutral kaon decays. CP is violated at a small but nonzero level in the weak interaction.
+
+CP violation is built into the Standard Model through the **CKM matrix** (for quarks) and the **PMNS matrix** (for leptons, via neutrino oscillations). It is also essential for generating the matter-antimatter asymmetry of the universe; though the amount of CP violation in the Standard Model is insufficient to account for the observed asymmetry, suggesting new physics.
+
+### CPT Theorem
+
+Any Lorentz-invariant local quantum field theory must conserve the combined transformation CPT. Consequences:
+
+- Particles and antiparticles have identical masses and lifetimes
+- Any violation of CPT would be a violation of Lorentz invariance
+
+Every test to date confirms CPT exactly.
+
+---
+
+## 5. The Quark Model and Hadrons
+
+Quarks are never seen directly. What we see are **hadrons**; color-neutral bound states. Understanding hadrons requires understanding how quarks combine.
+
+### Confinement in a Sentence
+
+The strong force between quarks grows with distance, so pulling two quarks apart requires infinite energy. What happens instead is that at some separation, the stored energy is sufficient to create new quark-antiquark pairs, and the system fragments into new hadrons; each color-neutral. You never isolate a single quark.
+
+### Types of Hadrons
+
+**Mesons**; quark-antiquark pairs ($q\bar{q}$). Integer spin (bosons).
+
+**Baryons**; three quarks ($qqq$). Half-integer spin (fermions). Antibaryons are $\bar{q}\bar{q}\bar{q}$.
+
+**Exotic hadrons**; tetraquarks ($qq\bar{q}\bar{q}$), pentaquarks ($qqqq\bar{q}$), etc. Observed in recent decades. All still color-neutral.
+
+The rule is: any color-neutral combination is allowed.
+
+### Isospin
+
+Heisenberg noticed (1932) that the proton and neutron are nearly identical to the strong force; same mass (to ~0.1%), same nuclear force. He proposed they are two states of a single "nucleon" differing only in an internal quantum number: **isospin**.
+
+In modern language, this reflects the approximate symmetry between u and d quarks. Define:
+
+- $I_3 = +\tfrac{1}{2}$ for u, $I_3 = -\tfrac{1}{2}$ for d
+- Proton (uud): $I_3 = +\tfrac{1}{2}$
+- Neutron (udd): $I_3 = -\tfrac{1}{2}$
+
+Isospin is conserved by the strong interaction (to good approximation) and broken by the electromagnetic interaction (since u and d have different charges) and by the u-d mass difference.
+
+### Meson Spectrum: The Light Mesons
+
+Combining u, d, s quarks and antiquarks gives nine $q\bar{q}$ combinations; an SU(3) nonet.
+
+**Pseudoscalar mesons** (spin 0, negative parity):
+
+| Meson | Content | Mass (MeV) |
+|---|---|---|
+| $\pi^+$ | $u\bar{d}$ | 139.6 |
+| $\pi^-$ | $d\bar{u}$ | 139.6 |
+| $\pi^0$ | $(u\bar{u} - d\bar{d})/\sqrt{2}$ | 135.0 |
+| $K^+$ | $u\bar{s}$ | 493.7 |
+| $K^-$ | $s\bar{u}$ | 493.7 |
+| $K^0$ | $d\bar{s}$ | 497.6 |
+| $\bar{K}^0$ | $s\bar{d}$ | 497.6 |
+| $\eta$ | mixed | 547.9 |
+| $\eta'$ | mixed | 957.8 |
+
+**Vector mesons** (spin 1, negative parity): $\rho, \omega, K^*, \phi$, with similar quark content but parallel spins, yielding masses ~700–1000 MeV.
+
+### Baryon Spectrum: The Light Baryons
+
+**Spin-½ octet**; the ground-state baryons with u, d, s quarks:
+
+| Baryon | Content | Mass (MeV) |
+|---|---|---|
+| Proton (p) | uud | 938.3 |
+| Neutron (n) | udd | 939.6 |
+| Λ | uds | 1115.7 |
+| $\Sigma^+$ | uus | 1189.4 |
+| $\Sigma^0$ | uds | 1192.6 |
+| $\Sigma^-$ | dds | 1197.4 |
+| $\Xi^0$ | uss | 1314.9 |
+| $\Xi^-$ | dss | 1321.7 |
+
+**Spin-3/2 decuplet**: $\Delta(1232)$, $\Sigma^*(1385)$, $\Xi^*(1530)$, $\Omega^-(1672)$. The $\Omega^-$ (sss) was predicted by Gell-Mann based on the pattern before it was discovered; a triumph for the quark model.
+
+### Why Quark Model Works
+
+Masses, magnetic moments, and spin structure of all these hadrons fit together using only a few parameters (quark masses, spin-spin interactions). This is strong evidence that hadrons really are bound states of three (or two) constituents.
+
+### Heavy Hadrons
+
+Including charm and bottom quarks extends the pattern. Notable states:
+
+- $J/\psi$ (c$\bar{c}$, 3097 MeV); the 1974 discovery that confirmed charm
+- $\Upsilon$ (b$\bar{b}$, 9460 MeV); confirmed bottom in 1977
+- $B$ mesons (containing one b quark); central to CP violation studies
+- Top quark does not form bound states; it decays too fast (lifetime ~$10^{-25}$ s)
+
+---
+
+## 6. Feynman Diagrams
+
+Feynman diagrams are the working language of particle physics. They encode interactions pictorially and, with proper rules, yield quantitative predictions for cross sections and decay rates.
+
+### What They Represent
+
+A Feynman diagram is a graphical shorthand for a term in a perturbative expansion of a scattering amplitude. Each diagram contributes an amplitude; you sum amplitudes over all relevant diagrams, then square to get probabilities.
+
+### Basic Ingredients
+
+**Lines:**
+- Straight lines with arrows = fermions (arrow direction = particle/antiparticle)
+- Wavy lines = photons
+- Curly (or spring-like) lines = gluons
+- Dashed lines = Higgs
+- Zigzag lines = W, Z bosons
+
+**Vertices** = interaction points. Each vertex represents a term in the theory's Lagrangian and contributes a factor to the amplitude.
+
+**External lines** = real incoming/outgoing particles (on shell: $E^2 = p^2 + m^2$).
+
+**Internal lines** = virtual particles (off shell: energy and momentum don't satisfy the mass-shell condition; they exist only briefly, as permitted by the energy-time uncertainty relation).
+
+### Reading a Diagram
+
+Convention: time flows left to right (or bottom to top). Lines going backward in time represent antiparticles.
+
+**Example: electron-electron scattering (Møller scattering)**
+
+Two electrons come in, exchange a virtual photon, and go out. The diagram has four external electron lines, one internal photon line, and two vertices where an electron emits/absorbs a photon.
+
+**Example: electron-positron annihilation to muon pair ($e^+ e^- \to \mu^+ \mu^-$)**
+
+An electron and positron annihilate into a virtual photon, which then produces a muon-antimuon pair. Two vertices, one virtual photon in the middle.
+
+### Vertex Factors and Couplings
+
+Each vertex carries a coupling strength:
+
+- QED: $e$ at each photon-fermion vertex
+- QCD: $g_s$ at each gluon-quark vertex (and gluon self-coupling)
+- Weak: $g$ at each W or Z vertex
+
+The coupling squared is the fine-structure-constant-like quantity:
+
+$$\alpha_{\text{EM}} = \frac{e^2}{4\pi} \approx \frac{1}{137}$$
+
+$$\alpha_s = \frac{g_s^2}{4\pi} \approx 0.1 \text{ (at 100 GeV)}$$
+
+$$\alpha_W = \frac{g^2}{4\pi} \approx 0.034$$
+
+### Why Perturbation Theory Works
+
+Each additional vertex adds a factor of the coupling. For small couplings, higher-order diagrams (more vertices, more loops) contribute less. QED converges beautifully because $\alpha \approx 1/137$ is small.
+
+QCD at low energies has $\alpha_s \sim 1$ and perturbation theory fails; this is why bound-state hadronic physics is hard. At high energies, $\alpha_s$ decreases (asymptotic freedom, section 8) and perturbation theory works.
+
+### Propagators
+
+Internal lines contribute **propagators**; factors of $1/(p^2 - m^2)$ for the virtual particle. For exchange of a heavy boson (like W or Z) at low energies, $p^2 \ll m^2$, and the propagator becomes approximately $-1/m^2$. This is why the weak interaction looks like a short-range, four-fermion contact interaction at low energies; Fermi's original theory.
+
+### Loops and Renormalization
+
+Diagrams with closed loops give divergent integrals. The technique of **renormalization** absorbs these divergences into redefinitions of a few physical quantities (masses and couplings). After renormalization, finite predictions emerge. This was the breakthrough that made QED calculationally meaningful in the late 1940s.
+
+A consequence of renormalization is that couplings "run" with energy scale:
+
+$$\alpha_{\text{EM}}(M_Z) \approx 1/128$$
+
+at the Z mass, rather than 1/137. Couplings are energy-dependent. This running is the key to asymptotic freedom and grand unification ideas.
+
+---
+
+## 7. Quantum Electrodynamics (QED)
+
+QED is the quantum field theory of electrons and photons. It is the most precisely tested theory in all of physics; agreement with experiment to better than one part in $10^{12}$ in some cases.
+
+### The Structure
+
+QED has three ingredients:
+
+1. A fermion field (electron) with Dirac equation dynamics
+2. A photon field (gauge field of $U(1)_{\text{EM}}$)
+3. A single coupling; the electromagnetic vertex
+
+The interaction vertex: an electron line emits or absorbs a photon. Nothing else. Every QED process is built from this single vertex.
+
+### The Fine-Structure Constant
+
+$$\alpha = \frac{e^2}{4\pi \varepsilon_0 \hbar c} \approx \frac{1}{137.036}$$
+
+A pure, dimensionless number. Its smallness is why perturbation theory works so well.
+
+### Classic QED Results
+
+**Electron anomalous magnetic moment:**
+
+A classical electron with spin would have $g = 2$. QED predicts corrections:
+
+$$\frac{g - 2}{2} = \frac{\alpha}{2\pi} + O(\alpha^2) + \ldots$$
+
+The leading term was computed by Schwinger in 1948. Current theoretical calculation (to $\alpha^5$) and experimental measurement agree to ~12 decimal places. This is science's most precise test of any theory.
+
+**Lamb shift:** small splitting between $2S_{1/2}$ and $2P_{1/2}$ levels of hydrogen, which Dirac's equation predicts degenerate. QED corrections (vacuum polarization, self-energy) split them by ~1057 MHz. Measured and predicted agree beautifully.
+
+**Compton scattering** (already seen in Modern Physics); the elementary QED process, computable to high precision.
+
+**Pair production and annihilation:** $\gamma\gamma \to e^+ e^-$ and $e^+ e^- \to \gamma\gamma$. The cross sections follow from straightforward QED calculation.
+
+### Running Coupling
+
+At higher energies, QED's coupling increases:
+
+$$\alpha(Q^2) = \frac{\alpha(0)}{1 - \frac{\alpha(0)}{3\pi}\ln(Q^2/m_e^2)}$$
+
+This is because virtual electron-positron pairs in the vacuum partially screen the bare charge. At very high energies, you see through the screening.
+
+The running coupling eventually hits a **Landau pole**; a point where QED alone would break down. But long before that, other physics (the weak interaction, then unknown physics) enters.
+
+---
+
+## 8. Quantum Chromodynamics (QCD)
+
+QCD is the theory of the strong interaction. Structurally similar to QED (a gauge theory) but with crucial differences that produce completely different phenomenology.
+
+### The Gauge Group
+
+QCD is based on SU(3); the group of 3×3 unitary matrices with determinant 1. The "3" refers to the three colors quarks can carry. There are $3^2 - 1 = 8$ generators, corresponding to 8 gluons.
+
+### Color Charges
+
+Quarks transform as 3-component color vectors (the fundamental representation of SU(3)). Antiquarks transform as the conjugate (anti-fundamental).
+
+Gluons carry color themselves; specifically, they live in the adjoint representation (a matrix with one color index and one anti-color index, minus the trace). This is the decisive difference from QED: **photons don't carry electric charge, but gluons do carry color.**
+
+### Gluon Self-Interaction
+
+Because gluons carry color, they interact with each other directly. Three-gluon and four-gluon vertices exist. In Feynman diagrams you have gluon-gluon-gluon and gluon-gluon-gluon-gluon vertices that have no QED analog.
+
+This is the source of everything strange about QCD.
+
+### Asymptotic Freedom
+
+The QCD coupling $\alpha_s$ *decreases* at high energy; opposite to QED:
+
+$$\alpha_s(Q^2) = \frac{\alpha_s(Q_0^2)}{1 + \frac{\alpha_s(Q_0^2)}{4\pi}(11 - \tfrac{2}{3}n_f)\ln(Q^2/Q_0^2)}$$
+
+Here $n_f$ is the number of quark flavors (6 in the Standard Model). The coefficient $(11 - \tfrac{2}{3}n_f) > 0$ ensures decrease. Gross, Politzer, and Wilczek discovered this in 1973; it earned them the 2004 Nobel Prize.
+
+Physical meaning: at very short distances (high energy), quarks behave as nearly free particles. This is why deep inelastic scattering "sees" pointlike quarks inside protons.
+
+### Confinement
+
+The flip side: at large distances (low energy), the coupling becomes strong; of order 1 or larger; and perturbation theory fails. In this regime, quarks are bound into color-neutral hadrons and cannot be extracted.
+
+A hand-waving picture: the gluon field between two quarks forms a narrow "flux tube" with constant energy per unit length (~1 GeV/fm). To separate the quarks, you must do work against this tension indefinitely. At some point, the stored energy exceeds the mass of a quark-antiquark pair, and the tube snaps by creating a new pair from the vacuum. You end up with two color-neutral hadrons instead of isolated quarks.
+
+Confinement has never been proved analytically from the QCD Lagrangian; it's a conjecture strongly supported by lattice QCD simulations and experiment. Proving or disproving it is one of the Millennium Problems.
+
+### Lattice QCD
+
+Because QCD at low energies is non-perturbative, calculations are done numerically on a discretized spacetime lattice. Lattice QCD computes:
+
+- Hadron masses (from first principles, to few-percent accuracy)
+- Quark masses (extracted by matching to experiment)
+- Matrix elements for weak decays (crucial for CP violation studies)
+- Finite-temperature behavior (quark-gluon plasma)
+
+Huge computational enterprise; runs on some of the world's largest supercomputers.
+
+### Jets
+
+In high-energy collisions, quarks and gluons produced at short distances cannot propagate as free particles. They fragment into narrow cones of hadrons called **jets**. Experimentally, we don't "see" quarks; we see jets, whose kinematics reflect the underlying quark or gluon.
+
+Three-jet events at high-energy $e^+e^-$ colliders were the first direct evidence for the gluon, observed at DESY in 1979.
+
+---
+
+## 9. The Weak Interaction
+
+The weak interaction is responsible for radioactive beta decay, neutrino interactions, flavor changes among quarks, and the slow burn of the sun. It has three features that make it uniquely strange.
+
+### Mediators
+
+Three massive bosons: $W^+$, $W^-$, $Z^0$. Masses around 80-90 GeV; nearly 100 times the proton mass. The heaviness is the *entire reason* the interaction is "weak" and short-ranged. The intrinsic coupling is actually comparable to electromagnetic.
+
+**Range** of a force mediated by a mass-$M$ particle:
+
+$$\lambda \sim \frac{\hbar}{Mc} \sim 10^{-18} \text{ m (for } M \sim 80 \text{ GeV)}$$
+
+About a thousandth the size of a proton.
+
+### Charged vs. Neutral Currents
+
+**Charged current (W exchange):** changes the charge of the interacting fermion. Example: $d \to u + W^-$, leading to $\beta^-$ decay $n \to p + e^- + \bar{\nu}_e$.
+
+**Neutral current (Z exchange):** doesn't change charge. Example: $\nu_e + e^- \to \nu_e + e^-$. The 1973 discovery of neutral currents at CERN's Gargamelle bubble chamber was a key confirmation of electroweak theory; nothing before had predicted them.
+
+### Parity Violation
+
+The charged weak interaction couples only to **left-handed fermions** (and right-handed antifermions). "Handedness" (chirality) is a relativistic spin-momentum relation; left-handed means spin opposite to momentum.
+
+This complete absence of right-handed participation in the charged weak interaction is maximal parity violation. There is no right-handed neutrino in the Standard Model (and if it exists, as required for nonzero neutrino masses, it doesn't couple to the weak force).
+
+### Flavor Changing: The CKM Matrix
+
+The weak interaction can turn a quark of one generation into a quark of another. The mixing is encoded in the **Cabibbo-Kobayashi-Maskawa matrix** $V_{\text{CKM}}$:
+
+$$\begin{pmatrix} d' \\ s' \\ b' \end{pmatrix} = V_{\text{CKM}} \begin{pmatrix} d \\ s \\ b \end{pmatrix}$$
+
+where primed states are "weak eigenstates" and unprimed are "mass eigenstates." The matrix is nearly diagonal (generations mostly stay within themselves) but not exactly; the off-diagonal elements control inter-generational decays.
+
+Numerically (magnitudes):
+
+$$|V_{\text{CKM}}| \approx \begin{pmatrix} 0.974 & 0.225 & 0.004 \\ 0.225 & 0.973 & 0.041 \\ 0.009 & 0.040 & 0.999 \end{pmatrix}$$
+
+Key facts:
+- **Cabibbo angle:** $\sin\theta_C \approx 0.225$ governs s ↔ u mixing. Recognized in 1963 before the quark model was complete.
+- **CP violation:** the CKM matrix has one irreducible complex phase, which generates CP violation in quark processes.
+- **Kobayashi and Maskawa** (1973 Nobel 2008): realized that three generations were *necessary* for a CP-violating phase, predicting the third generation before the b and t quarks were found.
+
+### Leptonic Analog: the PMNS Matrix
+
+Neutrino oscillations (section 11) require a similar mixing matrix for leptons, the **Pontecorvo-Maki-Nakagawa-Sakata matrix** $U_{\text{PMNS}}$. Unlike the CKM matrix, it is *far* from diagonal; the mixings are large. This is a major unresolved difference between quark and lepton sectors.
+
+### The Weak Current
+
+The interaction Lagrangian involves currents coupled to the W or Z bosons. For the charged current:
+
+$$\mathcal{L}_{\text{CC}} = \frac{g}{\sqrt{2}} W^+_\mu \bar{u}_L \gamma^\mu d_L + \text{h.c.}$$
+
+The $L$ subscripts enforce left-handed coupling. In full generality, all three generations appear with CKM mixing.
+
+---
+
+## 10. Electroweak Unification and the Higgs Mechanism
+
+Glashow, Weinberg, and Salam unified the electromagnetic and weak interactions in the 1960s. The unified theory has symmetry group $SU(2)_L \times U(1)_Y$, with four gauge bosons. The Higgs mechanism breaks the symmetry and gives three of them mass, leaving the photon massless.
+
+### The Problem
+
+Mass terms for gauge bosons break gauge invariance explicitly. But the weak bosons are clearly massive. How to reconcile?
+
+And similarly for fermion masses: a mass term $m\bar{\psi}\psi$ in a chiral theory mixes left and right components differently, which is incompatible with the charged weak interaction coupling only to left-handed particles.
+
+### Spontaneous Symmetry Breaking
+
+The resolution is **spontaneous symmetry breaking**: the laws are symmetric, but the vacuum (ground state) is not. Think of a marble on top of a Mexican-hat potential; the potential is rotationally symmetric, but the marble falls to one side of the trough, picking a direction and breaking the symmetry.
+
+In the Standard Model, the Higgs field $\phi$ has a potential
+
+$$V(\phi) = -\mu^2 |\phi|^2 + \lambda |\phi|^4$$
+
+with $\mu^2 > 0$ and $\lambda > 0$. The minimum is not at $\phi = 0$ but at $|\phi| = v/\sqrt{2}$ with $v \approx 246$ GeV. The Higgs field has a nonzero **vacuum expectation value** (VEV) everywhere in space.
+
+### The Higgs Mechanism in Outline
+
+The Higgs field is a doublet of $SU(2)_L$:
+
+$$\phi = \begin{pmatrix} \phi^+ \\ \phi^0 \end{pmatrix}$$
+
+After symmetry breaking, three of its four components get absorbed as longitudinal modes of the W$^\pm$ and Z; this is what gives them mass. The fourth component remains and is the physical Higgs boson.
+
+Gauge boson masses from this mechanism:
+
+$$M_W = \frac{1}{2} g v, \quad M_Z = \frac{1}{2}\sqrt{g^2 + g'^2}\, v, \quad M_\gamma = 0$$
+
+where $g$ and $g'$ are the gauge couplings of $SU(2)_L$ and $U(1)_Y$.
+
+### The Weinberg Angle
+
+Define $\tan\theta_W = g'/g$. Then:
+
+$$\cos\theta_W = \frac{M_W}{M_Z}$$
+
+Measured: $\sin^2 \theta_W \approx 0.231$. The prediction $M_W/M_Z$ matches to high precision.
+
+The photon and Z are specific combinations of the "pre-symmetry-breaking" bosons:
+
+$$A = B\cos\theta_W + W^3 \sin\theta_W$$
+
+$$Z = -B\sin\theta_W + W^3 \cos\theta_W$$
+
+This mixing is fundamental: the photon is not a pre-existing object, but a specific rotation of the $U(1)_Y$ and $SU(2)_L^3$ bosons that happens to stay massless.
+
+### Fermion Masses
+
+Fermions get masses through their coupling to the Higgs. The **Yukawa interaction**
+
+$$\mathcal{L}_{\text{Yukawa}} = -y_f (\bar{\psi}_L \phi \psi_R + \text{h.c.})$$
+
+becomes, after the Higgs VEV is inserted:
+
+$$-\frac{y_f v}{\sqrt{2}} \bar{\psi}\psi$$
+
+which is exactly a mass term with $m_f = y_f v/\sqrt{2}$. Each fermion has its own Yukawa coupling, and these couplings are free parameters of the Standard Model; we have no theoretical understanding of why, for example, $y_t \approx 1$ while $y_e \approx 3 \times 10^{-6}$.
+
+### The Higgs Boson
+
+The physical Higgs is the remaining degree of freedom after electroweak symmetry breaking. Its mass is determined by $\lambda$ and $v$:
+
+$$M_H = \sqrt{2\lambda}\, v$$
+
+Measured: $M_H \approx 125$ GeV, implying $\lambda \approx 0.13$.
+
+**Higgs couplings:** the Higgs couples to other particles proportional to their mass. So it couples strongly to heavy things (top, W, Z) and weakly to light things (electrons, up quarks, etc.). This is the characteristic signature of the Higgs.
+
+**Observed decay channels** (with approximate branching ratios at $M_H = 125$ GeV):
+
+| Channel | BR |
+|---|---|
+| $H \to b\bar{b}$ | 58% |
+| $H \to WW^*$ | 21% |
+| $H \to gg$ | 8% |
+| $H \to \tau^+\tau^-$ | 6% |
+| $H \to c\bar{c}$ | 3% |
+| $H \to ZZ^*$ | 2.6% |
+| $H \to \gamma\gamma$ | 0.23% |
+
+The $\gamma\gamma$ and $ZZ^* \to 4\ell$ channels; despite being rare; were the golden discovery modes at the LHC because they have clean experimental signatures.
+
+### Significance
+
+The Higgs mechanism is the only known way to reconcile massive gauge bosons with gauge invariance. Without it, the Standard Model is mathematically inconsistent above ~1 TeV. The 2012 Higgs discovery is therefore not merely finding one more particle; it's confirming the mechanism that makes the whole theoretical structure self-consistent.
+
+---
+
+## 11. Neutrino Physics
+
+Neutrinos are the strangest corner of the Standard Model. They were the last fundamental particles to be observed (1956), they violate lepton flavor (discovered 1998-2002), and they may or may not be their own antiparticles.
+
+### Neutrinos in the Standard Model (Original Form)
+
+Originally, the Standard Model contained only left-handed neutrinos, and they were assumed massless. Three flavors: $\nu_e$, $\nu_\mu$, $\nu_\tau$. Each couples to its corresponding charged lepton.
+
+### The Solar Neutrino Problem
+
+In the 1960s, Ray Davis's Homestake experiment measured the solar neutrino flux and found only about 1/3 of the predicted rate. This persisted for decades and became the **solar neutrino problem**.
+
+### Neutrino Oscillations; The Resolution
+
+If neutrinos have mass and their mass eigenstates differ from their flavor eigenstates, then a neutrino born as $\nu_e$ can oscillate into $\nu_\mu$ or $\nu_\tau$ as it propagates. The Homestake experiment was only sensitive to $\nu_e$, so it saw a deficit.
+
+Oscillation probability (two-flavor approximation):
+
+$$P(\nu_\alpha \to \nu_\beta) = \sin^2(2\theta) \sin^2\left(\frac{\Delta m^2 L}{4E}\right)$$
+
+where $\Delta m^2 = m_2^2 - m_1^2$ is the mass-squared difference, $\theta$ is the mixing angle, $L$ is the distance traveled, $E$ is the neutrino energy.
+
+**Crucial observation:** oscillations require $\Delta m^2 \neq 0$, which requires neutrinos to be massive. This is physics *beyond* the original Standard Model.
+
+### Experimental Confirmation
+
+- **Super-Kamiokande** (1998): atmospheric neutrino oscillations $\nu_\mu \to \nu_\tau$
+- **SNO** (2001-2002): definitive proof of solar $\nu_e \to \nu_{\mu,\tau}$ by measuring both charged-current (sensitive only to $\nu_e$) and neutral-current (sensitive to all flavors) rates simultaneously
+- **KamLAND, Daya Bay, T2K, NOvA, IceCube**: various reactor, beam, and atmospheric experiments pinning down the mixing parameters
+
+### Mass Hierarchy and Mixing
+
+The PMNS matrix connecting flavor to mass eigenstates:
+
+$$\begin{pmatrix} \nu_e \\ \nu_\mu \\ \nu_\tau \end{pmatrix} = U_{\text{PMNS}} \begin{pmatrix} \nu_1 \\ \nu_2 \\ \nu_3 \end{pmatrix}$$
+
+Measured mixing angles:
+
+- $\theta_{12} \approx 33°$ (solar)
+- $\theta_{23} \approx 49°$ (atmospheric)
+- $\theta_{13} \approx 8.6°$ (reactor)
+
+Note how large these are compared to quark mixing; the lepton sector is very different.
+
+Mass-squared differences:
+
+- $\Delta m^2_{21} \approx 7.5 \times 10^{-5}$ eV²
+- $|\Delta m^2_{31}| \approx 2.5 \times 10^{-3}$ eV²
+
+The sign of $\Delta m^2_{31}$; the "mass hierarchy"; is not yet determined.
+
+### Open Questions
+
+- **Absolute mass scale:** we know differences but not individual masses. Upper bounds: cosmological ($\sum m_\nu \lesssim 0.1$ eV), tritium beta decay (KATRIN, $m_\nu < 0.8$ eV).
+- **Majorana vs. Dirac:** are neutrinos their own antiparticles? Testable via neutrinoless double beta decay experiments. No signal yet.
+- **CP violation:** does the lepton sector violate CP like the quark sector? T2K and NOvA show hints.
+- **Sterile neutrinos:** are there additional neutrino species that don't couple to the Z? Controversial experimental anomalies, no definitive evidence.
+
+Neutrinos remain a frontier.
+
+---
+
+## 12. Experimental Particle Physics
+
+Building the Standard Model took machines.
+
+### Accelerators
+
+**Fixed-target experiments:** beam directed at a stationary target. Energy per collision scales as $\sqrt{E_{\text{beam}}}$. Simple but inefficient at high energies.
+
+**Colliders:** two beams collide head-on. Energy scales as $E_{\text{beam}}$. Much more efficient.
+
+**Types:**
+
+- **Linear:** e.g., SLAC's SLC (e⁺e⁻)
+- **Circular synchrotrons:** e.g., Tevatron (p$\bar{p}$), LHC (pp)
+- **Circular e⁺e⁻:** e.g., LEP, KEKB, CEPC (proposed)
+
+### The LHC
+
+The Large Hadron Collider at CERN:
+
+- Circumference: 26.7 km
+- Beam energy: 6.5 TeV per beam → $\sqrt{s} = 13$ TeV (Run 2), now 13.6 TeV (Run 3)
+- Four main experiments: ATLAS, CMS (general-purpose), LHCb (flavor/CP), ALICE (heavy ions)
+- Luminosity: $\sim 2 \times 10^{34}$ cm⁻²s⁻¹
+
+### Detectors: the General Layout
+
+A modern general-purpose detector like ATLAS or CMS is built in concentric layers:
+
+1. **Inner tracker** (innermost): silicon pixel/strip detectors, tracks charged particles in a magnetic field for momentum measurement
+2. **Electromagnetic calorimeter:** measures energy of electrons and photons
+3. **Hadronic calorimeter:** measures energy of hadrons (which mostly interact here, not in the ECAL)
+4. **Muon system** (outermost): since muons pass through the inner layers, only muons reach here; dedicated tracking
+
+### How Particles Are Identified
+
+- **Photons:** ECAL deposit, no track in the inner tracker
+- **Electrons:** ECAL deposit, matching track
+- **Muons:** hits in the muon chambers, minimal calorimeter activity
+- **Hadrons:** HCAL deposits, matching tracks (charged) or no track (neutrals)
+- **Jets:** clustered collections of hadrons from a single parton
+- **Neutrinos:** invisible; inferred from missing transverse momentum
+- **Taus:** reconstructed from their decay products (jets or leptons)
+
+### Triggering
+
+At the LHC, collisions happen at 40 MHz (every 25 ns). Only a tiny fraction can be recorded. A multi-level **trigger system** makes real-time decisions:
+
+- Level 1 (hardware): a few microseconds per decision, selects $\sim 10^5$ Hz from $4 \times 10^7$ Hz
+- High Level Trigger (software): selects $\sim 10^3$ Hz for permanent storage
+
+Physics goals determine what passes. Anything producing high-momentum leptons, photons, jets, or missing energy is typically kept.
+
+### Example: How the Higgs Was Found
+
+$H \to \gamma\gamma$: look for two high-energy photons whose invariant mass
+
+$$m_{\gamma\gamma}^2 = 2 E_1 E_2 (1 - \cos\theta_{12})$$
+
+forms a narrow peak over a smooth background. A bump at $125$ GeV with enough statistical significance → discovery.
+
+$H \to ZZ^* \to 4\ell$: four leptons (electrons or muons), pair them into two Z candidates, then compute the 4-lepton invariant mass. Much lower background, cleaner signature.
+
+Both channels saw the peak simultaneously in July 2012 at ATLAS and CMS independently. ~5σ significance in each. The Higgs had been found.
+
+### Statistical Significance
+
+Particle physics uses a $5\sigma$ (5 standard deviations) convention for "discovery," corresponding to a background-only probability of about $3 \times 10^{-7}$. This high bar has been justified historically by many $3$–$4\sigma$ "hints" that later disappeared. Evidence below $5\sigma$ is reported but not called "discovery."
+
+---
+
+## 13. Beyond the Standard Model
+
+The Standard Model is spectacular but incomplete. Here's what we know is missing or troubling.
+
+### Confirmed Gaps
+
+**Dark matter:** Galactic rotation curves, gravitational lensing, and CMB anisotropies all point to roughly 5× more invisible matter than visible. The Standard Model has no candidate.
+
+**Dark energy:** Accelerating cosmic expansion requires about 68% of the universe's energy to be a substance with negative pressure. No Standard Model candidate.
+
+**Neutrino masses:** Established by oscillations. Can be accommodated by adding right-handed neutrinos, but this is an extension, not native.
+
+**Baryon asymmetry:** the universe has ~$10^9$ times more matter than antimatter. Generating this requires CP violation, baryon number violation, and out-of-equilibrium conditions (Sakharov conditions). Standard Model CP violation is insufficient.
+
+**Gravity:** not included at all.
+
+### Theoretical Discomforts
+
+**Hierarchy problem:** The Higgs mass receives quantum corrections that want to drag it to the Planck scale ($\sim 10^{19}$ GeV). Keeping it at 125 GeV requires cancellations at the level of 1 part in $10^{34}$; a fine-tuning that suggests new physics near the TeV scale. The LHC has found no such physics.
+
+**Strong CP problem:** QCD allows a CP-violating parameter $\theta_{\text{QCD}}$ that could be anywhere from 0 to $2\pi$, but it's measured to be less than $10^{-10}$. Why is it so small? The **Peccei-Quinn solution** postulates a new particle, the **axion**; also a dark matter candidate.
+
+**Flavor puzzle:** Why three generations? Why the specific mass hierarchy? Why the specific CKM and PMNS mixings? No one knows.
+
+**Unification:** At high energies, the three Standard Model couplings nearly meet at a single point around $10^{15}$ GeV, suggesting **grand unification**; but they don't quite meet. Supersymmetric extensions make them meet, which is part of the appeal of SUSY.
+
+### Candidate Extensions
+
+**Supersymmetry (SUSY):** Postulates a fermion-boson symmetry, with every Standard Model particle having a superpartner. Solves the hierarchy problem and provides dark matter candidates (lightest SUSY particle). Predicts new particles at the TeV scale that the LHC should have seen by now. As of 2024, no SUSY particles observed in the expected windows, though SUSY at higher scales remains possible.
+
+**Extra dimensions:** Large or warped extra spatial dimensions could explain the hierarchy. Predicts signatures like Kaluza-Klein modes or microscopic black holes. None observed.
+
+**Grand Unified Theories (GUTs):** Unify SU(3) × SU(2) × U(1) into a single larger group. Predict proton decay with extremely long lifetimes ($> 10^{34}$ yr). No proton decay seen yet.
+
+**String theory:** Attempts to unify everything including gravity. Extremely ambitious but has struggled to produce testable predictions.
+
+**Axions:** Light pseudoscalar particles from PQ symmetry breaking. Experimental searches ongoing (ADMX, IAXO).
+
+**WIMPs (Weakly Interacting Massive Particles):** Generic dark matter candidates. Direct detection experiments (LZ, XENONnT) have pushed limits to impressive precision without finding anything.
+
+### Current Anomalies
+
+A few experimental results deviate from Standard Model predictions by $3$–$4\sigma$, potentially hinting at new physics:
+
+- **Muon $g-2$:** Fermilab measurement disagrees with some theoretical calculations by ~4σ. Interpretation clouded by tension between different theoretical approaches.
+- **Flavor anomalies** ($b \to s\ell^+\ell^-$ decays at LHCb): earlier hints of lepton universality violation have weakened with more data.
+- **Atomki anomaly:** claimed signal of a new light boson. Not confirmed elsewhere.
+
+None are conclusive. History suggests most will disappear.
+
+### What the Future Looks Like
+
+The era of guaranteed discoveries ended in 2012. The next decades involve:
+
+- **High-luminosity LHC (2029+):** 10× more data, extending precision measurements and the reach for rare or small-signal new physics
+- **Future colliders:** proposals for a Higgs/top factory (ILC, CLIC, FCC-ee, CEPC) and eventually a 100 TeV hadron collider (FCC-hh, SPPC)
+- **Neutrino experiments:** DUNE, Hyper-Kamiokande; mass hierarchy, CP violation, supernova neutrinos
+- **Dark matter searches:** direct detection, collider, axion experiments
+- **Precision flavor:** Belle II, LHCb upgrades
+- **Gravitational waves:** LIGO/Virgo/KAGRA and future space-based (LISA)
+- **Cosmology:** CMB-S4, Euclid, LSST
+
+Whether any of these will find something beyond the Standard Model is genuinely unknown.
+
+---
+
+## Appendix: Data, Units, and Conventions
+
+### Standard Model Parameters (19 or so, depending on counting)
+
+**Gauge couplings:** $g_s$, $g$, $g'$ (or equivalently $\alpha_s$, $\alpha$, $\sin^2\theta_W$)
+
+**Quark masses:** $m_u$, $m_d$, $m_c$, $m_s$, $m_t$, $m_b$
+
+**Lepton masses:** $m_e$, $m_\mu$, $m_\tau$
+
+**CKM parameters:** 3 angles + 1 phase
+
+**Higgs sector:** $v$ (VEV), $M_H$ (or equivalently $\mu^2$, $\lambda$)
+
+Add neutrino masses and PMNS parameters for extensions.
+
+### Useful Conversion Factors
+
+| Quantity | Value |
+|---|---|
+| $\hbar c$ | 197.327 MeV·fm |
+| $(\hbar c)^2$ | 0.389 GeV²·mb |
+| 1 fm | $5.068 \text{ GeV}^{-1}$ |
+| 1 s | $1.519 \times 10^{24} \text{ GeV}^{-1}$ |
+| $\alpha^{-1}$ (low energy) | 137.036 |
+| $\alpha^{-1}$ (at $M_Z$) | ≈ 128 |
+
+### Precision Electroweak Observables (approximate)
+
+| Quantity | Value |
+|---|---|
+| $M_Z$ | 91.1876 GeV |
+| $M_W$ | 80.369 GeV |
+| $\sin^2\theta_W$ | 0.2312 |
+| $\Gamma_Z$ | 2.4952 GeV |
+| $M_t$ | 172.76 GeV |
+| $M_H$ | 125.25 GeV |
+
+### Coupling Constants at the Z Scale
+
+| Coupling | Value |
+|---|---|
+| $\alpha(M_Z)$ | 1/127.95 |
+| $\alpha_s(M_Z)$ | 0.1181 |
+| $G_F$ | $1.166 \times 10^{-5}$ GeV⁻² |
+
+### Further Reading
+
+- **Griffiths, *Introduction to Elementary Particles*:** the standard undergraduate text, pitched at roughly the level of this document
+- **Halzen & Martin, *Quarks and Leptons*:** complementary undergraduate text with different emphasis
+- **Thomson, *Modern Particle Physics*:** more contemporary treatment with experimental focus
+- **Peskin & Schroeder, *Introduction to Quantum Field Theory*:** the graduate-level QFT text; next step after undergraduate QM and classical field theory
+- **Particle Data Group Review:** pdg.lbl.gov; the definitive compilation of particle data, updated biennially
+
+---
+
+## Closing Note
+
+Particle physics at the undergraduate level covered here is the phenomenology; the particles, the interactions, the conservation laws, what happens when things collide. Understanding *why* it all works this way is quantum field theory.
+
+The conceptual core, once you've worked through this document, is something like:
+
+- Nature has a few kinds of stuff (quarks, leptons, gauge bosons, the Higgs)
+- These interact through forces arising from gauge symmetries (electromagnetic, weak, strong)
+- The Higgs field breaks the electroweak symmetry, giving mass
+- Hadronic physics emerges from the strong interaction's confinement
+- Everything non-gravitational observed to date fits
+
+What's missing from that picture; gravity, dark matter, dark energy, neutrino masses, the reason for three generations and the specific parameter values; defines the frontier of the field.
+
+If you want to go further, the natural next step is **quantum field theory**. QFT is where the math of this document's black boxes gets opened up. It requires more sophisticated tools (path integrals, renormalization group, functional methods) and typically a full year of dedicated study, but it's where "particle physics" as a *working* subject actually lives.
+
+You now have a reasonable foundation for that journey. Good luck.

@@ -1,0 +1,263 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base
+  title="About"
+  description="Adam Cagle and Claude (Anthropic), computational collaborator. The collaboration behind Donkey on the Edge."
+>
+  <div class="shell">
+
+    <!-- Running head -->
+    <div class="running-head">
+      <a class="rh-mark" href="/"><span class="arr">&larr;</span>The Donkey on the Edge</a>
+      <div class="rh-meta">
+        <span>Vol. I</span>
+        <span class="dot"></span>
+        <span>About</span>
+      </div>
+    </div>
+
+    <!-- ================================================================
+         ABOUT HEADER
+         ================================================================ -->
+    <header class="about-header">
+      <div class="about-eyebrow">The Donkey on the Edge &middot; Vol. I, No. I</div>
+      <h1 class="about-title">About</h1>
+      <p class="about-title-sub">
+        A non-physicist. An AI. Eighteen days. A paper.
+        This is the record of how that happened and who made it.
+      </p>
+    </header>
+
+    <!-- ================================================================
+         PORTRAIT PLATES
+         ================================================================ -->
+    <div class="portraits" aria-label="Portrait illustrations">
+
+      <!-- Donkey portrait plate -->
+      <div class="plate-wrap">
+        <div class="plate">
+          <div class="plate-inner">
+            <img src="/images/donkeyportrait.png" alt="The donkey" />
+          </div>
+        </div>
+        <div class="plate-caption">
+          <span class="fig">Fig.&thinsp;I.</span>
+          <em>The donkey. Drawn from life, April MMXXVI.</em>
+        </div>
+      </div>
+
+      <!-- Author portrait plate -->
+      <div class="plate-wrap">
+        <div class="plate">
+          <div class="plate-inner">
+            <img src="/images/headshot.png" alt="Adam Cagle" />
+          </div>
+        </div>
+        <div class="plate-caption">
+          <span class="fig">Fig.&thinsp;II.</span>
+          <em>Adam Cagle. Bend, Oregon, MMXXVI.</em>
+        </div>
+      </div>
+
+    </div><!-- /.portraits -->
+
+    <p class="plates-caption-joint narrow">
+      <span class="fig">Fig.&thinsp;I&ndash;II.</span>
+      Adam Cagle and the donkey. Composed at Bend, in the State of Oregon, in the months of April and May, in the Year of Our Lord Two Thousand and Twenty-Six.
+    </p>
+
+    <!-- ================================================================
+         BIOGRAPHY
+         ================================================================ -->
+    <section class="prose-section narrow" aria-labelledby="bio-heading">
+      <div class="section-head" id="bio-heading">Biography</div>
+
+      <p class="bio-text">
+        <strong>Adam Cagle</strong> lives in Bend, Oregon. He is not a physicist. In late April 2026 he asked Claude (Anthropic) what someone would have to study to actually understand quantum physics, and then started studying. Three weeks later they had a paper headed for arXiv at the frontier of quantum gravity, with two new theorems about how observers reconstructing a quantum state through a non-isometric encoding will disagree about its entropy. He is interested in what happens when an ordinary, motivated person decides to climb all the way up the ladder of a field, fast, with the right partner. He suspects there might be more donkeys at the edge if more of us tried it.
+      </p>
+    </section>
+
+    <!-- ================================================================
+         THE COLLABORATION
+         ================================================================ -->
+    <section class="prose-section narrow" aria-labelledby="collab-heading">
+      <div class="section-head" id="collab-heading">The Collaboration</div>
+
+      <p>
+        Claude is an AI built by Anthropic. In this collaboration Claude derives, codes, sanity-checks the literature, drafts and re-drafts, and catches Adam's mistakes. Adam picks the questions, sets the direction, catches Claude's mistakes, and is responsible for the work. Both kinds of catching have happened. Both kinds of mistakes are documented in <a href="/field-notes" style="color:var(--red);border-bottom:1px dotted var(--red);">Field Notes</a> and in <a href="/method" style="color:var(--red);border-bottom:1px dotted var(--red);">The Method</a>.
+      </p>
+
+      <div class="pull">
+        <p>The honest answer to "did the AI do it" and the honest answer to "did the human do it" are both no. The honest answer to "did the partnership do it" is yes.</p>
+      </div>
+
+      <p>
+        The collaboration is not magic and not a stunt. It is a working relationship that produces a paper, and the methodology is itself an open question that this site exists in part to investigate. Claude is credited on the paper as computational collaborator, which is what Claude was.
+      </p>
+    </section>
+
+    <!-- ================================================================
+         CITATION
+         ================================================================ -->
+    <section class="prose-section narrow" aria-labelledby="cite-heading">
+      <div class="section-head" id="cite-heading">How to Cite</div>
+
+      <!-- Paper citation -->
+      <div class="citation-block">
+        <div class="citation-inner">
+          <div class="citation-type">The Paper</div>
+          <p class="citation-text">
+            Cagle, A.R., 2026. <em>Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes.</em> arXiv:26XX.XXXXX.
+          </p>
+          <div class="cite-actions">
+            <button class="cite-btn" data-copy="Cagle, A.R., 2026. Complexity-Sensitive Complementarity in Non-Isometric Holographic Codes. arXiv:26XX.XXXXX.">Copy plain text</button>
+            <button class="cite-btn" id="bibtex-toggle">BibTeX &#9662;</button>
+          </div>
+          <div class="bibtex-wrap" id="bibtex-block" style="display:none;">
+            <div class="bibtex-label">BibTeX</div>
+            <pre class="bibtex-code"><span class="key">@article</span>&#123;cagle2026,
+  <span class="key">author</span>  = &#123;<span class="val">Cagle, Adam R.</span>&#125;,
+  <span class="key">title</span>   = &#123;<span class="val">Complexity-Sensitive Complementarity in
+             Non-Isometric Holographic Codes</span>&#125;,
+  <span class="key">year</span>    = &#123;<span class="val">2026</span>&#125;,
+  <span class="key">journal</span> = &#123;<span class="val">arXiv preprint</span>&#125;,
+  <span class="key">eprint</span>  = &#123;<span class="val">26XX.XXXXX</span>&#125;,
+  <span class="key">note</span>    = &#123;<span class="val">With Claude (Anthropic),
+             computational collaborator.</span>&#125;
+&#125;</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Site citation -->
+      <div class="citation-block">
+        <div class="citation-inner">
+          <div class="citation-type">The Site</div>
+          <p class="citation-text">
+            Cagle, A.R., 2026. <em>Donkey on the Edge.</em> https://donkeyontheedge.com
+          </p>
+          <div class="cite-actions">
+            <button class="cite-btn" data-copy="Cagle, A.R., 2026. Donkey on the Edge. https://donkeyontheedge.com">Copy plain text</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         CONTACT
+         ================================================================ -->
+    <section class="prose-section narrow" aria-labelledby="contact-heading">
+      <div class="section-head" id="contact-heading">Correspondence</div>
+
+      <div class="contact-grid">
+        <div class="contact-item">
+          <div class="contact-item-label">General</div>
+          <p>
+            <a href="mailto:adamrcagle@gmail.com">adamrcagle@gmail.com</a><br />
+            Reasonable correspondence welcome. Unreasonable correspondence will be ignored politely.
+          </p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">Press</div>
+          <p>
+            Same address, subject line: <em>Press.</em><br />
+            The story is straightforward and the timeline is documented. Everything needed for a piece is on this site.
+          </p>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-label">Methodology</div>
+          <p>
+            Subject line: <em>Methodology.</em><br />
+            Other generalists wanting to try this in their own fields. Response times are honest but slow.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         COLOPHON
+         ================================================================ -->
+    <div class="colophon">
+      <div class="colophon-head">Colophon</div>
+
+      <div class="colophon-grid narrow">
+        <div>
+          <div class="col-item-label">Display type</div>
+          <p class="col-item-text"><em>IM Fell DW Pica</em> and <em>IM Fell DW Pica SC</em><br />
+          Digitised by Igino Marini after the type of John Fell, Oxford, 17th century.</p>
+        </div>
+        <div>
+          <div class="col-item-label">Body type</div>
+          <p class="col-item-text"><em>Old Standard TT</em><br />
+          Academic precision. Legible at length. The body font of a
+          nineteenth-century scientific periodical, revived for the web.</p>
+        </div>
+        <div>
+          <div class="col-item-label">Code &amp; Data</div>
+          <p class="col-item-text"><em>JetBrains Mono</em><br />
+          The one anachronism the site earns. All numerical apparatus, code
+          listings, and data labels are set in this face.</p>
+        </div>
+        <div>
+          <div class="col-item-label">Palette</div>
+          <p class="col-item-text">
+            Ink: <em>#211810</em> &nbsp;&middot;&nbsp; Cream: <em>#EFE5CC</em><br />
+            Oxblood: <em>#8A1818</em> &nbsp;&middot;&nbsp; Rule: <em>#B5A37C</em><br />
+            Chosen to match the donkey illustrations, which set the visual tone.
+          </p>
+        </div>
+        <div>
+          <div class="col-item-label">Illustrations</div>
+          <p class="col-item-text">
+            Donkey illustrations by Adam Cagle, April 2026. Pen and ink,
+            digitised. The donkey is the sigil. The cliff is the condition.
+            The composition is the argument.
+          </p>
+        </div>
+        <div>
+          <div class="col-item-label">Built with</div>
+          <p class="col-item-text">
+            <em>Claude</em> (Anthropic), computational collaborator.<br />
+            HTML, CSS, and SVG. No framework. No build step.
+            This site was designed to outlast its tooling.
+          </p>
+        </div>
+      </div>
+
+      <div class="colophon-closing">
+        <span class="sigil">&#10022;</span>
+        <strong>The Donkey on the Edge</strong><br />
+        Adam R. Cagle &middot; with Claude of Anthropic, in the role of computational collaborator<br />
+        Composed at Bend, in the State of Oregon, in the months of April and May,<br />
+        in the Year of Our Lord Two Thousand and Twenty-Six<br /><br />
+        <span style="font-style:italic;font-size:12px;letter-spacing:.12em;color:var(--rule-strong);">
+          This site is run by Adam Cagle (the donkey).
+        </span>
+      </div>
+
+    </div><!-- /.colophon -->
+
+  </div><!-- /.shell -->
+
+  <script is:inline>
+    // Copy plain text handlers
+    document.querySelectorAll('.cite-btn[data-copy]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(btn.getAttribute('data-copy') || '');
+      });
+    });
+    // BibTeX toggle
+    const toggle = document.getElementById('bibtex-toggle');
+    if (toggle) {
+      toggle.addEventListener('click', function () {
+        const block = document.getElementById('bibtex-block');
+        if (!block) return;
+        const open = block.style.display !== 'none';
+        block.style.display = open ? 'none' : 'block';
+        this.textContent = open ? 'BibTeX ▾' : 'BibTeX ▴';
+      });
+    }
+  </script>
+</Base>

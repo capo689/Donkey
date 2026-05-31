@@ -1,0 +1,906 @@
+---
+title: "Lagrangian Mechanics"
+stationNumber: 5
+line: "Classical Branch"
+date: 2026-04-27
+backdated: true
+prerequisites: [2]
+extendsTo: [7]
+classReportTitle: "The universe is lazy."
+---
+
+*Written in May 2026, backdated to when the work happened. This post is a reflection, not a contemporaneous journal entry.*
+
+# Lagrangian and Hamiltonian Mechanics: A Comprehensive Reference
+
+*The deeper reformulation of classical mechanics; and the essential prerequisite for quantum field theory.*
+
+Newton's laws describe mechanics in terms of forces. But forces are not the most convenient starting point for most problems; and they are not the natural language in which modern physics is written. The reformulations developed by Lagrange (1788), Hamilton (1833), and Jacobi in the 19th century reveal classical mechanics as something deeper and more elegant: a theory built on the principle that nature minimizes a quantity called the **action**.
+
+These reformulations are not merely more convenient. They are how every subsequent theory has been built:
+
+- Quantum mechanics uses Lagrangian and Hamiltonian structure
+- Special and general relativity are naturally formulated in terms of Lagrangians
+- Classical and quantum field theory are *entirely* Lagrangian-based
+- Gauge theory and the Standard Model rest on Lagrangian symmetries
+
+This document covers Lagrangian and Hamiltonian mechanics at the senior undergraduate level, then extends to classical field theory; the genuine prerequisite to QFT.
+
+---
+
+## Table of Contents
+
+1. [Why Lagrangian Mechanics?](#1-why-lagrangian-mechanics)
+2. [Calculus of Variations](#2-calculus-of-variations)
+3. [The Principle of Least Action](#3-the-principle-of-least-action)
+4. [The Euler-Lagrange Equations](#4-the-euler-lagrange-equations)
+5. [Generalized Coordinates and Constraints](#5-generalized-coordinates-and-constraints)
+6. [Worked Examples](#6-worked-examples)
+7. [Symmetries and Noether's Theorem](#7-symmetries-and-noethers-theorem)
+8. [The Hamiltonian Formulation](#8-the-hamiltonian-formulation)
+9. [Phase Space and Poisson Brackets](#9-phase-space-and-poisson-brackets)
+10. [Canonical Transformations](#10-canonical-transformations)
+11. [Hamilton-Jacobi Theory (Brief)](#11-hamilton-jacobi-theory-brief)
+12. [Classical Field Theory; The Bridge to QFT](#12-classical-field-theory--the-bridge-to-qft)
+13. [Noether's Theorem for Fields](#13-noethers-theorem-for-fields)
+14. [Appendix: Conventions and Identities](#appendix-conventions-and-identities)
+
+---
+
+## 1. Why Lagrangian Mechanics?
+
+Consider a bead sliding on a wire shaped like a helix, under gravity. Using Newton's second law, you'd have to analyze the normal force from the wire (unknown, depends on constraint), the tension (if any), gravity, possibly friction, and decompose everything into components along and perpendicular to the wire.
+
+Using Lagrangian mechanics, you write down one number; the Lagrangian; in terms of one coordinate (distance along the wire). One equation pops out. Done.
+
+### Three Concrete Advantages
+
+**1. Coordinates of your choice.** Lagrangian mechanics works in any coordinates; Cartesian, spherical, rotating, oscillating, whatever fits the problem. No need to project forces onto axes.
+
+**2. Constraints handled automatically.** Forces of constraint (normal forces, tension in inextensible strings, contact forces in rigid bodies) drop out; you don't need to know them to solve the motion.
+
+**3. Symmetries to conservation laws.** Every continuous symmetry of the Lagrangian produces a conservation law via Noether's theorem. Translation invariance → momentum conservation. Time invariance → energy conservation. Rotation invariance → angular momentum conservation. The relationship is mechanical, not mysterious.
+
+### The Deeper Reason
+
+More profoundly, Lagrangian mechanics reveals that classical physics is a **variational** theory. Nature does not "push things around with forces." Nature selects, out of all conceivable paths between two points in spacetime, the one that extremizes a quantity called the action. Force is a derived concept; useful, but not fundamental.
+
+This variational structure turns out to be universal. It survives quantization (in the path integral formulation, particles explore *all* paths, weighted by the action). It's the foundation of general relativity (Einstein's equations come from varying the Einstein-Hilbert action). It's how every quantum field theory; including the Standard Model; is defined.
+
+Learning Lagrangian mechanics isn't just a reformulation. It's a shift in how you see physics.
+
+---
+
+## 2. Calculus of Variations
+
+Before the physics, the math. The calculus of variations is about finding functions that extremize (minimize or maximize) an integral. Regular calculus finds points that extremize a function; the calculus of variations finds *functions* that extremize a *functional*.
+
+### The Basic Problem
+
+Given a functional of the form
+
+$$J[y] = \int_{x_1}^{x_2} F(y(x), y'(x), x) \, dx$$
+
+find the function $y(x)$; with fixed endpoints $y(x_1) = y_1$ and $y(x_2) = y_2$; that makes $J$ stationary (i.e., unchanged under small variations).
+
+### The Variational Derivation
+
+Suppose $y(x)$ is the extremizing function. Consider a nearby path
+
+$$\tilde{y}(x) = y(x) + \epsilon \eta(x)$$
+
+where $\eta(x)$ is an arbitrary smooth function with $\eta(x_1) = \eta(x_2) = 0$ (endpoints held fixed) and $\epsilon$ is a small parameter.
+
+Substitute into the functional:
+
+$$J[\tilde{y}] = \int_{x_1}^{x_2} F(\tilde{y}, \tilde{y}', x) \, dx$$
+
+For $y$ to be extremizing, $J$ must be stationary with respect to $\epsilon$:
+
+$$\left.\frac{dJ}{d\epsilon}\right|_{\epsilon=0} = 0$$
+
+Differentiating under the integral and using the chain rule:
+
+$$\frac{dJ}{d\epsilon} = \int_{x_1}^{x_2} \left(\frac{\partial F}{\partial y}\eta + \frac{\partial F}{\partial y'}\eta'\right) dx$$
+
+Integrate the second term by parts:
+
+$$\int_{x_1}^{x_2} \frac{\partial F}{\partial y'} \eta' \, dx = \left[\frac{\partial F}{\partial y'} \eta\right]_{x_1}^{x_2} - \int_{x_1}^{x_2} \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) \eta \, dx$$
+
+The boundary term vanishes because $\eta(x_1) = \eta(x_2) = 0$. So:
+
+$$\left.\frac{dJ}{d\epsilon}\right|_{\epsilon=0} = \int_{x_1}^{x_2} \left[\frac{\partial F}{\partial y} - \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right)\right] \eta \, dx = 0$$
+
+Since $\eta(x)$ is arbitrary, the bracketed quantity must vanish everywhere.
+
+### The Euler-Lagrange Equation (General Form)
+
+$$\boxed{\frac{\partial F}{\partial y} - \frac{d}{dx}\left(\frac{\partial F}{\partial y'}\right) = 0}$$
+
+This is the central equation of the calculus of variations. Every function that extremizes an integral of the given form satisfies it.
+
+### Classic Example: The Shortest Path
+
+Problem: what curve $y(x)$ has the shortest arc length between two points?
+
+Arc length is
+
+$$L = \int \sqrt{1 + y'^2} \, dx$$
+
+so $F = \sqrt{1 + y'^2}$, independent of $y$. The Euler-Lagrange equation becomes:
+
+$$-\frac{d}{dx}\left(\frac{y'}{\sqrt{1 + y'^2}}\right) = 0$$
+
+which means $y'/\sqrt{1+y'^2}$ is constant. That in turn means $y'$ is constant, so $y(x) = mx + b$; a straight line. Exactly what you'd hope.
+
+### Classic Example: The Brachistochrone
+
+Problem (posed by Johann Bernoulli in 1696, solved by Newton overnight): what curve between two points lets a ball rolling under gravity travel from one to the other in the least time?
+
+Setting up the integral for transit time and applying the Euler-Lagrange equation yields; after some work; the **cycloid**: the curve traced by a point on a rolling wheel. This problem launched the calculus of variations.
+
+### Why This Matters for Physics
+
+Hamilton's principle says that classical trajectories are the ones that extremize a particular functional called the **action**. The Euler-Lagrange equations for this functional are the equations of motion. Every calculation in Lagrangian mechanics is, underneath, an application of the math above.
+
+---
+
+## 3. The Principle of Least Action
+
+### The Action
+
+For a mechanical system described by coordinates $q_i(t)$ and velocities $\dot{q}_i(t)$, define the **Lagrangian**:
+
+$$L(q, \dot{q}, t) = T - V$$
+
+where $T$ is the kinetic energy and $V$ is the potential energy. (This choice works for most ordinary systems; the more general statement is that $L$ is whatever gives the right equations of motion under Hamilton's principle.)
+
+The **action** is the time integral of the Lagrangian:
+
+$$S[q] = \int_{t_1}^{t_2} L(q(t), \dot{q}(t), t) \, dt$$
+
+### Hamilton's Principle
+
+Given fixed endpoints $q(t_1) = q_1$ and $q(t_2) = q_2$, the physical trajectory is the one that makes $S$ stationary:
+
+$$\delta S = 0$$
+
+(Often called "least action"; usually it's actually a minimum, but strictly it just needs to be stationary. Other formulations do call out "stationary action" more carefully.)
+
+### What "Stationary" Means
+
+Small deformations of the path $q(t) \to q(t) + \delta q(t)$ with $\delta q(t_1) = \delta q(t_2) = 0$ change the action by $\delta S$. For the physical path, $\delta S = 0$ to first order in $\delta q$. Deformations away from the true path do change $S$ (usually increasing it, sometimes decreasing; but the first-order variation vanishes).
+
+### An Important Clarification
+
+The Lagrangian is not uniquely defined. Adding a total time derivative changes nothing:
+
+$$L \to L + \frac{df(q, t)}{dt}$$
+
+leaves the equations of motion unchanged (the added term integrates to a boundary term that vanishes at fixed endpoints). This flexibility is occasionally useful.
+
+### Why This Works
+
+Physically, one can derive Hamilton's principle from Newton's laws (or vice versa; they are equivalent for most systems). But the conceptual move; treating a trajectory as the solution of a global optimization problem rather than a step-by-step integration of forces; is profound and scales to relativistic and quantum physics in a way that force laws don't.
+
+---
+
+## 4. The Euler-Lagrange Equations
+
+Apply the calculus of variations to the action $S = \int L \, dt$ with $F = L$, $x = t$, $y = q$, $y' = \dot{q}$. You immediately get the equations of motion:
+
+### The Euler-Lagrange Equations
+
+For each generalized coordinate $q_i$:
+
+$$\boxed{\frac{d}{dt}\left(\frac{\partial L}{\partial \dot{q}_i}\right) - \frac{\partial L}{\partial q_i} = 0}$$
+
+One equation per degree of freedom. That's it. That's the entire machinery of Lagrangian mechanics.
+
+### Immediate Verification: Free Particle
+
+For a free particle in 1D, $L = T - V = \tfrac{1}{2}m\dot{x}^2$ (no potential). Then:
+
+$$\frac{\partial L}{\partial \dot x} = m\dot x, \qquad \frac{\partial L}{\partial x} = 0$$
+
+The Euler-Lagrange equation gives:
+
+$$\frac{d}{dt}(m\dot x) = 0 \quad\Longrightarrow\quad m\ddot x = 0$$
+
+Newton's second law for a free particle. $\checkmark$
+
+### Immediate Verification: Particle in a Potential
+
+For $L = \tfrac{1}{2} m\dot{x}^2 - V(x)$:
+
+$$\frac{\partial L}{\partial \dot x} = m\dot x, \qquad \frac{\partial L}{\partial x} = -\frac{dV}{dx}$$
+
+Euler-Lagrange:
+
+$$m\ddot x = -\frac{dV}{dx} = F(x)$$
+
+Newton's second law in the form $m\ddot x = F$. $\checkmark$
+
+So for simple systems, the Lagrangian formalism reproduces Newton exactly; with more work. The payoff comes when the coordinates are not Cartesian.
+
+### Generalized Momentum
+
+Define the **generalized momentum** (or **canonical momentum**) conjugate to $q_i$:
+
+$$p_i = \frac{\partial L}{\partial \dot{q}_i}$$
+
+For Cartesian coordinates, $p_i$ is the ordinary momentum $m\dot{x}_i$. But in other coordinate systems, it can be something quite different (angular momentum, for instance). The Euler-Lagrange equation then reads
+
+$$\dot{p}_i = \frac{\partial L}{\partial q_i}$$
+
+that is, the generalized force equals the rate of change of generalized momentum.
+
+### Cyclic Coordinates
+
+A coordinate $q_i$ is **cyclic** (or **ignorable**) if $L$ doesn't depend on it, only on $\dot{q}_i$. Then:
+
+$$\frac{\partial L}{\partial q_i} = 0 \implies \dot{p}_i = 0 \implies p_i = \text{const}$$
+
+A cyclic coordinate immediately gives you a conservation law. If your coordinate system is well-chosen, conserved quantities fall out automatically.
+
+---
+
+## 5. Generalized Coordinates and Constraints
+
+The power of the Lagrangian approach comes from coordinate freedom. Let's formalize that.
+
+### Generalized Coordinates
+
+A **generalized coordinate** is any variable that helps specify the configuration of the system. There's no requirement that it be a Cartesian position. Examples:
+
+- For a pendulum: the angle $\theta$ from vertical is one coordinate
+- For a particle on a sphere: angles $(\theta, \phi)$
+- For a bead on a wire: arc length $s$ along the wire
+- For a rigid body: three Euler angles plus the center-of-mass position
+
+The **number of degrees of freedom** is the minimum number of coordinates needed to fully specify the configuration.
+
+### Holonomic Constraints
+
+A constraint that can be written as an equation between coordinates:
+
+$$f(q_1, \ldots, q_N, t) = 0$$
+
+is called **holonomic**. A holonomic constraint reduces the degrees of freedom by one.
+
+Examples:
+- Rigid body (distances between pairs of points fixed)
+- Bead on a wire
+- Pendulum on a fixed-length string
+
+Strategy: choose generalized coordinates that automatically satisfy the constraints. For a pendulum, instead of $(x, y)$ with the constraint $x^2 + y^2 = \ell^2$, just use $\theta$. One coordinate, no constraint, one equation of motion.
+
+### Non-Holonomic Constraints
+
+Constraints that involve velocities or inequalities and cannot be integrated into an equation of coordinates alone. Example: a ball rolling without slipping on a plane; the constraint involves the velocities and cannot be reduced to a relation between positions alone.
+
+Non-holonomic systems require more care: Lagrange multipliers or d'Alembert's principle. This document sticks with holonomic cases.
+
+### The Procedure
+
+To solve a mechanics problem by the Lagrangian method:
+
+1. Identify the degrees of freedom and choose generalized coordinates $q_i$
+2. Write $T$ and $V$ in terms of the $q_i$ and $\dot{q}_i$
+3. Form the Lagrangian $L = T - V$
+4. Apply the Euler-Lagrange equation for each $q_i$
+5. Solve the resulting ODEs
+
+The art is mainly in step 1. Steps 2-5 are mechanical.
+
+---
+
+## 6. Worked Examples
+
+Nothing replaces doing these. I'll work four in full detail.
+
+### Example 1: Simple Pendulum
+
+A mass $m$ on a massless rigid rod of length $\ell$, swinging in a vertical plane.
+
+**Step 1: Choose coordinate.** One degree of freedom: angle $\theta$ from the vertical.
+
+**Step 2: Kinetic and potential energies.** The mass moves on a circle of radius $\ell$:
+
+$$T = \tfrac{1}{2} m (\ell \dot\theta)^2 = \tfrac{1}{2} m \ell^2 \dot\theta^2$$
+
+Height above lowest point: $h = \ell(1 - \cos\theta)$, so:
+
+$$V = mg\ell(1 - \cos\theta)$$
+
+**Step 3: Lagrangian.**
+
+$$L = \tfrac{1}{2} m \ell^2 \dot\theta^2 - mg\ell(1 - \cos\theta)$$
+
+**Step 4: Euler-Lagrange.**
+
+$$\frac{\partial L}{\partial \dot\theta} = m\ell^2 \dot\theta, \quad \frac{\partial L}{\partial \theta} = -mg\ell \sin\theta$$
+
+$$\frac{d}{dt}(m\ell^2 \dot\theta) - (-mg\ell\sin\theta) = 0$$
+
+$$\boxed{\ddot\theta = -\frac{g}{\ell}\sin\theta}$$
+
+The pendulum equation. For small angles, $\sin\theta \approx \theta$ and you recover simple harmonic motion at $\omega = \sqrt{g/\ell}$.
+
+**What didn't we need?** The tension in the rod. It never appeared. By choosing $\theta$ as our coordinate, we built the constraint into the description and bypassed the constraint force entirely.
+
+### Example 2: Atwood Machine
+
+Two masses $m_1$ and $m_2$ connected by a string over a frictionless pulley, under gravity.
+
+**Step 1: Coordinate.** One degree of freedom. Let $x$ be the height of $m_1$ below the pulley. Then $m_2$ is at height $-(L - x)$ below the pulley, where $L$ is the total string length (a constant).
+
+**Step 2: Energies.**
+
+$$T = \tfrac{1}{2} m_1 \dot x^2 + \tfrac{1}{2} m_2 \dot x^2 = \tfrac{1}{2}(m_1 + m_2)\dot x^2$$
+
+(Both masses have speed $|\dot x|$ because the string is inextensible.)
+
+$$V = -m_1 g x - m_2 g (L - x) = -(m_1 - m_2) g x - m_2 g L$$
+
+(Measuring potential from the pulley's level, with downward as positive.)
+
+**Step 3: Lagrangian.**
+
+$$L = \tfrac{1}{2}(m_1 + m_2) \dot x^2 + (m_1 - m_2) g x + \text{const}$$
+
+The constant doesn't affect equations of motion.
+
+**Step 4: Euler-Lagrange.**
+
+$$\frac{\partial L}{\partial \dot x} = (m_1 + m_2) \dot x, \quad \frac{\partial L}{\partial x} = (m_1 - m_2) g$$
+
+$$\boxed{\ddot x = \frac{(m_1 - m_2) g}{m_1 + m_2}}$$
+
+The standard Atwood result; and notice how the tension never appeared.
+
+### Example 3: Bead on a Rotating Hoop
+
+A bead of mass $m$ slides without friction on a hoop of radius $R$ rotating about a vertical diameter at constant angular velocity $\Omega$.
+
+**Step 1: Coordinate.** Let $\theta$ be the angle of the bead from the bottom of the hoop.
+
+**Step 2: Energies.**
+
+Position:
+
+$$x = R\sin\theta \cos(\Omega t), \quad y = R\sin\theta\sin(\Omega t), \quad z = -R\cos\theta$$
+
+Velocities (squared, summed):
+
+$$|\vec{v}|^2 = R^2 \dot\theta^2 + R^2 \sin^2\theta \, \Omega^2$$
+
+So:
+
+$$T = \tfrac{1}{2} m R^2 (\dot\theta^2 + \Omega^2 \sin^2\theta)$$
+
+$$V = -mgR\cos\theta$$
+
+**Step 3: Lagrangian.**
+
+$$L = \tfrac{1}{2} m R^2 \dot\theta^2 + \tfrac{1}{2} m R^2 \Omega^2 \sin^2\theta + mgR\cos\theta$$
+
+**Step 4: Euler-Lagrange.**
+
+$$\frac{\partial L}{\partial \dot\theta} = mR^2 \dot\theta, \quad \frac{\partial L}{\partial \theta} = mR^2 \Omega^2 \sin\theta\cos\theta - mgR\sin\theta$$
+
+Equation of motion:
+
+$$\boxed{R\ddot\theta = R\Omega^2 \sin\theta\cos\theta - g\sin\theta}$$
+
+**Interpretation.** There's an equilibrium at $\theta = 0$ (bottom). If $\Omega^2 > g/R$, there's also an equilibrium at $\cos\theta = g/(R\Omega^2)$; the bead settles at a nonzero angle because centrifugal effects push it out. The $\theta = 0$ equilibrium becomes unstable above this critical rotation speed. This is a pitchfork bifurcation; a genuine structural change in the dynamics.
+
+Doing this problem with Newton's laws requires juggling fictitious forces in rotating frames, keeping track of the normal force from the hoop, and carefully decomposing vectors. Lagrangian mechanics handed us the answer in four lines.
+
+### Example 4: Double Pendulum
+
+Two pendulums: mass $m_1$ on rod of length $\ell_1$ from the ceiling, mass $m_2$ on rod of length $\ell_2$ from $m_1$. Angles from vertical: $\theta_1$ and $\theta_2$.
+
+**Positions:**
+
+$$x_1 = \ell_1 \sin\theta_1, \quad y_1 = -\ell_1 \cos\theta_1$$
+
+$$x_2 = \ell_1 \sin\theta_1 + \ell_2 \sin\theta_2, \quad y_2 = -\ell_1 \cos\theta_1 - \ell_2 \cos\theta_2$$
+
+**Velocities squared:**
+
+$$\dot x_1^2 + \dot y_1^2 = \ell_1^2 \dot\theta_1^2$$
+
+$$\dot x_2^2 + \dot y_2^2 = \ell_1^2 \dot\theta_1^2 + \ell_2^2 \dot\theta_2^2 + 2\ell_1 \ell_2 \dot\theta_1 \dot\theta_2 \cos(\theta_1 - \theta_2)$$
+
+(Cross term from the chain rule on the product of two cosines and two sines; trig identity collapses it.)
+
+**Lagrangian:**
+
+$$L = \tfrac{1}{2}(m_1 + m_2)\ell_1^2 \dot\theta_1^2 + \tfrac{1}{2} m_2 \ell_2^2 \dot\theta_2^2 + m_2 \ell_1 \ell_2 \dot\theta_1 \dot\theta_2 \cos(\theta_1 - \theta_2)$$
+
+$$+ (m_1 + m_2) g \ell_1 \cos\theta_1 + m_2 g \ell_2 \cos\theta_2$$
+
+**Euler-Lagrange equations** for $\theta_1$ and $\theta_2$ are messy but straightforward; two coupled second-order nonlinear ODEs. Writing them out:
+
+$$(m_1 + m_2)\ell_1 \ddot\theta_1 + m_2 \ell_2 \ddot\theta_2 \cos(\theta_1 - \theta_2) + m_2 \ell_2 \dot\theta_2^2 \sin(\theta_1 - \theta_2) + (m_1 + m_2) g \sin\theta_1 = 0$$
+
+$$m_2 \ell_2 \ddot\theta_2 + m_2 \ell_1 \ddot\theta_1 \cos(\theta_1 - \theta_2) - m_2 \ell_1 \dot\theta_1^2 \sin(\theta_1 - \theta_2) + m_2 g \sin\theta_2 = 0$$
+
+This is the entry point to chaos: the double pendulum is a canonical example of deterministic chaos in classical mechanics. Writing the equations by Newtonian methods is a nightmare of tensions and pivot forces; Lagrangian mechanics gets you to this point mechanically.
+
+---
+
+## 7. Symmetries and Noether's Theorem
+
+Here the Lagrangian formulation delivers something that would be almost miraculous in Newtonian mechanics: a precise, constructive connection between symmetries and conservation laws.
+
+### The Statement
+
+**Noether's theorem (1918):** Every continuous symmetry of the action corresponds to a conserved quantity.
+
+More precisely: if the action is invariant under a continuous family of transformations parametrized by $\epsilon$, then there is a quantity $Q$ such that $dQ/dt = 0$ on the equations of motion.
+
+### The Proof Sketch
+
+Consider a transformation $q_i \to q_i + \epsilon \delta q_i$ that leaves $L$ invariant: $\delta L = 0$.
+
+Expand:
+
+$$0 = \delta L = \sum_i \left(\frac{\partial L}{\partial q_i}\delta q_i + \frac{\partial L}{\partial \dot q_i}\delta \dot q_i\right)$$
+
+Use the Euler-Lagrange equation on the first term: $\partial L/\partial q_i = d/dt(\partial L/\partial \dot q_i) = \dot p_i$. And $\delta \dot q_i = d(\delta q_i)/dt$. Then:
+
+$$0 = \sum_i \left(\dot p_i \, \delta q_i + p_i \, \frac{d(\delta q_i)}{dt}\right) = \frac{d}{dt}\sum_i p_i \, \delta q_i$$
+
+So the conserved quantity is:
+
+$$\boxed{Q = \sum_i p_i \, \delta q_i}$$
+
+Clean, constructive, and powerful.
+
+### Example: Translation Invariance → Momentum
+
+If $L$ is invariant under $x \to x + \epsilon$ (uniform shifts in space), then $\delta q = 1$ and
+
+$$Q = p = m\dot x$$
+
+is conserved. Translation invariance → momentum conservation.
+
+### Example: Rotation Invariance → Angular Momentum
+
+If $L$ is invariant under rotations about the $z$-axis ($\phi \to \phi + \epsilon$), then with the $\phi$-component of motion we get $\delta \phi = 1$ and
+
+$$Q = p_\phi = \frac{\partial L}{\partial \dot\phi}$$
+
+For a particle in spherical coordinates, $p_\phi = m r^2 \sin^2\theta \, \dot\phi = L_z$, the $z$-component of angular momentum. Rotation invariance → angular momentum conservation.
+
+### Example: Time Invariance → Energy
+
+Time translation is slightly different (it's a symmetry of the action as a whole, not the Lagrangian in isolation) but by a similar argument, if $L$ doesn't explicitly depend on $t$, the quantity
+
+$$H = \sum_i p_i \dot q_i - L$$
+
+is conserved. This $H$ is the **Hamiltonian** (section 8), and it equals the total energy for typical systems. Time-translation invariance → energy conservation.
+
+### Why This Matters
+
+Noether's theorem is the bridge from abstract symmetries to physical conservation laws. It's used constantly; you identify a symmetry, you immediately know there's a conserved quantity, you use conservation to simplify. The procedure works the same in every formulation of physics from classical mechanics to quantum field theory. In fact, Noether's theorem is arguably *more* important in QFT than in classical mechanics, because it's how conserved currents (like electric current, baryon number, etc.) arise from the symmetries of the Standard Model.
+
+---
+
+## 8. The Hamiltonian Formulation
+
+The Lagrangian treats $q$ and $\dot q$ as the fundamental variables. The Hamiltonian treats $q$ and $p$ instead. This change of variables, called a **Legendre transform**, has far-reaching consequences; including providing the natural starting point for quantum mechanics.
+
+### The Legendre Transform
+
+Starting from $L(q, \dot q, t)$, define:
+
+$$p_i = \frac{\partial L}{\partial \dot q_i}$$
+
+Solve for $\dot q_i$ in terms of $q_i, p_i$ (requires this to be invertible; usually the case). Define the Hamiltonian:
+
+$$\boxed{H(q, p, t) = \sum_i p_i \dot q_i - L(q, \dot q, t)}$$
+
+where $\dot q_i$ is understood as its expression in terms of $q$ and $p$.
+
+### The Hamiltonian Is (Usually) the Energy
+
+For a Lagrangian $L = T - V$ where $T$ is quadratic in velocities and $V$ depends only on coordinates:
+
+$$T = \tfrac{1}{2}\sum_{ij} a_{ij}(q) \dot q_i \dot q_j$$
+
+Then $p_i = \sum_j a_{ij}(q)\dot q_j$ and $\sum_i p_i \dot q_i = 2T$. So $H = 2T - L = 2T - (T - V) = T + V$. The Hamiltonian is the total energy.
+
+### Hamilton's Equations
+
+Varying $H$ with respect to $p$ and $q$ yields two first-order equations of motion per degree of freedom:
+
+$$\boxed{\dot q_i = \frac{\partial H}{\partial p_i}, \qquad \dot p_i = -\frac{\partial H}{\partial q_i}}$$
+
+Note the symmetry and the crucial minus sign. These are **Hamilton's equations**, equivalent to the Euler-Lagrange equations but arranged as $2N$ first-order equations rather than $N$ second-order ones.
+
+### Derivation
+
+From $H = \sum p_i \dot q_i - L$, take the total differential:
+
+$$dH = \sum_i \dot q_i dp_i + \sum_i p_i d\dot q_i - \sum_i \frac{\partial L}{\partial q_i} dq_i - \sum_i \frac{\partial L}{\partial \dot q_i} d\dot q_i - \frac{\partial L}{\partial t} dt$$
+
+The second and fourth terms on the right cancel (since $p_i = \partial L/\partial \dot q_i$). Using the Euler-Lagrange equation, $\partial L/\partial q_i = \dot p_i$:
+
+$$dH = \sum_i \dot q_i dp_i - \sum_i \dot p_i dq_i - \frac{\partial L}{\partial t} dt$$
+
+Comparing with $dH = \sum (\partial H/\partial q_i) dq_i + \sum (\partial H/\partial p_i) dp_i + (\partial H/\partial t) dt$ yields Hamilton's equations. Also: $\partial H/\partial t = -\partial L/\partial t$.
+
+### Simple Example
+
+For a 1D particle in a potential, $L = \tfrac{1}{2} m\dot x^2 - V(x)$:
+
+$$p = m\dot x \implies \dot x = p/m$$
+
+$$H = p\dot x - L = p\cdot\frac{p}{m} - \left(\frac{p^2}{2m} - V\right) = \frac{p^2}{2m} + V(x)$$
+
+Kinetic plus potential energy, as expected. Hamilton's equations:
+
+$$\dot x = \frac{\partial H}{\partial p} = \frac{p}{m}, \qquad \dot p = -\frac{\partial H}{\partial x} = -\frac{dV}{dx}$$
+
+The first is the definition of momentum; the second is Newton's law. $\checkmark$
+
+---
+
+## 9. Phase Space and Poisson Brackets
+
+### Phase Space
+
+A system with $N$ degrees of freedom has $N$ coordinates $q_i$ and $N$ conjugate momenta $p_i$. Together they form a $2N$-dimensional **phase space**. A point in phase space specifies the complete instantaneous state of the system; Hamilton's equations describe how that point moves over time, tracing out a trajectory.
+
+This geometric picture is useful. Phase space trajectories never cross (consequences of determinism). Closed orbits represent periodic motion. Chaotic systems have trajectories that fill out regions of phase space.
+
+### Liouville's Theorem
+
+The "flow" of phase-space points generated by Hamilton's equations is **volume-preserving**: a region of phase space has the same volume at all later times as it did initially. This is Liouville's theorem, and it is the classical precursor to the conservation of probability in quantum mechanics.
+
+### Poisson Brackets
+
+For any two functions $f(q, p, t)$ and $g(q, p, t)$ on phase space, define the **Poisson bracket**:
+
+$$\{f, g\} = \sum_i \left(\frac{\partial f}{\partial q_i}\frac{\partial g}{\partial p_i} - \frac{\partial f}{\partial p_i}\frac{\partial g}{\partial q_i}\right)$$
+
+### Fundamental Brackets
+
+$$\{q_i, q_j\} = 0, \quad \{p_i, p_j\} = 0, \quad \{q_i, p_j\} = \delta_{ij}$$
+
+These are the canonical commutation relations of classical mechanics.
+
+### Time Evolution in Bracket Form
+
+For any function $f$ on phase space:
+
+$$\frac{df}{dt} = \{f, H\} + \frac{\partial f}{\partial t}$$
+
+Compact and elegant: time evolution is generated by the Hamiltonian via the Poisson bracket. If $f$ has no explicit time dependence and $\{f, H\} = 0$, then $f$ is conserved.
+
+### The Bridge to Quantum Mechanics
+
+Here is the single most important fact in all of this document.
+
+Dirac's rule: to go from classical mechanics to quantum mechanics, replace classical observables with operators and Poisson brackets with commutators:
+
+$$\{f, g\} \quad \longrightarrow \quad \frac{1}{i\hbar}[\hat f, \hat g]$$
+
+Canonical commutation relations follow instantly:
+
+$$\{q_i, p_j\} = \delta_{ij} \quad\longrightarrow\quad [\hat q_i, \hat p_j] = i\hbar \delta_{ij}$$
+
+And the Heisenberg equation of motion in quantum mechanics,
+
+$$\frac{d\hat f}{dt} = \frac{1}{i\hbar}[\hat f, \hat H] + \frac{\partial \hat f}{\partial t}$$
+
+is just the quantum version of the classical bracket equation.
+
+This is what "quantization" means, in operational terms. Classical Hamiltonian mechanics is *structurally isomorphic* to quantum mechanics via this substitution. Learning Hamiltonian mechanics deeply is learning the skeleton of quantum mechanics.
+
+---
+
+## 10. Canonical Transformations
+
+Hamilton's equations have a beautiful property: they're preserved by a large class of coordinate changes on phase space, called **canonical transformations**.
+
+### The Question
+
+Suppose we switch from $(q, p)$ to new variables $(Q(q, p, t), P(q, p, t))$. When do Hamilton's equations retain their form in the new variables? That is, when does there exist a new Hamiltonian $K(Q, P, t)$ such that
+
+$$\dot Q_i = \frac{\partial K}{\partial P_i}, \qquad \dot P_i = -\frac{\partial K}{\partial Q_i}?$$
+
+### The Answer
+
+$(Q, P)$ is canonical iff the Poisson brackets are preserved:
+
+$$\{Q_i, Q_j\} = 0, \quad \{P_i, P_j\} = 0, \quad \{Q_i, P_j\} = \delta_{ij}$$
+
+(Brackets computed with the original $q, p$.)
+
+### Generating Functions
+
+Canonical transformations can be generated by a **generating function** $F$. Four types exist depending on which variables $F$ depends on. For example, for $F = F_1(q, Q, t)$:
+
+$$p_i = \frac{\partial F_1}{\partial q_i}, \qquad P_i = -\frac{\partial F_1}{\partial Q_i}, \qquad K = H + \frac{\partial F_1}{\partial t}$$
+
+This is quite abstract at first encounter, but useful for finding integrals of motion and for certain advanced techniques.
+
+### Why This Matters
+
+Canonical transformations are the classical analog of unitary transformations in quantum mechanics. A unitary transformation preserves inner products and commutation relations; a canonical transformation preserves symplectic structure and Poisson brackets. Many of the formal properties of quantum mechanics are direct quantizations of corresponding classical properties.
+
+---
+
+## 11. Hamilton-Jacobi Theory (Brief)
+
+Hamilton-Jacobi theory is a very different reformulation: instead of looking at trajectories, you look at the action as a function of the endpoint. This is the classical precursor to the Schrödinger equation and the path integral.
+
+### Hamilton's Principal Function
+
+Define $S(q, t)$ as the action along the classical trajectory from some fixed starting point to $(q, t)$. Then $S$ satisfies the **Hamilton-Jacobi equation**:
+
+$$\frac{\partial S}{\partial t} + H\left(q, \frac{\partial S}{\partial q}, t\right) = 0$$
+
+This is a first-order partial differential equation for $S$. Solving it gives a complete description of the dynamics.
+
+### The Quantum Connection
+
+The Hamilton-Jacobi equation is the classical limit of the Schrödinger equation. Writing $\Psi = e^{iS/\hbar}$ in the Schrödinger equation and taking $\hbar \to 0$ recovers the HJ equation at leading order. This is the **WKB approximation**; tunneling probabilities can be computed this way, and it's how semiclassical methods bridge classical and quantum physics.
+
+In the path integral formulation of quantum mechanics, quantum amplitudes are sums of $e^{iS/\hbar}$ over all paths. The classical path (which extremizes $S$) gets enhanced by constructive interference of nearby paths, giving classical mechanics in the $\hbar \to 0$ limit. Hamilton-Jacobi theory, variational mechanics, and the path integral are deeply linked.
+
+---
+
+## 12. Classical Field Theory; The Bridge to QFT
+
+Here we make the critical transition. Every concept so far has been for a finite number of degrees of freedom (particles with coordinates $q_i$). To describe fields; electromagnetism, the Higgs field, quark fields; we need infinitely many degrees of freedom, one per point of space.
+
+### From Particles to Fields
+
+A particle has coordinate $q(t)$: one number per moment of time. A field has coordinate $\phi(\vec{x}, t)$: one number per spacetime point. You can think of a field as a continuous collection of "coordinates," one for each point in space, evolving in time.
+
+### The Action for a Field
+
+Instead of $L(q, \dot q)$, a field theory has a **Lagrangian density** $\mathcal{L}(\phi, \partial_\mu \phi)$. The action is an integral over all of spacetime:
+
+$$S[\phi] = \int d^4 x \, \mathcal{L}(\phi, \partial_\mu \phi)$$
+
+Here $\partial_\mu \phi = (\partial_t \phi, \nabla \phi)$ comprises time and space derivatives, indexed by $\mu = 0, 1, 2, 3$.
+
+### The Euler-Lagrange Equation for Fields
+
+Applying the variational principle to $S$ with respect to small variations $\delta\phi$ that vanish on the boundary of the integration region yields:
+
+$$\boxed{\partial_\mu \left(\frac{\partial \mathcal{L}}{\partial(\partial_\mu \phi)}\right) - \frac{\partial \mathcal{L}}{\partial \phi} = 0}$$
+
+This is the **Euler-Lagrange equation for fields**. Same structure as before, now with a sum over $\mu$ (implied by Einstein convention) instead of a time derivative alone.
+
+### Example: The Klein-Gordon Field
+
+The Lagrangian density for a free scalar field of mass $m$:
+
+$$\mathcal{L} = \tfrac{1}{2} \partial_\mu \phi \, \partial^\mu \phi - \tfrac{1}{2} m^2 \phi^2$$
+
+(Indices are raised and lowered with the Minkowski metric $\eta^{\mu\nu} = \text{diag}(+, -, -, -)$.)
+
+Applying the field Euler-Lagrange equation:
+
+$$\frac{\partial \mathcal{L}}{\partial \phi} = -m^2 \phi, \qquad \frac{\partial \mathcal{L}}{\partial(\partial_\mu \phi)} = \partial^\mu \phi$$
+
+So:
+
+$$\partial_\mu \partial^\mu \phi + m^2 \phi = 0$$
+
+This is the **Klein-Gordon equation**; the relativistic wave equation for a spin-0 field. It's the starting point of quantum field theory.
+
+### Example: The Electromagnetic Field
+
+Define the field strength tensor $F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu$, where $A^\mu = (\phi, \vec{A})$ is the four-potential. The Lagrangian density:
+
+$$\mathcal{L} = -\tfrac{1}{4} F_{\mu\nu} F^{\mu\nu} - J^\mu A_\mu$$
+
+The first term is the free-field part; the second couples the field to a source current $J^\mu$. The field Euler-Lagrange equation yields:
+
+$$\partial_\mu F^{\mu\nu} = J^\nu$$
+
+These are Maxwell's equations in covariant form. The other two Maxwell equations follow automatically from the definition of $F^{\mu\nu}$ as an antisymmetric combination of $A^\mu$ derivatives.
+
+In four lines of formalism we've derived the whole of classical electromagnetism from a single Lagrangian. This is the power of field theory.
+
+### The Hamiltonian Density
+
+Analogous to particle mechanics, define the canonical momentum density:
+
+$$\pi(\vec x, t) = \frac{\partial \mathcal{L}}{\partial \dot\phi}$$
+
+and Hamiltonian density:
+
+$$\mathcal{H} = \pi \dot\phi - \mathcal{L}$$
+
+The total Hamiltonian is
+
+$$H = \int d^3 x \, \mathcal{H}$$
+
+and Hamilton's equations generalize to field form.
+
+### Canonical Quantization of Fields
+
+The classical fields $\phi$ and $\pi$ get promoted to operators satisfying:
+
+$$[\hat\phi(\vec x, t), \hat\pi(\vec y, t)] = i\hbar \delta^3(\vec x - \vec y)$$
+
+A direct generalization of $[\hat q, \hat p] = i\hbar$. This single step; promoting fields to operators; is the heart of quantum field theory. Everything else (particle creation/annihilation operators, Feynman rules, renormalization) is consequence and technique built on this foundation.
+
+**This is why you needed Lagrangian mechanics before QFT.** Quantum field theory is the canonical quantization of classical field theory, which is the Lagrangian formalism extended to fields. Without the Lagrangian foundation, QFT looks like arbitrary rules; with it, QFT is the natural next step.
+
+---
+
+## 13. Noether's Theorem for Fields
+
+Noether's theorem extends gracefully to field theory; and becomes even more important, because it's how we identify conserved charges in the Standard Model.
+
+### Conserved Currents
+
+For each continuous symmetry of the action $\phi \to \phi + \epsilon \, \delta \phi$ (with $\delta\phi$ possibly depending on $\phi$), there is a **conserved current**:
+
+$$j^\mu = \frac{\partial \mathcal{L}}{\partial(\partial_\mu \phi)} \delta\phi$$
+
+satisfying the continuity equation:
+
+$$\partial_\mu j^\mu = 0$$
+
+The corresponding conserved **charge** is the spatial integral of the time component:
+
+$$Q = \int d^3 x \, j^0$$
+
+Then $dQ/dt = 0$ as a consequence of the continuity equation.
+
+### Example: Spacetime Symmetries
+
+**Translation invariance** in direction $\nu$ gives a conserved current $T^{\mu\nu}$; the **stress-energy tensor**. Its components are:
+
+- $T^{00}$ = energy density
+- $T^{0i}$ = momentum density
+- $T^{ij}$ = stress (momentum flux)
+
+The conserved charges are total energy (from time translation) and total momentum (from space translations). Just as Noether predicted.
+
+**Lorentz invariance** gives six more conserved quantities; three from rotations (angular momentum) and three from boosts (center-of-mass motion).
+
+### Example: Internal Symmetries
+
+Consider a complex scalar field $\phi$ with Lagrangian
+
+$$\mathcal{L} = \partial_\mu \phi^* \partial^\mu \phi - m^2 \phi^* \phi$$
+
+This is invariant under the global phase transformation $\phi \to e^{i\alpha} \phi$ (a $U(1)$ symmetry). The Noether current is:
+
+$$j^\mu = i(\phi^* \partial^\mu \phi - \phi \partial^\mu \phi^*)$$
+
+and the conserved charge is what we call electric charge (up to a proportionality constant).
+
+### Gauge Symmetries
+
+If we promote the global symmetry to a **local** (spacetime-dependent) symmetry; called **gauging**; the theory must be extended by introducing a new field that transforms in a compensating way. For $U(1)$, this new field is the electromagnetic potential $A^\mu$, and the full theory is QED. Gauging $SU(2) \times U(1)$ gives electroweak theory; gauging $SU(3)$ gives QCD.
+
+**The entire Standard Model is constructed by gauging the internal symmetries of a Lagrangian.** This is what is meant by "the Standard Model is a gauge theory." Lagrangian mechanics is not just a prerequisite; it's the *language* in which particle physics is written.
+
+### The Chain of Conservation Laws in the Standard Model
+
+- Global $U(1)$ of QED → electric charge conservation (exact)
+- Global $U(1)$ of baryon number (accidental, not gauged) → baryon conservation (very accurate)
+- $SU(3)_C$ gauge symmetry → color conservation (exact)
+- Weak isospin $SU(2)_L$ → weak charge conservation (broken by Higgs)
+
+Every one of these emerges from Noether's theorem applied to a symmetry of the Standard Model Lagrangian.
+
+---
+
+## Appendix: Conventions and Identities
+
+### Variational Notation
+
+- $\delta q(t)$ is a variation of the trajectory at fixed time
+- $\delta F = F[q + \delta q] - F[q]$ to first order in $\delta q$
+- Euler-Lagrange equations follow from $\delta S = 0$ for arbitrary $\delta q$ vanishing at endpoints
+
+### Index Conventions
+
+- Greek indices $\mu, \nu, \ldots$ run over spacetime: 0, 1, 2, 3
+- Latin indices $i, j, \ldots$ run over space: 1, 2, 3
+- Einstein summation: repeated indices (one up, one down) are summed
+- Metric $\eta^{\mu\nu} = \text{diag}(+1, -1, -1, -1)$ (particle physics convention)
+- Raise/lower: $V^\mu = \eta^{\mu\nu} V_\nu$, $V_\mu = \eta_{\mu\nu} V^\nu$
+
+### Key Formulas Summary
+
+**Particle mechanics:**
+
+| Concept | Formula |
+|---|---|
+| Lagrangian | $L = T - V$ |
+| Action | $S = \int L \, dt$ |
+| Euler-Lagrange | $\frac{d}{dt}\frac{\partial L}{\partial \dot q} = \frac{\partial L}{\partial q}$ |
+| Canonical momentum | $p = \partial L/\partial \dot q$ |
+| Hamiltonian | $H = \sum p \dot q - L$ |
+| Hamilton's equations | $\dot q = \partial H/\partial p$, $\dot p = -\partial H/\partial q$ |
+| Poisson bracket | $\{f, g\} = \sum (\partial_q f \partial_p g - \partial_p f \partial_q g)$ |
+| Time evolution | $df/dt = \{f, H\} + \partial f/\partial t$ |
+| Noether charge | $Q = \sum p_i \delta q_i$ (for symmetry $\delta q$) |
+
+**Field theory:**
+
+| Concept | Formula |
+|---|---|
+| Lagrangian density | $\mathcal{L}(\phi, \partial_\mu \phi)$ |
+| Action | $S = \int d^4 x \, \mathcal{L}$ |
+| Euler-Lagrange (field) | $\partial_\mu \frac{\partial \mathcal{L}}{\partial(\partial_\mu \phi)} = \frac{\partial \mathcal{L}}{\partial \phi}$ |
+| Canonical momentum density | $\pi = \partial \mathcal{L}/\partial \dot\phi$ |
+| Hamiltonian density | $\mathcal{H} = \pi \dot\phi - \mathcal{L}$ |
+| Noether current | $j^\mu = \frac{\partial \mathcal{L}}{\partial(\partial_\mu \phi)} \delta\phi$ |
+| Continuity | $\partial_\mu j^\mu = 0$ |
+| Noether charge | $Q = \int d^3x \, j^0$ |
+
+### Important Lagrangians
+
+**Free non-relativistic particle:**
+
+$$L = \tfrac{1}{2} m \dot{\vec x}^2$$
+
+**Non-relativistic particle in a potential:**
+
+$$L = \tfrac{1}{2} m \dot{\vec x}^2 - V(\vec x)$$
+
+**Free relativistic particle:**
+
+$$L = -mc^2 \sqrt{1 - v^2/c^2}$$
+
+**Charged particle in EM field:**
+
+$$L = \tfrac{1}{2} m \dot{\vec x}^2 - q\phi + q\vec A \cdot \dot{\vec x}$$
+
+**Free scalar field (Klein-Gordon):**
+
+$$\mathcal{L} = \tfrac{1}{2} \partial_\mu \phi \, \partial^\mu \phi - \tfrac{1}{2} m^2 \phi^2$$
+
+**Free electromagnetic field (Maxwell):**
+
+$$\mathcal{L} = -\tfrac{1}{4} F_{\mu\nu} F^{\mu\nu}$$
+
+**QED Lagrangian:**
+
+$$\mathcal{L} = \bar\psi(i\gamma^\mu D_\mu - m)\psi - \tfrac{1}{4} F_{\mu\nu}F^{\mu\nu}$$
+
+where $D_\mu = \partial_\mu + ieA_\mu$ is the gauge-covariant derivative. The entirety of QED sits in this one-line expression. Unpacking it is most of the content of a QFT course.
+
+---
+
+## Closing Note
+
+Lagrangian and Hamiltonian mechanics are, in a sense, too good to be "just classical mechanics." What looked like a clever reformulation in the hands of Lagrange and Hamilton has turned out to be the deep structure of physics. Every fundamental theory is written in Lagrangian form. Every quantization procedure relies on the Hamiltonian or Lagrangian. Every conservation law in the Standard Model is a Noether current.
+
+You now have:
+
+- The variational foundation of classical mechanics
+- Lagrangian and Hamiltonian formulations as dual descriptions
+- Poisson brackets as the classical skeleton of quantum mechanics
+- Noether's theorem as the engine connecting symmetries to conservation laws
+- Classical field theory as the bridge to QFT
+- Enough of the formal vocabulary to open a quantum field theory textbook
+
+The natural next steps are:
+
+1. **Work problems.** Pick up Taylor's *Classical Mechanics* or Goldstein's *Classical Mechanics* and solve problems until the formalism feels natural. This is genuinely the prerequisite for everything that follows.
+
+2. **Study special relativity in covariant form.** Reproduce Maxwell's equations from the electromagnetic Lagrangian. Get comfortable with index gymnastics.
+
+3. **Learn the Dirac equation.** The relativistic wave equation for spin-½ particles. This is where antimatter falls out as a mathematical inevitability.
+
+4. **Begin quantum field theory proper.** Peskin & Schroeder is the standard; Srednicki and Schwartz are alternatives with different emphases.
+
+Whenever you're ready, we can continue with any of these. You now have the classical foundation the rest of the edifice rests on.
+

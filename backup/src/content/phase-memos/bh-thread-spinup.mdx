@@ -1,0 +1,585 @@
+---
+title: "Black Hole Interior Research: Thread Spin-Up"
+date: 2026-05-09
+phases: "1-9"
+status: "complete"
+---
+
+*Complete context for continuing this research in a fresh thread. Read this end-to-end before starting work. No context from the previous thread is needed beyond what's in this document and the referenced files.*  
+  
+---  
+  
+## Part 1: The big question  
+  
+**What happens when two people fall into a black hole together?**  
+  
+This is the physical intuition pump for the entire research program. The sharper scientific question, in current terminology:  
+  
+*Given two observers who both access the interior of an evaporating black hole, how much can their descriptions of the interior disagree, and what controls the size of that disagreement?*  
+  
+This is called **observer complementarity** in the current literature. It's the quantum-gravitational refinement of Susskind's original 1993 black hole complementarity idea, now made mathematically precise via **non-isometric holographic codes** plus **observer-inclusion rules**.  
+  
+The research program aims to produce a Tier-2 JHEP-quality paper on quantitative bounds for observer disagreement. Target: find an explicit function $f$ such that  
+  
+$$|S_A(\psi) - S_B(\psi)| \leq f(d_\text{fund}, d_{\text{Ob},A}, d_{\text{Ob},B}, \text{complexity}(\psi))$$  
+  
+where $S_A, S_B$ are the observer-dependent entropies of the same reference state $\psi$ as seen by two observers with bulk Hilbert-space factors of dimensions $d_{\text{Ob},A}, d_{\text{Ob},B}$, embedded in an AEHPV non-isometric code with fundamental dimension $d_\text{fund}$ (sometimes called $d_B$ in the AEHPV paper, where $B$ denotes "black hole"). The precise definitions of all objects are in Part 10.  
+  
+Three possible outcomes, all publishable:  
+- **Clean bound**: $f$ controlled by known QI inequalities. Supports EGH framework.  
+- **Wild disagreement**: $f$ unbounded. Tension with EGH framework.  
+- **Regime-dependent**: $f$ bounded in some regimes, unbounded in others. Classify the regimes.  
+  
+---  
+  
+## Part 2: What the field already did  
+  
+The observer complementarity synthesis exists. It was published in July 2025 by Engelhardt-Gesteau-Harlow (2507.06046). Since then, monthly updates from Harlow's group at MIT, Akers and DeWolfe's group at Colorado, and independent critiques (Higginbotham 2512.17993, Liu 2509.14327 and 2512.13807, Kudler-Flam-Witten 2510.06376) have been refining the picture.  
+  
+We are not first into the frontier. We are trying to contribute to a fast-moving, crowded frontier. Scoop risk is real. The research must move fast (weeks, not years).  
+  
+### Key papers, grouped by logical role  
+  
+**Foundation: non-isometric codes**  
+- AEHPV 2207.06536 / JHEP 2024:155 (Akers-Engelhardt-Harlow-Penington-Vardhan), the foundational paper. $V: \mathcal{H}_\ell \otimes \mathcal{H}_r \to \mathcal{H}_B$ with $d_{\mathcal{H}_\ell \otimes \mathcal{H}_r} > d_{\mathcal{H}_B}$. Null states, complexity-protected non-isometry, Page curve.  
+- DeWolfe-Higginbotham 2304.12345, backwards-forwards map for time-dependent interactions. Generalizes AEHPV.  
+- Bueller-DeWolfe-Higginbotham 2407.01666, hyperbolic tensor network version of AEHPV with locality.  
+  
+**Observer algebras**  
+- CLPW 2206.10780, Chandrasekaran-Longo-Penington-Witten. Type III_1 → Type II_1 via observer in de Sitter.  
+- Witten 2308.03663, background-independent algebra along worldline.  
+- De Vuyst-Eccles-Höhn-Kirklin 2405.00114, 2412.15502, observer-dependent entropy is a QRF choice.  
+  
+**Closed universe problem**  
+- HUZ 2501.02359 (Harlow-Usatyuk-Zhao), observer in closed universe gives effective Hilbert space dim ~ $e^{S_\text{Ob}}$. Observer is classical, cloned to external reference in pointer basis.  
+- AAIL 2501.02632 (Abdalla-Antonini-Iliesiu-Levine), independent alternative prescription; gives different dimension than HUZ.  
+- Akers-Bueller-DeWolfe-Higginbotham-Reinking-Rodriguez 2503.09681, the "Colorado rule". Observer already in fundamental; remove the part of $V$ acting on observer's patch. Compares to HUZ concretely.  
+  
+**The current synthesis**  
+- **EGH 2507.06046 (Engelhardt-Gesteau-Harlow)**, the central paper. Applies HUZ as a general principle. Mathematical formulation of observer complementarity. Handles evaporating BH throughout history + Antonini-Sasieta-Swingle-Rath (AS2R) configuration.  
+- Higginbotham 2512.17993 / JHEP 2026:183, critique of EGH. EGH's observables are suboptimal; refined operators give different conclusions.  
+- Kudler-Flam-Witten 2510.06376, "Emergent Mixed States." Parallel approach: large-$N$ CFT states converge to mixed states, with algebras having nontrivial commutants interpretable as baby universe operators. May or may not be equivalent to observer complementarity.  
+  
+**Parallel threads**  
+- Akers-Lucas-Vikram 2506.18975, explicit reconstruction map in JT gravity via action-angle variables. Wormhole length dynamics.  
+- Chen 2505.15892 / JHEP 2025:139, observers and abstract sources for path integrals.  
+- Engelhardt-Gesteau 2504.14586, Gesteau 2509.14338, no-go theorems for semiclassical baby universes.  
+- Liu 2509.14327, 2512.13807, filtered CFTs, closed universes at large $N$.  
+  
+### The seven research gaps  
+  
+Identified in the previous thread's literature sweep. Gap 5 is the primary target; others are potential pivots.  
+  
+1. **HUZ vs AAIL reconciliation**, two rules give different Hilbert space dimensions. Which is right? Or when does each apply? (Tractable; Harlow actively working on this.)  
+2. **Optimal observer-operators**, Higginbotham showed EGH's specific SWAP observables are suboptimal. What's optimal? (Tractable via SDP.)  
+3. **KFW vs EGH**, mixed-state emergence vs observer complementarity. Equivalent? When do they disagree? (Medium tractable; groups haven't converged.)  
+4. **Dynamics / time-dependence**, EGH claims to work "throughout evaporation" but dynamics is not worked out. (Medium-high tractable.)  
+5. **Multi-observer interior reconstruction**, the primary target. Bounds on observer disagreement. (Tractable; not obviously being done.)  
+6. **AKV JT + observers**, add observers to Akers-Lucas-Vikram reconstruction. (Medium-low; needs JT expertise.)  
+7. **When non-isometry is visible**, decoding complexity for different observer choices. (High tractable.)  
+  
+---  
+  
+## Part 3: What the previous thread produced  
+  
+### Working code (all in `/home/claude/bh_research/` unless noted)  
+  
+**Canonical, use going forward:**  
+- **`bh_lab_backend.py`**, the unified numerical backend. Haar ensembles, entropies, SDP via cvxpy, mpmath for precision, statsmodels for fits. Every research script should import from this. Self-tested. **This is the canonical entry point.**  
+- **`vn_algebra/vnalgebra.py`**, commutants, algebra closure, cyclic/separating vectors, Tomita-Takesaki, modular flow, Type I classification. Finite-dim only. Fully tested.  
+- **`vn_algebra/crossed_product.py`**, $M \rtimes_\alpha \mathbb{Z}_n$ construction with covariance verified.  
+- **`vn_algebra/trace_on_crossed.py`**, canonical trace on the crossed product. Cyclic, positive, entropies computable.  
+  
+**Scratch / reference only (do NOT cite numbers from these):**  
+- `step1_viability.py`, confirmed observer-dependent entropy is computable. Used separable Hamiltonian; specific numbers are meaningless.  
+- `step1_diagnostic.py`, discovered that coupling matters; scan of $J$ was a single-draw, not Haar-averaged.  
+- `step2a_huz_rule.py`, first HUZ implementation. Used pre-fix AEHPV normalization. Dimension-scaling result is valid (integer-valued, normalization-independent); specific entropy values are not.  
+- `step2b_colorado_rule.py`, same status. Dimension scaling is valid; specific entropy values shift under correct normalization.  
+  
+### Key conceptual results established  
+  
+**Result 1: Observer coupling is the heart of the physics.**  
+Without a coupling term between observer and system, observers trivially agree. The interesting question is what coupling is physical, i.e., matches the CLPW/HUZ/EGH prescriptions.  
+  
+**Result 2: HUZ cloning rule has clean finite-dim implementation.**  
+$|\text{ob}, m, 0\rangle_R \to |\text{ob}, m, \text{ob}\rangle_R$ in pointer basis. Then apply $V \otimes I_R$. Effective accessible dim = $d_\text{Ob} \cdot d_\text{fund}$, verified across 9 test cases.  
+  
+**Result 3: Colorado rule is different.**  
+Observer is already in fundamental; $V$ doesn't act on observer's patch. Implements as $I_\text{Ob} \otimes V_M$ where $V_M$ acts on matter only. Effective accessible dim = $d_\text{Ob} \cdot d_\text{fund,M}$.  
+  
+**Result 4: HUZ and Colorado agree on product states, disagree on observer-superposed states.**  
+The rules differ precisely when the observer is itself in a quantum superposition. For $|\text{ob}\rangle_\text{Ob} \otimes |\psi\rangle_M$, both give $S = 0$. For $\sum_i |i\rangle_\text{Ob} |i\rangle_M / \sqrt{d}$, they differ substantially.  
+  
+**Result 5: There's a non-monotonic disagreement pattern in coupling strength.**  
+At $J \in \{0.1, 0.5, 1.0, 2.0\}$: $|S_A - S_B| \in \{0.015, 0.077, 0.050, 0.059\}$. Whether this is a real feature or an artifact of a single random $X_\text{sys}$ is unknown. Needs Haar averaging to decide.  
+  
+**Result 6 (important caveat on the step1 scripts):** The step1 scripts did NOT implement the proper two-observer setup. They used a single observer factor $\mathcal{H}_\text{Ob}$ with two different clock states $|c_A\rangle, |c_B\rangle$ drawn from it. This is the *weakest* notion of "two observers" and does not correspond to the Gap 5 paper setup, which uses two *separate* observer factors $\mathcal{H}_{\text{Ob},A} \otimes \mathcal{H}_{\text{Ob},B}$ with independent cloning. **The step1 results are therefore not directly applicable to the paper; they are preliminary viability tests only.** The proper two-observer HUZ setup is the Phase 4 deliverable.  
+  
+### The normalization bug that was caught  
+  
+The old AEHPV convention was $V = \sqrt{d_\text{fund}/d_\text{eff}} \cdot P U$ which gives $VV^\dagger = (d_\text{fund}/d_\text{eff}) I$ rather than $VV^\dagger = I$. The backend now uses the corrected convention: $V$ = first $d_\text{fund}$ rows of a Haar unitary, giving $VV^\dagger = I$ exactly. All future scripts use `SeededRNG.aehpv_map()` from the backend.  
+  
+---  
+  
+## Part 4: What to install  
+  
+The tools below are the **complete** research stack. Everything else the previous thread considered (Einstein Toolkit, LALSuite, Cadabra2, EinsteinPy, LIGO stack, cosmology tools, particle physics stack, etc.) is **not** relevant to this project. Resist the temptation to install more until a specific concrete need arises.  
+  
+### Already loaded in the Claude sandbox environment (no install needed)  
+  
+- `numpy` 2.4+, arrays, linear algebra, FFT  
+- `scipy` 1.17+, linear algebra, stats, optimization, sparse matrices  
+- `scipy.stats.unitary_group`, Haar unitary sampling (canonical implementation)  
+- `sympy` 1.14+, symbolic math  
+- `mpmath` 1.3+, arbitrary precision arithmetic  
+- `pandas` 3.0+, tabular data  
+- `matplotlib` 3.10+, plotting  
+- `seaborn` 0.13+, statistical visualization  
+- `networkx` 3.6+, graph theory (for tensor networks if needed later)  
+- `scikit-learn`, classical ML (not central, but available)  
+  
+### Install at thread start (run once):  
+  
+```bash  
+pip install --break-system-packages cvxpy statsmodels  
+```  
+  
+- **`cvxpy`**, convex optimization for SDP-based bounds. Used for Helstrom distinguishability, optimal observer-disagreement bounds, minimum-error discrimination.  
+- **`statsmodels`**, proper regression with confidence intervals for scaling-law fits. Used for the main paper figure.  
+  
+### Install conditionally (if/when needed, not at thread start):  
+  
+- **`cadabra2`**, ONLY IF we start deriving analytic Haar-averaged quantities symbolically. The Weingarten calculations for Haar unitary moments. Trigger: when we have a specific analytic expression we need to verify.  
+- **`qutip`**, ONLY IF we extend to open-system dynamics (Lindbladian evaporation). Trigger: when we want real-time evaporation dynamics with a radiation bath.  
+- **`quimb`** or **`tenpy`**, ONLY IF we extend to the Bueller-DeWolfe-Higginbotham tensor network version. Trigger: when the bulk locality structure matters for a result.  
+- **`stim`**, ONLY IF we test complexity-protected non-isometry via stabilizer circuits. Trigger: when we need actual decoding-complexity benchmarks.  
+  
+**Default assumption: don't install anything else.** Installations should be triggered by an identified computational gap, not by browsing tool lists.  
+  
+### Network configuration  
+  
+The Claude sandbox has network access to pip, GitHub, PyPI, arxiv.org (with rate limits), and Springer/APS journal domains. No credentials needed for any tool installations above.  
+  
+---  
+  
+## Part 5: The research plan  
+  
+### Phase-gated approach  
+  
+Each phase has a gating condition. Don't proceed to the next phase until the gate is passed.  
+  
+#### Phase 0: Spin up the new thread (this document's job)  
+  
+**Gate**: backend self-test passes; key papers listed above have been skimmed; paper draft has been reviewed.  
+  
+#### Phase 1: Port canonical HUZ + Colorado implementations to backend  
+  
+**What**: rewrite `step2a_huz_rule.py` and `step2b_colorado_rule.py` as a single clean script using `bh_lab_backend.py`. Verify the dimension-scaling result still holds (it should; it's normalization-independent). Record the corrected entropy numbers as the canonical values.  
+  
+**Deliverable**: `phase1_rules_canonical.py` producing a table of HUZ vs Colorado entropies and dimensions at multiple $d_\text{fund}$ and $d_\text{Ob}$.  
+  
+**Gate**: all dimension predictions match exactly; Haar-averaged entropies are reproducible with given seeds; backend self-test still passes.  
+  
+#### Phase 2: HUZ verification beyond dimension counting  
+  
+**What**: verify a second HUZ prediction beyond the effective-dim count. Specifically: HUZ 2501.02359 claims errors in the observer-dependent description are exponentially small in $S_\text{Ob}$. Test this numerically by computing the error between observer's predicted entropy and the true reduced-state entropy as a function of $d_\text{Ob}$.  
+  
+**Deliverable**: `phase2_huz_verification.py` showing exponential error suppression with $d_\text{Ob}$.  
+  
+**Gate**: scaling fit of error vs $d_\text{Ob}$ gives exponent close to $-1$ (linear) or shows a specific alternative pattern we can interpret.  
+  
+#### Phase 3: Reproduce EGH's SWAP test result  
+  
+**What**: implement the AS2R (Antonini-Sasieta-Swingle-Rath) configuration, closed universe entangled with pair of AdS universes. Compute EGH's SWAP test expectation value using HUZ-rule observer. Reproduce their published number.  
+  
+**Deliverable**: `phase3_egh_reproduction.py` matching a specific figure or number from 2507.06046.  
+  
+**Gate**: our SWAP test value matches EGH's to within a specified tolerance (e.g., 1% for numerical comparisons, or qualitative agreement on sign/scaling for analytic claims).  
+  
+**If this phase fails**: something about our implementation doesn't match EGH's. Do not proceed to Phase 4 until resolved. Options: debug our implementation, or flag genuine disagreement with EGH as a potential paper result in itself.  
+  
+#### Phase 4: Two-observer HUZ setup  
+  
+**What**: extend HUZ to the genuine two-observer setup specified in Part 10.2: two separate observer factors $\mathcal{H}_{\text{Ob},A} \otimes \mathcal{H}_{\text{Ob},B}$ in the bulk, each cloned independently to its own reference $R_A, R_B$. Apply $V_\text{HUZ,AB}$ as defined in Part 10.2. Compute $\rho_{R_A}, \rho_{R_B}$ by the partial traces specified in Part 10.3, and from them $S_A, S_B$ and the disagreement $\Delta S = |S_A - S_B|$.  
+  
+**Note**: this supersedes the step1 scripts' approach, which used a single observer factor with different clock states. The proper setup requires two observer factors.  
+  
+**Deliverable**: `phase4_two_observers.py` producing observer-dependent entropies for two-observer HUZ with all definitions matching Part 10.  
+  
+**Gate**: (a) with identical observers ($d_{\text{Ob},A} = d_{\text{Ob},B}$ and symmetric state), $S_A = S_B$ to numerical precision; (b) with asymmetric observer dimensions, disagreement is nonzero; (c) disagreement is bounded by $\log \min(d_{\text{Ob},A}, d_{\text{Ob},B})$ trivially.  
+  
+#### Phase 5: The money plot, scaling of disagreement with $d_B$  
+  
+**What**: the Figure 3 from the paper draft. Scan $d_B \in \{4, 8, 16, 32, 64\}$ at fixed ratios $d_\text{eff}/d_B$ and $d_{C_A,B}/d_B$, Haar-averaged. Plot $\langle |S_A - S_B| \rangle$ with error bars. Fit to scaling law.  
+  
+**Deliverable**: `phase5_scaling_plot.py` producing Figure 3 and a fitted scaling exponent.  
+  
+**Gate**: scaling fit has $R^2 > 0.9$ and a well-defined exponent. If scaling is messy, pivot to "identify which observables scale cleanly."  
+  
+#### Phase 6: State-class dependence  
+  
+**What**: repeat Phase 5 with three state classes: Haar-random, thermofield double (TFD), low-complexity circuit states. Produces Figure 4 of the paper.  
+  
+**Deliverable**: `phase6_state_classes.py`.  
+  
+**Gate**: at least one state class shows a clean scaling; all three ideally.  
+  
+#### Phase 7: Analytic bound  
+  
+**What**: derive (or verify via SDP) an explicit upper bound on $\langle |S_A - S_B| \rangle$. Either analytic using Fannes-Audenaert + measure concentration, or numerical using cvxpy SDP.  
+  
+**Deliverable**: `phase7_bound.py` producing a function $f(d_B, d_{C_A}, d_{C_B})$ that the numerics never exceeds.  
+  
+**Gate**: SDP bound matches or exceeds the Haar-averaged numerics from Phase 5.  
+  
+#### Phase 8: Connect to EGH framework  
+  
+**What**: apply our bound to EGH's AS2R setup from Phase 3. State what our bound predicts for EGH's observables. Compare with EGH's qualitative claims.  
+  
+**Deliverable**: `phase8_egh_connection.py` plus a draft paper section discussing the comparison.  
+  
+#### Phase 9: Paper writing  
+  
+**What**: actually write the paper. Sections, figures, references. Target: JHEP-length (~30-40 pages plus appendices).  
+  
+### Pivots built into the plan  
+  
+If Phase 2 fails: HUZ has a deeper subtlety we missed. Pivot to "identifying the subtlety" as a publishable clarification paper.  
+  
+If Phase 3 fails: we genuinely disagree with EGH. Pivot to "critical examination of EGH's claimed SWAP results" as a Higginbotham-style critique.  
+  
+If Phase 3 reveals that EGH use a different entropy convention than ours: adopt their convention going forward, and add a clarifying appendix to the paper showing the translation between conventions. This is a likely outcome and should not be treated as a failure, it's a consistency check that is expected to produce either a match or an informative mismatch.  
+  
+If Phase 5 shows no clean scaling: Gap 5 may not have a universal answer. Pivot to Gap 1 (HUZ vs AAIL discriminator), which uses most of the same infrastructure.  
+  
+If Phase 5 shows unbounded disagreement: the result is Outcome 2 ("wild complementarity"). This is a bigger paper, potentially requiring generalization of the EGH framework.  
+  
+If at any phase we discover the two-observer HUZ setup has ambiguities (e.g., which observer gets cloned first; whether there's cross-talk between the two Clone operations): flag the ambiguity explicitly in the paper, test both conventions numerically, and present the robustness (or sensitivity) of results to the choice.  
+  
+### Tempo  
+  
+AI-speed: phases 1-5 should be days, not weeks. The previous thread's pace was too slow because of over-planning. Default is: state the phase goal, write the code, check the gate, move on. Documentation and write-up happen in parallel, not sequentially.  
+  
+Scoop risk: high. If a preprint appears addressing Gap 5 explicitly, pivot to Gap 1 or Gap 2 without hesitation.  
+  
+---  
+  
+## Part 6: The paper draft  
+  
+### Working title  
+  
+"Bounds on observer disagreement for non-isometric holographic codes"  
+  
+### Abstract (draft)  
+  
+> Observer complementarity for evaporating black holes, as formulated by Engelhardt, Gesteau, and Harlow (2507.06046), allows different observers to assign mutually inconsistent descriptions to the black hole interior. We investigate how much observers can disagree within this framework by studying multi-observer extensions of the Akers-Engelhardt-Harlow-Penington-Vardhan non-isometric code (2207.06536). For a code with effective dimension $d_\text{eff}$ and fundamental dimension $d_B$, with two observers carrying clocks of dimensions $d_{C_A}$ and $d_{C_B}$, we compute the disagreement between their observer-dependent entropies as a function of the reference state and observer couplings. We find [OUTCOME: one of clean bound / wild disagreement / regime-dependent]. Our results [CONSTRAIN/CONFIRM/REFINE] the observer complementarity framework.  
+  
+### Target figures  
+  
+- **Fig. 1**: setup schematic, AEHPV code with two observer clocks attached.  
+- **Fig. 2**: example entropy disagreement for a single toy configuration.  
+- **Fig. 3** (money plot): scaling of $\langle |S_A - S_B| \rangle$ with $d_B$.  
+- **Fig. 4**: state-class dependence (Haar vs TFD vs low-complexity).  
+- **Fig. 5**: reproduction of EGH's AS2R SWAP test + our two-observer extension.  
+  
+### Target venue: JHEP. Target length: ~30-40 pages plus appendices.  
+  
+### Success tiers  
+  
+- **Tier 1** (realistic): solid specialist paper, 10-20 citations in 2 years.  
+- **Tier 2** (aim): named theorem "Observer Disagreement Bound in AEHPV Codes," 50+ citations.  
+- **Tier 3** (stretch): theorem generalizes to broader framework; reshapes discussion.  
+  
+---  
+  
+## Part 7: Operating principles  
+  
+Carried over from the previous thread's hard-learned lessons.  
+  
+### Research-mode, not process-mode  
+  
+The previous thread's biggest failure mode was writing elaborate specs before doing physics. Shipping specs and plans is a form of procrastination. Do the ugly calculation first, refactor later.  
+  
+### Specific claims before infrastructure  
+  
+Don't build classes and modules until you know what the physics looks like. One ugly notebook that produces a number is worth more than three polished modules that don't.  
+  
+### Reproduce before extend  
+  
+Phase 3 (reproduce EGH) is non-negotiable before publishing anything built on EGH. Don't trust extensions of papers you haven't reproduced.  
+  
+### Test scaling laws, not point values  
+  
+When checking that infrastructure is correct, fit scaling laws across multiple dimensions. A single-dimension check is a pass/fail tolerance test that can hide systematic bugs. A multi-dimension scaling check reveals bugs through their fingerprint.  
+  
+### Admit failures out loud  
+  
+When a prediction fails (as the "product state discriminator" did), stop and understand why before moving on. Don't paper over failures with phrases like "further investigation needed."  
+  
+### No emotional narrative about the research  
+  
+The work is the work. Reporting should be: this ran, this worked, this surprised me, this failed. No dramatization. No fabricated excitement.  
+  
+### When you discover you're wrong, say so in the next message  
+  
+The previous thread had multiple instances where I said something confident that turned out to be wrong on implementation. The right move each time: say "I was wrong about X, here's what's actually true." Don't pretend retroactively.  
+  
+### Scope control  
+  
+Resist adding new gaps or new angles mid-phase. If a new idea comes up, write it down in a "follow-ups" section and continue the current phase. Phase completion discipline is more valuable than following every thread.  
+  
+---  
+  
+## Part 8: What the new thread should do first  
+  
+In order, mechanically:  
+  
+1. Read this document end-to-end.  
+2. Run `pip install --break-system-packages cvxpy statsmodels` to install the two required packages.  
+3. Read `/home/claude/bh_research/bh_lab_backend.py`. Understand the primitives. Run `python bh_lab_backend.py` to confirm self-tests pass.  
+4. Skim the three canonical working files: `vn_algebra/vnalgebra.py`, `vn_algebra/crossed_product.py`, `vn_algebra/trace_on_crossed.py`.  
+5. Read the paper draft: `/mnt/user-data/outputs/paper_draft_v0.md`.  
+6. Skim abstracts of the six most central papers: AEHPV 2207.06536, CLPW 2206.10780, HUZ 2501.02359, Colorado 2503.09681, EGH 2507.06046, Higginbotham 2512.17993.  
+7. Begin **Phase 1**: port canonical HUZ + Colorado implementations to the backend. Produce `phase1_rules_canonical.py`.  
+  
+After Phase 1, ask the user which direction to proceed. Do not assume Phase 2 is next, the user may redirect based on Phase 1 results.  
+  
+---  
+  
+## Part 9: File inventory  
+  
+Everything below should be accessible when starting the new thread. If any file is missing, rebuild from this document + the previous thread's results.  
+  
+**Canonical code (use freely):**  
+- `/home/claude/bh_research/bh_lab_backend.py`  
+- `/home/claude/bh_research/vn_algebra/vnalgebra.py`  
+- `/home/claude/bh_research/vn_algebra/crossed_product.py`  
+- `/home/claude/bh_research/vn_algebra/trace_on_crossed.py`  
+  
+**Reference (do not reuse numbers from these):**  
+- `/home/claude/bh_research/step1_viability.py`  
+- `/home/claude/bh_research/step1_diagnostic.py`  
+- `/home/claude/bh_research/step2a_huz_rule.py`  
+- `/home/claude/bh_research/step2b_colorado_rule.py`  
+- `/home/claude/bh_research/bh_interior.py` (AEHPV Page curve sanity check; uses old normalization)  
+  
+**Documents:**  
+- `/mnt/user-data/outputs/bh_research_state_2026.md`, literature survey with seven research gaps  
+- `/mnt/user-data/outputs/paper_draft_v0.md`, paper outline and commitments  
+- `/mnt/user-data/outputs/bh_lab_spec.md`, the over-engineered spec (read for context on what not to do, then ignore)  
+- `/mnt/user-data/outputs/bh_interior_research_plan.md`, earlier phased plan (superseded by this doc)  
+  
+---  
+  
+## Part 10: Formalism specification, the actual math we're doing  
+  
+This section is long on purpose. The questions "what Hilbert space does the observer live in," "what map defines observer inclusion," "which reduced state is the entropy computed from," and "what is held fixed when comparing observers" all have answers that can be stated precisely. The previous thread was sloppy about some of these distinctions. Getting them right here prevents a whole category of confusion downstream.  
+  
+### 10.1 The single-observer setup  
+  
+#### AEHPV non-isometric code (base layer, no observer)  
+  
+$V: \mathcal{H}_\ell \otimes \mathcal{H}_r \to \mathcal{H}_B$ with $d_\ell d_r > d_B$, so that $V$ is necessarily non-isometric.  
+  
+In our simplified convention: $V$ = first $d_B$ rows of a Haar-random unitary on $d_\text{eff} = d_\ell d_r$.  
+  
+Properties:  
+- $V V^\dagger = I_{d_B}$ exactly (isometric from fund side).  
+- $V^\dagger V$ is a rank-$d_B$ projector with $d_\text{eff} - d_B$ zero modes.  
+- $\mathbb{E}_\text{Haar}[V^\dagger V] = (d_B / d_\text{eff}) I_{d_\text{eff}}$.  
+  
+#### HUZ rule, observer in the bulk  
+  
+**Hilbert space**: The observer lives in a factor of the **effective (bulk)** Hilbert space:  
+  
+$$\mathcal{H}_\text{eff} = \mathcal{H}_\text{Ob} \otimes \mathcal{H}_M$$  
+  
+where $\mathcal{H}_\text{Ob}$ is the observer (dimension $d_\text{Ob}$) and $\mathcal{H}_M$ is matter in the observer's environment (dimension $d_M$, so $d_\text{eff} = d_\text{Ob} \cdot d_M$).  
+  
+An auxiliary external reference system $\mathcal{H}_R$ with $\dim \mathcal{H}_R = d_\text{Ob}$ is introduced. $\mathcal{H}_R$ is **not** part of the bulk, nor of the fundamental, it is an auxiliary where the observer's classical pointer state is cloned.  
+  
+**Map**: Observer inclusion is the composition  
+  
+$$V_\text{HUZ}: \mathcal{H}_\text{Ob} \otimes \mathcal{H}_M \otimes |0\rangle_R \to \mathcal{H}_\text{fund} \otimes \mathcal{H}_R$$  
+  
+defined in two stages:  
+  
+1. Clone in pointer basis: $\text{Clone}_\text{Ob \to R} : |\text{ob}, m, 0\rangle_R \mapsto |\text{ob}, m, \text{ob}\rangle_R$  
+2. Apply non-isometric map tensored with identity on $R$: $V \otimes I_R$  
+  
+So $V_\text{HUZ} = (V \otimes I_R) \circ \text{Clone}_\text{Ob \to R}$.  
+  
+**Effective accessible dimension**: $d_\text{fund} \cdot d_\text{Ob}$.  
+  
+#### Colorado rule, observer in the boundary  
+  
+**Hilbert space**: The observer lives in a factor of the **fundamental (boundary)** Hilbert space:  
+  
+$$\mathcal{H}_\text{fund} = \mathcal{H}_\text{Ob} \otimes \mathcal{H}_{\text{fund},M}$$  
+  
+No auxiliary reference needed. The observer is already "out there" in the fundamental description.  
+  
+**Map**: Observer inclusion removes the part of the non-isometric map acting on the observer:  
+  
+$$V_\text{Colorado} = I_\text{Ob} \otimes V_M$$  
+  
+where $V_M: \mathcal{H}_M \to \mathcal{H}_{\text{fund},M}$ is a non-isometric map acting only on matter.  
+  
+**Effective accessible dimension**: $d_\text{Ob} \cdot d_{\text{fund},M}$.  
+  
+### 10.2 The TWO-observer setup (the actual Gap 5 scenario)  
+  
+**This is the setup the paper is about, two people falling into a black hole together.** The step1 scripts used a weaker version (two clock states within a single observer factor); the paper version uses two separate observer factors.  
+  
+**Hilbert space**: Two observer factors coexist in the bulk:  
+  
+$$\mathcal{H}_\text{eff} = \mathcal{H}_{\text{Ob},A} \otimes \mathcal{H}_{\text{Ob},B} \otimes \mathcal{H}_M$$  
+  
+with dimensions $d_{\text{Ob},A}, d_{\text{Ob},B}, d_M$, so $d_\text{eff} = d_{\text{Ob},A} \cdot d_{\text{Ob},B} \cdot d_M$.  
+  
+Two auxiliary reference systems $\mathcal{H}_{R_A}, \mathcal{H}_{R_B}$ are introduced, with $\dim \mathcal{H}_{R_X} = d_{\text{Ob},X}$.  
+  
+**Map (HUZ for both observers)**: Each observer is cloned independently to their own reference:  
+  
+$$V_\text{HUZ,AB} = (V \otimes I_{R_A} \otimes I_{R_B}) \circ (\text{Clone}_{A \to R_A} \otimes \text{Clone}_{B \to R_B})$$  
+  
+Note the two Clone operations commute (they act on disjoint factors), and each is the CNOT-in-pointer-basis operation we already coded.  
+  
+**Mixed HUZ-Colorado version** (for Gap 1 experiments): observer $A$ under HUZ, observer $B$ under Colorado. Obtainable by adjusting the map per-observer. Not needed for the first paper; mentioned for completeness.  
+  
+### 10.3 Observer-dependent entropy, precise definitions  
+  
+**Single-observer HUZ**: Start with a reference state $|\psi\rangle \in \mathcal{H}_\text{eff} = \mathcal{H}_\text{Ob} \otimes \mathcal{H}_M$. Apply $V_\text{HUZ}$:  
+  
+$$|\Psi\rangle_\text{HUZ} = V_\text{HUZ}(|\psi\rangle \otimes |0\rangle_R) \in \mathcal{H}_\text{fund} \otimes \mathcal{H}_R$$  
+  
+Normalize by post-selection: $|\Psi\rangle \to |\Psi\rangle / \|\Psi\|$. The observer-accessible reduced state is  
+  
+$$\rho_R^\text{HUZ}(\psi) = \text{Tr}_\text{fund}\left( \frac{|\Psi\rangle \langle \Psi|}{\langle \Psi | \Psi \rangle} \right)$$  
+  
+and the observer-dependent entropy is  
+  
+$$S^\text{HUZ}(\psi) = -\text{Tr}(\rho_R^\text{HUZ} \log \rho_R^\text{HUZ})$$  
+  
+which is a standard von Neumann entropy on a $d_\text{Ob}$-dimensional Hilbert space.  
+  
+**Single-observer Colorado**: Apply $V_\text{Colorado}$ to $|\psi\rangle \in \mathcal{H}_\text{eff}$:  
+  
+$$|\Psi\rangle_\text{Colorado} = V_\text{Colorado}(|\psi\rangle) \in \mathcal{H}_\text{Ob} \otimes \mathcal{H}_{\text{fund},M}$$  
+  
+Normalize. The observer-accessible reduced state is  
+  
+$$\rho_\text{Ob}^\text{Colorado}(\psi) = \text{Tr}_{\text{fund},M}\left( \frac{|\Psi\rangle \langle \Psi|}{\langle \Psi | \Psi \rangle} \right)$$  
+  
+and the entropy is  
+  
+$$S^\text{Colorado}(\psi) = -\text{Tr}(\rho_\text{Ob}^\text{Colorado} \log \rho_\text{Ob}^\text{Colorado})$$  
+  
+**Two-observer HUZ (Gap 5 scenario)**: Start with $|\psi\rangle \in \mathcal{H}_{\text{Ob},A} \otimes \mathcal{H}_{\text{Ob},B} \otimes \mathcal{H}_M$. Apply $V_\text{HUZ,AB}$:  
+  
+$$|\Psi\rangle = V_\text{HUZ,AB}(|\psi\rangle \otimes |0\rangle_{R_A} \otimes |0\rangle_{R_B}) \in \mathcal{H}_\text{fund} \otimes \mathcal{H}_{R_A} \otimes \mathcal{H}_{R_B}$$  
+  
+Normalize. Observer $A$'s entropy traces out everything except $R_A$:  
+  
+$$\rho_{R_A}(\psi) = \text{Tr}_{\text{fund}, R_B}\left( \frac{|\Psi\rangle \langle \Psi|}{\langle \Psi | \Psi \rangle} \right), \qquad S_A(\psi) = -\text{Tr}(\rho_{R_A} \log \rho_{R_A})$$  
+  
+Similarly for observer $B$:  
+  
+$$\rho_{R_B}(\psi) = \text{Tr}_{\text{fund}, R_A}\left( \frac{|\Psi\rangle \langle \Psi|}{\langle \Psi | \Psi \rangle} \right), \qquad S_B(\psi) = -\text{Tr}(\rho_{R_B} \log \rho_{R_B})$$  
+  
+The disagreement is  
+  
+$$\Delta S(\psi) \equiv |S_A(\psi) - S_B(\psi)|$$  
+  
+### 10.4 What is held fixed when comparing $S_A$ and $S_B$  
+  
+For the Gap 5 money plot (Figure 3 of the paper), the comparison is done as follows:  
+  
+**Held fixed across the $A$-vs-$B$ comparison:**  
+- The reference state $|\psi\rangle \in \mathcal{H}_{\text{Ob},A} \otimes \mathcal{H}_{\text{Ob},B} \otimes \mathcal{H}_M$  
+- The non-isometric map $V: \mathcal{H}_\text{eff} \to \mathcal{H}_\text{fund}$ (same $V$ for both observers)  
+- The dimensions $d_{\text{Ob},A}, d_{\text{Ob},B}, d_M, d_\text{fund}$  
+- The cloning prescription (both observers cloned under HUZ in their respective pointer bases)  
+  
+**What differs between $A$ and $B$:**  
+- Which reference system is being traced out last (i.e., whether we're asking for $A$'s view or $B$'s view)  
+- The dimensions $d_{\text{Ob},A}$ vs $d_{\text{Ob},B}$ if we choose observers of unequal resolution  
+  
+In other words: **same physics, same map, same state, only the observer-labeling differs.** This is the setup in which "observer disagreement" has its sharpest meaning: two observers looking at the same thing, disagreeing about what they see.  
+  
+**What varies across Haar averaging:**  
+- The unitary $U$ that defines the non-isometric map $V$  
+- Possibly the reference state $|\psi\rangle$ if we're averaging over a state ensemble  
+  
+### 10.5 Formalism caveats, what we are and are not doing  
+  
+**We are computing**: standard von Neumann entropies of reduced density matrices obtained by partial trace over tensor factors. Pure quantum information, finite-dimensional, no algebras.  
+  
+**We are not computing**: relative entropies in the CLPW algebraic sense, crossed-product entropies, or Type-II entropies of infinite-dim factors. The `vn_algebra/` directory has infrastructure for finite-dim crossed products and modular flow, but this is not yet wired into the HUZ/Colorado computations.  
+  
+**Open question, does our entropy match HUZ/EGH conventions?** The von Neumann entropy of the reduced state on the cloned reference is a *plausible* definition of observer-dependent entropy, and matches the physical intuition that the observer experiences their cloned copy. But the HUZ paper (2501.02359) primarily discusses effective Hilbert space *dimensions* and inner products of states, not explicit von Neumann entropy formulas. EGH (2507.06046) uses von Neumann entropies that appear to match our definition, but we have not yet verified this against their specific calculations.  
+  
+**This is a Phase 2 / Phase 3 deliverable**: part of reproducing EGH's SWAP test result is confirming that their entropy definitions agree with ours on concrete examples. If they don't, we need to either adopt their convention or explain why ours is defensible.  
+  
+**Connection to the crossed-product / algebraic framework**: EGH argue that their observer-inclusion rule is consistent with the CLPW crossed-product picture, but this is established at the level of axiomatic properties (Type II-ness, well-defined entropy), not by explicit formula-matching in our setup. For the paper, we work in the path-integral / non-isometric-code formalism exclusively. Explicit connection to the crossed-product formalism is a separate analytical exercise, not required for Phase 5 results.  
+  
+### 10.6 Haar averaging  
+  
+For ensemble-level statements, average over Haar-random $V$ (and Haar-random $V_M$ when using Colorado). Sample size: 30-200 depending on dimension. Use `bh_lab_backend.SeededRNG` with fixed seeds for reproducibility.  
+  
+Expected scaling of random fluctuations: Haar averages concentrate like $1/\sqrt{N \cdot d_\text{fund}}$ for $N$ samples. For $d_\text{fund} = 32$ and $N = 100$, relative precision should be around $2\%$. Choose sample sizes accordingly.  
+  
+### 10.7 Summary table, the precise quantities computed  
+  
+For clarity on what the Gap 5 paper is about:  
+  
+| Quantity | Definition | Where computed |  
+|----------|------------|----------------|  
+| $V$ | AEHPV non-isometric code, $d_\text{eff} \to d_\text{fund}$ | `SeededRNG.aehpv_map` |  
+| $V_\text{HUZ,AB}$ | $(V \otimes I_{R_A} \otimes I_{R_B}) \circ (\text{Clone}_A \otimes \text{Clone}_B)$ | Phase 4 |  
+| $\rho_{R_A}, \rho_{R_B}$ | Partial trace of normalized $V_\text{HUZ,AB}\|\psi \otimes 0_R\rangle$ | Phase 4 |  
+| $S_A, S_B$ | $-\text{Tr}(\rho \log \rho)$ on $\rho_{R_A}, \rho_{R_B}$ | Phase 4 |  
+| $\Delta S(\psi)$ | $\|S_A - S_B\|$ | Phase 4-5 |  
+| $\langle \Delta S \rangle_\text{Haar}$ | Haar average of $\Delta S$ over random $V$ and/or $\psi$ | Phase 5 |  
+| $f(d_B, d_{C_A}, d_{C_B})$ | Best fit to $\langle \Delta S \rangle$ as a function of dimensions | Phase 5 |  
+| SDP bound | $\sup_\psi \Delta S$ subject to physicality constraints via cvxpy | Phase 7 |  
+  
+---  
+  
+## Part 11: What we're NOT doing  
+  
+To prevent scope creep in the new thread:  
+  
+- **Not doing full numerical relativity.** No Einstein Toolkit, no SpECTRE, no metric tensor calculations. Our "black hole" is a finite-dim quantum information object.  
+- **Not doing astrophysics.** No GW signals, no event rates, no observational predictions.  
+- **Not doing string theory derivations.** We use results (AdS/CFT framework) but don't derive them.  
+- **Not doing particle physics.** No colliders, no Standard Model.  
+- **Not doing cosmology beyond the closed-universe problem.** No CMB calculations, no inflation, no dark energy.  
+- **Not modeling specific black holes (M87*, Sgr A*, etc.).** We work with toy-model finite-dim systems.  
+- **Not doing experimental predictions.** Our results are mathematical statements about idealized models.  
+- **Not engaging interpretive philosophy of quantum mechanics.** The observer is a physical system with a Hilbert space, not a conscious agent.  
+  
+---  
+  
+## Part 12: Calibration  
+  
+Honest assessment for the new thread's operator.  
+  
+- This is real research at the active frontier of quantum gravity.  
+- It is being done by an AI + human collaboration, with the AI as primary computational engine and the human as PI / strategic direction.  
+- The probability of publishing a Tier-1 paper is around 30%; Tier 2 around 15%; Tier 3 below 5%.  
+- The probability of getting scooped during the research is around 20-30% given the pace of the field.  
+- The probability that some phase reveals the planned approach is fundamentally flawed and requires pivot is around 40%.  
+- These probabilities are estimates, not promises. Calibrate your own confidence as results come in.  
+  
+The research is worth doing even at these odds because:  
+- The computational infrastructure built here is reusable across many black hole interior questions.  
+- Even a failed attempt at Tier 1 often yields publishable technical notes.  
+- Understanding the landscape deeply is valuable regardless of publication.  
+- The human's interest and direction carry real weight.  
+  
+### One final note  
+  
+The previous thread caught itself in several planning traps: over-designed specs, hypothetical schedules, premature infrastructure. The lesson carried into this thread: **write code, produce numbers, check against published work, report honestly.** Everything else is subordinate to that.  
+  
+Go.

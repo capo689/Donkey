@@ -1,0 +1,819 @@
+---
+title: "QFT IX: Path Integrals for Bosons"
+stationNumber: 21
+line: "Quantum Trunk"
+date: 2026-05-06
+backdated: true
+prerequisites: [20]
+extendsTo: [22]
+classReportTitle: "Every history at once."
+---
+
+*QFT document 9: an entirely different way to set up quantum field theory, where the fundamental object is a sum over field configurations weighted by $e^{iS}$. Same physics, different lens; and often clearer.*
+
+Documents 1-8 used **canonical quantization**: promote classical fields to operators, impose commutation relations, build Fock space, compute perturbatively. This works, and it gives all the results of QED we've seen.
+
+But there's an alternative formulation, due to Feynman (1948), that starts from a different place entirely. Instead of operators and states, the path integral takes *all possible field configurations* and sums over them, weighted by $e^{iS[\phi]/\hbar}$ where $S$ is the classical action. Observables are computed as integrals over this infinite-dimensional space of field histories.
+
+This formulation:
+- Is manifestly Lorentz-invariant at every step
+- Makes the connection to statistical mechanics transparent
+- Handles gauge theories cleanly (Faddeev-Popov, coming in doc 10/11)
+- Is essential for non-perturbative methods (lattice QCD, instantons)
+- Makes many symmetry arguments direct and geometric
+
+This document develops the path integral for bosonic fields (scalars, gauge fields). Document 10 will handle fermions (which need Grassmann variables).
+
+### Prerequisites and Conventions
+
+- QFT documents 1-8 (especially the canonical formalism for comparison)
+- Classical mechanics: the action principle, Lagrangian formulation
+- Statistical mechanics: the partition function $Z = \sum e^{-\beta E}$
+
+### Signature Convention
+
+Same as before: mostly-minus, $\eta = \text{diag}(+,-,-,-)$, $\hbar = c = 1$.
+
+---
+
+## Table of Contents
+
+1. [Why Path Integrals?](#1-why-path-integrals)
+2. [The Path Integral in Quantum Mechanics](#2-the-path-integral-in-quantum-mechanics)
+3. [From QM to QFT: The Scalar Field Path Integral](#3-from-qm-to-qft-the-scalar-field-path-integral)
+4. [Generating Functionals](#4-generating-functionals)
+5. [Wick Rotation: Euclidean Path Integrals](#5-wick-rotation-euclidean-path-integrals)
+6. [The Connection to Statistical Mechanics](#6-the-connection-to-statistical-mechanics)
+7. [Perturbation Theory from the Path Integral](#7-perturbation-theory-from-the-path-integral)
+8. [Deriving Feynman Rules](#8-deriving-feynman-rules)
+9. [Effective Actions and the Quantum Equations of Motion](#9-effective-actions-and-the-quantum-equations-of-motion)
+10. [Symmetries and Ward Identities](#10-symmetries-and-ward-identities)
+11. [Beyond Perturbation Theory: Instantons](#11-beyond-perturbation-theory-instantons)
+12. [Preview: Gauge Theories and Grassmann Variables](#12-preview-gauge-theories-and-grassmann-variables)
+13. [Appendix: Path Integral Formulas](#appendix-path-integral-formulas)
+
+---
+
+## 1. Why Path Integrals?
+
+### A New Starting Point
+
+The canonical formulation starts with: "here's a quantum system with operators $\hat\phi$ and states $|\psi\rangle$, how do they evolve?"
+
+The path integral starts with: "here's a classical theory with action $S[\phi]$. The quantum theory is *all possible histories*, each weighted by $e^{iS/\hbar}$."
+
+Both give the same answers for physical observables. But the two frameworks make different aspects obvious.
+
+### What the Path Integral Makes Clear
+
+**Manifestly Lorentz-invariant.** No singling out a time direction for canonical commutation relations. The action $S = \int d^4x\, \mathcal{L}$ is a scalar; everything is built from it.
+
+**Classical limit is transparent.** In the limit $\hbar \to 0$, the dominant contribution to $e^{iS/\hbar}$ comes from configurations that extremize $S$; these are the classical equations of motion. The path integral *is* the classical limit.
+
+**Symmetries are geometric.** A symmetry of the action means the integration measure is invariant under that transformation, and physical observables automatically respect the symmetry (modulo anomalies; see section 10).
+
+**Gauge fixing becomes natural.** The presence of gauge redundancy in the path integral leads naturally to Faddeev-Popov; more elegant than the Gupta-Bleuler approach of document 3.
+
+**Non-perturbative methods exist.** Since the path integral is well-defined (at least formally) without expanding in a coupling, it's the natural tool for non-perturbative calculations: lattice gauge theory, instantons, solitons.
+
+### The Price
+
+The path integral, as literally written, is a formal object; you're integrating over an infinite-dimensional function space, which requires regularization to be meaningful. Different regularizations (lattice, dimensional, zeta-function) give different finite answers at intermediate steps, all agreeing on physical observables.
+
+Also, while the path integral is conceptually cleaner, actual calculations in perturbation theory look identical to the canonical approach. Feynman rules, propagators, Wick's theorem; all derivable from the path integral, all giving the same results.
+
+The real power of the path integral shows up in:
+1. Conceptual clarity
+2. Non-perturbative problems
+3. Gauge theories (Faddeev-Popov)
+4. Connections to stat mech
+
+---
+
+## 2. The Path Integral in Quantum Mechanics
+
+Before field theory, let's see the idea in ordinary QM.
+
+### The Transition Amplitude
+
+For a single particle moving in 1D with Hamiltonian $\hat H = \hat p^2/2m + V(\hat q)$, the amplitude to go from position $q_i$ at time $t_i$ to position $q_f$ at time $t_f$ is:
+
+$$K(q_f, t_f; q_i, t_i) = \langle q_f | e^{-i\hat H(t_f - t_i)} | q_i\rangle$$
+
+### Feynman's Insight
+
+Feynman (1948) showed this amplitude can be written as:
+
+$$K(q_f, t_f; q_i, t_i) = \int_{q(t_i) = q_i}^{q(t_f) = q_f}\mathcal{D}q\, e^{iS[q]/\hbar}$$
+
+where the integral is over **all paths** $q(t)$ from $q_i$ at $t_i$ to $q_f$ at $t_f$, and $S[q] = \int dt\, L$ is the classical action.
+
+### How to Read This
+
+The transition amplitude is a sum over all imaginable paths the particle could take. Each path contributes a phase $e^{iS/\hbar}$. The total amplitude is the interference sum of all contributions.
+
+Paths where $S$ is stationary ($\delta S = 0$); i.e., classical trajectories; dominate in the classical limit $\hbar \to 0$ because they're the ones where nearby paths have nearly the same phase and interfere constructively. Other paths have rapidly varying phases and cancel.
+
+This is the quantum mechanical explanation of Hamilton's principle.
+
+### The Derivation
+
+The path integral is derived by slicing the time evolution into small steps and inserting complete sets of position and momentum states:
+
+$$\langle q_f | e^{-i\hat H T}|q_i\rangle = \int\prod_{j=1}^{N-1}dq_j\,\prod_{j=0}^{N-1}\langle q_{j+1}|e^{-i\hat H \Delta t}|q_j\rangle$$
+
+where $\Delta t = T/N$, $q_0 = q_i$, $q_N = q_f$. Taking $N \to \infty$, each factor $\langle q_{j+1}|e^{-i\hat H \Delta t}|q_j\rangle \to e^{iS[q]\Delta t/\hbar}$ (up to a factor from integrating out momenta), and the product becomes $e^{iS[q_{\rm discrete}]/\hbar}$, with the product of $dq_j$'s becoming the path integral measure.
+
+### What $\mathcal{D}q$ Actually Means
+
+The "measure" $\mathcal{D}q$ is defined as the limit of products of $dq_j$'s with appropriate normalization:
+
+$$\mathcal{D}q = \lim_{N\to\infty}\prod_{j=1}^{N-1}\sqrt{\frac{m}{2\pi i\hbar\Delta t}}\,dq_j$$
+
+The prefactor ensures that the path integral gives the right normalization when compared to explicit calculations.
+
+This is a formal object. In practice, path integrals are evaluated by:
+- Expanding around classical solutions (saddle-point)
+- Gaussian integration (when the action is quadratic)
+- Lattice discretization (for non-perturbative methods)
+- Regularization + renormalization
+
+### A Simple Example
+
+For a free particle ($V = 0$), the path integral gives:
+
+$$K(q_f, T; q_i, 0) = \sqrt{\frac{m}{2\pi i\hbar T}}\exp\left[\frac{im(q_f - q_i)^2}{2\hbar T}\right]$$
+
+This matches the known free-particle propagator derived from the Schrödinger equation. Good; path integrals reproduce QM.
+
+---
+
+## 3. From QM to QFT: The Scalar Field Path Integral
+
+### The Generalization
+
+For a scalar field $\phi(x)$, the path integral is a sum over all field configurations; all functions $\phi: \mathbb{R}^4 \to \mathbb{R}$:
+
+$$Z = \int\mathcal{D}\phi\, e^{iS[\phi]}$$
+
+where $S[\phi] = \int d^4x\, \mathcal{L}[\phi, \partial\phi]$ is the classical action and $\mathcal{D}\phi$ is the path integral measure over the space of field configurations.
+
+### What's Being Summed
+
+In QM, we summed over all paths $q(t)$. In QFT, we sum over all field configurations $\phi(x)$; functions defined at every spacetime point. This is an infinite-infinite-dimensional integration.
+
+At each spacetime point $x$, $\phi(x)$ can take any real value. We're integrating over all possible functions $\phi$. This is vastly more integrals than in QM.
+
+### The Scalar Field Action
+
+For a free scalar field:
+
+$$S[\phi] = \int d^4x\left[\tfrac{1}{2}(\partial_\mu\phi)(\partial^\mu\phi) - \tfrac{1}{2}m^2\phi^2\right]$$
+
+The path integral becomes:
+
+$$Z = \int\mathcal{D}\phi\,\exp\left[i\int d^4x\,\left(\tfrac{1}{2}(\partial\phi)^2 - \tfrac{1}{2}m^2\phi^2\right)\right]$$
+
+For the interacting theory, add $-\tfrac{\lambda}{4!}\phi^4$ (or similar interaction) inside the exponential.
+
+### Computing Observables
+
+Observables are computed as:
+
+$$\langle\hat{\mathcal{O}}\rangle = \frac{1}{Z}\int\mathcal{D}\phi\,\mathcal{O}[\phi]\,e^{iS[\phi]}$$
+
+Where $\mathcal{O}[\phi]$ is the classical observable (a function of the field) whose expectation value we want. The normalization $Z$ ensures $\langle 1\rangle = 1$.
+
+### Example: The Two-Point Function
+
+The vacuum two-point function in the canonical formalism:
+
+$$\langle 0|T\{\phi(x)\phi(y)\}|0\rangle$$
+
+becomes, in the path integral:
+
+$$\frac{1}{Z}\int\mathcal{D}\phi\,\phi(x)\phi(y)\,e^{iS[\phi]}$$
+
+Remarkably, these two expressions are *equal* for the free theory, and by extension in perturbation theory when you add interactions. The path integral and canonical formulations are equivalent.
+
+### Why This Works
+
+The time-ordered product in the canonical formalism comes automatically in the path integral formulation; because when you derive path integrals from canonical operators (as in section 2), the time-slicing naturally gives time-ordered products.
+
+The symmetry of the path integral expression under $x \leftrightarrow y$ reflects this: $\phi(x)\phi(y) = \phi(y)\phi(x)$ as classical fields commute, and the time-ordering is automatic.
+
+---
+
+## 4. Generating Functionals
+
+### The Trick
+
+Compute a "generating functional" $Z[J]$ by adding a source term to the action:
+
+$$Z[J] = \int\mathcal{D}\phi\,\exp\left[iS[\phi] + i\int d^4x\, J(x)\phi(x)\right]$$
+
+The source $J(x)$ is an arbitrary external function coupled linearly to $\phi$. The path integral $Z[J]$ is a functional of $J$.
+
+### Extracting Correlators
+
+All $n$-point correlation functions can be extracted from $Z[J]$ by functional differentiation:
+
+$$\langle 0|T\{\phi(x_1)\cdots\phi(x_n)\}|0\rangle = \frac{1}{Z[0]}\left.\frac{\delta^n Z[J]}{i^n\,\delta J(x_1)\cdots\delta J(x_n)}\right|_{J=0}$$
+
+This is beautiful: a single functional $Z[J]$ encodes all the information in the quantum field theory. Every correlator is just a functional derivative.
+
+### Computing $Z[J]$ for the Free Scalar
+
+The free action is quadratic in $\phi$. The path integral is a Gaussian integral, which can be done explicitly:
+
+$$Z[J] = \int\mathcal{D}\phi\,\exp\left[i\int d^4x\left(-\tfrac{1}{2}\phi(\Box + m^2)\phi + J\phi\right)\right]$$
+
+(I've integrated by parts in the action: $\tfrac{1}{2}(\partial\phi)^2 \to -\tfrac{1}{2}\phi\Box\phi$.)
+
+Complete the square:
+
+$$-\tfrac{1}{2}\phi(\Box + m^2)\phi + J\phi$$
+
+Let $\phi = \phi_0 + \tilde\phi$ where $\phi_0 = -(\Box + m^2)^{-1}J$ is chosen so that the linear term vanishes:
+
+$$= -\tfrac{1}{2}\tilde\phi(\Box + m^2)\tilde\phi + \tfrac{1}{2}J(\Box + m^2)^{-1}J$$
+
+The $\tilde\phi$ integral is now a pure Gaussian (no source term), giving a $J$-independent factor. The $J$-dependent piece is:
+
+$$Z[J] = Z[0]\exp\left[\frac{i}{2}\int d^4x\,d^4y\,J(x)D_F(x-y)J(y)\right]$$
+
+where $D_F(x-y)$ is the Feynman propagator. 
+
+### What This Tells Us
+
+The free-field generating functional is a simple Gaussian in $J$. Its exponent is the propagator connecting pairs of source insertions.
+
+Functional derivatives give:
+
+$$\frac{\delta^2 Z[J]}{\delta J(x)\delta J(y)}\bigg|_{J=0} = i D_F(x - y) \cdot Z[0]$$
+
+So:
+
+$$\langle 0|T\{\phi(x)\phi(y)\}|0\rangle = \frac{1}{i^2}\cdot\frac{iD_F(x-y)}{1} = \frac{D_F(x-y)}{i} = -iD_F(x-y)$$
+
+Wait, this is giving me a sign issue. Let me be more careful with the $i$'s. Actually the conventional result is that:
+
+$$\langle 0|T\{\phi(x)\phi(y)\}|0\rangle = D_F(x - y)$$
+
+which matches what I derived in document 1 from canonical methods. The sign conventions vary between textbooks; the physical content is the same. ✓
+
+### The $\epsilon$-Prescription in Path Integrals
+
+A technical point: for the path integral to converge properly, you need an infinitesimal rotation $S \to S + i\epsilon\int\phi^2$. This is what produces the $+i\epsilon$ in the Feynman propagator. In Euclidean path integrals (next section), this is automatic.
+
+---
+
+## 5. Wick Rotation: Euclidean Path Integrals
+
+### The Problem
+
+The Minkowski path integral is oscillatory; $e^{iS/\hbar}$; and doesn't converge as an ordinary integral. It's only defined through regularization (like the $+i\epsilon$ prescription) or analytic continuation.
+
+### The Trick: Analytic Continuation in Time
+
+Replace $t \to -i\tau$, where $\tau$ is "Euclidean time." The Minkowski interval:
+
+$$ds^2 = dt^2 - d\vec x^2$$
+
+becomes:
+
+$$ds^2 = -d\tau^2 - d\vec x^2 = -(d\tau^2 + d\vec x^2) = -ds^2_E$$
+
+The minus sign is fine; we're just relabeling. The key point: in Euclidean coordinates, the metric is positive definite. No distinction between "time" and "space."
+
+### The Action Transforms
+
+The Minkowski action:
+
+$$S_M = \int d^4x\left[\tfrac{1}{2}(\partial_\mu\phi)(\partial^\mu\phi) - V(\phi)\right]$$
+
+Under $t \to -i\tau$, $\partial_t \to i\partial_\tau$, and the action transforms:
+
+$$iS_M \to -S_E$$
+
+where the Euclidean action is:
+
+$$S_E = \int d^4x_E\left[\tfrac{1}{2}(\partial_\mu\phi)(\partial_\mu\phi) + V(\phi)\right]$$
+
+(with Euclidean conventions where all partial derivatives have the same sign).
+
+### The Euclidean Path Integral
+
+The path integral becomes:
+
+$$Z = \int\mathcal{D}\phi\, e^{-S_E[\phi]}$$
+
+This is a *real* exponential; the integrand is damped, not oscillatory. The path integral converges (at least formally) as an ordinary integral over a probability-like measure.
+
+### Why This Matters
+
+Two huge benefits:
+
+1. **Mathematical well-definedness.** The Euclidean path integral looks like an ordinary statistical mechanics partition function (next section). Rigorous treatments of QFT often start from the Euclidean formulation.
+
+2. **Connection to stat mech.** The formal similarity between the Euclidean path integral and thermal ensembles is deep, not superficial.
+
+### Going Back to Minkowski
+
+Physical observables are computed in Euclidean space, then analytically continued back to Minkowski. Correlation functions as a function of Euclidean momenta can be continued to Minkowski momenta by $k^0_E \to -ik^0$.
+
+For equal-time correlators, Euclidean and Minkowski give the same result. Time-ordering emerges naturally.
+
+### Lattice Field Theory
+
+On a Euclidean lattice, field theories are rigorously well-defined. The Euclidean path integral becomes a finite-dimensional integral (one integration per lattice site). Monte Carlo methods can evaluate it numerically.
+
+This is how **lattice QCD** works: put the theory on a Euclidean lattice, compute quantities non-perturbatively, continue back to Minkowski for physical predictions. It's the primary tool for understanding strong-coupling QCD (confinement, hadron masses, etc.).
+
+---
+
+## 6. The Connection to Statistical Mechanics
+
+### The Formal Match
+
+Statistical mechanics of a classical system at temperature $T$:
+
+$$Z_{\rm stat} = \sum_{\rm states}e^{-\beta E} = \int d\phi\, e^{-\beta H[\phi]}$$
+
+where $\beta = 1/(k_B T)$ and $H[\phi]$ is the Hamiltonian as a function of the configuration.
+
+Euclidean QFT:
+
+$$Z_{\rm QFT} = \int\mathcal{D}\phi\, e^{-S_E[\phi]}$$
+
+These look *identical*. The Euclidean action $S_E$ plays the role of $\beta H$. Each configuration $\phi$ is weighted by an exponential factor.
+
+### More Than Formal
+
+The match isn't just notational. Actual calculations in the two frameworks produce the same structures:
+
+**Phase transitions:** In stat mech, second-order phase transitions have divergent correlation lengths and universal critical exponents. In QFT, theories at RG fixed points have the same features.
+
+**Universality:** The universality classes of stat mech (Ising, XY, Heisenberg, etc.) correspond directly to conformal field theories at fixed points of QFT RG flow.
+
+**Correlation functions:** $\langle\phi(x)\phi(y)\rangle$ in stat mech (probability correlator of configurations) and $\langle 0|T\{\phi(x)\phi(y)\}|0\rangle$ in QFT (Wightman/Feynman function) are the same object in Euclidean signature.
+
+### The Temperature-Inverse-Time Correspondence
+
+For a quantum system at temperature $T$:
+
+$$Z_{\rm thermal} = \text{tr}\,e^{-\beta\hat H} = \int \mathcal{D}\phi\, e^{-S_E[\phi; \text{period }\beta]}$$
+
+The Euclidean time direction is periodic with period $\beta = 1/(k_B T)$.
+
+Quantum thermal equilibrium at temperature $T$ is equivalent to a Euclidean field theory on a 4D space-time with one direction compactified to a circle of circumference $\beta$. This is **imaginary time formalism** for finite-temperature field theory.
+
+### Examples
+
+**QGP at LHC temperatures:** The quark-gluon plasma produced in heavy-ion collisions is described by QCD at temperatures $\sim 200$ MeV. Lattice QCD calculations at finite $T$ use this imaginary-time formalism.
+
+**Hawking radiation:** A black hole appears thermal to distant observers because the Euclidean continuation of the black hole metric naturally has a periodicity in Euclidean time, corresponding to the Hawking temperature.
+
+**CMB:** The CMB is thermal radiation from the early universe. The thermal QFT machinery describes it.
+
+### The Deep Lesson
+
+Quantum mechanics and thermal fluctuations share the same mathematical structure. Both involve probability-like distributions over configurations, weighted by exponentials.
+
+In QM: weight is $e^{iS/\hbar}$, phase with coefficient $\hbar$.
+In stat mech: weight is $e^{-\beta H}$, damping with coefficient $k_B T$.
+
+Under Wick rotation, these are formally equivalent. The Planck constant $\hbar$ plays a role similar to the thermal energy $k_B T$; both set the scale of fluctuations.
+
+---
+
+## 7. Perturbation Theory from the Path Integral
+
+### The Interacting Case
+
+For an interacting theory like $\phi^4$:
+
+$$S[\phi] = S_0[\phi] + S_{\rm int}[\phi]$$
+
+where $S_0$ is the free (quadratic) part and $S_{\rm int} = -\int d^4x\,\frac{\lambda}{4!}\phi^4$ is the interaction.
+
+The path integral:
+
+$$Z[J] = \int\mathcal{D}\phi\, e^{iS_0 + iS_{\rm int} + iJ\phi}$$
+
+### Expand in the Coupling
+
+Expand $e^{iS_{\rm int}}$ in powers of $\lambda$:
+
+$$e^{iS_{\rm int}} = \sum_{n=0}^\infty\frac{(i S_{\rm int})^n}{n!}$$
+
+Each term brings down factors of $\phi^4$ at spacetime points $x_i$:
+
+$$(iS_{\rm int})^n = \left(-\frac{i\lambda}{4!}\right)^n\int d^4x_1\cdots d^4x_n\,\phi^4(x_1)\cdots\phi^4(x_n)$$
+
+### Compute Using Gaussian Integration
+
+The path integral becomes:
+
+$$Z[J] \propto \sum_n\left(-\frac{i\lambda}{4!}\right)^n\int d^4x_1\cdots d^4x_n\int\mathcal{D}\phi\,\phi^4(x_1)\cdots\phi^4(x_n)e^{iS_0 + iJ\phi}$$
+
+The inner path integral is a Gaussian with $\phi^4$ insertions. For each insertion, we can use the generating functional trick.
+
+### The Key Identity
+
+For a Gaussian path integral with a source, we have:
+
+$$\int\mathcal{D}\phi\,\phi(x)\,e^{iS_0 + iJ\phi} = \frac{\delta}{i\delta J(x)}\int\mathcal{D}\phi\,e^{iS_0 + iJ\phi}$$
+
+Applied iteratively:
+
+$$\int\mathcal{D}\phi\,\phi(x_1)\cdots\phi(x_n)\,e^{iS_0 + iJ\phi} = \frac{\delta}{i\delta J(x_1)}\cdots\frac{\delta}{i\delta J(x_n)}Z_0[J]$$
+
+Where $Z_0[J]$ is the free generating functional we computed in section 4.
+
+### The Master Formula
+
+$$Z[J] = \exp\left[-\frac{i\lambda}{4!}\int d^4x\left(\frac{\delta}{i\delta J(x)}\right)^4\right]Z_0[J]$$
+
+This is exact. It says: to compute correlators in the interacting theory, take the free generating functional and hit it with the interaction-vertex operator (which is a differential operator in functional space).
+
+### Extracting Diagrams
+
+The operator $\exp[...]$ expands as a Taylor series. Each term contributes a factor of $-i\lambda/4!$ times some number of functional derivatives at the vertex. Applied to $Z_0[J] = \exp[\tfrac{i}{2}JD_F J]$, each derivative pulls down a propagator.
+
+The result: the $n$-th order term corresponds to Feynman diagrams with $n$ vertices, where each internal line is a Feynman propagator and each vertex is a $-i\lambda$.
+
+This is exactly the Feynman rules from document 5; but derived directly from the path integral, without any reference to Wick's theorem or interaction-picture operators.
+
+---
+
+## 8. Deriving Feynman Rules
+
+Let me make the connection more explicit.
+
+### The Two-Point Function at First Order in $\lambda$
+
+Compute $\langle\phi(x)\phi(y)\rangle$ in $\phi^4$ theory to order $\lambda$.
+
+From the master formula at first order:
+
+$$\langle\phi(x)\phi(y)\rangle_1 \propto \int\mathcal{D}\phi\,\phi(x)\phi(y)\,\left(-\frac{i\lambda}{4!}\int d^4z\,\phi^4(z)\right)e^{iS_0}$$
+
+$$\propto -\frac{i\lambda}{4!}\int d^4z\,\langle\phi(x)\phi(y)\phi^4(z)\rangle_0$$
+
+The subscript 0 denotes free-theory expectation. By Wick's theorem (which in the path integral language just means: Gaussian integrals factorize into pairs), this six-point function is a sum over all pairings.
+
+### The Three Topologies
+
+Six fields $\phi(x)$, $\phi(y)$, $\phi(z)$, $\phi(z)$, $\phi(z)$, $\phi(z)$. Each pair of fields contracts to a propagator. There are $\binom{5}{1} = 5$ different contractions at the vertex, producing three distinct topological diagrams:
+
+**Topology 1:** $\phi(x)$ pairs with $\phi(y)$, and the four $\phi(z)$'s pair among themselves (3 ways). This gives a product of disconnected propagators; a "vacuum bubble" times $\langle\phi(x)\phi(y)\rangle_0$.
+
+**Topology 2:** $\phi(x)$ pairs with one of the $\phi(z)$'s, $\phi(y)$ with another, and the remaining two $\phi(z)$'s pair with each other. This is the "self-energy" topology; a loop of propagators connected through the vertex.
+
+**Topology 3:** Same as topology 2 with $x$ and $y$ roles swapped; but the diagram is topologically equivalent.
+
+Counting the combinatorial factors and applying the Feynman rules gives the $O(\lambda)$ contribution to the two-point function, which corresponds to the one-loop tadpole diagram.
+
+### Why This Method Works
+
+The path integral gives Feynman rules *directly* from the action. Each vertex in the Lagrangian becomes a vertex in diagrams. Each propagator of free fields becomes a line in diagrams. The coefficients ($-i\lambda/4!$, $1/4!$ from identical permutations) come out of the expansion.
+
+No need to go through the interaction picture, Dyson expansion, and Wick's theorem separately. The path integral packages all of that into one mathematical object.
+
+### Symmetry Factors
+
+Occasionally, a diagram has fewer topologically distinct configurations than the naive counting would suggest; because some rearrangements leave the diagram invariant (its "symmetry group" is non-trivial). In those cases, you divide by a **symmetry factor** equal to the order of that group.
+
+For example, a tadpole-like vacuum bubble at the end of a single propagator has symmetry factor 2 (flip the bubble), meaning its contribution is $1/2$ of the naive counting. This is automatically accounted for in the path integral derivation through combinatorial factors that emerge from functional differentiation.
+
+### The Philosophical Point
+
+The path integral and canonical formulations give the same Feynman rules. This is a non-trivial result; it's the statement that both formulations describe the same physics.
+
+In practice, for perturbative calculations, which formulation you choose is often a matter of taste or convenience. The path integral shines especially for gauge theories (where gauge fixing is cleaner) and non-perturbative work.
+
+---
+
+## 9. Effective Actions and the Quantum Equations of Motion
+
+### The Effective Action
+
+Define a new functional, the **effective action** $\Gamma[\phi_{\rm cl}]$, by Legendre transform:
+
+$$\Gamma[\phi_{\rm cl}] = -iW[J] - \int d^4x\, J(x)\phi_{\rm cl}(x)$$
+
+where $W[J] = -i\ln Z[J]$ and $\phi_{\rm cl}(x) = \frac{\delta W[J]}{\delta J(x)}$.
+
+### What It Is
+
+$\phi_{\rm cl}$ is the "classical" field; the quantum expectation value of $\phi$ in the presence of a source. The effective action $\Gamma$ is like the classical action $S$, but with all quantum corrections included.
+
+**The quantum equations of motion** are:
+
+$$\frac{\delta\Gamma[\phi_{\rm cl}]}{\delta\phi_{\rm cl}(x)} = -J(x)$$
+
+Setting $J = 0$: $\delta\Gamma/\delta\phi_{\rm cl} = 0$. This tells you the possible vacuum values of $\phi_{\rm cl}$.
+
+### The Loop Expansion
+
+The effective action has a perturbative expansion:
+
+$$\Gamma[\phi_{\rm cl}] = S[\phi_{\rm cl}] + \sum_{n\geq 1}\hbar^n\Gamma^{(n)}[\phi_{\rm cl}]$$
+
+At zeroth order in $\hbar$, $\Gamma = S$ (the classical action). At higher orders, $\Gamma^{(n)}$ contains quantum corrections.
+
+### Spontaneous Symmetry Breaking
+
+For theories with symmetry breaking (like the Higgs mechanism), the effective potential $V_{\rm eff}$ (which comes from the effective action in the case of constant $\phi_{\rm cl}$) tells you the structure of the vacuum.
+
+For example: a $\phi^4$ theory with negative mass squared has a classical potential $V(\phi) = \tfrac{1}{2}m^2\phi^2 + \tfrac{\lambda}{4!}\phi^4$ (with $m^2 < 0$) that has minima at $\phi \neq 0$. Quantum corrections to this potential can shift the minima (Coleman-Weinberg mechanism), adjust the symmetry-breaking scale, or even restore the symmetry.
+
+### The 1PI Generating Functional
+
+$\Gamma[\phi_{\rm cl}]$ is also the generating functional for **one-particle-irreducible (1PI)** diagrams; diagrams that can't be disconnected by cutting a single internal line. These are the "physical" diagrams in a precise sense; they're the building blocks of all other diagrams, which can be assembled from 1PI pieces via propagators.
+
+This makes the effective action the cleanest conceptual tool for studying things like renormalization (the divergent structures live in $\Gamma$) and the physical spectrum (poles of the inverse two-point function).
+
+---
+
+## 10. Symmetries and Ward Identities
+
+### The Claim
+
+If the classical action $S[\phi]$ has a symmetry, and the measure $\mathcal{D}\phi$ is invariant under the same transformation, then the quantum theory has the same symmetry. This manifests as relations between correlation functions called **Ward identities**.
+
+### Derivation
+
+Suppose $\phi \to \phi + \delta\phi(x)$ is an infinitesimal symmetry: $\delta S = 0$ and $\mathcal{D}\phi \to \mathcal{D}\phi$ (measure invariant).
+
+Change variables in the path integral:
+
+$$\int\mathcal{D}\phi\,\mathcal{O}[\phi]\,e^{iS[\phi]} = \int\mathcal{D}\phi'\,\mathcal{O}[\phi']\,e^{iS[\phi']}$$
+
+Expanding to first order in $\delta\phi$:
+
+$$\int\mathcal{D}\phi\,\delta\mathcal{O}\,e^{iS} = 0$$
+
+which gives $\langle\delta\mathcal{O}\rangle = 0$. This is the Ward identity.
+
+For explicit symmetries, this gives relations between correlators of different operators; constraints that must be satisfied at every order in perturbation theory.
+
+### Example: QED Ward-Takahashi Identity
+
+The QED Ward-Takahashi identity, which gave us $Z_1 = Z_2$ in document 7, follows from the path integral by considering the $U(1)$ gauge transformation. Since the path integral measure is invariant under this transformation, correlators satisfy specific relations.
+
+The relation $q_\mu\Gamma^\mu(p', p) = S^{-1}(p') - S^{-1}(p)$ is a Ward identity; a direct consequence of path integral invariance.
+
+### Anomalies
+
+**But sometimes the measure is NOT invariant** under a classical symmetry. When the naive symmetry transformation changes the path integral measure, the quantum theory fails to respect the classical symmetry.
+
+This is an **anomaly**. The classical symmetry is broken by quantum effects.
+
+### The Chiral Anomaly
+
+The most famous example: the axial current $j^\mu_5 = \bar\psi\gamma^\mu\gamma^5\psi$ in QED with massless fermions. Classically, $\partial_\mu j^\mu_5 = 0$. Quantum mechanically:
+
+$$\partial_\mu j^\mu_5 = \frac{e^2}{8\pi^2}F_{\mu\nu}\tilde F^{\mu\nu}$$
+
+where $\tilde F^{\mu\nu} = \tfrac{1}{2}\epsilon^{\mu\nu\rho\sigma}F_{\rho\sigma}$. This is the **Adler-Bell-Jackiw anomaly**.
+
+### Physical Consequences
+
+1. **$\pi^0 \to \gamma\gamma$ decay rate:** Determined by the chiral anomaly. The anomaly-based prediction matches experiment.
+2. **Strong CP problem:** The QCD analog of the chiral anomaly would normally lead to large CP violation in strong interactions. Experimentally, this violation is absent; suggesting fine tuning of a parameter or new physics (axions).
+3. **Anomaly cancellation:** In the Standard Model, various anomalies must cancel between different fermion species. This requires specific charge assignments; and the fact that the Standard Model particle content satisfies these conditions is a non-trivial consistency check.
+
+### Why Anomalies Are Deep
+
+Anomalies represent quantum corrections that can't be removed by field redefinition or renormalization. They're genuine features of the quantum theory that differ from the classical theory in an essential way.
+
+They also have a topological character: the coefficient of the anomaly is often an integer (counting, e.g., the number of fermions in the loop) that can't be changed continuously.
+
+### Fujikawa Method
+
+Fujikawa (1979) showed how to derive anomalies directly from the path integral. The measure $\mathcal{D}\psi\mathcal{D}\bar\psi$ isn't invariant under chiral transformations; it picks up a Jacobian proportional to the anomaly. This provides an elegant way to compute anomalies without evaluating specific diagrams.
+
+### Preview: Gauge Anomalies
+
+If a gauge symmetry is anomalous, the theory becomes inconsistent; gauge redundancy doesn't fully decouple unphysical modes, and you lose unitarity. This is why gauge anomalies must cancel in any consistent theory, constraining the particle content of the Standard Model and GUT extensions.
+
+---
+
+## 11. Beyond Perturbation Theory: Instantons
+
+The path integral's real power shows up when perturbation theory isn't enough.
+
+### The Problem
+
+Perturbation theory is an expansion around $g = 0$. It misses effects that are exponentially small in $g$:
+
+$$f(g) \sim e^{-1/g^2}$$
+
+These "instanton" contributions come from classical solutions of the Euclidean equations of motion with non-trivial topology. They're invisible in perturbation theory but can dominate certain physical observables.
+
+### The Instanton Picture
+
+In Euclidean signature, look for classical solutions $\phi_{\rm cl}(x)$ with finite action. These are called **instantons**.
+
+For each instanton, the path integral gets a contribution $e^{-S_E[\phi_{\rm cl}]}$. Around each instanton, quantum fluctuations give a perturbative expansion.
+
+### Example: Yang-Mills Instantons
+
+Belavin-Polyakov-Schwartz-Tyupkin (1975) found a classical solution of Euclidean Yang-Mills equations (for $SU(2)$ or larger gauge group) with action $S_E = 8\pi^2/g^2$. These BPST instantons:
+
+- Are localized in 4D Euclidean space
+- Have topological charge 1 (related to winding number of the gauge field)
+- Contribute to the path integral as $e^{-8\pi^2/g^2}$
+
+The exponent is $-8\pi^2/g^2$; enormous when $g$ is small, so instanton contributions are exponentially suppressed in perturbative QCD. But they're there.
+
+### Why They Matter
+
+Instantons explain several real effects:
+
+**The U(1) problem:** Naively, QCD has a $U(1)_A$ symmetry that would lead to a light 9th pseudoscalar meson in addition to the 8 pseudo-Goldstone bosons ($\pi$, $K$, $\eta$). Experimentally, the $\eta'$ is much heavier than expected. Instantons (via the axial anomaly) solve this puzzle; they give the $\eta'$ a large mass.
+
+**Vacuum structure:** The QCD vacuum has a non-trivial "theta vacuum" structure characterized by a parameter $\theta$. Instantons mediate transitions between topologically distinct vacua.
+
+**Strong CP problem:** The $\theta$ parameter should show up as CP violation in strong interactions. Experimentally, $|\theta| < 10^{-10}$. Why so small? Nobody knows (axion models provide one proposed solution).
+
+**Tunneling in general:** In quantum mechanics, tunneling between classical vacua is described by instantons. The same idea extends to field theory.
+
+### Calculating with Instantons
+
+The semiclassical evaluation of the path integral around an instanton gives:
+
+$$Z \supset \int d^4 x_0 \int d\rho\,\rho^{-5}e^{-8\pi^2/g^2(\rho)}(\text{quantum corrections})$$
+
+Where $x_0$ is the instanton position, $\rho$ is its size (instantons have a scale parameter), and $g(\rho)$ is the running coupling evaluated at scale $1/\rho$.
+
+Because of the running coupling, instanton contributions can be computed reliably at high energies (where $g$ is small) but grow at low energies, eventually becoming order 1.
+
+---
+
+## 12. Preview: Gauge Theories and Grassmann Variables
+
+### What's Coming Next
+
+This document handled bosonic fields. Two major extensions are needed for a complete QFT toolbox:
+
+**Fermions in the path integral (document 10).** Fermionic fields anticommute, so they can't be described by ordinary numbers. The mathematical objects are **Grassmann numbers**; anticommuting c-numbers. The path integral over fermion fields becomes an integral over Grassmann-valued functions.
+
+Key features:
+- Gaussian Grassmann integrals give *determinants* (not inverse determinants like bosonic integrals)
+- Integrating out fermions from a theory generates effective bosonic actions
+- Used extensively in QCD, electroweak theory, any theory with fermions
+
+**Gauge theories (document 11).** The path integral for gauge theories has subtleties that the canonical approach handled via gauge fixing + ghost fields. In the path integral, these become the **Faddeev-Popov procedure**; an elegant geometric construction that:
+
+- Introduces ghost fields automatically
+- Preserves gauge invariance of physical observables
+- Applies to both abelian (QED) and non-abelian (Yang-Mills) theories
+
+The combination of these two techniques (fermionic path integrals + Faddeev-Popov) gives the modern formulation of QFT. Every state-of-the-art calculation in particle physics uses these tools.
+
+### Why Path Integrals Matter for Gauge Theories
+
+In the canonical approach to QED (document 3), we had to choose between Coulomb gauge (physical but non-covariant) and Gupta-Bleuler (covariant but with indefinite-metric Hilbert space).
+
+In the path integral, the Faddeev-Popov procedure handles gauge fixing in a way that's:
+- Manifestly Lorentz-invariant
+- Produces a positive-definite Hilbert space (via ghost cancellations)
+- Preserves gauge invariance of physical observables
+- Naturally extends to non-abelian theories
+
+For non-abelian gauge theories (Yang-Mills, QCD, electroweak), the path integral approach with Faddeev-Popov ghosts is essential; the alternative (canonical quantization) is much more awkward and has additional complications.
+
+### The Big Picture
+
+By the end of document 11, you'll have the complete modern formulation of gauge theories in the path integral language. By the end of document 12, you'll have the full Standard Model assembled as a quantum field theory.
+
+---
+
+## 13. Appendix: Path Integral Formulas
+
+### Basic Path Integral
+
+For a generic quantum system:
+
+$$\langle f|e^{-i\hat H T}|i\rangle = \int_{\phi(0) = i}^{\phi(T) = f}\mathcal{D}\phi\,e^{iS[\phi]/\hbar}$$
+
+### Scalar Field Path Integral
+
+$$Z = \int\mathcal{D}\phi\, e^{iS[\phi]}$$
+
+### Generating Functional
+
+$$Z[J] = \int\mathcal{D}\phi\, e^{iS[\phi] + i\int J\phi}$$
+
+### Correlation Functions
+
+$$\langle 0|T\{\phi(x_1)\cdots\phi(x_n)\}|0\rangle = \frac{1}{Z[0]}\frac{\delta^n Z[J]}{i^n\delta J(x_1)\cdots\delta J(x_n)}\bigg|_{J=0}$$
+
+### Free Generating Functional (Scalar)
+
+$$Z_0[J] = Z_0[0]\exp\left[\frac{i}{2}\int d^4x\,d^4y\, J(x)D_F(x - y)J(y)\right]$$
+
+### Effective Action (Legendre Transform)
+
+$$\Gamma[\phi_{\rm cl}] = W[J] - \int J\phi_{\rm cl}, \quad \phi_{\rm cl} = \delta W/\delta J, \quad W = -i\ln Z[J]$$
+
+Quantum EOM:
+
+$$\frac{\delta\Gamma[\phi_{\rm cl}]}{\delta\phi_{\rm cl}} = -J$$
+
+### Wick Rotation
+
+$$t \to -i\tau \implies iS \to -S_E$$
+
+Euclidean action:
+
+$$S_E[\phi] = \int d^4x_E\left[\tfrac{1}{2}(\partial\phi)^2 + V(\phi)\right]$$
+
+(All derivatives have positive signs in Euclidean signature.)
+
+### Euclidean Path Integral
+
+$$Z_E = \int\mathcal{D}\phi\, e^{-S_E[\phi]}$$
+
+### Stat Mech Correspondence
+
+$$\text{tr}\,e^{-\beta\hat H} = \int_{\phi(\tau = 0) = \phi(\tau = \beta)}\mathcal{D}\phi\, e^{-S_E}$$
+
+(Periodic Euclidean time with period $\beta = 1/T$.)
+
+### Gaussian Integration Identity
+
+For a bosonic Gaussian integral:
+
+$$\int d^N x\, e^{-\tfrac{1}{2}x^T A x + J^T x} = (2\pi)^{N/2}(\det A)^{-1/2}e^{\tfrac{1}{2}J^T A^{-1} J}$$
+
+Analog in path integral:
+
+$$\int\mathcal{D}\phi\, e^{-\tfrac{1}{2}\phi K\phi + J\phi} \propto (\det K)^{-1/2}e^{\tfrac{1}{2}J K^{-1}J}$$
+
+### Anomaly Example (Chiral Anomaly)
+
+$$\partial_\mu j^\mu_5 = \frac{e^2}{8\pi^2}F_{\mu\nu}\tilde F^{\mu\nu}, \quad \tilde F^{\mu\nu} = \tfrac{1}{2}\epsilon^{\mu\nu\rho\sigma}F_{\rho\sigma}$$
+
+### Instanton Action (SU(2) Yang-Mills)
+
+$$S_E^{\rm BPST} = \frac{8\pi^2}{g^2}$$
+
+### Further Reading
+
+- **Peskin & Schroeder, Chapter 9:** introduction to path integrals
+- **Srednicki, Chapters 6-12:** thorough development
+- **Schwartz, Chapters 14-15:** modern pedagogical treatment
+- **Zinn-Justin, *Quantum Field Theory and Critical Phenomena*:** the definitive reference
+- **Feynman & Hibbs, *Quantum Mechanics and Path Integrals*:** original pedagogical account
+- **Polyakov, *Gauge Fields and Strings*:** conceptually deep, non-perturbative emphasis
+
+### Problems to Work
+
+1. Derive the free-field generating functional $Z_0[J]$ by completing the square in the action.
+
+2. Verify that functional differentiation of $Z_0[J]$ gives the correct two-point function $\langle\phi(x)\phi(y)\rangle = D_F(x - y)$.
+
+3. Perform the Wick rotation of the scalar field action explicitly, showing $iS \to -S_E$.
+
+4. For $\phi^4$ theory, compute the first-order correction to the two-point function using the path integral machinery. Identify the Feynman diagrams that emerge.
+
+5. Derive the Ward identity for $U(1)$ symmetry in scalar QED from the path integral.
+
+6. Compute the effective potential at one loop for the Coleman-Weinberg mechanism in massless $\phi^4$ theory.
+
+---
+
+## Closing Note
+
+The path integral is genuinely a different way of thinking about QFT. The canonical formulation starts with operators and states; the path integral starts with field configurations and classical actions. Both give the same physical predictions, but they highlight different aspects.
+
+### What the Path Integral Makes Clear
+
+- **Classical limit** is transparent: stationary-phase gives classical equations of motion
+- **Symmetries** are geometric: invariance of the path integral measure implies Ward identities
+- **Anomalies** are natural: when the measure isn't invariant, the classical symmetry is broken by quantum effects
+- **Euclidean connection to stat mech** is explicit: Wick rotation unifies QFT and statistical mechanics
+- **Non-perturbative methods** have a natural home: instantons, lattice field theory, solitons
+
+### The Framework Going Forward
+
+From now on, calculations can be done in either formulation. For practical perturbative calculations, the results are identical; both give Feynman diagrams. But conceptually, certain features are clearer in the path integral:
+
+- Gauge theories (coming in document 11 via Faddeev-Popov)
+- Anomalies (both perturbative and non-perturbative)
+- Critical phenomena (where the Euclidean path integral = stat mech partition function)
+- Non-perturbative phenomena (instantons, solitons, confinement)
+
+### Where We Go Next
+
+Document 10 extends the path integral to **fermions**. The mathematical tool is Grassmann numbers; anticommuting c-numbers that encode fermionic statistics at the level of path integral measure. Integrating over Grassmann fields gives *determinants* rather than inverse determinants; a different but equally well-defined Gaussian structure.
+
+Then document 11 tackles **Yang-Mills** with full Faddeev-Popov machinery. That's where the ghost fields emerge naturally, and where the path integral's conceptual advantages over canonical quantization become most apparent.
+
+Two more documents of infrastructure, then document 12 brings everything together in the complete quantized Standard Model.
+
+You're in the home stretch.

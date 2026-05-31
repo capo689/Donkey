@@ -1,0 +1,853 @@
+---
+title: "QFT XVI: SMEFT and HQET"
+stationNumber: 28
+line: "Advanced QFT Loop"
+date: 2026-05-08
+backdated: true
+prerequisites: [27]
+extendsTo: [29]
+classReportTitle: "The practitioner's tools."
+---
+
+*The workhorses of contemporary particle physics. SMEFT parametrizes new physics model-independently; HQET makes heavy-quark physics tractable.*
+
+Document 14 developed EFT methodology. Document 15 showed how it works for strongly-coupled low-energy QCD (chiral perturbation theory). This document covers the two EFTs most directly relevant to contemporary particle physics research:
+
+**SMEFT** (Standard Model Effective Field Theory) is the framework for parametrizing physics beyond the Standard Model. It's the workhorse of LHC phenomenology and precision tests of the SM. When theorists talk about "constraining new physics from data," they're usually constraining SMEFT Wilson coefficients.
+
+**HQET** (Heavy Quark Effective Theory) makes tractable the physics of heavy-quark systems; B mesons, D mesons, heavy baryons. The expansion is in $1/m_Q$ where $m_Q$ is the heavy quark mass ($m_b, m_c$). It's essential for flavor physics: CP violation in B decays, CKM matrix measurements, rare processes.
+
+Both are modern, extensively applied, and at the frontier of active research. Together with ChPT, they span the landscape of EFT applications in particle physics.
+
+### Prerequisites
+
+- Documents 14-15 (EFT principles and ChPT)
+- Standard Model document (QFT 12)
+- Particle physics reference
+
+### Conventions
+
+- Mostly-minus metric
+- $\hbar = c = 1$
+- Standard Model gauge structure: $SU(3)_C \times SU(2)_L \times U(1)_Y$
+
+---
+
+## Table of Contents
+
+**Part A: SMEFT**
+
+1. [What Is SMEFT?](#1-what-is-smeft)
+2. [The SMEFT Expansion](#2-the-smeft-expansion)
+3. [Dimension-6 Operators](#3-dimension-6-operators)
+4. [The Warsaw Basis](#4-the-warsaw-basis)
+5. [Running of SMEFT Coefficients](#5-running-of-smeft-coefficients)
+6. [Constraints from Higgs Physics](#6-constraints-from-higgs-physics)
+7. [Constraints from Electroweak Precision](#7-constraints-from-electroweak-precision)
+8. [Constraints from Flavor Physics](#8-constraints-from-flavor-physics)
+9. [Global SMEFT Fits](#9-global-smeft-fits)
+
+**Part B: HQET**
+
+10. [The Heavy Quark Problem](#10-the-heavy-quark-problem)
+11. [The HQET Lagrangian](#11-the-hqet-lagrangian)
+12. [Heavy Quark Symmetry](#12-heavy-quark-symmetry)
+13. [$1/m_Q$ Corrections](#13-1m_q-corrections)
+14. [Applications: B Physics](#14-applications-b-physics)
+15. [Beyond HQET: NRQCD and SCET](#15-beyond-hqet-nrqcd-and-scet)
+
+**Appendix**
+
+16. [Reference Tables and Formulas](#16-appendix-reference-tables-and-formulas)
+
+---
+
+## Part A: SMEFT
+
+## 1. What Is SMEFT?
+
+### The Framework
+
+SMEFT is the effective field theory where:
+
+1. The **relevant degrees of freedom** are the Standard Model fields (quarks, leptons, gauge bosons, Higgs)
+2. The **symmetries** are the full SM gauge symmetries: $SU(3)_C \times SU(2)_L \times U(1)_Y$ (unbroken phase)
+3. Operators of dimension $> 4$ parametrize **beyond-SM physics** assumed to live at scale $\Lambda \gtrsim $ TeV
+4. The **cutoff** $\Lambda$ is where new physics enters
+
+The SMEFT Lagrangian:
+
+$$\mathcal{L}_{\rm SMEFT} = \mathcal{L}_{\rm SM} + \frac{1}{\Lambda}\sum_i c_i^{(5)}\mathcal{O}_i^{(5)} + \frac{1}{\Lambda^2}\sum_i c_i^{(6)}\mathcal{O}_i^{(6)} + \frac{1}{\Lambda^3}\sum_i c_i^{(7)}\mathcal{O}_i^{(7)} + \ldots$$
+
+where $\mathcal{O}_i^{(n)}$ are dimension-$n$ operators built from SM fields.
+
+### What SMEFT Is For
+
+**Model-independent analysis of BSM physics.** If physics at scale $\Lambda$ is "heavy" (decoupled), its effects on SM processes appear through SMEFT Wilson coefficients. Measuring these coefficients is equivalent to measuring the footprint of new physics; without committing to a specific model.
+
+**Precision SM tests.** Deviations from SM predictions can be parametrized as nonzero $c_i$'s. Current data constrains them to be small.
+
+**Consistency between experiments.** Different measurements (Higgs couplings, electroweak precision, flavor observables) can be combined into global fits on SMEFT coefficients, revealing correlations and anomalies.
+
+**Matching to UV models.** If you have a specific UV theory (say, a heavy $Z'$, or extra dimensions, or supersymmetry), you can integrate out the heavy fields and compute specific predictions for the SMEFT coefficients. These can then be compared to data.
+
+### What SMEFT Assumes
+
+**Decoupling.** All new physics is at scale $\Lambda$ or higher, and can be integrated out. This fails if new physics is light (like a new $Z'$ below $M_Z$); then SMEFT can't be used.
+
+**Linear realization.** The Higgs is in a linear representation of $SU(2)_L$. This is the minimal assumption; non-linear (or "HEFT") realizations parametrize different physics.
+
+**Standard Model field content.** No new light particles. If new physics includes light dark matter or new gauge bosons below $\Lambda$, you need a different EFT.
+
+### What SMEFT Doesn't Assume
+
+**No specific model.** Any UV theory that decouples cleanly at scale $\Lambda$ can be matched to SMEFT. This is the "model-independent" part.
+
+**No specific flavor structure.** Wilson coefficients are generically complex matrices in flavor space. Constraints from flavor physics limit their structure (CKM-like, MFV, etc.).
+
+**No assumption about $\Lambda$.** The cutoff is a free parameter determined (or bounded) by data.
+
+---
+
+## 2. The SMEFT Expansion
+
+### The Hierarchy of Operators
+
+**Dimension 4:** The SM itself. All Wilson coefficients have been measured with high precision.
+
+**Dimension 5:** A single operator (the Weinberg operator):
+
+$$\mathcal{O}_5 = (L_L^c i\sigma_2 H)(H^T i\sigma_2 L_L)$$
+
+Generates Majorana neutrino masses $m_\nu \sim v^2/\Lambda$. For $m_\nu \sim 0.05$ eV and $c_5 \sim 1$: $\Lambda \sim 10^{14}$ GeV.
+
+**Dimension 6:** 59 independent baryon-conserving operators (per generation, 2499 total with all flavor structure). These are the main constraint on BSM physics from current experiments.
+
+**Dimension 7:** Additional operators, including some that violate baryon or lepton number.
+
+**Dimension 8:** Even more operators. Contribute at relative $(v/\Lambda)^4$ suppression compared to dim-6.
+
+For most current analyses, dim-6 is the leading-order BSM effect. Dim-8 and higher are small corrections for $\Lambda \gg v$.
+
+### The Scale of Expansion
+
+Dim-6 operator effects on observables at energy $E$:
+
+$$\delta\mathcal{O} \sim c_6\cdot\frac{E^2}{\Lambda^2}$$
+
+For LHC at $E \sim$ TeV and $\Lambda \sim 10$ TeV: $\delta\mathcal{O} \sim c_6\cdot 0.01 = 1\%$.
+
+For Higgs measurements at $E \sim v = 246$ GeV and $\Lambda \sim 10$ TeV: $\delta\mathcal{O} \sim c_6 \cdot 0.0006 = 0.06\%$.
+
+For flavor observables at $E \sim m_B = 5$ GeV and $\Lambda \sim 10$ TeV: $\delta\mathcal{O} \sim c_6\cdot 2.5\times 10^{-7}$.
+
+So flavor physics can probe very high scales; but only for specific operators that don't vanish at low energy.
+
+### Two Power Countings
+
+SMEFT admits different ways of expanding:
+
+**Warsaw counting:** expand in $1/\Lambda^2$ at each order. Most common, clean interpretation.
+
+**Higgs EFT counting:** expand in specific physical quantities (like $v$ or Higgs couplings). Useful when Higgs dominance is expected.
+
+The choice depends on the physics being probed. Most LHC analyses use Warsaw-style counting.
+
+---
+
+## 3. Dimension-6 Operators
+
+### Operator Classes
+
+The 59 independent dim-6 operators in SMEFT can be grouped by the fields they contain:
+
+**Class 1; Bosonic:** Contain only gauge bosons and the Higgs.
+- $\mathcal{O}_H = (H^\dagger H)^3$ (Higgs potential)
+- $\mathcal{O}_{HB} = H^\dagger H\, B_{\mu\nu}B^{\mu\nu}$
+- $\mathcal{O}_{HW} = H^\dagger H\, W^A_{\mu\nu}W^{A\mu\nu}$
+- $\mathcal{O}_{HG} = H^\dagger H\, G^a_{\mu\nu}G^{a\mu\nu}$
+- Similar with $\tilde W, \tilde B, \tilde G$ (CP-odd partners)
+
+These affect bosonic observables: Higgs decays, gauge boson production, diboson pair production.
+
+**Class 2; Higgs-fermion:** Contain fermions and the Higgs.
+- $\mathcal{O}_{HL}^{(1)} = (H^\dagger i\stackrel{\leftrightarrow}{D_\mu}H)(\bar L_L\gamma^\mu L_L)$
+- $\mathcal{O}_{HL}^{(3)} = (H^\dagger i\stackrel{\leftrightarrow}{D_\mu^A}H)(\bar L_L\sigma^A\gamma^\mu L_L)$
+- $\mathcal{O}_{Hq}^{(1)}$, $\mathcal{O}_{Hq}^{(3)}$: quark analogs
+- $\mathcal{O}_{He}$: right-handed lepton analog
+- $\mathcal{O}_{Hu}$, $\mathcal{O}_{Hd}$: right-handed quark analogs
+
+These modify couplings of fermions to the Higgs and electroweak bosons.
+
+**Class 3; Yukawa-like:**
+- $\mathcal{O}_{eH} = (H^\dagger H)(\bar L_L H e_R)$ (modifies electron Yukawa)
+- $\mathcal{O}_{dH}$, $\mathcal{O}_{uH}$: quark Yukawa modifiers
+
+Affect Higgs-fermion couplings.
+
+**Class 4; Four-fermion:** Purely fermion operators.
+- $(\bar L_L\gamma^\mu L_L)(\bar L_L\gamma_\mu L_L)$ and other combinations
+- Include operators with different fermion species (e.g., quarks and leptons)
+
+These are essentially the modernization of Fermi theory; contact four-fermion interactions.
+
+**Class 5; Dipole operators:**
+- $\mathcal{O}_{eB} = \bar L_L\sigma^{\mu\nu}e_R H B_{\mu\nu}$
+- Similar for quarks
+
+These generate anomalous magnetic moments and rare decays.
+
+### A Concrete Example
+
+Consider $\mathcal{O}_H$, the Higgs potential operator:
+
+$$\mathcal{O}_H = (H^\dagger H)^3$$
+
+Adding it to the SM with coefficient $c_H/\Lambda^2$:
+
+$$V(H) = -\mu^2|H|^2 + \lambda|H|^4 + \frac{c_H}{\Lambda^2}|H|^6$$
+
+This modifies the Higgs self-coupling (relevant at the triple Higgs vertex), the Higgs mass relation to the VEV, and the electroweak vacuum stability at high field values.
+
+Current LHC limits: $c_H/\Lambda^2 \lesssim 1/(10 \text{ TeV})^2$ or so (weak, because triple Higgs processes are rare at LHC). Future colliders (HL-LHC, FCC) will probe tighter.
+
+### CP Structure
+
+SMEFT operators split into CP-even and CP-odd. CP-odd operators are constrained by electric dipole moment (EDM) searches:
+
+- Electron EDM limit (ACME 2018): $|d_e| < 1.1\times 10^{-29}$ e·cm
+- Constrains CP-violating four-fermion operators and dipole operators involving electrons
+- Provides very tight bounds on some operators, loose bounds on others (depending on their structure)
+
+EDMs are among the most sensitive probes of CP-violating new physics.
+
+---
+
+## 4. The Warsaw Basis
+
+### Basis Choice Matters
+
+As noted in document 14, operators can be redundant (related by equations of motion, integration by parts, Fierz rearrangement). A **basis** is a set of independent operators with no redundancy.
+
+The **Warsaw basis** (Grzadkowski, Iskrzynski, Misiak, Rosiek, 2010) is the standard. It's:
+- Complete (contains all independent operators at dim-6)
+- Non-redundant (no Fierz/IBP relations)
+- Convenient (operators have transparent physical meaning)
+
+Most modern SMEFT analyses use Warsaw basis.
+
+### Alternative Bases
+
+Other bases exist and are sometimes used:
+- **HISZ basis:** differs in some operator choices
+- **SILH basis:** organized around "Strong Interactions for a Light Higgs"
+- **JHEP basis:** similar to SILH
+
+For most purposes, you can translate between bases using the redundancy relations. Warsaw is the default.
+
+### Example Operators in Warsaw Basis
+
+A sample from the 59 Warsaw basis operators:
+
+| Symbol | Operator |
+|---|---|
+| $\mathcal{O}_H$ | $(H^\dagger H)^3$ |
+| $\mathcal{O}_{H\Box}$ | $(H^\dagger H)\Box(H^\dagger H)$ |
+| $\mathcal{O}_{HD}$ | $(H^\dagger D_\mu H)^*(H^\dagger D^\mu H)$ |
+| $\mathcal{O}_{HWB}$ | $H^\dagger \sigma^A H\, W^A_{\mu\nu}B^{\mu\nu}$ |
+| $\mathcal{O}_{eB}$ | $(\bar L_L\sigma^{\mu\nu}e_R)H B_{\mu\nu}$ |
+| $\mathcal{O}_{uH}$ | $(H^\dagger H)(\bar Q_L\tilde H u_R)$ |
+| $\mathcal{O}_{LL}^{(1)}$ | $(\bar L_L\gamma^\mu L_L)(\bar L_L\gamma_\mu L_L)$ |
+| $\mathcal{O}_{eu}$ | $(\bar e_R\gamma^\mu e_R)(\bar u_R\gamma_\mu u_R)$ |
+
+(These are 8 of 59 operators. Full tables in the original papers.)
+
+### Flavor Structure
+
+Each operator has a flavor index structure (generations of fermions involved). For operators involving two fermion species, the Wilson coefficient is a matrix in flavor space.
+
+Example: $\mathcal{O}_{uH}^{ij} = (H^\dagger H)(\bar Q_L^i\tilde H u_R^j)$ has a $3\times 3$ Wilson coefficient matrix. All 9 components are independent in general.
+
+Flavor symmetries (like Minimal Flavor Violation, MFV) can constrain these matrices to be proportional to SM Yukawas, reducing the number of independent parameters significantly.
+
+---
+
+## 5. Running of SMEFT Coefficients
+
+### Anomalous Dimensions
+
+Under RG, SMEFT coefficients run:
+
+$$\mu\frac{dc_i}{d\mu} = \frac{1}{16\pi^2}\gamma_{ij}(g_k)c_j$$
+
+where $\gamma_{ij}$ is the anomalous dimension matrix, computed at one loop for dim-6 operators. The SM couplings $g_k$ (gauge couplings, Yukawas) enter the running.
+
+**Operator mixing** is essential: an operator that starts as $c_i(\Lambda) = c$, $c_j(\Lambda) = 0$ can develop a nonzero $c_j$ at lower scales due to loop mixing.
+
+### The Anomalous Dimension Matrix
+
+The full one-loop anomalous dimension matrix for SMEFT was computed by Jenkins, Manohar, Trott (2013-14) and Alonso, Jenkins, Manohar, Trott (2014). It's a $59\times 59$ matrix (or larger when accounting for flavor).
+
+Computed at two-loop for specific subsets: gauge-Yukawa running, flavor-changing operators, etc. Three-loop results are appearing.
+
+### Scales That Matter
+
+Typical SMEFT analysis flow:
+
+1. **Match at $\mu = \Lambda$:** from UV theory or as starting point for bottom-up
+2. **Run from $\Lambda$ to $M_Z$:** using SMEFT RGE
+3. **Match at $M_Z$:** to "LEFT" (low-energy EFT, where W and Z are integrated out)
+4. **Run within LEFT to observable scale:** e.g., $m_b$ for B physics
+5. **Compute observable:** at the relevant scale
+
+Each step introduces calculable corrections. The full program is called "electroweak EFT + low-energy EFT."
+
+### Example: Running Modifies Predictions
+
+Consider a single Wilson coefficient $c_i(\Lambda) = 1/\text{TeV}^2$ at $\Lambda = 10$ TeV. Running to $\mu = M_Z$ introduces factors of $\ln(10 \text{ TeV}/M_Z) \approx 4$.
+
+The coefficient at $M_Z$ can differ from the input by $\mathcal{O}(g^2/(16\pi^2)\ln(\Lambda/M_Z)) \sim 0.03$, about 3%.
+
+At high precision (few-percent), this running must be included. The infrastructure exists; programs like DsixTools, Wilson, etc.; to run SMEFT coefficients between scales.
+
+---
+
+## 6. Constraints from Higgs Physics
+
+### Higgs Coupling Modifiers
+
+Modifications to Higgs couplings are parameterized as:
+
+$$\mathcal{L}_{\rm eff} \supset -\frac{m_f}{v}(1 + \kappa_f - 1)h\bar ff - \frac{2M_V^2}{v}(1 + \kappa_V - 1)h V_\mu V^\mu$$
+
+where $\kappa_f$, $\kappa_V$ are "coupling modifiers" (SM value = 1).
+
+In SMEFT, these modifiers come from specific operators. For example:
+- $\kappa_f = 1 + \Delta\kappa_f$ where $\Delta\kappa_f$ depends on $c_{fH}$ (Yukawa-modifying operators)
+- $\kappa_V$ depends on operators like $\mathcal{O}_{HB}, \mathcal{O}_{HW}, \mathcal{O}_{HD}$
+
+LHC measurements: $\kappa_f = 1 \pm 10\%$, $\kappa_V = 1 \pm 5\%$. So Wilson coefficients are bounded:
+
+$$\frac{c_i v^2}{\Lambda^2} \lesssim 0.1 \implies \Lambda \gtrsim 2-3 v \sim 700-1000 \text{ GeV}$$
+
+For specific operators. This is a weak constraint, reflecting that Higgs coupling measurements are not yet ultra-precise.
+
+### Triple Higgs Coupling
+
+The Higgs self-coupling is accessible via double Higgs production ($pp \to hh$). It's modified by operators like $\mathcal{O}_H = (H^\dagger H)^3$ (changes the cubic term) and $\mathcal{O}_{H\Box}$ (changes wave-function).
+
+LHC Run 3 aims for a first observation of $hh$ production. HL-LHC will constrain the self-coupling at $\mathcal{O}(30-50\%)$. Future colliders (FCC-hh, muon collider) could reach $\mathcal{O}(5\%)$.
+
+### Higgs Decays to Invisible
+
+$\text{BR}(h \to \text{invisible}) < 0.15$ at LHC (combination). This constrains operators coupling the Higgs to dark matter or other invisible particles.
+
+### Higgs as a Precision Tool
+
+Despite being a new particle (discovered 2012), the Higgs is now a precision tool. Its 5+ independent coupling measurements + total width + width-to-invisible provide many constraints on SMEFT. Most operators affecting the Higgs are constrained at the $\mathcal{O}(0.1-1\text{ TeV})^{-2}$ level.
+
+---
+
+## 7. Constraints from Electroweak Precision
+
+### The Electroweak Observables
+
+The Z pole (LEP + SLC) measured:
+- $M_Z = 91.1876 \pm 0.0021$ GeV
+- $\Gamma_Z = 2.4952 \pm 0.0023$ GeV
+- $\sin^2\theta_W^{\rm eff} = 0.23153 \pm 0.00016$ 
+- Various partial widths, forward-backward asymmetries
+- W boson mass: $M_W = 80.369 \pm 0.013$ GeV
+
+These provide stringent tests of the SM. In SMEFT, they constrain:
+
+$$\mathcal{O}_{HL}^{(1,3)}, \mathcal{O}_{Hq}^{(1,3)}, \mathcal{O}_{He}, \mathcal{O}_{Hu}, \mathcal{O}_{Hd}, \mathcal{O}_{LL}, \text{etc.}$$
+
+### The Peskin-Takeuchi Parameters
+
+At the heart of electroweak precision tests: the Peskin-Takeuchi **$S, T, U$ parameters** (1990). These encode deviations in Z and W masses, widths, and asymmetries from SM predictions.
+
+In SMEFT language:
+
+$$S = -\frac{4\pi v^2}{\Lambda^2}(c_{HW} + c_{HB} + c_{HWB})$$
+
+(Modulo conventions.) Current constraints: $|S| \lesssim 0.1$, implying:
+
+$$\Lambda \gtrsim v\sqrt{4\pi/0.1}\cdot|\ldots| \sim 3 \text{ TeV}$$
+
+For specific operator combinations.
+
+### What Electroweak Data Tells Us
+
+The electroweak precision measurements have constrained new physics to be heavy. Combined with LHC direct searches, the landscape of possible new physics is significantly narrowed.
+
+**Naturalness** considerations suggest new physics at scale $\Lambda \lesssim 1$ TeV to avoid fine-tuning the Higgs mass. Precision EW data push this higher, to 10 TeV or more.
+
+This is the "electroweak hierarchy problem" in numerical form: precision tests don't allow for natural new physics at accessible scales.
+
+---
+
+## 8. Constraints from Flavor Physics
+
+### Flavor Observables
+
+Many B meson observables provide strong constraints:
+
+**$B \to X_s\gamma$ inclusive branching ratio.** Measures operator $\mathcal{O}_7^{bs}$:
+
+$$\mathcal{O}_7^{bs} = \bar s_L\sigma^{\mu\nu}b_R F_{\mu\nu}$$
+
+Current measurement: $\text{BR} = (3.49 \pm 0.19)\times 10^{-4}$
+
+SM prediction: $(3.40\pm 0.17)\times 10^{-4}$
+
+Agreement → $c_{7}^{bs} < O(0.03)\cdot\text{SM}$ → $\Lambda \gtrsim 400$ TeV for generic BSM!
+
+**$B_s \to \mu^+\mu^-$.** Rare leptonic decay, sensitive to FCNC new physics.
+
+$\text{BR} = (3.09 \pm 0.30)\times 10^{-9}$ (measured)
+
+$\text{BR} = (3.66 \pm 0.14)\times 10^{-9}$ (SM prediction)
+
+Close agreement → constraints on several operators.
+
+**$K_L \to \mu^+\mu^-$** and **$K \to \pi\nu\nu$**. Constrain FCNC operators involving quarks and neutrinos.
+
+**$\epsilon_K$, $\Delta m_K$.** CP violation and oscillation in kaon system. Probe $\Delta s = 2$ operators (Wilson coefficients for $\bar s d \bar s d$).
+
+**$B \to \pi\pi$, $B \to K\pi$.** Non-leptonic decays, tested in many channels.
+
+### The Flavor Problem Reversed
+
+Generic SMEFT operators with arbitrary flavor structure would generate huge FCNC that are not observed. Two possibilities:
+
+1. **New physics is at $\Lambda \gtrsim 10^5$ TeV.** Then dim-6 effects are small enough.
+2. **New physics has flavor structure similar to SM** (Minimal Flavor Violation or variants). Then FCNCs are suppressed by the same mechanism as in the SM.
+
+Option 2 is more aesthetically pleasing and phenomenologically common. Most BSM models invoke some flavor principle (MFV, $U(3)^5$ flavor symmetry, etc.) to suppress FCNCs.
+
+### Flavor Anomalies
+
+Recent B-physics anomalies have generated interest:
+
+**$b \to s\ell\ell$** (with $\ell = \mu$ or $e$): some measurements show discrepancies from SM predictions at the $2-3\sigma$ level. Interpretations include new heavy mediators (Z', leptoquarks) at few-TeV scales.
+
+**$b \to c\tau\nu$** ($R(D), R(D^*)$): measured rates are higher than SM predictions by $\sim 2\sigma$. Suggests new tau-specific interactions.
+
+These anomalies have gone up and down in significance over the years. Current status (as of my knowledge cutoff): still some tensions but no definitive new physics claim. Ongoing experimental work at LHCb and Belle II will clarify.
+
+---
+
+## 9. Global SMEFT Fits
+
+### Combining Constraints
+
+The power of SMEFT comes from combining constraints from different observables. A global fit:
+
+1. Takes all relevant observables (Higgs, EW, flavor, collider)
+2. Writes them as functions of SMEFT Wilson coefficients
+3. Performs a statistical fit to find allowed ranges
+
+Key tools: SMEFTsim, DSixTools, Flavio, HEPfit, and others. Major collaborations: ATLAS-CMS combined measurements, HFLAV for flavor, Particle Data Group reviews.
+
+### The Current State
+
+Global SMEFT fits with current data:
+
+- **Most dim-6 coefficients are consistent with zero** at the $1-2\sigma$ level
+- **Typical bounds:** $c_i/\Lambda^2 < 1/\text{TeV}^2$ to $1/(100 \text{ TeV})^2$
+- **Strongest bounds on FCNC operators:** $\Lambda > 10^3 - 10^5$ TeV
+- **Weakest bounds on operators involving neutrinos:** $\Lambda > $ few TeV
+
+### Interpretation
+
+The message from SMEFT fits is clear: **if new physics exists, it's either**:
+1. At very high scales ($\Lambda \gg 1$ TeV for most operators)
+2. With a specific flavor structure suppressing FCNC
+3. Coupled weakly to the SM
+4. A combination of these
+
+Discovering new physics likely requires one of:
+- Direct production at higher-energy colliders
+- Precision measurements at HL-LHC and future facilities
+- Dedicated low-energy experiments (EDMs, anomalous magnetic moments)
+- Cosmological/astronomical probes
+
+### Alternatives to SMEFT
+
+When the assumptions of SMEFT break down, alternatives include:
+
+**HEFT** (Higgs Effective Field Theory, or nonlinear): treats the physical Higgs as $\sigma$-model field. Used for strongly-interacting EWSB scenarios.
+
+**SMEFT with light new physics:** extending the field content with light sterile neutrinos, axions, dark photons.
+
+**Direct model fits:** for specific BSM scenarios, compute observables directly rather than through EFT.
+
+Each has its domain of applicability.
+
+---
+
+## Part B: HQET
+
+## 10. The Heavy Quark Problem
+
+### The Physics
+
+Consider a meson containing a heavy quark, like a $B$ meson ($\bar b$ quark + light quark). The $b$ quark has mass $m_b \approx 4.2$ GeV, much heavier than $\Lambda_{\rm QCD} \sim 200$ MeV.
+
+**Two scales are present:**
+- Hard scale: $m_b \sim 4$ GeV
+- Soft scale: $\Lambda_{\rm QCD} \sim 0.2$ GeV
+
+The interesting physics (light quark interactions, gluon exchanges binding the quarks) happens at the soft scale. The heavy quark is essentially a static source of color.
+
+**The problem:** QCD with heavy quarks has these two scales intertwined, making calculations hard. We'd like to exploit the scale hierarchy systematically.
+
+### HQET's Idea
+
+HQET (Isgur-Wise, Neubert, Georgi, Grinstein, 1990s) treats the heavy quark as an EFT:
+
+$$m_Q \to \infty \text{ with velocity } v^\mu \text{ fixed}$$
+
+The heavy quark becomes a "static color source" with velocity $v$. The light degrees of freedom (gluons, light quarks) dynamics are encoded in an effective Lagrangian expanded in $1/m_Q$.
+
+### Key Idea: Heavy Quark Field Decomposition
+
+Write the heavy quark field as:
+
+$$Q(x) = e^{-im_Q v\cdot x}[h_v(x) + H_v(x)]$$
+
+where:
+- $h_v(x) = e^{im_Q v\cdot x}\frac{1 + \slashed v}{2}Q(x)$: the "large" field, oscillating as $e^{-im_Q v\cdot x}$
+- $H_v(x) = e^{im_Q v\cdot x}\frac{1 - \slashed v}{2}Q(x)$: the "small" field, suppressed by $1/m_Q$
+
+In the heavy-quark limit, only $h_v$ matters. The fast oscillation $e^{-im_Q v\cdot x}$ is factored out.
+
+### Power Counting
+
+HQET expands in $k/m_Q$ where $k$ is the residual momentum (difference from $m_Q v^\mu$). In typical B meson processes: $k \sim \Lambda_{\rm QCD}$, so the expansion parameter is:
+
+$$\frac{\Lambda_{\rm QCD}}{m_b} \approx \frac{0.2}{4.2} \approx 0.05$$
+
+Each order in this expansion gives several-percent corrections. Leading order captures the dominant physics.
+
+---
+
+## 11. The HQET Lagrangian
+
+### Leading-Order Lagrangian
+
+At leading order in $1/m_Q$:
+
+$$\mathcal{L}_{\rm HQET}^{(0)} = \bar h_v\, iv\cdot D\, h_v$$
+
+where $iv\cdot D = iv^\mu D_\mu = iv^\mu(\partial_\mu - ig A_\mu^a T^a)$.
+
+This describes the heavy quark as a color-charged static source. It propagates along its velocity direction $v^\mu$ but has no internal dynamics beyond the color coupling.
+
+### Propagator
+
+The HQET propagator:
+
+$$\frac{i(1 + \slashed v)/2}{v\cdot k + i\epsilon}$$
+
+where $k$ is the residual momentum. This is a simple static propagator; no mass, no Dirac structure beyond the projector $(1 + \slashed v)/2$.
+
+### Heavy-to-Heavy Current
+
+The matrix element of a current like $\bar b\gamma^\mu b$ between heavy quark states becomes:
+
+$$\bar h_{v'}\Gamma h_v$$
+
+where $\Gamma$ is some Dirac structure. This is simpler than the full QCD calculation; the heavy quark kinematics are trivial.
+
+### At Next Order ($1/m_Q$)
+
+The next-order corrections:
+
+$$\mathcal{L}_{\rm HQET}^{(1)} = \frac{1}{2m_Q}\bar h_v\left[-(iD_\perp)^2 - c_F g\sigma_{\mu\nu}G^{\mu\nu}\right]h_v$$
+
+where $iD_\perp^\mu = iD^\mu - v^\mu (v\cdot iD)$ is the "perpendicular" covariant derivative.
+
+**The first term:** kinetic energy of the heavy quark (how it moves off its classical trajectory).
+
+**The second term:** chromomagnetic moment of the heavy quark (interaction with chromomagnetic field).
+
+The coefficient $c_F$ (chromomagnetic coefficient) is matched to full QCD. At tree level: $c_F = 1$. At one loop: small correction.
+
+---
+
+## 12. Heavy Quark Symmetry
+
+### The Symmetry
+
+In the heavy-quark limit, HQET has a remarkable symmetry: **the dynamics don't depend on the heavy quark's mass or spin.**
+
+This is **heavy quark symmetry (HQS)**; a symmetry of the effective theory that isn't a symmetry of QCD. It emerges from the heavy-quark limit.
+
+Specifically, HQS is $SU(2N_h)$ where $N_h$ is the number of heavy quarks (usually 2: $b$ and $c$, giving $SU(4)$). This unifies different heavy-quark species and spins into an effective multiplet.
+
+### Consequences
+
+**Relations between hadron properties.** Heavy mesons $(\bar Q q)$ with different heavy quarks should have similar structure (apart from mass). Specifically:
+- $B$ and $D$ mesons: similar properties, just different masses
+- $B$ and $B^*$: spin-0 and spin-1, related by HQS
+
+**Decay constants:** HQS predicts $f_B = f_{B_s}\sqrt{m_D/m_B}$ (after matching to full QCD; more precisely, the "scaling law"). Tests of HQS.
+
+**Semileptonic decays:** $B \to D\ell\nu$ and $B \to D^*\ell\nu$ have form factors related by HQS.
+
+### The Isgur-Wise Function
+
+A remarkable consequence: at leading order in $1/m_Q$, all form factors for $B \to D$ transitions are determined by a single universal function $\xi(v\cdot v')$; the **Isgur-Wise function**.
+
+$$\langle D(v')|\bar c\gamma^\mu b|B(v)\rangle = \xi(v\cdot v')\, (v + v')^\mu\sqrt{m_B m_D}$$
+
+And similarly for $B \to D^*$. Both form factors are the same function $\xi$!
+
+**Normalization:** $\xi(1) = 1$ at zero recoil (heavy-quark symmetry at the maximum-transfer point).
+
+**Shape:** determined by $v\cdot v'$ and non-perturbative physics; can be computed on lattice or fit from data.
+
+This is an incredible prediction: many form factors reduced to one function.
+
+### Breaking at Finite $m_Q$
+
+HQS is exact only at $m_Q \to \infty$. At finite $m_Q$, corrections of $\mathcal{O}(1/m_Q)$ and $\mathcal{O}(\alpha_s)$ modify these relations.
+
+The corrections have been computed to NLO and NNLO, and agreement with experimental measurements of $B$ decay rates is generally good (at the few-percent level).
+
+---
+
+## 13. $1/m_Q$ Corrections
+
+### Computing Corrections
+
+At next order in $1/m_Q$, the Lagrangian gets additional terms. Matrix elements of operators that were the same at leading order now split:
+
+**Example.** The chromomagnetic operator $\bar h\sigma_{\mu\nu}G^{\mu\nu}h$ gives matrix elements that are different for $B$ (spin-0) and $B^*$ (spin-1) mesons. The splitting:
+
+$$m_{B^*}^2 - m_B^2 \approx \frac{C_m\Lambda^3}{m_b}$$
+
+where $C_m$ is a number and $\Lambda$ a hadronic scale. Gives the $B^*$-$B$ mass splitting.
+
+**Numerically:** $m_{B^*} - m_B \approx 45$ MeV. Using the formula: $\Lambda^3/m_b \sim (300 \text{ MeV})^3/(4200 \text{ MeV}) \approx 6\text{ MeV}^2\cdot (\Lambda/m_b) \sim 6\cdot 0.07 \sim $ few 100 MeV. Rough agreement.
+
+The more precise calculation gives $\Lambda^3/m_b \approx 45\cdot 2\cdot m_B$ MeV$^2$, i.e., $\Lambda \approx 600$ MeV.
+
+### HQS Corrections to Isgur-Wise
+
+At $1/m_Q$ order, the Isgur-Wise function gets corrections. These include both perturbative ($\alpha_s$) and non-perturbative ($\Lambda_{\rm QCD}/m_Q$) effects.
+
+Modern fits to $B \to D\ell\nu$ data include these corrections. The CKM matrix element $|V_{cb}|$ is extracted from the exclusive rate:
+
+$$\Gamma(B \to D^*\ell\nu) = \frac{G_F^2|V_{cb}|^2}{48\pi^3}\cdot|\mathcal{F}|^2\cdot(\text{kinematic stuff})$$
+
+With $\mathcal{F}$ the form factor. HQET provides the form factor's structure to high precision, allowing $|V_{cb}|$ extraction at the percent level.
+
+### Limits of HQET
+
+HQET works best when:
+- Heavy quark is truly heavy: $m_Q \gg \Lambda_{\rm QCD}$
+- Process involves the heavy quark's velocity only, not its relative motion
+- $1/m_Q$ corrections are small
+
+For charm quarks ($m_c \approx 1.3$ GeV), $1/m_c$ is not so small. HQET works for some processes but with larger uncertainties than for bottom.
+
+For top quarks ($m_t \approx 173$ GeV), HQET methods are often not needed; top decays before hadronizing, so the complication doesn't arise.
+
+---
+
+## 14. Applications: B Physics
+
+### The B Physics Program
+
+Over the last 30 years, dedicated B experiments (BaBar, Belle, LHCb) have tested CKM, measured rare decays, searched for CP violation. HQET is essential for extracting precision CKM matrix elements.
+
+### $|V_{cb}|$ and $|V_{ub}|$
+
+**$|V_{cb}|$** from $B \to D^*\ell\nu$ or $B \to X_c\ell\nu$ (inclusive) uses HQET for the form factor or hadronic matrix elements. Current value:
+
+$$|V_{cb}| = (39.4\pm 0.8)\times 10^{-3} \text{ (exclusive)}$$
+
+$$|V_{cb}| = (42.2\pm 0.8)\times 10^{-3} \text{ (inclusive)}$$
+
+A few percent tension; "B anomaly" question. Ongoing research.
+
+**$|V_{ub}|$** from $B \to X_u\ell\nu$ (inclusive, charmless) or $B \to \pi\ell\nu$ (exclusive). Uses HQET + ChPT (for the $\pi$ at the end) or inclusive resummation methods.
+
+### Rare Decays
+
+$B \to X_s\gamma$ (radiative), $B \to X_s\ell\ell$ (semileptonic FCNC), $B \to K^{(*)}\nu\nu$, etc. All constrain BSM physics and test SM predictions.
+
+Key technical challenge: computing hadronic matrix elements. HQET + lattice QCD (+ ChPT for final-state pions) provides the framework.
+
+### B-B̄ Mixing
+
+$B$ meson oscillations constrain $V_{td}$, $V_{ts}$. The relevant amplitude depends on the "bag parameter" $B$ and decay constant $f_B$:
+
+$$\Delta m_s \propto f_{B_s}^2 B_{B_s}|V_{tb}V_{ts}^*|^2$$
+
+Lattice calculations of these parameters are crucial for $|V_{td}|$, $|V_{ts}|$ extraction.
+
+### The Unitarity Triangle
+
+Combining many B physics measurements, the CKM unitarity triangle is now constrained to the percent level. All angles and sides are measured consistently. Any discrepancy would signal new physics.
+
+HQET + ChPT + lattice QCD are all essential to making this program quantitative.
+
+---
+
+## 15. Beyond HQET: NRQCD and SCET
+
+### NRQCD
+
+**NRQCD** (Non-Relativistic QCD) is the EFT for bound states of heavy quark-antiquark pairs ($c\bar c = $ charmonium, $b\bar b = $ bottomonium).
+
+The key difference from HQET: you have two heavy quarks, and their relative motion is non-relativistic. The expansion is in $v$ (relative velocity), not $1/m_Q$.
+
+NRQCD is used for:
+- Quarkonium spectrum (J/psi, upsilon masses, decays)
+- Decay widths to leptons and other final states
+- Production cross sections at colliders
+
+### SCET
+
+**SCET** (Soft-Collinear Effective Theory) handles processes with energetic particles traveling at nearly light-like velocities.
+
+Relevant scales:
+- Hard: $Q$ (process energy, e.g., $m_Z$)
+- Collinear: $Q\lambda$ (for particles in a collimated jet)
+- Soft: $Q\lambda^2$ (for soft radiation)
+
+SCET organizes the expansion in $\lambda \sim \Lambda_{\rm QCD}/Q$. Essential for:
+- Jet physics at LHC
+- Threshold resummation
+- Factorization theorems in QCD
+
+### The EFT Landscape
+
+SMEFT, HQET, NRQCD, SCET, ChPT... all are effective field theories. Each solves a specific problem. Together, they're the modern toolkit for particle physics calculations.
+
+**Example of using multiple EFTs:** For a process $B \to K\pi$:
+- SMEFT may describe underlying BSM physics
+- HQET describes the heavy $b$ quark
+- ChPT describes the final-state pion
+- QCD factorization (based on SCET-like arguments) separates hard and soft physics
+
+All combined for the prediction. The framework, while complex, is systematic.
+
+---
+
+## 16. Appendix: Reference Tables and Formulas
+
+### SMEFT Parameter Sizes
+
+For a dim-6 operator $\mathcal{O}^{(6)}/\Lambda^2$:
+
+- At LHC ($E \sim$ TeV): correction $\sim (E/\Lambda)^2 \sim (1/10)^2 = 1\%$ for $\Lambda = 10$ TeV
+- At EW scale: correction $\sim (v/\Lambda)^2 \sim (0.025)^2 = 6\times 10^{-4}$ for $\Lambda = 10$ TeV
+
+### Key SMEFT Operators and Where They Show Up
+
+| Operator | Main Constraint |
+|---|---|
+| $\mathcal{O}_H$ | Triple Higgs coupling |
+| $\mathcal{O}_{HB}, \mathcal{O}_{HW}$ | Higgs production and decay |
+| $\mathcal{O}_{HL}^{(1,3)}, \mathcal{O}_{Hq}^{(1,3)}$ | EW precision, Z couplings |
+| $\mathcal{O}_{LL}, \mathcal{O}_{LQ}$ | Contact interactions at LHC |
+| $\mathcal{O}_{eB}, \mathcal{O}_{uG}, \ldots$ | EDMs, anomalous magnetic moments |
+| Flavor-violating dipoles | $B \to X_s\gamma$, EDMs |
+
+### HQET Power Counting
+
+Leading order: $\mathcal{L} = \bar h_v i v\cdot D h_v$, $h_v \sim \Lambda_{\rm QCD}^{3/2}$, $D^\mu \sim \Lambda_{\rm QCD}$
+
+Expansion parameter: $\Lambda_{\rm QCD}/m_Q \sim 0.05$ for $b$, $0.15$ for $c$.
+
+### Isgur-Wise Function
+
+$$\xi(v\cdot v')$$: universal function, $\xi(1) = 1$ at zero recoil
+
+All $B \to D, D^*$ form factors expressible in $\xi$ at $O(1/m_Q^0)$.
+
+### Relating Full QCD to HQET
+
+$$\bar Q\Gamma Q = \bar h_v\Gamma h_v + O(1/m_Q)$$
+
+$$Q(x) = e^{-im_Q v\cdot x}h_v(x) + O(1/m_Q)$$
+
+### Further Reading
+
+- **Grzadkowski et al., *Dimension-Six Terms in the SM Lagrangian*, JHEP 1010 (2010) 085**: the Warsaw basis paper
+- **Manohar, *Introduction to EFT*, TASI lectures 2017**: unified modern treatment
+- **Neubert, *Heavy Quark Effective Theory***, Phys. Rept. 245 (1994): classic HQET review
+- **Grozin, *Heavy Quark Effective Theory***: textbook
+- **Isgur & Wise, *Weak Decays of Heavy Mesons***: original HQET papers
+- **Buchalla, Buras, Lautenbacher, *Weak Decays Beyond Leading Logarithms***: comprehensive flavor physics
+
+### Problems
+
+1. For the Warsaw basis operator $\mathcal{O}_H = (H^\dagger H)^3$, compute the modification to the Higgs cubic self-coupling after EWSB. What's the LHC sensitivity?
+
+2. Derive the relation between the decay constants of $B$ and $B_s$ mesons in the heavy-quark limit. How is this modified by $1/m_b$ corrections?
+
+3. For a general dim-6 SMEFT operator, derive its contribution to the $Z$ boson width and compare to the current experimental precision.
+
+4. Compute the $B^*$-$B$ mass splitting in HQET. Show that the leading term is $\propto 1/m_b$ and estimate its size.
+
+5. For $\bar B \to \bar D^*\ell\nu$, write down the tree-level amplitude in HQET in terms of the Isgur-Wise function. What corrections appear at $1/m_b$?
+
+6. A specific UV theory has a heavy $Z'$ coupled to quarks. Integrate out the $Z'$ and derive the SMEFT Wilson coefficients. What are the constraints from B physics?
+
+---
+
+## Closing Note
+
+SMEFT and HQET are two of the most important EFTs in modern particle physics. Together with ChPT (document 15), they form the core toolkit for interpreting contemporary experimental data.
+
+### What This Three-Document Sequence Covered
+
+**Document 14:** EFT methodology; the conceptual framework. How to build EFTs, what power counting is, how matching and running work.
+
+**Document 15:** ChPT; the canonical strongly-coupled EFT. Low-energy QCD via pseudo-Goldstone bosons. Symmetry breaking, chiral dynamics, precision tests.
+
+**Document 16:** SMEFT + HQET; the workhorses of modern phenomenology. SMEFT parametrizes BSM physics; HQET tames heavy-quark physics.
+
+### What You Now Have
+
+A comprehensive understanding of EFT as a practical tool for:
+- Building theories at different scales (Doc 14)
+- Handling spontaneously broken symmetries (Doc 15)
+- Parametrizing beyond-SM physics (Doc 16a)
+- Computing heavy-quark observables (Doc 16b)
+
+You can now read most papers in:
+- LHC phenomenology (SMEFT-based analyses)
+- Flavor physics (HQET-based calculations)
+- Low-energy nuclear physics (ChPT-based)
+- Precision electroweak physics (all of the above)
+
+### What's Next
+
+The EFT sequence is complete. Your options going forward, from our earlier list:
+
+- **Option C:** Anomalies in depth (one doc)
+- **Option D:** Non-perturbative QFT (one-to-two docs)
+- **Option E:** Beyond the Standard Model (5-8 docs)
+
+Or further into EFTs with more specialized topics:
+- NRQCD and quarkonium physics in depth
+- SCET and jet physics
+- Non-linear HEFT
+- EFTs for gravitational waves
+- EFTs for cosmology (inflation, dark energy)
+
+Or back to foundational topics:
+- Deeper dives into specific aspects of QFT
+- Mathematical physics (representation theory, differential geometry)
+- Computational physics techniques
+
+Each of these is its own research direction. You're in a position to choose based on what interests you; you have the foundations for essentially any of them.
+
+Take a break if you want one. The physics frontier will still be here.
