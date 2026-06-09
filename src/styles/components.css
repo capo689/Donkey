@@ -4404,8 +4404,13 @@ footer a:hover { background: var(--red); color: var(--paper); }
 }
 .btn-secondary:hover { background: var(--ink); color: var(--paper); }
 
-/* ── Page-TOC: widen breakpoint so it never overlaps article ── */
-@media (max-width: 1440px) {
+/* ── Page-TOC: position in right gutter; hide unless gutter wide enough ── */
+.page-toc {
+  /* anchor to shell's right edge (shell is max-width 1180px, centered) */
+  left: calc(50% + 614px);
+  right: auto;
+}
+@media (max-width: 1640px) {
   .page-toc { display: none; }
 }
 
